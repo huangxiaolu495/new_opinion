@@ -65,8 +65,13 @@
             </div>
             <div class="enshrineBox">
               <!-- <span><i class="iconfont icon-star"></i> 加入收藏夹</span> -->
-              <span @click="openAttentionPool" class="marginLeft85">
-                <i>@</i> 添加重点关注池</span>
+              <span class="marginLeft85">
+                <!-- @click="openAttentionPool" -->
+                <!-- <router-link to="/attentionPoolSet">
+                  <i>@</i>
+                  添加重点关注池
+                </router-link> -->
+              </span>
             </div>
           </div>
           <div @click="query" class="queryBtn">查询</div>
@@ -129,6 +134,19 @@
                     <span @click="details(item, index)">{{item.details}}</span>
                   </td>
                   <td>{{item.SOURCE}}</td>
+                  <td>
+                    <div class="floatLeft">
+                      <!-- <pull-down-list :prop="risk_typeList" @legislationEvent='legislationEvent'></pull-down-list>
+                      
+                    <div @click="yesBtn()" class="queryBtn mtt">确定</div> -->
+                      <select class="form-control" style="width:100px;" v-model="item.risk_code">
+                        <!-- <option value="">无</option> -->
+                        <option v-for="s in risk_codeList" :value="s.code" :key="s.code">{{s.title}}</option>
+                      </select>
+                      <button type="button" @click="saveItem(item)" class="btn btn-default">确定</button>
+                    </div>
+                    <!-- <div @click="cancelBtn()" class="queryBtn mtt">取消</div> -->
+                  </td>
                   <td class="starBox">
                     <div class="starBg">
                       <span @click="choiceStar(secondItem, item, index)" v-for="secondItem of starNumber" :key="secondItem" class="iconfont icon-star"></span>
@@ -250,8 +268,13 @@
             </div>
             <div class="enshrineBox">
               <!-- <span><i class="iconfont icon-star"></i> 加入收藏夹</span> -->
-              <span @click="openAttentionPool" class="marginLeft85">
-                <i>@</i> 添加重点关注池</span>
+              <span class="marginLeft85">
+                <!-- @click="openAttentionPool" -->
+                <!-- <router-link to="/attentionPoolSet">
+                  <i>@</i>
+                  添加重点关注池
+                </router-link> -->
+              </span>
             </div>
           </div>
           <div @click="query" class="queryBtn">查询</div>
@@ -314,6 +337,14 @@
                     <span @click="details(item, index)">{{item.details}}</span>
                   </td>
                   <td>{{item.SOURCE}}</td>
+                  <td>
+                    <div class="floatLeft">
+                      <select class="form-control" style="width:100px;" v-model="item.risk_code">
+                        <option v-for="s in risk_codeList" :value="s.code" :key="s.code">{{s.title}}</option>
+                      </select>
+                      <button type="button" @click="saveItem(item)" class="btn btn-default">确定</button>
+                    </div>
+                  </td>
                   <td class="starBox">
                     <div class="starBg">
                       <span @click="choiceStar(secondItem, item, index)" v-for="secondItem of starNumber" :key="secondItem" class="iconfont icon-star"></span>
@@ -435,8 +466,13 @@
             </div>
             <div class="enshrineBox">
               <!-- <span><i class="iconfont icon-star"></i> 加入收藏夹</span> -->
-              <span @click="openAttentionPool" class="marginLeft85">
-                <i>@</i> 添加重点关注池</span>
+              <span class="marginLeft85">
+                <!-- @click="openAttentionPool" -->
+                <!-- <router-link to="/attentionPoolSet">
+                  <i>@</i>
+                  添加重点关注池
+                </router-link> -->
+              </span>
             </div>
           </div>
           <div @click="query" class="queryBtn">查询</div>
@@ -499,6 +535,14 @@
                     <span @click="details(item, index)">{{item.details}}</span>
                   </td>
                   <td>{{item.SOURCE}}</td>
+                  <td>
+                    <div class="floatLeft">
+                      <select class="form-control" style="width:100px;" v-model="item.risk_code">
+                        <option v-for="s in risk_codeList" :value="s.code" :key="s.code">{{s.title}}</option>
+                      </select>
+                      <button type="button" @click="saveItem(item)" class="btn btn-default">确定</button>
+                    </div>
+                  </td>
                   <td class="starBox">
                     <div class="starBg">
                       <span @click="choiceStar(secondItem, item, index)" v-for="secondItem of starNumber" :key="secondItem" class="iconfont icon-star"></span>
@@ -559,7 +603,7 @@
           </div>
         </div>
       </div>
-       <div v-show="nowCategroy === 3">
+      <div v-show="nowCategroy === 3">
         <div class="queryConditionBox clearFloat height">
           <div class="clearFloat">
             <div class="floatLeft">
@@ -608,15 +652,15 @@
                   <i v-show="!isFinished3" class="dot"></i>
                 </span>
               </span>
-              
+
             </div>
           </div>
-           <div class="clearFloat marginTop10">
-              <div>
-                关键字：
-                <input type="text" placeholder="请输入" class="input" v-model="keyword" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')">
-              </div>
-           </div>
+          <div class="clearFloat marginTop10">
+            <div>
+              关键字：
+              <input type="text" placeholder="请输入" class="input" v-model="keyword" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')">
+            </div>
+          </div>
           <div class="clearFloat marginTop10">
             <div class="uploadFiles">
               <label for="fileExport">上传文件(csv、txt)等
@@ -627,17 +671,24 @@
             </div>
             <div class="enshrineBox">
               <!-- <span><i class="iconfont icon-star"></i> 加入收藏夹</span> -->
-              <span @click="openAttentionPool" class="marginLeft85">
-                <i>@</i> 添加重点关注池</span>
+              <span class="marginLeft85">
+                <!-- @click="openAttentionPool" -->
+                <!-- <router-link to="/attentionPoolSet">
+                  <i>@</i>
+                  添加重点关注池
+                </router-link> -->
+              </span>
             </div>
-             <div class="ml20">
-                证券代码
-                <input type="text" placeholder="请输入" class="input" v-model="stock_code" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')">
-              </div>
-              <!-- <div @click="query2" class="yesBtn">确定</div> -->
+            <div class="ml20">
+              证券代码
+              <input type="text" placeholder="请输入" class="input" v-model="stock_code" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')">
+            </div>
+            <!-- <div @click="query2" class="yesBtn">确定</div> -->
           </div>
           <div @click="query2" class="queryBtn">查询</div>
-          <div class="codespan" v-show="codeshow">已识别证券代码：<span>{{stock_codetext}}</span></div>
+          <div class="codespan" v-show="codeshow">已识别证券代码：
+            <span>{{stock_codetext}}</span>
+          </div>
         </div>
         <!-- 风险类型选择 -->
         <div v-if="isShowTypeList3 && isShowTypeBox3" class="typeBox clearFloat">
@@ -688,7 +739,7 @@
                   <th v-for="(item, index) of titleData2" :key="index" class="tableTh" width:100px>{{item}}</th>
                 </tr>
                 <tr v-for="(item, index) of dataList3" :key="index">
-                 <td>{{item.RELATENAME}}</td>
+                  <td>{{item.RELATENAME}}</td>
                   <td>{{item.RELATECODE}}</td>
                   <td>{{item.SHOWTIME}}</td>
                   <td class="tableTd">
@@ -699,6 +750,14 @@
                     <span @click="details(item, index)">{{item.details}}</span>
                   </td>
                   <td>{{item.SOURCE}}</td>
+                  <td>
+                    <div class="floatLeft">
+                      <select class="form-control" style="width:100px;" v-model="item.risk_code">
+                        <option v-for="s in risk_codeList" :value="s.code" :key="s.code">{{s.title}}</option>
+                      </select>
+                      <button type="button" @click="saveItem(item)" class="btn btn-default">确定</button>
+                    </div>
+                  </td>
                   <td class="starBox">
                     <div class="starBg">
                       <span @click="choiceStar(secondItem, item, index)" v-for="secondItem of starNumber" :key="secondItem" class="iconfont icon-star"></span>
@@ -725,12 +784,12 @@
                         </div> -->
                     </div>
                   </td>
-                  <td>
+                  <!-- <td>
                     <span v-if="item.is_favorite">已收藏
                       <span @click="favorite(item, index, false)" class="updateBtn">取消</span>
                     </span>
                     <span v-else @click="favorite(item, index, true)" class="updateBtn">加入收藏夹</span>
-                  </td>
+                  </td> -->
                   <td>
                     <span v-if="item.finished">zhangxx已处理
                       <span @click="dispose(item, index, false)" class="updateBtn">取消</span>
@@ -764,20 +823,23 @@
 </template>
 
 <script>
-import pullDownList from '@/components/common/pullDownList'
-import pagination from '@/components/common/pagination'
-import commonMethods from '@/common/common.js'
-import datePicker from '@/components/common/datePicker'
+import pullDownList from "@/components/common/pullDownList";
+import pagination from "@/components/common/pagination";
+import commonMethods from "@/common/common.js";
+import datePicker from "@/components/common/datePicker";
 export default {
   data() {
     const oneDayAfter = new Date().getTime() + 86400000;
     return {
-      url: 'http://10.25.24.51:10192/api/rest/nlp/risk/query_news',
-      updateUrl: 'http://10.25.24.51:10192/api/rest/nlp/risk/update_news_factor',
-      keyword:'',
-      stock_code:'',
-      stock_codetext:'',
-      codeshow:false,
+      url: "http://10.25.24.51:10192/api/rest/nlp/risk/query_news",
+      updateUrl:
+        "http://10.25.24.51:10192/api/rest/nlp/risk/update_news_factor",
+      keyword: "",
+      stock_code: "",
+      stock_codetext: "",
+      isShowDropDownList: false,
+      codeshow: false,
+      dropDownList: [],
       isShowTypeList: false,
       isShowTypeList1: false,
       isShowTypeList2: false,
@@ -785,7 +847,7 @@ export default {
       isShowTypeBox: false,
       isShowTypeBox1: false,
       isShowTypeBox2: false,
-       isShowTypeBox3: false,
+      isShowTypeBox3: false,
       isShowQueryResult: false,
       isShowQueryResult1: false,
       isShowQueryResult2: false,
@@ -800,140 +862,159 @@ export default {
       isFinished3: false,
       isAttentionPool: false,
       categroyIndex: 0,
-      nowCategroy: '',
-      selectFileName: '选择文件',
-      selectFileName1: '选择文件',
-      selectFileName2: '选择文件',
-      selectFileName3: '选择文件',
+      nowCategroy: "",
+      selectFileName: "选择文件",
+      selectFileName1: "选择文件",
+      selectFileName2: "选择文件",
+      selectFileName3: "选择文件",
       starNumber: [1, 2, 3],
       conditionStarNumber: [],
       conditionStarNumber1: [],
       conditionStarNumber2: [],
       conditionStarNumber3: [],
-      categroyList: ['基金', '债券', '股票','搜索'],
+      categroyList: ["基金", "债券", "股票", "搜索"],
       // =F&=&&=&=&=1&=10&=2018-05-17&=2018-05-25&=&=
       sendData: {},
       sendData1: {},
       sendData2: {},
       sendData3: {},
       queryCondition: {
-        stock_type: 'F',
-        imp_score: '',
-        is_favorite: '',
-        risk_type: '',
-        risk_code: '',
+        stock_type: "F",
+        imp_score: "",
+        is_favorite: "",
+        risk_type: "",
+        risk_code: "",
         page_size: 10,
         page: 1,
-        from_date: '',
-        to_date: '',
-        keyword: '',
-        finished: '',
+        from_date: "",
+        to_date: "",
+        keyword: "",
+        finished: ""
       },
       queryCondition1: {
-        stock_type: 'B',
-        imp_score: '',
-        is_favorite: '',
-        risk_type: '',
-        risk_code: '',
+        stock_type: "B",
+        imp_score: "",
+        is_favorite: "",
+        risk_type: "",
+        risk_code: "",
         page_size: 10,
         page: 1,
-        from_date: '',
-        to_date: '',
-        keyword: '',
-        finished: '',
+        from_date: "",
+        to_date: "",
+        keyword: "",
+        finished: ""
       },
       queryCondition2: {
-        stock_type: 'S',
-        imp_score: '',
-        is_favorite: '',
-        risk_type: '',
-        risk_code: '',
+        stock_type: "S",
+        imp_score: "",
+        is_favorite: "",
+        risk_type: "",
+        risk_code: "",
         page_size: 10,
         page: 1,
-        from_date: '',
-        to_date: '',
-        keyword: '',
-        finished: '',
+        from_date: "",
+        to_date: "",
+        keyword: "",
+        finished: ""
       },
       queryCondition3: {
-        stock_code: '',
-        imp_score: '',
-        is_favorite: '',
-        risk_type: '',
-        risk_code: '',
+        stock_code: "",
+        imp_score: "",
+        is_favorite: "",
+        risk_type: "",
+        risk_code: "",
         page_size: 10,
         page: 1,
-        from_date: '',
-        to_date: '',
-        keyword: '',
-        finished: '',
+        from_date: "",
+        to_date: "",
+        keyword: "",
+        finished: ""
       },
       startDatePicker: {
-        title: '新闻日期：',
-        parentEvent: 'startDateEvent',
+        title: "新闻日期：",
+        parentEvent: "startDateEvent",
         defaultDate: new Date()
       },
       endDatePicker: {
-        title: '至：',
-        parentEvent: 'endDateEvent',
+        title: "至：",
+        parentEvent: "endDateEvent",
         defaultDate: new Date(oneDayAfter)
       },
       startDatePicker1: {
-        title: '新闻日期：',
-        parentEvent: 'startDateEvent1',
+        title: "新闻日期：",
+        parentEvent: "startDateEvent1",
         defaultDate: new Date()
       },
       endDatePicker1: {
-        title: '至：',
-        parentEvent: 'endDateEvent1',
+        title: "至：",
+        parentEvent: "endDateEvent1",
         defaultDate: new Date(oneDayAfter)
       },
       startDatePicker2: {
-        title: '新闻日期：',
-        parentEvent: 'startDateEvent2',
+        title: "新闻日期：",
+        parentEvent: "startDateEvent2",
         defaultDate: new Date()
       },
       endDatePicker2: {
-        title: '至：',
-        parentEvent: 'endDateEvent2',
+        title: "至：",
+        parentEvent: "endDateEvent2",
         defaultDate: new Date(oneDayAfter)
       },
-       startDatePicker3: {
-        title: '新闻日期：',
-        parentEvent: 'startDateEvent3',
+      startDatePicker3: {
+        title: "新闻日期：",
+        parentEvent: "startDateEvent3",
         defaultDate: new Date()
       },
       endDatePicker3: {
-        title: '至：',
-        parentEvent: 'endDateEvent3',
+        title: "至：",
+        parentEvent: "endDateEvent3",
         defaultDate: new Date(oneDayAfter)
       },
       paginationData: {
-        parentEvent: 'paginationSelect',
+        parentEvent: "paginationSelect",
         page_Count: 0,
         total_Count: 0,
         current: 1
       },
       paginationData1: {
-        parentEvent: 'paginationSelect1',
+        parentEvent: "paginationSelect1",
         page_Count: 0,
         total_Count: 0,
         current: 1
       },
       paginationData2: {
-        parentEvent: 'paginationSelect2',
+        parentEvent: "paginationSelect2",
         page_Count: 0,
         total_Count: 0,
         current: 1
       },
-       paginationData3: {
-        parentEvent: 'paginationSelect3',
+      paginationData3: {
+        parentEvent: "paginationSelect3",
         page_Count: 0,
         total_Count: 0,
         current: 1
       },
-      titleData: ['新闻时间', '新闻标题', '新闻内容', '新闻源', '重要性', '收藏', '处理情况'],
-      titleData2: ['证券名称','证券代码','新闻时间', '新闻标题', '新闻内容', '新闻源', '重要性', '收藏', '处理情况'],
+      titleData: [
+        "新闻时间",
+        "新闻标题",
+        "新闻内容",
+        "新闻源",
+        "风险类型",
+        "重要性",
+        "收藏",
+        "处理情况"
+      ],
+      titleData2: [
+        "证券名称",
+        "证券代码",
+        "新闻时间",
+        "新闻标题",
+        "新闻内容",
+        "新闻源",
+        "风险类型",
+        "重要性",
+        "处理情况"
+      ],
       dataList: [],
       dataList1: [],
       dataList2: [],
@@ -942,123 +1023,409 @@ export default {
       firstTypeList2: null,
       firstTypeList3: null,
       firstTypeList: [
-        { type: '全部', check: false },
-        { type: '信用风险', check: false },
-        { type: '市场风险', check: false },
-        { type: '财务风险', check: false },
-        { type: '经营风险', check: false },
-        { type: '管理风险', check: false },
-        { type: '项目风险', check: false },
-        { type: '担保风险', check: false },
-        { type: '不可抗力风险', check: false },
-        { type: '监管预警', check: false },
-        { type: '产品预警', check: false },
-        { type: '其他风险', check: false }
+        { type: "全部", check: false },
+        { type: "信用风险", check: false },
+        { type: "市场风险", check: false },
+        { type: "财务风险", check: false },
+        { type: "经营风险", check: false },
+        { type: "管理风险", check: false },
+        { type: "项目风险", check: false },
+        { type: "担保风险", check: false },
+        { type: "不可抗力风险", check: false },
+        { type: "监管预警", check: false },
+        { type: "产品预警", check: false },
+        { type: "其他风险", check: false }
       ],
       secondTypeList1: null,
       secondTypeList2: null,
       secondTypeList3: null,
       secondTypeList: [
-        {          firstTitle: '信用风险', check: false, list: [
-            { code: '510101', check: false, title: '债务违约、合同失信、债务展期' },
-            { code: '510102', check: false, title: '评级下调、列入观察或负面类展望、推迟评级' },
-            { code: '510103', check: false, title: '欺诈造假' },
-            { code: '510104', check: false, title: '承诺失信' },
-            { code: '510105', check: false, title: '公司挪用资金、未按约定使用资金' },
+        {
+          firstTitle: "信用风险",
+          check: false,
+          list: [
+            {
+              code: "510101",
+              check: false,
+              title: "债务违约、合同失信、债务展期"
+            },
+            {
+              code: "510102",
+              check: false,
+              title: "评级下调、列入观察或负面类展望、推迟评级"
+            },
+            { code: "510103", check: false, title: "欺诈造假" },
+            { code: "510104", check: false, title: "承诺失信" },
+            {
+              code: "510105",
+              check: false,
+              title: "公司挪用资金、未按约定使用资金"
+            }
+          ]
+        },
+        {
+          firstTitle: "市场风险",
+          check: false,
+          list: [
+            { code: "511100", check: false, title: "暂停交易、退市" },
+            { code: "511101", check: false, title: "股权质押、冻结或爆仓" },
+            { code: "511102", check: false, title: "股份解禁或减持" },
+            { code: "511103", check: false, title: "证券价格异常波动" }
+          ]
+        },
+        {
+          firstTitle: "财务风险",
+          check: false,
+          list: [
+            { code: "512100", check: false, title: "发生亏损" },
+            { code: "512101", check: false, title: "盈利能力下降" },
+            {
+              code: "512102",
+              check: false,
+              title: "公司资金流动性不足或资金来源异常"
+            },
+            { code: "512103", check: false, title: "资不抵债、资产负债率过高" },
+            { code: "512104", check: false, title: "资产重大减值、资产异常" },
+            {
+              code: "512105",
+              check: false,
+              title: "财务造假、不透明，财务数据存在真实性问题"
+            },
+            { code: "512106", check: false, title: "放弃债权和财产" },
+            {
+              code: "512107",
+              check: false,
+              title: "对外借款或对外担保过多,存在代偿风险"
+            }
+          ]
+        },
+        {
+          firstTitle: "经营风险",
+          check: false,
+          list: [
+            {
+              code: "513100",
+              check: false,
+              title: "重组失败、重组取消或重组存在问题"
+            },
+            {
+              code: "513101",
+              check: false,
+              title: "经营方针、主营业务、经营范围发生重大变化"
+            },
+            {
+              code: "513102",
+              check: false,
+              title: "对外投资失误、参与其他公司股权之争、抛售公司资产"
+            },
+            {
+              code: "513103",
+              check: false,
+              title: "虚假注资、抽逃资金、转移资产"
+            },
+            {
+              code: "513104",
+              check: false,
+              title: "国家或地方政府政策变动而造成影响"
+            },
+            {
+              code: "513105",
+              check: false,
+              title: "公司资产被查封、扣押、冻结、司法划转"
+            },
+            {
+              code: "513106",
+              check: false,
+              title: "公司经营出现问题、公司（项目）停产或半停产、业务减少"
+            },
+            {
+              code: "513107",
+              check: false,
+              title: "公司发生减资、合并、分立、解散、破产"
+            },
+            {
+              code: "513108",
+              check: false,
+              title:
+                "关联企业或人（实际控制人、控股股东、供应商、客户、被担保企业、其他关联企业）出现问题"
+            },
+            {
+              code: "513109",
+              check: false,
+              title: "投诉和诉讼事件、经济纠纷和环保问题等公共纠纷"
+            },
+            {
+              code: "513110",
+              check: false,
+              title: "公司产品存在缺陷或存在问题"
+            },
+            {
+              code: "513111",
+              check: false,
+              title: "审批不通过事项或撤销公司某项经营资格"
+            },
+            { code: "513112", check: false, title: "犯罪事件" },
+            { code: "513113", check: false, title: "公司违规或被问询" }
+          ]
+        },
+        {
+          firstTitle: "管理风险",
+          check: false,
+          list: [
+            {
+              code: "514100",
+              check: false,
+              title:
+                "公司控制权斗争、实际控制人发生变动、公司性质变动、公司股东持有的股份被司法划转"
+            },
+            { code: "514101", check: false, title: "处罚事件或问询事件" },
+            { code: "514102", check: false, title: "高管变动（异动）" },
+            { code: "514103", check: false, title: "员工（含高管）违规" },
+            {
+              code: "514104",
+              check: false,
+              title: "拖欠员工工资、大量辞工或员工大面积离职"
+            }
+          ]
+        },
+        {
+          firstTitle: "项目风险",
+          check: false,
+          list: [
+            {
+              code: "515100",
+              check: false,
+              title: "公司项目发生延期、手续不全、陷入问题"
+            },
+            {
+              code: "515101",
+              check: false,
+              title: "项目产能未达到预期或情况备受质疑的"
+            }
+          ]
+        },
+        {
+          firstTitle: "担保风险",
+          check: false,
+          list: [
+            {
+              code: "516100",
+              check: false,
+              title: "担保人或抵押物出现纠纷或问题"
+            }
+          ]
+        },
+        {
+          firstTitle: "不可抗力风险",
+          check: false,
+          list: [
+            {
+              code: "517100",
+              check: false,
+              title: "地震、水灾、火灾、恐怖袭击；通讯、电力中断；战争"
+            }
+          ]
+        },
+        {          firstTitle: '监管预警', check: false, list: [
+            { code: '519', check: false, title: '监管预警' },
           ]        },
-        {          firstTitle: '市场风险', check: false, list: [
-            { code: '511100', check: false, title: '暂停交易、退市' },
-            { code: '511101', check: false, title: '股权质押、冻结或爆仓' },
-            { code: '511102', check: false, title: '股份解禁或减持' },
-            { code: '511103', check: false, title: '证券价格异常波动' },
+        {          firstTitle: '产品预警', check: false, list: [
+            { code: '518', check: false, title: '产品预警' },
           ]        },
-        {          firstTitle: '财务风险', check: false, list: [
-            { code: '512100', check: false, title: '发生亏损' },
-            { code: '512101', check: false, title: '盈利能力下降' },
-            { code: '512102', check: false, title: '公司资金流动性不足或资金来源异常' },
-            { code: '512103', check: false, title: '资不抵债、资产负债率过高' },
-            { code: '512104', check: false, title: '资产重大减值、资产异常' },
-            { code: '512105', check: false, title: '财务造假、不透明，财务数据存在真实性问题' },
-            { code: '512106', check: false, title: '放弃债权和财产' },
-            { code: '512107', check: false, title: '对外借款或对外担保过多,存在代偿风险' },
-          ]        },
-        {          firstTitle: '经营风险', check: false, list: [
-            { code: '513100', check: false, title: '重组失败、重组取消或重组存在问题' },
-            { code: '513101', check: false, title: '经营方针、主营业务、经营范围发生重大变化' },
-            { code: '513102', check: false, title: '对外投资失误、参与其他公司股权之争、抛售公司资产' },
-            { code: '513103', check: false, title: '虚假注资、抽逃资金、转移资产' },
-            { code: '513104', check: false, title: '国家或地方政府政策变动而造成影响' },
-            { code: '513105', check: false, title: '公司资产被查封、扣押、冻结、司法划转' },
-            { code: '513106', check: false, title: '公司经营出现问题、公司（项目）停产或半停产、业务减少' },
-            { code: '513107', check: false, title: '公司发生减资、合并、分立、解散、破产' },
-            { code: '513108', check: false, title: '关联企业或人（实际控制人、控股股东、供应商、客户、被担保企业、其他关联企业）出现问题' },
-            { code: '513109', check: false, title: '投诉和诉讼事件、经济纠纷和环保问题等公共纠纷' },
-            { code: '513110', check: false, title: '公司产品存在缺陷或存在问题' },
-            { code: '513111', check: false, title: '审批不通过事项或撤销公司某项经营资格' },
-            { code: '513112', check: false, title: '犯罪事件' },
-            { code: '513113', check: false, title: '公司违规或被问询' },
-          ]        },
-        {          firstTitle: '管理风险', check: false, list: [
-            { code: '514100', check: false, title: '公司控制权斗争、实际控制人发生变动、公司性质变动、公司股东持有的股份被司法划转' },
-            { code: '514101', check: false, title: '处罚事件或问询事件' },
-            { code: '514102', check: false, title: '高管变动（异动）' },
-            { code: '514103', check: false, title: '员工（含高管）违规' },
-            { code: '514104', check: false, title: '拖欠员工工资、大量辞工或员工大面积离职' },
-          ]        },
-        {          firstTitle: '项目风险', check: false, list: [
-            { code: '515100', check: false, title: '公司项目发生延期、手续不全、陷入问题' },
-            { code: '515101', check: false, title: '项目产能未达到预期或情况备受质疑的' },
-          ]        },
-        {          firstTitle: '担保风险', check: false, list: [
-            { code: '516100', check: false, title: '担保人或抵押物出现纠纷或问题' },
-          ]        },
-        {          firstTitle: '不可抗力风险', check: false, list: [
-            { code: '517100', check: false, title: '地震、水灾、火灾、恐怖袭击；通讯、电力中断；战争' },
-          ]        },
-        // {firstTitle: '监管预警', check: false, list: [
-        //   {code: 'xxxxx', check: false, title: 'xxxxxxxxxx'},
-        // ]},
-        // {firstTitle: '产品预警', check: false, list: [
-        //   {code: 'xxxxx', check: false, title: 'xxxxxxxxxx'},
-        // ]},
-        {          firstTitle: '其他风险', check: false, list: [
-            { code: '590100', check: false, title: '其他风险类事件' },
-          ]        },
+        {
+          firstTitle: "其他风险",
+          check: false,
+          list: [{ code: "590100", check: false, title: "其他风险类事件" }]
+        }
       ],
-      file: '',
-      file1: '',
-      file2: '',
-       file3: '',
-    }
+      file: "",
+      file1: "",
+      file2: "",
+      file3: "",
+      risk_typeList: {
+        title: "",
+        parentEvent: "legislationEvent",
+        default: "请选择",
+        listWidth: 245,
+        nowSelectWidth: 145,
+        nowSelectHeight: 25,
+        nowSelectFontSize: 13,
+        list: [
+          "债务违约、合同失信、债务展期",
+          "评级下调、列入观察或负面类展望、推迟评级",
+          "欺诈造假",
+          "承诺失信",
+          "公司挪用资金、未按约定使用资金",
+          "暂停交易、退市",
+          "股权质押、冻结或爆仓",
+          "股份解禁或减持",
+          "证券价格异常波动",
+          "发生亏损",
+          "盈利能力下降",
+          "公司资金流动性不足或资金来源异常",
+          "资不抵债、资产负债率过高",
+          "资产重大减值、资产异常",
+          "财务造假、不透明，财务数据存在真实性问题",
+          "放弃债权和财产",
+          "对外借款或对外担保过多,存在代偿风险",
+          "重组失败、重组取消或重组存在问题",
+          "经营方针、主营业务、经营范围发生重大变化",
+          "对外投资失误、参与其他公司股权之争、抛售公司资产",
+          "虚假注资、抽逃资金、转移资产",
+          "国家或地方政府政策变动而造成影响",
+          "公司资产被查封、扣押、冻结、司法划转",
+          "公司经营出现问题、公司（项目）停产或半停产、业务减少；",
+          "公司发生减资、合并、分立、解散、破产",
+          "关联企业或人（实际控制人、控股股东、供应商、客户、被担保企业、其他关联企业）出现问题；",
+          "投诉和诉讼事件、经济纠纷和环保问题等公共纠纷",
+          "公司产品存在缺陷或存在问题",
+          "审批不通过事项或撤销公司某项经营资格",
+          "犯罪事件",
+          "公司违规或被问询",
+          "公司控制权斗争、实际控制人发生变动、公司性质变动、公司股东持有的股份被司法划转",
+          "处罚事件或问询事件",
+          "高管变动（异动）",
+          "员工（含高管）违规；",
+          "拖欠员工工资、大量辞工或员工大面积离职",
+          "公司项目发生延期、手续不全、陷入问题",
+          "项目产能未达到预期或情况备受质疑的",
+          "担保人或抵押物出现纠纷或问题",
+          "地震、水灾、火灾、恐怖袭击；通讯、电力中断；战争；",
+          "其他风险类事件"
+        ]
+      },
+      risk_codeList: [
+        { code: " ", title: "无" },
+        { code: "518", title: "产品预警" },
+        { code: "519", title: "监管预警" },
+        { code: "510101", title: "债务违约、合同失信、债务展期" },
+        { code: "510102", title: "评级下调、列入观察或负面类展望、推迟评级" },
+        { code: "510103", title: "欺诈造假" },
+        { code: "510104", title: "承诺失信" },
+        { code: "510105", title: "公司挪用资金、未按约定使用资金" },
+        { code: "511100", title: "暂停交易、退市" },
+        { code: "511101", title: "股权质押、冻结或爆仓" },
+        { code: "511102", title: "股份解禁或减持" },
+        { code: "511103", title: "证券价格异常波动" },
+        { code: "512100", title: "发生亏损" },
+        { code: "512101", title: "盈利能力下降" },
+        { code: "512102", title: "公司资金流动性不足或资金来源异常" },
+        { code: "512103", title: "资不抵债、资产负债率过高" },
+        { code: "512104", title: "资产重大减值、资产异常" },
+        { code: "512105", title: "财务造假、不透明，财务数据存在真实性问题" },
+        { code: "512106", title: "放弃债权和财产" },
+        { code: "512107", title: "对外借款或对外担保过多,存在代偿风险" },
+        { code: "513100", title: "重组失败、重组取消或重组存在问题" },
+        { code: "513101", title: "经营方针、主营业务、经营范围发生重大变化" },
+        {
+          code: "513102",
+          title: "对外投资失误、参与其他公司股权之争、抛售公司资产"
+        },
+        { code: "513103", title: "虚假注资、抽逃资金、转移资产" },
+        { code: "513104", title: "国家或地方政府政策变动而造成影响" },
+        { code: "513105", title: "公司资产被查封、扣押、冻结、司法划转" },
+        {
+          code: "513106",
+          title: "公司经营出现问题、公司（项目）停产或半停产、业务减少"
+        },
+        { code: "513107", title: "公司发生减资、合并、分立、解散、破产" },
+        {
+          code: "513108",
+          title:
+            "关联企业或人（实际控制人、控股股东、供应商、客户、被担保企业、其他关联企业）出现问题"
+        },
+        {
+          code: "513109",
+          title: "投诉和诉讼事件、经济纠纷和环保问题等公共纠纷"
+        },
+        { code: "513110", title: "公司产品存在缺陷或存在问题" },
+        { code: "513111", title: "审批不通过事项或撤销公司某项经营资格" },
+        { code: "513112", title: "犯罪事件" },
+        { code: "513113", title: "公司违规或被问询" },
+        {
+          code: "514100",
+          title:
+            "公司控制权斗争、实际控制人发生变动、公司性质变动、公司股东持有的股份被司法划转"
+        },
+        { code: "514101", title: "处罚事件或问询事件" },
+        { code: "514102", title: "高管变动（异动）" },
+        { code: "514103", title: "员工（含高管）违规" },
+        { code: "514104", title: "拖欠员工工资、大量辞工或员工大面积离职" },
+        { code: "515100", title: "公司项目发生延期、手续不全、陷入问题" },
+        { code: "515101", title: "项目产能未达到预期或情况备受质疑的" },
+        { code: "516100", title: "担保人或抵押物出现纠纷或问题" },
+        {
+          code: "517100",
+          title: "地震、水灾、火灾、恐怖袭击；通讯、电力中断；战争"
+        },
+        { code: "590100", title: "其他风险类事件" }
+      ]
+    };
   },
   components: {
     pullDownList,
     pagination,
-    datePicker,
+    datePicker
   },
   methods: {
+    saveItem(s) {
+      let m = Object.assign({}, s);
+      m.news_id = m.INFOCODE;
+      m.imp_score = m.starNumber;
+      delete m.CONTENT;
+      delete m.details;
+      delete m.SHOWTIME;
+      delete m.SOURCE;
+      delete m.TITLE;
+      delete m.URL;
+      delete m.INFOCODE;
+
+      this.$_axios
+        .get(this.updateUrl, {
+          params: m
+        })
+        .then(response => {
+          // 结果
+          const resultData = response.data.result;
+          console.log("dispose处理数据", resultData);
+          if (resultData.update_result === 1) {
+            alert("风险类型设置成功");
+          }
+        })
+        .catch(err => {
+          debugger;
+          console.log(err);
+        });
+    },
     handleFileChange(event) {
       // selectFileName: '上传文件',
-      this['file' + this.nowCategroy.toString()] = event.target.files[0];
-      if(this['file' + this.nowCategroy.toString()]){
-        const type = this['file' + this.nowCategroy.toString()].name.slice(-4).toLowerCase();
-        if(type != '.txt' && type != '.csv'){
-          this['file' + this.nowCategroy.toString()] = '';
-          event.target.value = '';
-          this['selectFileName' + this.nowCategroy.toString()] =  '选择文件';
-          alert('请输入txt或csv类型文件')
+      this["file" + this.nowCategroy.toString()] = event.target.files[0];
+      if (this["file" + this.nowCategroy.toString()]) {
+        const type = this["file" + this.nowCategroy.toString()].name
+          .slice(-4)
+          .toLowerCase();
+        if (type != ".txt" && type != ".csv") {
+          this["file" + this.nowCategroy.toString()] = "";
+          event.target.value = "";
+          this["selectFileName" + this.nowCategroy.toString()] = "选择文件";
+          alert("请输入txt或csv类型文件");
           return;
         }
-        event.target.value = '';
-        this['selectFileName' + this.nowCategroy.toString()] = this['file' + this.nowCategroy.toString()].name;
+        event.target.value = "";
+        this["selectFileName" + this.nowCategroy.toString()] = this[
+          "file" + this.nowCategroy.toString()
+        ].name;
       }
-      console.log('file' + this.nowCategroy.toString(), this['file' + this.nowCategroy.toString()])
+      console.log(
+        "file" + this.nowCategroy.toString(),
+        this["file" + this.nowCategroy.toString()]
+      );
     },
-    clearFile(){
-      // inputer 
-      this.$refs['inputer' + this.nowCategroy.toString()] = null;
-      this['selectFileName' + this.nowCategroy.toString()] = '选择文件';
-      this['file' + this.nowCategroy.toString()] = '';
+    clearFile() {
+      // inputer
+      this.$refs["inputer" + this.nowCategroy.toString()] = null;
+      this["selectFileName" + this.nowCategroy.toString()] = "选择文件";
+      this["file" + this.nowCategroy.toString()] = "";
     },
     // 打开重点关注池
     openAttentionPool() {
@@ -1069,113 +1436,73 @@ export default {
       this.categroyIndex = index;
       this.nowCategroy = index;
       if (!this.categroyIndex) {
-        this.nowCategroy = '';
+        this.nowCategroy = "";
       }
     },
-    yesquery(){},
+    legislationEvent(...data) {
+      this.risk_codeList.forEach((item, index) => {
+        if (data[0] == item.title) {
+          this.queryCondition1.risk_code = item.code;
+          return;
+        }
+      });
+    },
     query() {
-      this['isShowQueryResult' + this.nowCategroy.toString()] = true;
-      this['hasResultData' + this.nowCategroy.toString()] = false;
-      this['sendData' + this.nowCategroy.toString()] = JSON.parse(JSON.stringify(this['queryCondition' + this.nowCategroy.toString()]));
-      this['sendFile' + this.nowCategroy.toString()] = this['file' + this.nowCategroy.toString()];
-      for (let key in this['sendData' + this.nowCategroy.toString()]) {
-        if (this['sendData' + this.nowCategroy.toString()][key] === '') {
-          delete this['sendData' + this.nowCategroy.toString()][key];
+      this["isShowQueryResult" + this.nowCategroy.toString()] = true;
+      this["hasResultData" + this.nowCategroy.toString()] = false;
+      this["sendData" + this.nowCategroy.toString()] = JSON.parse(
+        JSON.stringify(this["queryCondition" + this.nowCategroy.toString()])
+      );
+      this["sendFile" + this.nowCategroy.toString()] = this[
+        "file" + this.nowCategroy.toString()
+      ];
+      for (let key in this["sendData" + this.nowCategroy.toString()]) {
+        if (this["sendData" + this.nowCategroy.toString()][key] === "") {
+          delete this["sendData" + this.nowCategroy.toString()][key];
         }
       }
-      console.log('sendData',this['sendData' + this.nowCategroy.toString()])
+      console.log("sendData", this["sendData" + this.nowCategroy.toString()]);
       let formData = new FormData();
-      for (let key in this['sendData' + this.nowCategroy.toString()]) {
-        if (this['sendData' + this.nowCategroy.toString()].hasOwnProperty(key)) {
-          formData.append(key, this['sendData' + this.nowCategroy.toString()][key]);
+      for (let key in this["sendData" + this.nowCategroy.toString()]) {
+        if (
+          this["sendData" + this.nowCategroy.toString()].hasOwnProperty(key)
+        ) {
+          formData.append(
+            key,
+            this["sendData" + this.nowCategroy.toString()][key]
+          );
         }
       }
       let config = {
         headers: {
-          'Content-Type': 'multipart/form-data'
+          "Content-Type": "multipart/form-data"
         }
-      }
-      this['sendFile' + this.nowCategroy.toString()] && formData.append('file', this['sendFile' + this.nowCategroy.toString()]);
-      this.$_axios.post(this.url.toUrl(), formData, config).then(response => {
-        // 显示查询结果
-        this['hasResultData' + this.nowCategroy.toString()] = true;
-        console.log('主页数据', response.data.result);
-        this['resultData' + this.nowCategroy.toString()] = response.data.result.Announce_List;
-        this['resultData' + this.nowCategroy.toString()].forEach(item => {
-          item.CONTENT = item.CONTENT.toString().replace(/\\r\\n\\r\\n/g, "<br>");
-          item.CONTENT = item.CONTENT.toString().replace(/\\r\\n/g, "<br>");
-        });
-        this['dataList' + this.nowCategroy.toString()] = JSON.parse(JSON.stringify(this['resultData' + this.nowCategroy.toString()]));
-        this['paginationData' + this.nowCategroy.toString()].page_Count = response.data.result.Page_Count;
-        this['paginationData' + this.nowCategroy.toString()].total_Count = response.data.result.Total_Count;
-        this['dataList' + this.nowCategroy.toString()].forEach(item => {
-          // item.SHOWTIME = item.SHOWTIME ? commonMethods.formatDateTime(new Date(item.SHOWTIME)) : '-';
-          if (item.imp_score) {
-            item.starNumber = parseInt(item.imp_score);
-          } else {
-            item.starNumber = 0;
-          }
-          if (item.CONTENT && item.CONTENT.length > 175) {
-            item.CONTENT = item.CONTENT.slice(0, 175) + '...';
-            item.details = '...详情';
-          }
-        });
-      }).catch(err => {
-        console.log(err);
-      });
-
-    },
-    query2(){
-      this['sendFile' + this.nowCategroy.toString()] = this['file' + this.nowCategroy.toString()];
-      if(this.file3=="" && this.stock_code==""){
-        alert("请输入或者上传证券代码！");
-      }
-      else{
-        this['isShowQueryResult' + this.nowCategroy.toString()] = true;
-        this['hasResultData' + this.nowCategroy.toString()] = false;
-        this.queryCondition3.keyword=this.keyword;
-        this.queryCondition3.stock_code=this.stock_code;
-        this['sendData' + this.nowCategroy.toString()] = JSON.parse(JSON.stringify(this['queryCondition' + this.nowCategroy.toString()]));
-        for (let key in this['sendData' + this.nowCategroy.toString()]) {
-          if (this['sendData' + this.nowCategroy.toString()][key] === '') {
-            delete this['sendData' + this.nowCategroy.toString()][key];
-          }
-        }
-        console.log('sendData',this['sendData' + this.nowCategroy.toString()])
-        let formData = new FormData();
-        for (let key in this['sendData' + this.nowCategroy.toString()]) {
-          if (this['sendData' + this.nowCategroy.toString()].hasOwnProperty(key)) {
-            formData.append(key, this['sendData' + this.nowCategroy.toString()][key]);
-          }
-        }
-        let config = {
-          headers: {
-            'Content-Type': 'multipart/form-data'
-          }
-        }
-        this['sendFile' + this.nowCategroy.toString()] && formData.append('file', this['sendFile' + this.nowCategroy.toString()]);
-        let url="http://10.25.24.51:10192/api/rest/nlp/risk/query_news_search";
-        this.$_axios.post(url.toUrl(), formData, config).then(response => {
+      };
+      this["sendFile" + this.nowCategroy.toString()] &&
+        formData.append("file", this["sendFile" + this.nowCategroy.toString()]);
+      this.$_axios
+        .post(this.url.toUrl(), formData, config)
+        .then(response => {
           // 显示查询结果
-          this.hasResultData3=true;
-          this.resultData3= response.data.result.Announce_List;
-          this.resultData3.forEach(item => {
-            item.CONTENT = item.CONTENT.toString().replace(/\\r\\n\\r\\n/g, "<br>");
+          this["hasResultData" + this.nowCategroy.toString()] = true;
+          console.log("主页数据", response.data.result);
+          this["resultData" + this.nowCategroy.toString()] =
+            response.data.result.Announce_List;
+          this["resultData" + this.nowCategroy.toString()].forEach(item => {
+            item.CONTENT = item.CONTENT.toString().replace(
+              /\\r\\n\\r\\n/g,
+              "<br>"
+            );
             item.CONTENT = item.CONTENT.toString().replace(/\\r\\n/g, "<br>");
           });
-          this.dataList3= JSON.parse(JSON.stringify(this.resultData3));
-          this.paginationData3.page_Count = response.data.result.Page_Count;
-          this.paginationData3.total_Count = response.data.result.Total_Count;
-          let code=response.data.result.Stock_Code;
-          if(code!="")
-          {
-            this.codeshow=true;
-            this.stock_codetext=code;
-          if (code.length > 175) {
-              this.stock_codetext= code.slice(0, 175) + '...';
-            }
-          }
-          this.dataList3.forEach(item => {
+          this["dataList" + this.nowCategroy.toString()] = JSON.parse(
+            JSON.stringify(this["resultData" + this.nowCategroy.toString()])
+          );
+          this["paginationData" + this.nowCategroy.toString()].page_Count =
+            response.data.result.Page_Count;
+          this["paginationData" + this.nowCategroy.toString()].total_Count =
+            response.data.result.Total_Count;
+          this["dataList" + this.nowCategroy.toString()].forEach(item => {
             // item.SHOWTIME = item.SHOWTIME ? commonMethods.formatDateTime(new Date(item.SHOWTIME)) : '-';
             if (item.imp_score) {
               item.starNumber = parseInt(item.imp_score);
@@ -1183,16 +1510,99 @@ export default {
               item.starNumber = 0;
             }
             if (item.CONTENT && item.CONTENT.length > 175) {
-              item.CONTENT = item.CONTENT.slice(0, 175) + '...';
-              item.details = '...详情';
+              item.CONTENT = item.CONTENT.slice(0, 175) + "...";
+              item.details = "...详情";
             }
           });
-          
-
-        }).catch(err => {
+        })
+        .catch(err => {
           console.log(err);
         });
+    },
+    query2() {
+      this["sendFile" + this.nowCategroy.toString()] = this[
+        "file" + this.nowCategroy.toString()
+      ];
+      if (this.file3 == "" && this.stock_code == "") {
+        alert("请输入或者上传证券代码！");
+      } else {
+        this["isShowQueryResult" + this.nowCategroy.toString()] = true;
+        this["hasResultData" + this.nowCategroy.toString()] = false;
+        this.queryCondition3.keyword = this.keyword;
+        this.queryCondition3.stock_code = this.stock_code;
+        this["sendData" + this.nowCategroy.toString()] = JSON.parse(
+          JSON.stringify(this["queryCondition" + this.nowCategroy.toString()])
+        );
+        for (let key in this["sendData" + this.nowCategroy.toString()]) {
+          if (this["sendData" + this.nowCategroy.toString()][key] === "") {
+            delete this["sendData" + this.nowCategroy.toString()][key];
+          }
         }
+        console.log("sendData", this["sendData" + this.nowCategroy.toString()]);
+        let formData = new FormData();
+        for (let key in this["sendData" + this.nowCategroy.toString()]) {
+          if (
+            this["sendData" + this.nowCategroy.toString()].hasOwnProperty(key)
+          ) {
+            formData.append(
+              key,
+              this["sendData" + this.nowCategroy.toString()][key]
+            );
+          }
+        }
+        let config = {
+          headers: {
+            "Content-Type": "multipart/form-data"
+          }
+        };
+        this["sendFile" + this.nowCategroy.toString()] &&
+          formData.append(
+            "file",
+            this["sendFile" + this.nowCategroy.toString()]
+          );
+        let url =
+          "http://10.25.24.51:10192/api/rest/nlp/risk/query_news_search";
+        this.$_axios
+          .post(url.toUrl(), formData, config)
+          .then(response => {
+            // 显示查询结果
+            this.hasResultData3 = true;
+            this.resultData3 = response.data.result.Announce_List;
+            this.resultData3.forEach(item => {
+              item.CONTENT = item.CONTENT.toString().replace(
+                /\\r\\n\\r\\n/g,
+                "<br>"
+              );
+              item.CONTENT = item.CONTENT.toString().replace(/\\r\\n/g, "<br>");
+            });
+            this.dataList3 = JSON.parse(JSON.stringify(this.resultData3));
+            this.paginationData3.page_Count = response.data.result.Page_Count;
+            this.paginationData3.total_Count = response.data.result.Total_Count;
+            let code = response.data.result.Stock_Code;
+            if (code != "") {
+              this.codeshow = true;
+              this.stock_codetext = code;
+              if (code.length > 175) {
+                this.stock_codetext = code.slice(0, 175) + "...";
+              }
+            }
+            this.dataList3.forEach(item => {
+              // item.SHOWTIME = item.SHOWTIME ? commonMethods.formatDateTime(new Date(item.SHOWTIME)) : '-';
+              if (item.imp_score) {
+                item.starNumber = parseInt(item.imp_score);
+              } else {
+                item.starNumber = 0;
+              }
+              if (item.CONTENT && item.CONTENT.length > 175) {
+                item.CONTENT = item.CONTENT.slice(0, 175) + "...";
+                item.details = "...详情";
+              }
+            });
+          })
+          .catch(err => {
+            console.log(err);
+          });
+      }
     },
     paginationSelect1(pageNumber) {
       this.paginationSelect(pageNumber);
@@ -1200,11 +1610,10 @@ export default {
     paginationSelect2(pageNumber) {
       this.paginationSelect(pageNumber);
     },
-        paginationSelect3(pageNumber) {
-      this.paginationSelect(pageNumber);
-    },
     paginationSelect(pageNumber) {
-      const sendData = JSON.parse(JSON.stringify(this['sendData' + this.nowCategroy.toString()]));
+      const sendData = JSON.parse(
+        JSON.stringify(this["sendData" + this.nowCategroy.toString()])
+      );
       sendData.page = pageNumber;
       let formData = new FormData();
       for (let key in sendData) {
@@ -1214,69 +1623,147 @@ export default {
       }
       let config = {
         headers: {
-          'Content-Type': 'multipart/form-data'
+          "Content-Type": "multipart/form-data"
+        }
+      };
+      this["sendFile" + this.nowCategroy.toString()] &&
+        formData.append("file", this["sendFile" + this.nowCategroy.toString()]);
+      console.log("sendData", sendData);
+      this.$_axios
+        .post(this.url.toUrl(), formData, config)
+        .then(response => {
+          // 显示查询结果
+          this["hasResultData" + this.nowCategroy.toString()] = true;
+          console.log("主页数据", response.data.result);
+          this["resultData" + this.nowCategroy.toString()] =
+            response.data.result.Announce_List;
+          this["resultData" + this.nowCategroy.toString()].forEach(item => {
+            item.CONTENT = item.CONTENT.toString().replace(
+              /\\r\\n\\r\\n/g,
+              "<br>"
+            );
+            item.CONTENT = item.CONTENT.toString().replace(/\\r\\n/g, "<br>");
+          });
+          this["dataList" + this.nowCategroy.toString()] = JSON.parse(
+            JSON.stringify(this["resultData" + this.nowCategroy.toString()])
+          );
+          this["dataList" + this.nowCategroy.toString()].forEach(item => {
+            // item.SHOWTIME = item.SHOWTIME ? commonMethods.formatDateTime(new Date(item.SHOWTIME)) : '-';
+            if (item.imp_score) {
+              item.starNumber = parseInt(item.imp_score);
+            } else {
+              item.starNumber = 0;
+            }
+            if (item.CONTENT && item.CONTENT.length > 175) {
+              item.CONTENT = item.CONTENT.slice(0, 175) + "...";
+              item.details = "...详情";
+            }
+          });
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+    paginationSelect3(pageNumber) {
+      const sendData = JSON.parse(
+        JSON.stringify(this["sendData" + this.nowCategroy.toString()])
+      );
+      sendData.page = pageNumber;
+      let formData = new FormData();
+      for (let key in sendData) {
+        if (sendData.hasOwnProperty(key)) {
+          formData.append(key, sendData[key]);
         }
       }
-      this['sendFile' + this.nowCategroy.toString()] && formData.append('file', this['sendFile' + this.nowCategroy.toString()]);
-      console.log('sendData', sendData);
-      this.$_axios.post(this.url.toUrl(), formData, config).then(response => {
-        // 显示查询结果
-        this['hasResultData' + this.nowCategroy.toString()] = true;
-        console.log('主页数据', response.data.result);
-        this['resultData' + this.nowCategroy.toString()] = response.data.result.Announce_List;
-        this['resultData' + this.nowCategroy.toString()].forEach(item => {
-          item.CONTENT = item.CONTENT.toString().replace(/\\r\\n\\r\\n/g, "<br>");
-          item.CONTENT = item.CONTENT.toString().replace(/\\r\\n/g, "<br>");
+      let config = {
+        headers: {
+          "Content-Type": "multipart/form-data"
+        }
+      };
+      // this['sendFile' + this.nowCategroy.toString()] && formData.append('file', this['sendFile' + this.nowCategroy.toString()]);
+      // console.log('sendData', sendData);
+      this["sendFile" + this.nowCategroy.toString()] &&
+        formData.append("file", this["sendFile" + this.nowCategroy.toString()]);
+      let url = "http://10.25.24.51:10192/api/rest/nlp/risk/query_news_search";
+      this.$_axios
+        .post(url.toUrl(), formData, config)
+        .then(response => {
+          // 显示查询结果
+          this["hasResultData" + this.nowCategroy.toString()] = true;
+          console.log("主页数据", response.data.result);
+          this["resultData" + this.nowCategroy.toString()] =
+            response.data.result.Announce_List;
+          this["resultData" + this.nowCategroy.toString()].forEach(item => {
+            item.CONTENT = item.CONTENT.toString().replace(
+              /\\r\\n\\r\\n/g,
+              "<br>"
+            );
+            item.CONTENT = item.CONTENT.toString().replace(/\\r\\n/g, "<br>");
+          });
+          this["dataList" + this.nowCategroy.toString()] = JSON.parse(
+            JSON.stringify(this["resultData" + this.nowCategroy.toString()])
+          );
+          this["dataList" + this.nowCategroy.toString()].forEach(item => {
+            // item.SHOWTIME = item.SHOWTIME ? commonMethods.formatDateTime(new Date(item.SHOWTIME)) : '-';
+            if (item.imp_score) {
+              item.starNumber = parseInt(item.imp_score);
+            } else {
+              item.starNumber = 0;
+            }
+            if (item.CONTENT && item.CONTENT.length > 175) {
+              item.CONTENT = item.CONTENT.slice(0, 175) + "...";
+              item.details = "...详情";
+            }
+          });
+        })
+        .catch(err => {
+          console.log(err);
         });
-        this['dataList' + this.nowCategroy.toString()] = JSON.parse(JSON.stringify(this['resultData' + this.nowCategroy.toString()]));
-        this['dataList' + this.nowCategroy.toString()].forEach(item => {
-          // item.SHOWTIME = item.SHOWTIME ? commonMethods.formatDateTime(new Date(item.SHOWTIME)) : '-';
-          if (item.imp_score) {
-            item.starNumber = parseInt(item.imp_score);
-          } else {
-            item.starNumber = 0;
-          }
-          if (item.CONTENT && item.CONTENT.length > 175) {
-            item.CONTENT = item.CONTENT.slice(0, 175) + '...';
-            item.details = '...详情';
-          }
-        });
-      }).catch(err => {
-        console.log(err);
-      });
     },
     details(item, index) {
-      if (item.details == '收起') {
-        item.details = '...详情';
-        item.CONTENT = item.CONTENT.slice(0, 220) + '...';
+      if (item.details == "收起") {
+        item.details = "...详情";
+        item.CONTENT = item.CONTENT.slice(0, 220) + "...";
       } else {
-        item.details = '收起';
-        item.CONTENT = this['resultData' + this.nowCategroy.toString()][index].CONTENT;
+        item.details = "收起";
+        item.CONTENT = this["resultData" + this.nowCategroy.toString()][
+          index
+        ].CONTENT;
       }
     },
     checkFinished(flag) {
-      this['isFinished' + this.nowCategroy.toString()] = flag;
-      this['queryCondition' + this.nowCategroy.toString()].finished = flag ? 1 : '';
+      this["isFinished" + this.nowCategroy.toString()] = flag;
+      this["queryCondition" + this.nowCategroy.toString()].finished = flag
+        ? 1
+        : "";
     },
     // 是否显示风险类别
     checkRiskType() {
-      this['isShowTypeList' + this.nowCategroy.toString()] = !this['isShowTypeList' + this.nowCategroy.toString()];
+      this["isShowTypeList" + this.nowCategroy.toString()] = !this[
+        "isShowTypeList" + this.nowCategroy.toString()
+      ];
       // isShowTypeBox
-      if (this['isShowTypeList' + this.nowCategroy.toString()]) {
-        this['isShowTypeBox' + this.nowCategroy.toString()] = true;
+      if (this["isShowTypeList" + this.nowCategroy.toString()]) {
+        this["isShowTypeBox" + this.nowCategroy.toString()] = true;
       } else {
-        this['isShowTypeBox' + this.nowCategroy.toString()] = false;
-        this['queryCondition' + this.nowCategroy.toString()].risk_code = '';
+        this["isShowTypeBox" + this.nowCategroy.toString()] = false;
+        this["queryCondition" + this.nowCategroy.toString()].risk_code = "";
       }
     },
     // 条件 选择重要级 星级
     conditionStar(number) {
-      if (this['conditionStarNumber' + this.nowCategroy.toString()].length === 1 && number === 1) {
-        this['conditionStarNumber' + this.nowCategroy.toString()] = [];
-        this['queryCondition' + this.nowCategroy.toString()].imp_score = '';
+      if (
+        this["conditionStarNumber" + this.nowCategroy.toString()].length ===
+        1 &&
+        number === 1
+      ) {
+        this["conditionStarNumber" + this.nowCategroy.toString()] = [];
+        this["queryCondition" + this.nowCategroy.toString()].imp_score = "";
       } else {
-        this['conditionStarNumber' + this.nowCategroy.toString()] = [...Array(number).keys()];
-        this['queryCondition' + this.nowCategroy.toString()].imp_score = number;
+        this["conditionStarNumber" + this.nowCategroy.toString()] = [
+          ...Array(number).keys()
+        ];
+        this["queryCondition" + this.nowCategroy.toString()].imp_score = number;
       }
     },
     // 选择重要级 星级
@@ -1287,40 +1774,58 @@ export default {
         risk_code: item.risk_code,
         is_favorite: item.is_favorite,
         finished: item.finished,
-        news_type_fk_id: '',
-        user: 'zhangxx',
+        news_type_fk_id: "",
+        user: "zhangxx"
       };
       for (let key in sendData) {
-        if (sendData[key] === '') {
+        if (sendData[key] === "") {
           delete sendData[key];
         }
       }
       sendData.imp_score = number;
-      if (this['dataList' + this.nowCategroy.toString()][index].starNumber === 1 && number === 1) {
-        sendData.imp_score = '';
+      if (
+        this["dataList" + this.nowCategroy.toString()][index].starNumber ===
+        1 &&
+        number === 1
+      ) {
+        sendData.imp_score = "";
       } else {
         sendData.imp_score = number;
       }
-      this.$_axios.get(this.updateUrl, {
-        params: sendData
-      }).then(response => {
-        // 结果
-        const resultData = response.data.result;
-        console.log('dispose处理数据', resultData);
-        if (resultData.update_result === 1) {
-          let content = this['dataList' + this.nowCategroy.toString()][index].CONTENT + ' ';
-          if (this['dataList' + this.nowCategroy.toString()][index].starNumber === 1 && number === 1) {
-            this['dataList' + this.nowCategroy.toString()][index].starNumber = 0;
-          } else {
-            this['dataList' + this.nowCategroy.toString()][index].starNumber = number;
+      this.$store.startnumber = sendData.imp_score;
+      this.$_axios
+        .get(this.updateUrl, {
+          params: sendData
+        })
+        .then(response => {
+          // 结果
+          const resultData = response.data.result;
+          console.log("dispose处理数据", resultData);
+          if (resultData.update_result === 1) {
+            let content =
+              this["dataList" + this.nowCategroy.toString()][index].CONTENT +
+              " ";
+            if (
+              this["dataList" + this.nowCategroy.toString()][index]
+                .starNumber === 1 &&
+              number === 1
+            ) {
+              this["dataList" + this.nowCategroy.toString()][
+                index
+              ].starNumber = 0;
+            } else {
+              this["dataList" + this.nowCategroy.toString()][
+                index
+              ].starNumber = number;
+            }
+            this["dataList" + this.nowCategroy.toString()][
+              index
+            ].CONTENT = content;
           }
-          this['dataList' + this.nowCategroy.toString()][index].CONTENT = content;
-        }
-      }).catch(err => {
-        console.log(err);
-      });
-
-
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     // 收藏
     favorite(item, index, flag) {
@@ -1331,33 +1836,40 @@ export default {
         risk_code: item.risk_code,
         imp_score: item.imp_score,
         finished: item.finished,
-        news_type_fk_id: '',
-        user: 'zhangxx',
+        news_type_fk_id: "",
+        user: "zhangxx"
       };
       for (let key in sendData) {
-        if (sendData[key] === '') {
+        if (sendData[key] === "") {
           delete sendData[key];
         }
       }
+
       if (flag) {
-        sendData.is_favorite = '1';
+        sendData.is_favorite = "1";
       } else {
-        sendData.is_favorite = '';
+        sendData.is_favorite = "";
       }
-      console.log('item', item)
-      console.log('sendData', sendData)
-      this.$_axios.get(this.updateUrl, {
-        params: sendData
-      }).then(response => {
-        // 结果
-        const resultData = response.data.result;
-        console.log('dispose处理数据', resultData);
-        if (resultData.update_result === 1) {
-          this['dataList' + this.nowCategroy.toString()][index].is_favorite = flag ? '1' : '';
-        }
-      }).catch(err => {
-        console.log(err);
-      });
+      sendData.imp_score = this.$store.startnumber;
+      console.log("item", item);
+      console.log("sendData", sendData);
+      this.$_axios
+        .get(this.updateUrl, {
+          params: sendData
+        })
+        .then(response => {
+          // 结果
+          const resultData = response.data.result;
+          console.log("dispose处理数据", resultData);
+          if (resultData.update_result === 1) {
+            this["dataList" + this.nowCategroy.toString()][
+              index
+            ].is_favorite = flag ? "1" : "";
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     // 处理
     dispose(item, index, flag) {
@@ -1368,33 +1880,39 @@ export default {
         risk_code: item.risk_code,
         imp_score: item.imp_score,
         is_favorite: item.is_favorite,
-        news_type_fk_id: '',
-        user: 'zhangxx',
+        news_type_fk_id: "",
+        user: "zhangxx"
       };
       for (let key in sendData) {
-        if (sendData[key] === '') {
+        if (sendData[key] === "") {
           delete sendData[key];
         }
       }
+      sendData.imp_score = this.$store.startnumber;
       if (flag) {
-        sendData.finished = '1';
+        sendData.finished = "1";
       } else {
-        sendData.finished = '';
+        sendData.finished = "";
       }
-      console.log('item', item)
-      console.log('sendData', sendData)
-      this.$_axios.get(this.updateUrl, {
-        params: sendData
-      }).then(response => {
-        // 结果
-        const resultData = response.data.result;
-        console.log('dispose处理数据', resultData);
-        if (resultData.update_result === 1) {
-          this['dataList' + this.nowCategroy.toString()][index].finished = flag ? '1' : '';
-        }
-      }).catch(err => {
-        console.log(err);
-      });
+      console.log("item", item);
+      console.log("sendData", sendData);
+      this.$_axios
+        .get(this.updateUrl, {
+          params: sendData
+        })
+        .then(response => {
+          // 结果
+          const resultData = response.data.result;
+          console.log("dispose处理数据", resultData);
+          if (resultData.update_result === 1) {
+            this["dataList" + this.nowCategroy.toString()][
+              index
+            ].finished = flag ? "1" : "";
+          }
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     startDateEvent(...data) {
       this.queryCondition.from_date = data[0];
@@ -1408,7 +1926,7 @@ export default {
       this.queryCondition2.from_date = data[0];
       this.startDatePicker2.defaultDate = new Date(data[0]);
     },
-     startDateEvent3(...data) {
+    startDateEvent3(...data) {
       this.queryCondition3.from_date = data[0];
       this.startDatePicker3.defaultDate = new Date(data[0]);
     },
@@ -1434,28 +1952,31 @@ export default {
     // 点击一级风险类型
     checkFirstType(item, index) {
       item.check = !item.check;
-      if (item.type === '全部') {
-
-        this['firstTypeList' + this.nowCategroy.toString()].forEach(val => {
+      if (item.type === "全部") {
+        this["firstTypeList" + this.nowCategroy.toString()].forEach(val => {
           val.check = item.check;
         });
-        this['secondTypeList' + this.nowCategroy.toString()].forEach(firstVal => {
-          firstVal.check = item.check;
-          firstVal.list.forEach(secondVal => {
-            secondVal.check = item.check;
-          });
-        });
-      } else {
-        this['secondTypeList' + this.nowCategroy.toString()].forEach(firstVal => {
-          if (item.type === firstVal.firstTitle) {
+        this["secondTypeList" + this.nowCategroy.toString()].forEach(
+          firstVal => {
             firstVal.check = item.check;
             firstVal.list.forEach(secondVal => {
               secondVal.check = item.check;
             });
           }
-        });
+        );
+      } else {
+        this["secondTypeList" + this.nowCategroy.toString()].forEach(
+          firstVal => {
+            if (item.type === firstVal.firstTitle) {
+              firstVal.check = item.check;
+              firstVal.list.forEach(secondVal => {
+                secondVal.check = item.check;
+              });
+            }
+          }
+        );
         if (!item.check) {
-          this['firstTypeList' + this.nowCategroy.toString()][0].check = false;
+          this["firstTypeList" + this.nowCategroy.toString()][0].check = false;
         } else {
           this.checkAll();
         }
@@ -1465,45 +1986,53 @@ export default {
     checkSecondType(item, index) {
       item.check = !item.check;
       if (!item.check) {
-        this['firstTypeList' + this.nowCategroy.toString()][0].check = false;
-        this['secondTypeList' + this.nowCategroy.toString()].forEach(firstVal => {
-          let checkNull = firstVal.list.every(secondVal => {
-            return secondVal.check === false;
-          });
-          if (checkNull) {
-            firstVal.check = false;
-            this['firstTypeList' + this.nowCategroy.toString()].forEach(val => {
-              if (val.type === firstVal.firstTitle) {
-                val.check = false;
-              }
+        this["firstTypeList" + this.nowCategroy.toString()][0].check = false;
+        this["secondTypeList" + this.nowCategroy.toString()].forEach(
+          firstVal => {
+            let checkNull = firstVal.list.every(secondVal => {
+              return secondVal.check === false;
             });
+            if (checkNull) {
+              firstVal.check = false;
+              this["firstTypeList" + this.nowCategroy.toString()].forEach(
+                val => {
+                  if (val.type === firstVal.firstTitle) {
+                    val.check = false;
+                  }
+                }
+              );
+            }
           }
-        });
+        );
       } else {
         this.checkAll();
       }
     },
     // 点击一级或者二级判断是否全部选中了
     checkAll() {
-      let tempFirstArr = JSON.parse(JSON.stringify(this['firstTypeList' + this.nowCategroy.toString()]));
+      let tempFirstArr = JSON.parse(
+        JSON.stringify(this["firstTypeList" + this.nowCategroy.toString()])
+      );
       tempFirstArr.shift();
       let isFirstAll = tempFirstArr.every(item => {
         return item.check === true;
       });
-      let isSecondAll = this['secondTypeList' + this.nowCategroy.toString()].every(item => {
+      let isSecondAll = this[
+        "secondTypeList" + this.nowCategroy.toString()
+      ].every(item => {
         let isCheck = item.list.every(secondItem => {
           return secondItem.check === true;
         });
         return isCheck === true;
       });
-      console.log(1, isFirstAll, 2, isSecondAll)
+      console.log(1, isFirstAll, 2, isSecondAll);
       if (isFirstAll && isSecondAll) {
-        this['firstTypeList' + this.nowCategroy.toString()][0].check = true;
+        this["firstTypeList" + this.nowCategroy.toString()][0].check = true;
       }
     },
     confirmType() {
       const tempArr = [];
-      this['secondTypeList' + this.nowCategroy.toString()].forEach(firstVal => {
+      this["secondTypeList" + this.nowCategroy.toString()].forEach(firstVal => {
         firstVal.list.forEach(secondVal => {
           if (secondVal.check) {
             tempArr.push(secondVal.code);
@@ -1511,20 +2040,23 @@ export default {
         });
       });
       this.resetType();
-      this['queryCondition' + this.nowCategroy.toString()].risk_code = tempArr.join(',');
-      this['isShowTypeBox' + this.nowCategroy.toString()] = false;
+      this[
+        "queryCondition" + this.nowCategroy.toString()
+      ].risk_code = tempArr.join(",");
+      this["isShowTypeBox" + this.nowCategroy.toString()] = false;
+      this["isShowTypeList" + this.nowCategroy.toString()] = false;
     },
     resetType() {
-      this['firstTypeList' + this.nowCategroy.toString()].forEach(val => {
+      this["firstTypeList" + this.nowCategroy.toString()].forEach(val => {
         val.check = false;
       });
-      this['secondTypeList' + this.nowCategroy.toString()].forEach(firstVal => {
+      this["secondTypeList" + this.nowCategroy.toString()].forEach(firstVal => {
         firstVal.check = false;
         firstVal.list.forEach(secondVal => {
           secondVal.check = false;
         });
       });
-      this['queryCondition' + this.nowCategroy.toString()].risk_code = '';
+      this["queryCondition" + this.nowCategroy.toString()].risk_code = "";
     }
   },
   mounted() {
@@ -1534,16 +2066,32 @@ export default {
     this.secondTypeList1 = JSON.parse(JSON.stringify(this.secondTypeList));
     this.secondTypeList2 = JSON.parse(JSON.stringify(this.secondTypeList));
     this.secondTypeList3 = JSON.parse(JSON.stringify(this.secondTypeList));
-    this.queryCondition.from_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
-    this.queryCondition1.from_date = commonMethods.formatDateTime2(this.startDatePicker1.defaultDate);
-    this.queryCondition2.from_date = commonMethods.formatDateTime2(this.startDatePicker2.defaultDate);
-    this.queryCondition3.from_date = commonMethods.formatDateTime2(this.startDatePicker3.defaultDate);
-    this.queryCondition.to_date = commonMethods.formatDateTime2(this.endDatePicker.defaultDate);
-    this.queryCondition1.to_date = commonMethods.formatDateTime2(this.endDatePicker.defaultDate);
-    this.queryCondition2.to_date = commonMethods.formatDateTime2(this.endDatePicker.defaultDate);
-    this.queryCondition3.to_date = commonMethods.formatDateTime2(this.endDatePicker.defaultDate);
+    this.queryCondition.from_date = commonMethods.formatDateTime2(
+      this.startDatePicker.defaultDate
+    );
+    this.queryCondition1.from_date = commonMethods.formatDateTime2(
+      this.startDatePicker1.defaultDate
+    );
+    this.queryCondition2.from_date = commonMethods.formatDateTime2(
+      this.startDatePicker2.defaultDate
+    );
+    this.queryCondition3.from_date = commonMethods.formatDateTime2(
+      this.startDatePicker3.defaultDate
+    );
+    this.queryCondition.to_date = commonMethods.formatDateTime2(
+      this.endDatePicker.defaultDate
+    );
+    this.queryCondition1.to_date = commonMethods.formatDateTime2(
+      this.endDatePicker.defaultDate
+    );
+    this.queryCondition2.to_date = commonMethods.formatDateTime2(
+      this.endDatePicker.defaultDate
+    );
+    this.queryCondition3.to_date = commonMethods.formatDateTime2(
+      this.endDatePicker.defaultDate
+    );
   }
-}
+};
 </script>
 
 <style lang="less" scoped>
@@ -1560,7 +2108,7 @@ export default {
   }
   span.active {
     // background-color: rgba(0, 114, 255, 0.5);
-    background-color: #B50229;
+    background-color: #b50229;
     font-size: 17px;
   }
 }
@@ -1587,7 +2135,7 @@ export default {
     .nowConditionStar {
       position: absolute;
       top: -1px;
-      left: 56px;
+      left: 96px;
       pointer-events: none;
     }
   }
@@ -1622,20 +2170,20 @@ export default {
       opacity: 0;
       z-index: -2;
     }
-    label{
+    label {
       float: left;
       // width: 200px;
       cursor: pointer;
     }
     .clearFile,
-    .fileExportBtn{
-      background-color: #EAEAEA;
+    .fileExportBtn {
+      background-color: #eaeaea;
       padding: 5px;
       border: 1px solid #797979;
       border-radius: 5px;
       cursor: pointer;
     }
-    .fileExportBtn{
+    .fileExportBtn {
       pointer-events: none;
     }
   }
@@ -1643,6 +2191,9 @@ export default {
     float: left;
     span {
       cursor: pointer;
+    }
+    a {
+      color: #000;
     }
   }
   .queryBtn {
@@ -1795,7 +2346,7 @@ export default {
       .nowStarNumber {
         position: absolute;
         top: 50%;
-        left: 13px;
+        left: 26px;
         transform: translate(0px, -10px);
         pointer-events: none;
         span {
@@ -1821,23 +2372,29 @@ export default {
       border-radius: 5px;
       background-color: #f3f3f3;
     }
-    th:nth-child(1){
+    th:nth-child(1) {
       width: 75px;
     }
-    th:nth-child(2){
+    th:nth-child(2) {
       width: 165px;
     }
-    th:nth-child(4){
+    th:nth-child(3) {
+      width: 260px;
+    }
+    th:nth-child(4) {
       width: 75px;
     }
-    th:nth-child(5){
-      width: 75px;
+    th:nth-child(5) {
+      width: 180px;
     }
-    th:nth-child(6){
+    th:nth-child(6) {
       width: 95px;
     }
-    th:nth-child(7){
-      width: 150px;
+    th:nth-child(7) {
+      width: 100px;
+    }
+    th:nth-child(8) {
+      width: 140px;
     }
     .tableTh:nth-child(1) {
       width: 75px;
@@ -1848,14 +2405,14 @@ export default {
     .tableTh:nth-child(3) {
       width: 90px;
     }
-    .tableTh:nth-child(4){
+    .tableTh:nth-child(4) {
       width: 120px;
     }
-    .tableTh:nth-child(5){
-      width: 350px;
+    .tableTh:nth-child(5) {
+      width: 250px;
     }
-    .tableTh:nth-child(7){
-      width: 75px;
+    .tableTh:nth-child(7) {
+      width: 160px;
     }
     .tableTh:nth-child(6),
     .tableTh:nth-child(8) {
@@ -1864,41 +2421,69 @@ export default {
   }
 }
 
-
-.height{
-  height:150px!important;
+.height {
+  height: 150px !important;
 }
 
-.ml20{
-      width: 300px;
-    float: left;
-    margin-left: 40px;
+.ml20 {
+  width: 300px;
+  float: left;
+  margin-left: 40px;
 }
 
-.input{
-  width:200px;
+.input {
+  width: 200px;
 }
 
-.yesBtn{
-      position: absolute;
-    left: 760px;
-    top: 113px;
-      width: 75px;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    cursor: pointer;
-    border: 1px solid #797979;
-    background-color: #fff;
-    border-radius: 5px;
+.yesBtn {
+  position: absolute;
+  left: 760px;
+  top: 113px;
+  width: 75px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid #797979;
+  background-color: #fff;
+  border-radius: 5px;
 }
 
-.codespan{
+.codespan {
   width: 350px;
-    position: absolute;
-    left: 820px;
-    top: 10px;
-    word-break: break-all;
-    word-wrap: break-word;
+  position: absolute;
+  left: 820px;
+  top: 10px;
+  word-break: break-all;
+  word-wrap: break-word;
+}
+
+.queryBtn {
+  width: 75px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid #797979;
+  background-color: #fff;
+  border-radius: 5px;
+  margin-top: -3px;
+}
+
+.input {
+  width: 130px;
+  height: 25px;
+  border: 1px solid #797979;
+}
+
+.mtt {
+  margin-top: 40px !important;
+  margin-left: 60px !important;
+}
+.floatLeft {
+  margin-left: 20px;
+}
+.a {
+  color: blue;
 }
 </style>

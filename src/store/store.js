@@ -17,7 +17,8 @@ export default new Vuex.Store({
     codeDataList_F: [],
     // 基金情况-基金列表
     fundList: [],
-    
+    startnumber: "",
+
   },
-  
+
 })

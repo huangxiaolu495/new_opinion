@@ -1,10 +1,7 @@
 <template>
   <div class="userSystemPage clearFloat">
     <div class="sidebarTab">
-      <p  v-for="(item, index) of sidebarTabData" 
-          @click="switchModule(item.module)"
-          :class="{active: isShowModule == item.module}" 
-          :key="index">{{item.title}}</p>
+      <p v-for="(item, index) of sidebarTabData" @click="switchModule(item.module)" :class="{active: isShowModule == item.module}" :key="index">{{item.title}}</p>
     </div>
     <div class="contentBox">
       <div v-if="isShowModule === 'user-defined'" class="clearFloat">
@@ -47,11 +44,12 @@
               </div>
             </EasyScrollbar>
           </div>
-          <div class="right floatLeft">
+          <div v-if="isShowSeeModule" class="right floatLeft">
             <div class="top">
               <span>板块名称：</span>
               <input v-model="nowUpdateModuleName" @input="inputEvent" type="text" :placeholder="nowSeeModule">
               <span @click="updateModuleName" class="updateModuleName">更新板块名</span>
+              <span @click="isShowSeeModule = false" class="close">×</span>
             </div>
             <div class="bottom">
               <span @click="emptyModulesInfo">清空</span>
@@ -83,7 +81,7 @@
                   </div>
                 </div>
               </EasyScrollbar>
-              
+
             </div>
           </div>
         </div>
@@ -127,19 +125,26 @@
                             <th v-for="(item, index) of securitiesImportResult.th" :key="index">{{item}}</th>
                           </tr>
                           <tr v-for="(item, index) of securitiesImportResult.tr" :key="index">
-                            <td><span v-if="index === 0">匹配列表</span><span v-else></span></td>
+                            <td>
+                              <span v-if="index === 0">匹配列表</span>
+                              <span v-else></span>
+                            </td>
                             <td>{{item.code}}</td>
                             <td>{{item.name}}</td>
                           </tr>
                           <tr v-for="(item, index) of securitiesImportResult.tr2" :key="index">
-                            <td><span v-if="index === 0">未匹配列表</span><span v-else></span></td>
+                            <td>
+                              <span v-if="index === 0">未匹配列表</span>
+                              <span v-else></span>
+                            </td>
                             <td>{{item.code}}</td>
                             <td>{{item.name}}</td>
                           </tr>
                         </table>
                         <div class="matchcountBottom">
-                          匹配代码列表 <span>{{securitiesImportResult.matchcountNumber}}</span> 条，
-                          未匹配代码列表 <span>{{securitiesImportResult.unmatchlistNumber}}</span> 条
+                          匹配代码列表
+                          <span>{{securitiesImportResult.matchcountNumber}}</span> 条， 未匹配代码列表
+                          <span>{{securitiesImportResult.unmatchlistNumber}}</span> 条
                         </div>
                       </div>
                     </div>
@@ -173,10 +178,7 @@
                     <div v-show="isShowsearchResultList">
                       <div v-if="hasSearchResultList">
                         <ul class="clearFloat">
-                          <li v-for="(item, index) of searchResultList" 
-                              :key="index" 
-                              @click="moduleCheck(item)" 
-                              :class="{oneLine: oneLine}" class="floatLeft searchResultList">
+                          <li v-for="(item, index) of searchResultList" :key="index" @click="moduleCheck(item)" :class="{oneLine: oneLine}" class="floatLeft searchResultList">
                             <span class="checkIconBox">
                               <i v-if="item.check" class="iconfont icon-queren"></i>
                             </span>
@@ -207,7 +209,8 @@
         </div>
       </div>
     </div>
-    <span @click="closePage" class="closeBtn">×</span>
+    <!-- <span @click="closePage" class="closeBtn">×</span> -->
+    <span onclick="window.history.go(-1)" class="closeBtn">×</span>
   </div>
 </template>
 
@@ -216,21 +219,22 @@ import commonMethods from '@/common/common.js'
 import pullDownList from '@/components/common/pullDownList'
 import pagination from '@/components/common/pagination'
 export default {
-  data(){
-    return{
-      myBarOption:{
-        barColor:"red"
+  data() {
+    return {
+      myBarOption: {
+        barColor: "red"
       },
       isShowModule: 'user-defined',
       isShowAddBox: false,
       oneLine: false,
+      isShowSeeModule: false,
       nowTabIndex: 0,
       nowAddModuleName: '',
       placeholderList: '例如：\n000000\n000001\n000002',
       textareaVlaue: '',
       sidebarTabData: [
-        {module: 'user-defined', title: '自定义板块管理'},
-        {module: 'securitiesImport', title: '证券导入'},
+        { module: 'user-defined', title: '自定义板块管理' },
+        { module: 'securitiesImport', title: '证券导入' },
       ],
       paginationData: {
         parentEvent: 'paginationSelect',
@@ -238,15 +242,15 @@ export default {
         total_Count: 0,
         current: 1
       },
-      modulesDataList:[],
-      seeModuleData:{
+      modulesDataList: [],
+      seeModuleData: {
         th: ['证券代码', '证券名称', '交易市场'],
         tr: [
           // {证券代码: '835364', 证券名称: '德善药业', 交易市场: '交易市场a'}
         ]
       },
       impotModuleName: '',
-      selectImpotModule:{
+      selectImpotModule: {
         title: '请选择要导入的板块：',
         parentEvent: 'impotModuleEvent',
         default: '请选择',
@@ -254,7 +258,7 @@ export default {
         nowSelectWidth: 145,
         nowSelectHeight: 25,
         nowSelectFontSize: 13,
-        list:[
+        list: [
           '板块一',
           '板块二'
         ]
@@ -262,7 +266,7 @@ export default {
       nowSeeModule: '',
       nowUpdateModuleName: '',
       nowImportWay: '手工输入',
-      importWay:{
+      importWay: {
         title: '导入方式：',
         parentEvent: 'importWayEvent',
         default: '手工输入',
@@ -270,12 +274,12 @@ export default {
         nowSelectWidth: 145,
         nowSelectHeight: 25,
         nowSelectFontSize: 13,
-        list:[
+        list: [
           '手工输入',
           '多项选择'
         ]
       },
-      importWayType:{
+      importWayType: {
         title: '类型：',
         parentEvent: 'importWayTypeEvent',
         default: '股票',
@@ -283,7 +287,7 @@ export default {
         nowSelectWidth: 145,
         nowSelectHeight: 25,
         nowSelectFontSize: 13,
-        list:[
+        list: [
           '股票',
           '债券',
           '基金',
@@ -291,8 +295,8 @@ export default {
         ]
       },
       codetype: 'S',
-      securitiesImportResult:{
-        th: ['类型','证券代码', '证券名称'],
+      securitiesImportResult: {
+        th: ['类型', '证券代码', '证券名称'],
         tr: [
           // {title: '匹配列表', code: '835364', name: '德善药业'},
         ],
@@ -310,19 +314,19 @@ export default {
       ]
     }
   },
-  components:{
+  components: {
     pullDownList,
     pagination,
   },
-  methods:{
+  methods: {
     // 关闭
-    closePage(){
+    closePage() {
       this.$store.state.isShowUserSystem = false;
     },
     // 切换tab
-    switchModule(nowModule){
+    switchModule(nowModule) {
       this.isShowModule = nowModule;
-      if(nowModule !== 'user-defined'){
+      if (nowModule !== 'user-defined') {
         this.nowImportWay = '手工输入';
         this.impotModuleName = '';
         this.moduleInit();
@@ -330,27 +334,27 @@ export default {
         this.selectImpotModule.list = this.modulesDataList.map(item => {
           return item.title;
         });
-      } else{
+      } else {
         this.nowSeeModule = '';
       }
     },
     // 显示添加模块Box
-    showAddBox(flag){
+    showAddBox(flag) {
       this.isShowAddBox = flag;
-      if(!flag){
+      if (!flag) {
         this.nowAddModuleName = '';
       }
     },
-    inputEvent(){
+    inputEvent() {
       this.nowAddModuleName = this.checkName(this.nowAddModuleName.trim());
       this.nowUpdateModuleName = this.checkName(this.nowUpdateModuleName.trim());
       this.keyword = this.checkName(this.keyword.trim());
     },
     // 添加模块提交
-    addModuleSubmit(){
+    addModuleSubmit() {
       console.log('提交')
       // this.nowAddModuleName
-      if(!this.nowAddModuleName) return;
+      if (!this.nowAddModuleName) return;
       const url = 'http://10.25.24.51:10189/api/risk/sector_set/insert'
       const sendData = {
         userid: 'risk',
@@ -359,7 +363,7 @@ export default {
       this.$_axios.get(url, {
         params: sendData
       }).then((response) => {
-        if(response.data.msg === 'insert success' && response.data.code == '0'){
+        if (response.data.msg === 'insert success' && response.data.code == '0') {
           this.nowAddModuleName = '';
           // 重新渲染已有板块
           this.moduleInit();
@@ -367,15 +371,15 @@ export default {
           this.isShowAddBox = false;
         }
       }).catch((err) => {
-        
+
       });
     },
     // 删除模块
-    deleteModules(){
+    deleteModules() {
       const url = 'http://10.25.24.51:10189/api/risk/sector_set/delete'
       const tempArr = [];
       this.modulesDataList.map(item => {
-        if(item.check){
+        if (item.check) {
           tempArr.push(item.title);
         }
       });
@@ -383,50 +387,55 @@ export default {
         userid: 'risk',
         sectorname: tempArr.join(',')
       }
+      if(!tempArr.length){
+        alert('没有选择要删除的模块');
+        return;
+      }
       console.log(tempArr.join(','))
       this.$_axios.get(url, {
         params: sendData
       }).then((response) => {
-        if(response.data.code == '0' && response.data.msg == 'delete success'){
+        if (response.data.code == '0' && response.data.msg == 'delete success') {
           alert('删除成功')
           // 重新渲染已有板块
           this.moduleInit();
         }
       }).catch((err) => {
-        
+
       });
     },
     // 选择模块
-    moduleCheck(item){
+    moduleCheck(item) {
       item.check = !item.check;
     },
     // 全选模块
-    allCheck(){
+    allCheck() {
       this.modulesDataList.forEach(item => {
         item.check = true;
       });
     },
     // 反选模块
-    reverseCheck(){
+    reverseCheck() {
       this.modulesDataList.forEach(item => {
         item.check = !item.check;
       });
     },
     // 查看板块
-    seeModule(modulename){
+    seeModule(modulename) {
       const url = 'http://10.25.24.51:10189/api/risk/sector_set/detail'
       const sendData = {
         userid: 'risk',
         action: 'query',
         sector: modulename,
       }
+      this.isShowSeeModule = true;
       // this.nowSeeModule = '';
       this.$_axios.get(url, {
         params: sendData
       }).then((response) => {
         console.log(response.data)
         this.nowSeeModule = modulename;
-        if(response.data.code == '0' && response.data.msg == 'query success'){
+        if (response.data.code == '0' && response.data.msg == 'query success') {
           this.seeModuleData.tr = response.data.result.result.map(item => {
             const tempItem = JSON.parse(JSON.stringify(item));
             tempItem.check = false;
@@ -435,37 +444,42 @@ export default {
         }
         console.log(this.seeModuleData.tr)
       }).catch((err) => {
-        
+
       });
     },
     // 更新板块名
-    updateModuleName(){
+    updateModuleName() {
       // this.nowUpdateModuleName
-      // if(!this.nowSeeModule || !this.nowUpdateModuleName) return;
-      const url = 'http://10.25.24.51:10189/api/risk/sector_set/detail'
-      const sendData = {
-        userid: 'risk',
-        action: 'update',
-        sector: this.nowSeeModule,
-        new_sector: this.nowUpdateModuleName
+      // if (!this.nowSeeModule || !this.nowUpdateModuleName) return;
+      if (this.nowUpdateModuleName == "") {
+        alert("请输入板块名");
       }
-      console.log('sendData', sendData)
-      this.$_axios.get(url, {
-        params: sendData
-      }).then((response) => {
-        console.log(response.data)
-        if(response.data.code == '0'){
-          this.nowSeeModule = this.nowUpdateModuleName;
-          this.nowUpdateModuleName = '';
-          this.moduleInit();
+      else {
+        const url = 'http://10.25.24.51:10189/api/risk/sector_set/detail'
+        const sendData = {
+          userid: 'risk',
+          action: 'update',
+          sector: this.nowSeeModule,
+          new_sector: this.nowUpdateModuleName
         }
-      }).catch((err) => {
-        
-      });
+        console.log('sendData', sendData)
+        this.$_axios.get(url, {
+          params: sendData
+        }).then((response) => {
+          console.log(response.data)
+          if (response.data.code == '0') {
+            this.nowSeeModule = this.nowUpdateModuleName;
+            this.nowUpdateModuleName = '';
+            this.moduleInit();
+          }
+        }).catch((err) => {
+
+        });
+      }
     },
     // 清空板块信息
-    emptyModulesInfo(){
-      if(!this.nowSeeModule) return;
+    emptyModulesInfo() {
+      if (!this.nowSeeModule) return;
       const url = 'http://10.25.24.51:10189/api/risk/sector_set/detail'
       const sendData = {
         userid: 'risk',
@@ -477,26 +491,28 @@ export default {
         params: sendData
       }).then((response) => {
         console.log(response.data)
-        if(response.data.code == '0'){
+        if (response.data.code == '0') {
           alert('清空成功')
+          this.moduleInit();
           this.seeModule(this.nowSeeModule);
+          this.isShowSeeModule = false;
         }
       }).catch((err) => {
-        
+
       });
     },
     // 删除板块信息
-    deleteModulesInfo(){
-      if(!this.nowSeeModule) return;
+    deleteModulesInfo() {
+      if (!this.nowSeeModule) return;
       const url = 'http://10.25.24.51:10189/api/risk/sector_set/detail'
       const tempArr = [];
       this.seeModuleData.tr.forEach(item => {
-        if(item.check){
+        if (item.check) {
           tempArr.push(item['证券代码']);
         }
       });
       console.log(tempArr.join(','))
-      if(!tempArr.join(',')) return;
+      if (!tempArr.join(',')) return;
       const sendData = {
         userid: 'risk',
         action: 'delete',
@@ -508,24 +524,24 @@ export default {
         params: sendData
       }).then((response) => {
         console.log(response.data)
-        if(response.data.code == '0'){
+        if (response.data.code == '0') {
           alert('删除成功')
           this.seeModule(this.nowSeeModule);
         }
       }).catch((err) => {
-        
+
       });
     },
     // 手动选择查询
-    ManualQueries(){
+    ManualQueries() {
       const codelist = this.textareaVlaue.split('\n');
       const tempArr = [];
       codelist.forEach(item => {
-        if(item){
+        if (item) {
           tempArr.push(item);
         }
       });
-      if(!tempArr.length){
+      if (!tempArr.length) {
         alert('请输入证券列表');
         return;
       }
@@ -538,30 +554,30 @@ export default {
       // return
       console.log(sendData)
       this.$_axios.get(url, {
-          params: sendData
-        }).then((response) => {
-          console.log(response.data)
-          if(response.data.code == '0'){
-            this.securitiesImportResult.tr = response.data.result.matchlist.map( item => {
-              return {
-                code: item.securitycode,
-                name: item.securityname,
-              }
-            });
-            this.securitiesImportResult.tr2 = response.data.result.unmatchlist.map( item => {
-              return {
-                code: item
-              }
-            });
-            this.securitiesImportResult.matchcountNumber = response.data.result.matchcount.matchcount;
-            this.securitiesImportResult.unmatchlistNumber = response.data.result.matchcount.unmatchcount;
-          }
-        }).catch((err) => {
-          
-        });
+        params: sendData
+      }).then((response) => {
+        console.log(response.data)
+        if (response.data.code == '0') {
+          this.securitiesImportResult.tr = response.data.result.matchlist.map(item => {
+            return {
+              code: item.securitycode,
+              name: item.securityname,
+            }
+          });
+          this.securitiesImportResult.tr2 = response.data.result.unmatchlist.map(item => {
+            return {
+              code: item
+            }
+          });
+          this.securitiesImportResult.matchcountNumber = response.data.result.matchcount.matchcount;
+          this.securitiesImportResult.unmatchlistNumber = response.data.result.matchcount.unmatchcount;
+        }
+      }).catch((err) => {
+
+      });
     },
     // 多项选择-搜索
-    search(){
+    search() {
       const url = 'http://10.25.24.51:10189/api/risk/code_import/choose'
       const sendData = {
         action: 'query',
@@ -576,80 +592,80 @@ export default {
       this.hasSearchResultList = false;
       this.paginationData.current = 1;
       this.$_axios.get(url, {
-          params: this.searchSendData
-        }).then((response) => {
-          if(this.codetype == 'B' || this.codetype == 'F'){
-            this.oneLine = true;
+        params: this.searchSendData
+      }).then((response) => {
+        if (this.codetype == 'B' || this.codetype == 'F') {
+          this.oneLine = true;
+        }
+        const resultData = response.data;
+        if (resultData.code == '0' && resultData.msg == 'query success') {
+          this.hasSearchResultList = true;
+          if (resultData.result.totalcount) {
+            this.paginationData.page_Count = Math.ceil(resultData.result.totalcount / 4000);
+          } else {
+            this.paginationData.page_Count = 0;
           }
-          const resultData = response.data;
-          if(resultData.code == '0' && resultData.msg == 'query success'){
-            this.hasSearchResultList = true;
-            if(resultData.result.totalcount){
-              this.paginationData.page_Count = Math.ceil(resultData.result.totalcount / 4000);
-            } else {
-              this.paginationData.page_Count = 0;
+          this.paginationData.total_Count = resultData.result.totalcount;
+          this.searchResultList = resultData.result.securitylist.map(item => {
+            return {
+              check: false,
+              name: item.securityname,
+              code: item.securitycode
             }
-            this.paginationData.total_Count = resultData.result.totalcount;
-            this.searchResultList = resultData.result.securitylist.map(item => {
-              return {
-                check: false,
-                name: item.securityname,
-                code: item.securitycode
-              }
-            });
-          } else if(resultData.code == '1'){
+          });
+        } else if (resultData.code == '1') {
 
-          }
-        }).catch((err) => {
-          
-        });
+        }
+      }).catch((err) => {
+
+      });
     },
     // 多项选择-搜索-分页
-    paginationSelect(pageNumber){
+    paginationSelect(pageNumber) {
       const url = 'http://10.25.24.51:10189/api/risk/code_import/choose'
       this.searchSendData.page = pageNumber - 1;
       this.isShowsearchResultList = true;
       this.hasSearchResultList = false;
       this.paginationData.current = pageNumber;
       this.$_axios.get(url, {
-          params: this.searchSendData
-        }).then((response) => {
-          const resultData = response.data;
-          if(resultData.code == '0' && resultData.msg == 'query success'){
-            this.hasSearchResultList = true;
-            this.searchResultList = resultData.result.securitylist.map(item => {
-              return {
-                check: false,
-                name: item.securityname,
-                code: item.securitycode
-              }
-            });
-          } else if(resultData.code == '1'){
+        params: this.searchSendData
+      }).then((response) => {
+        const resultData = response.data;
+        if (resultData.code == '0' && resultData.msg == 'query success') {
+          this.hasSearchResultList = true;
+          this.searchResultList = resultData.result.securitylist.map(item => {
+            return {
+              check: false,
+              name: item.securityname,
+              code: item.securitycode
+            }
+          });
+        } else if (resultData.code == '1') {
 
-          }
-        }).catch((err) => {
+        }
+      }).catch((err) => {
 
-        });
+      });
     },
     // 添加至板块-取消
-    cancelToModule(){
+    cancelToModule() {
       this.searchResultList.forEach(item => {
         item.check = false;
       });
     },
     // 添加至板块
-    addToModule(){
-      if(!this.impotModuleName){
+    addToModule() {
+      if (!this.impotModuleName) {
         alert('请选择要导入的板块');
         return;
       }
       const codelist = [];
       this.searchResultList.forEach(item => {
-        if(item.check){
+        if (item.check) {
           codelist.push(item.code);
         }
       });
-      if(!codelist.length){
+      if (!codelist.length) {
         alert('未选择代码');
         return;
       }
@@ -662,20 +678,20 @@ export default {
         codelist: codelist.join(',')
       };
       this.$_axios.get(url, {
-          params: sendData
-        }).then((response) => {
-          if(response.data.code == '0'){
-            alert('添加成功');
-          } else if(response.data.code == '1'){
-            alert('添加失败');
-          }
-        }).catch((err) => {
-          alert('查询请求服务失败');
-        });
+        params: sendData
+      }).then((response) => {
+        if (response.data.code == '0') {
+          alert('添加成功');
+        } else if (response.data.code == '1') {
+          alert('添加失败');
+        }
+      }).catch((err) => {
+        alert('查询请求服务失败');
+      });
     },
     // 添加匹配代码
-    addMatch(){
-      if(!this.impotModuleName){
+    addMatch() {
+      if (!this.impotModuleName) {
         alert('请选择要导入的板块');
         return;
       }
@@ -683,8 +699,8 @@ export default {
       const codelist = this.securitiesImportResult.tr.map(item => {
         return item.code;
       });
-      if(!codelist.length) {
-         alert('没有匹配代码');
+      if (!codelist.length) {
+        alert('没有匹配代码');
         return;
       }
       const sendData = {
@@ -695,33 +711,33 @@ export default {
         sector: this.impotModuleName
       };
       this.$_axios.get(url, {
-          params: sendData
-        }).then((response) => {
-          if(response.data.code == '0'){
-            alert('添加成功');
-          } else if(response.data.code == '1'){
-            alert('添加失败');
-          } else if(response.data.code == '2' && response.data.msg == 'already exists the record'){
-            alert('重复添加');
-          }
-        }).catch((err) => {
+        params: sendData
+      }).then((response) => {
+        if (response.data.code == '0') {
+          alert('添加成功');
+        } else if (response.data.code == '1') {
           alert('添加失败');
-        });
+        } else if (response.data.code == '2' && response.data.msg == 'already exists the record') {
+          alert('重复添加');
+        }
+      }).catch((err) => {
+        alert('添加失败');
+      });
     },
-    importWayEvent(...data){
+    importWayEvent(...data) {
       console.log(data[0])
-      if(this.nowImportWay !== data[0]){
+      if (this.nowImportWay !== data[0]) {
         this.nowImportWay = data[0];
         console.log(this.codetype)
         // this.codetype = 'S';
         // console.log(this.codetype)
       }
     },
-    impotModuleEvent(...data){
+    impotModuleEvent(...data) {
       this.impotModuleName = data[0];
     },
     // 类型
-    importWayTypeEvent(...data){
+    importWayTypeEvent(...data) {
       switch (data[0]) {
         case '股票':
           this.codetype = 'S';
@@ -737,15 +753,20 @@ export default {
           break;
       }
     },
-    moduleInit(){
+    moduleInit() {
       const url = 'http://10.25.24.51:10189/api/risk/sector_set/query'
       const sendData = {
         userid: 'risk'
       };
+      console.log('查询')
       this.$_axios.get(url, {
-          params: sendData
-        }).then((response) => {
-          if(response.data.code == '0'){
+        params: sendData
+      }).then((response) => {
+        console.log('查询结果', response.data)
+        if (!response.data) {
+          this.modulesDataList = [];
+        } else {
+          if (response.data.code == '0') {
             console.log(response.data.sectorlist)
             this.modulesDataList = response.data.sectorlist.map(item => {
               return {
@@ -753,10 +774,13 @@ export default {
                 check: false
               }
             });
+          } else {
+            this.modulesDataList = [];
           }
-        }).catch((err) => {
-          
-        });
+        }
+      }).catch((err) => {
+
+      });
     },
     checkName(val) {
       // let reg = new RegExp("[`~!%@#$^&*()=|{}':;',\\[\\].<>/?~！@#￥……&*（）——|{}【】‘；：”“'。，、？]");
@@ -768,14 +792,14 @@ export default {
       return rs;
     }
   },
-  mounted(){
+  mounted() {
     this.moduleInit();
   }
 }
 </script>
 
 <style lang="less" scoped>
-.userSystemPage{
+.userSystemPage {
   position: fixed;
   top: 0;
   left: 0;
@@ -784,12 +808,12 @@ export default {
   min-height: 100%;
   background: linear-gradient(#ffffff, #d7d7d7);
   z-index: 3;
-  .closeBtn{
+  .closeBtn {
     font-size: 40px;
     cursor: pointer;
     font-weight: 500;
   }
-  .sidebarTab{
+  .sidebarTab {
     float: left;
     width: 200px;
     margin-top: 100px;
@@ -797,33 +821,33 @@ export default {
     line-height: 35px;
     font-weight: 600;
     font-size: 16px;
-    color: #FFF;
-    p{
+    color: #fff;
+    p {
       // background-color: #b50229;
       background: linear-gradient(#fc0000, #030000);
       cursor: pointer;
     }
-    p.active{
+    p.active {
       font-size: 18px;
     }
   }
-  .contentBox{
+  .contentBox {
     float: left;
     width: 1000px;
     height: 200px;
-    >div{
+    > div {
       padding-top: 50px;
     }
-    .topBtn{
-      span{
+    .topBtn {
+      span {
         margin-left: 35px;
         border: 1px solid #797979;
-        border-radius: 5px; 
+        border-radius: 5px;
         cursor: pointer;
         padding: 8px;
       }
     }
-    .addBox{
+    .addBox {
       position: fixed;
       top: 0;
       left: 0;
@@ -831,27 +855,27 @@ export default {
       height: 100%;
       border: 1px solid #797979;
       line-height: 25px;
-      background-color: rgba(0,0,0,0.1);
+      background-color: rgba(0, 0, 0, 0.1);
       z-index: 4;
-      >div{
+      > div {
         position: fixed;
         top: 25%;
         left: 25%;
         width: 400px;
         height: 100px;
         z-index: 5;
-        >div{
+        > div {
           width: 215px;
           height: 50%;
           margin: 7px auto;
         }
       }
-      input{
+      input {
         width: 140px;
         height: 25px;
         border: 1px solid #797979;
       }
-      span{
+      span {
         padding: 5px 20px;
         margin-left: 28px;
         cursor: pointer;
@@ -859,44 +883,44 @@ export default {
         border-radius: 5px;
       }
     }
-    .content{
+    .content {
       width: 990px;
       height: 520px;
       margin-top: 20px;
       border: 1px solid #797979;
-      .left{
+      .left {
         width: 666px;
         height: 100%;
         border-right: 1px solid #797979;
-        li{
-          span{
+        li {
+          span {
             float: left;
             cursor: pointer;
           }
-          .checkIconBox{
+          .checkIconBox {
             position: relative;
             width: 10px;
             height: 10px;
             margin-top: 8px;
             border: 1px solid #797979;
             overflow: hidden;
-            .icon-queren{
+            .icon-queren {
               position: absolute;
               top: -2px;
               left: -8px;
             }
           }
-          .moduleName{
+          .moduleName {
             width: 155px;
             padding: 5px 0;
             margin-left: 5px;
             text-align: center;
             border: 1px solid #797979;
-            overflow: hidden; 
-            white-space: nowrap; 
+            overflow: hidden;
+            white-space: nowrap;
             text-overflow: ellipsis;
           }
-          .seeModule{
+          .seeModule {
             margin-left: 2px;
             padding: 3px;
             border: 1px solid #797979;
@@ -904,29 +928,30 @@ export default {
           }
         }
       }
-      .right{
-        .top{
+      .right {
+        .top {
           padding-top: 5px;
-          input{
+          input {
             width: 120px;
             height: 25px;
             border: 1px solid #797979;
           }
-          span{
-            margin-left: 10px;
+          span {
+            margin-left: 5px;
           }
-          .updateModuleName{
+          .close,
+          .updateModuleName {
             padding: 5px;
             cursor: pointer;
             background-color: #eaeaea;
             border: 1px solid #797979;
           }
         }
-        table{
+        table {
           margin-left: 1px;
           margin-top: 10px;
           width: 318px;
-          table-layout:fixed;
+          table-layout: fixed;
           border: 1px solid #797979;
           border-collapse: collapse;
           word-wrap: break-word;
@@ -947,10 +972,10 @@ export default {
             text-align: center;
             vertical-align: middle;
             border: 1px solid #797979;
-            div{
+            div {
               cursor: pointer;
             }
-            .checkIconBox{
+            .checkIconBox {
               position: relative;
               display: inline-block;
               width: 10px;
@@ -958,7 +983,7 @@ export default {
               margin-top: 8px;
               border: 1px solid #797979;
               overflow: hidden;
-              .icon-queren{
+              .icon-queren {
                 position: absolute;
                 top: -2px;
                 left: -8px;
@@ -966,10 +991,10 @@ export default {
             }
           }
         }
-        .bottom{
+        .bottom {
           margin-left: 60px;
           margin-top: 20px;
-          span{
+          span {
             margin-left: 20px;
             padding: 5px 20px;
             border: 1px solid #797979;
@@ -980,21 +1005,21 @@ export default {
         }
       }
     }
-    .securitiesImport{
+    .securitiesImport {
       width: 980px;
       height: 620px;
       margin-top: 20px;
       border: 1px solid #797979;
-      .securitiesImportCondition{
+      .securitiesImportCondition {
         width: 300px;
-        textarea{
+        textarea {
           width: 248px;
           height: 460px;
-          resize:none;
-          outline:none;
+          resize: none;
+          outline: none;
           border: 1px solid #797979;
         }
-        .queryBtn{
+        .queryBtn {
           margin-left: 90px;
           padding: 5px 20px;
           cursor: pointer;
@@ -1003,8 +1028,8 @@ export default {
           background-color: #eaeaea;
         }
       }
-      .securitiesImportResult{
-        .addCode{
+      .securitiesImportResult {
+        .addCode {
           margin-left: 90px;
           margin-bottom: 15px;
           padding: 5px 20px;
@@ -1013,12 +1038,12 @@ export default {
           border-radius: 5px;
           background-color: #eaeaea;
         }
-        .matchcountBottom{
+        .matchcountBottom {
           text-align: center;
           border: 1px solid #797979;
           border-top: none;
         }
-        table{
+        table {
           margin-left: 1px;
           margin-top: 10px;
           border: 1px solid #797979;
@@ -1041,49 +1066,49 @@ export default {
             vertical-align: middle;
             border: 1px solid #797979;
           }
-        } 
+        }
       }
-      .multiSelection{
-        input{
+      .multiSelection {
+        input {
           width: 150px;
           height: 25px;
           line-height: 25px;
           border: 1px solid #797979;
         }
-        .searchBtn{
+        .searchBtn {
           margin-top: 17px;
-          span{
+          span {
             padding: 3px 25px;
             cursor: pointer;
             background-color: #eaeaea;
             border: 1px solid #797979;
           }
         }
-        .searchResulBox{
+        .searchResulBox {
           margin-top: 15px;
           height: 560px;
           width: 978px;
           overflow: hidden;
-          .searchResultList.oneLine{
+          .searchResultList.oneLine {
             width: 960px;
-            >span:nth-child(3){
+            > span:nth-child(3) {
               width: 800px;
             }
           }
-          .searchResultList{
+          .searchResultList {
             width: 242px;
             height: 36px;
             cursor: pointer;
-            span{
+            span {
               float: left;
             }
-            >span:nth-child(3){
+            > span:nth-child(3) {
               width: 140px;
               overflow: hidden;
-              text-overflow:ellipsis;
-              white-space:nowrap
+              text-overflow: ellipsis;
+              white-space: nowrap;
             }
-            .checkIconBox{
+            .checkIconBox {
               position: relative;
               display: inline-block;
               width: 10px;
@@ -1091,7 +1116,7 @@ export default {
               margin-top: 8px;
               border: 1px solid #797979;
               overflow: hidden;
-              .icon-queren{
+              .icon-queren {
                 position: absolute;
                 top: -2px;
                 left: -8px;

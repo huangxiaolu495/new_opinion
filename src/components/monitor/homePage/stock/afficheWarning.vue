@@ -13,6 +13,9 @@
             <div class="floatLeft">
               <date-picker :prop="endDatePicker" @endDateEvent="endDateEvent"></date-picker>
             </div>
+            <div class="floatLeft">
+              <keyword @keywordEvent="keywordEvent"></keyword>
+            </div>
           </div>
           <!-- 查询按钮 -->
           <div class="queryBtn">
@@ -64,6 +67,7 @@
 import pagination from '@/components/common/pagination'
 import commonMethods from '@/common/common.js'
 import datePicker from '@/components/common/datePicker'
+import keyword from '@/components/common/keyword'
 
 export default {
   data() {
@@ -74,11 +78,13 @@ export default {
       hasResultData: false,
       resultData: {},
       queryCondition: {
+        keyword:'',
         page: 1,
         page_size: 10,
         from_date: '',
         to_date: ''
       },
+
       startDatePicker: {
         title: '日期：',
         parentEvent: 'startDateEvent',
@@ -102,12 +108,16 @@ export default {
   },
   components: {
     pagination,
-    datePicker
+    datePicker,
+    keyword
   },
   computed: {
 
   },
-  methods: {
+  methods: {      
+    keywordEvent(...data){
+      this.queryCondition.keyword = data[0];
+    },
     paginationSelect(pageNumber) {
       const sendData = JSON.parse(JSON.stringify(this.sendData));
       sendData.page = pageNumber;
@@ -162,6 +172,9 @@ export default {
           console.log(err);
         });
     },
+    //     inputEvent(){
+    //   this.queryCondition.keyword = commonMethods.checkName(this.queryCondition.keyword);
+    // },
     details(item, index) {
       if (item.details == '收起') {
         item.details = '...详情';

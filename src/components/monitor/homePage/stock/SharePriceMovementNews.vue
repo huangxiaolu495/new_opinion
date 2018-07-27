@@ -8,11 +8,11 @@
           <!-- 查询条件框 -->
           <div>
             <div class="floatLeft">
-            <date-picker :prop="startDatePicker_news" @startDateNews="startDateNews"></date-picker>
-          </div>
-          <div class="floatLeft">
-            <date-picker :prop="endDatePicker_news" @endDateNews="endDateNews"></date-picker>
-          </div>
+              <date-picker :prop="startDatePicker_news" @startDateNews="startDateNews"></date-picker>
+            </div>
+            <div class="floatLeft">
+              <date-picker :prop="endDatePicker_news" @endDateNews="endDateNews"></date-picker>
+            </div>
           </div>
           <!-- 查询按钮 -->
           <div class="queryBtn">
@@ -91,7 +91,7 @@ export default {
       hasResultDataNews: false,
       isShowDetails: false,
       resultDataNews: null,
-      queryConditionNews: {
+      queryCondition: {
         start_date: '',
         end_date: '',
         page: 0,
@@ -140,9 +140,16 @@ export default {
         });
     },
     query() {
+      const _year = 31536000000;
+      const _startDate = new Date(this.queryCondition.start_date).getTime()
+      const _endDate = new Date(this.queryCondition.end_date).getTime()
+      if (!this.queryCondition.start_date || !this.queryCondition.end_date) {
+        alert('请输入日期时间段');
+        return;
+      }
       this.isShowQueryResultNews = true;
       this.hasResultDataNews = false;
-      this.sendDataNews = JSON.parse(JSON.stringify(this.queryConditionNews));
+      this.sendDataNews = JSON.parse(JSON.stringify(this.queryCondition));
       for (let key in this.sendDataNews) {
         if (this.sendDataNews[key] === '') {
           delete this.sendDataNews[key];
@@ -157,12 +164,12 @@ export default {
         console.log('股票 > 股价异动预警News', response.data.result);
         this.dataListNews = JSON.parse(JSON.stringify(response.data.result.result));
         this.resultDataNews = response.data.result;
-        if(this.resultDataNews.total_count){
+        if (this.resultDataNews.total_count) {
           this.paginationDataNews.page_Count = Math.ceil(this.resultDataNews.total_count / 10);
         } else {
           this.paginationDataNews.page_Count = 0;
         }
-        
+
         this.paginationDataNews.total_Count = this.resultDataNews.total_count;
       })
         .catch(err => {
@@ -188,15 +195,15 @@ export default {
         });
     },
     startDateNews(...data) {
-      this.queryConditionNews.start_date = data[0];
+      this.queryCondition.start_date = data[0];
     },
     endDateNews(...data) {
-      this.queryConditionNews.end_date = data[0];
+      this.queryCondition.end_date = data[0];
     },
   },
   mounted() {
-    this.queryConditionNews.start_date = commonMethods.formatDateTime2(this.startDatePicker_news.defaultDate);
-    this.queryConditionNews.end_date = commonMethods.formatDateTime2(new Date());
+    this.queryCondition.start_date = commonMethods.formatDateTime2(this.startDatePicker_news.defaultDate);
+    this.queryCondition.end_date = commonMethods.formatDateTime2(new Date());
   }
 }
 </script>
@@ -233,7 +240,7 @@ export default {
       text-decoration: underline;
     }
     .tableTh:nth-child(1) {
-      width: 80px;
+      width: 150px;
     }
     .tableTh:nth-child(2) {
       width: 80px;
@@ -243,6 +250,9 @@ export default {
     }
     .tableTh:nth-child(4) {
       width: 80px;
+    }
+    .tableTh:nth-child(5) {
+      width: 200px;
     }
     .tableTh:nth-child(6) {
       width: 65px;

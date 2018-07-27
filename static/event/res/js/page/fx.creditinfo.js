@@ -16,55 +16,66 @@
 
     sel: function (opt) {
       var that = this;
-      var par = {
-        Stock_Code: that.query("Stock_Code") || '',
-        Risk_Type: that.query("Risk_Type") || '',
-        Stock_Type: that.query("Stock_Type") || '',
-        Stock_Name: that.query("Stock_Name") || '',
-        notice_source: that.query("notice_source") || '',
-      };
-      that.resolve('http://10.25.24.51:10188/api/rest/nlp/Credit_Announce/Stat', par, function (data) {
+      // var par = {
+      //   Stock_Code: that.query("Stock_Code") || '',
+      //   Risk_Type: that.query("Risk_Type") || '',
+      //   Stock_Type: that.query("Stock_Type") || '',
+      //   Stock_Name: that.query("Stock_Name") || '',
+      //   notice_source: that.query("notice_source") || '',
+      // };
+      var Stock_Code = that.query("Stock_Code") || '',
+        Risk_Type = that.query("Risk_Type") || '',
+        Stock_Type = that.query("Stock_Type") || '',
+        Stock_Name = that.query("Stock_Name") || '',
+        notice_source = that.query("notice_source") || '';
+      var url = "http://10.25.24.51:10188/api/rest/nlp/Credit_Announce/Stat?Stock_Code=" + Stock_Code + "&Risk_Type=" + Risk_Type + "&Stock_Type=" + Stock_Type + "&Stock_Name=" + Stock_Name + "&notice_source=" + notice_source;
+      that.resolve(url,null ,function (data) {
         var d = data.result;
         var str = '';
+        var str2 = '';
         $.each(d, function (index, item) {
           str += '<tr>\
                       <td>' + item.Stock_Code + '</td>\
                       <td>' + item.Stock_Name + '</td>\
                       <td>' + item.purch_or_not + '</td>\
-                      <td>' + item.event_count + '</td>\
                       <td>' + item.notice_source + '</td>\
-                      <td>' + item.up_percent * 100 + '%</td>\
-                      <td>' + item.down_percent * 100 + '%</td>\
-                      <td>' + item.up_price_average + '</td>\
-                      <td>' + item.down_price_average + '</td>\
                       <td>' + item.zq_lv + '</td>\
                       <td>' + item.zq_rzbl + '</td>\
                       <td>' + item.zq_rz + '</td>\
                     </tr>';
+          $.each(d.event_Seg.calculate_eod, function (index2, item2) {
+            str2 += '<tr>\
+                        <td>' + item2.risk_type + '</td>\
+                        <td>' + item2.event_count + '</td>\
+                        <td>' + item2.up_percent * 100 + '%</td>\
+                        <td>' + item2.down_percent * 100 + '%</td>\
+                        <td>' + item2.up_price_average + '</td>\
+                        <td>' + item2.down_price_average + '</td>\
+                    </tr>';
+          });
+          M('#detailData')[0].innerHTML = str;
+          M('#detailData2')[0].innerHTML = str2;
+          M.ellipsisToggle();
+          // that.page = M.ui.page.init({
+          //   container: this.node.page,
+          //   total: data.result.Total_Count == '' ? (data.result.Page_Count * 10) : (data.result.Total_Count),
+          //   items: 10,
+          //   number: 8,
+          //   isInput: true,
+          //   isText: true,
+          //   current: that.pageNum - 1,
+          //   callback: function (tha) {
+          //     that.pageNum = this.ops.current + 1;
+          //     var $Stock_Info = M('#Stock_Info_text');
+          //     var opt = {
+          //       export: 0,
+          //       stock_info: $Stock_Info.val().lastIndexOf(' ') == -1 ? $Stock_Info.val().slice(0) : $Stock_Info.val().slice($Stock_Info.val().lastIndexOf(' ') + 1)
+          //     };
+          //     that.sel(opt);
+          //   }
+          // }, that);
         });
-        M('#detailData')[0].innerHTML = str;
-        M.ellipsisToggle();
-
-        that.page = M.ui.page.init({
-          container: this.node.page,
-          total: data.result.Total_Count == '' ? (data.result.Page_Count * 10) : (data.result.Total_Count),
-          items: 10,
-          number: 8,
-          isInput: true,
-          isText: true,
-          current: that.pageNum - 1,
-          callback: function (tha) {
-            that.pageNum = this.ops.current + 1;
-            var $Stock_Info = M('#Stock_Info_text');
-            var opt = {
-              export: 0,
-              stock_info: $Stock_Info.val().lastIndexOf(' ') == -1 ? $Stock_Info.val().slice(0) : $Stock_Info.val().slice($Stock_Info.val().lastIndexOf(' ') + 1)
-            };
-            that.sel(opt);
-          }
-        }, that);
-      }, undefined, 'get');
-
+      }, null, 'get');
     },
 
     load: function (index, arr) {

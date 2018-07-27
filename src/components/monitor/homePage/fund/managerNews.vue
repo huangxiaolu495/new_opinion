@@ -139,7 +139,7 @@ export default {
     },
     markingNegative(newsData, index, flag) {
       // http://10.25.24.51:10192/api/rest/nlp/risk/update_fund_manager_news?infocode=&is_negative=1&checked=1&is_delete=
-      let sendData = flag ? '&is_negative=1&checked=1&is_delete=' : '&is_negative=&checked=0&is_delete=1';
+      let sendData = flag ? '&is_negative=1&checked=1&is_delete=' : '&is_negative=&checked=1&is_delete=1';
       let url = 'http://10.25.24.51:10192/api/rest/nlp/risk/update_fund_manager_news?'
         + 'infocode=' + newsData.INFOCODE + sendData;
       this.$_axios.get(url)

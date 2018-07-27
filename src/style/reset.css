@@ -3,6 +3,12 @@
   padding: 0;
   box-sizing: border-box;
 }
+
+html {
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 html,
 body,
 h1,
@@ -23,13 +29,16 @@ textarea {
   margin: 0;
   padding: 0;
 }
+
 table {
   table-layout: fixed;
 }
+
 i,
 em {
   font-style: normal;
 }
+
 html,
 body {
   width: 100%;
@@ -38,38 +47,48 @@ body {
   font-family: "Arial";
   color: #000000;
 }
+
 ul,
 ol,
 li {
   list-style: none;
 }
+
 a {
   text-decoration: none;
   user-select: none;
 }
+
 a:hover {
   text-decoration: none;
 }
+
 img {
   vertical-align: middle;
   border: 0;
 }
+
 .floatLeft {
   float: left;
 }
+
 .floatRight {
   float: right;
 }
+
 .width1100 {
   width: 1100px;
 }
+
 .colorBule {
   color: blue;
   cursor: pointer;
 }
+
 .colorBule:hover {
   text-decoration: underline;
 }
+
 .clearFloat::before,
 .clearFloat::after {
   content: "";
@@ -77,12 +96,15 @@ img {
   height: 0;
   visibility: hidden;
 }
+
 .clearFloat::after {
   clear: both;
 }
+
 .clearFloat {
   zoom: 1;
 }
+
 .highlight::after {
   content: "";
   width: 100%;
@@ -92,51 +114,67 @@ img {
   left: 0;
   background-color: rgba(255, 255, 255, 0.2);
 }
+
 .marginLeft3 {
   margin-left: 3px;
 }
+
 .marginLeft5 {
   margin-left: 5px;
 }
+
 .marginLeft10 {
   margin-left: 10px;
 }
+
 .marginLeft15 {
   margin-left: 15px;
 }
+
 .marginLeft20 {
   margin-left: 20px;
 }
+
 .marginLeft85 {
   margin-left: 85px;
 }
+
 .marginRight5 {
   margin-right: 5px;
 }
+
 .marginRight10 {
   margin-right: 10px;
 }
+
 .marginRight15 {
   margin-right: 15px;
 }
+
 .marginRight20 {
   margin-right: 20px;
 }
+
 .marginTop2 {
   margin-top: 2px;
 }
+
 .marginTop3 {
   margin-top: 3px;
 }
+
 .marginTop5 {
   margin-top: 5px;
 }
+
 .marginTop10 {
   margin-top: 10px;
 }
+
 .marginTop15 {
   margin-top: 15px;
 }
+
 .marginTop20 {
   margin-top: 20px;
 }

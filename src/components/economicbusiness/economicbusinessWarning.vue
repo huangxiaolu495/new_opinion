@@ -1,5 +1,5 @@
 <template>
-  <div>
+  <div class="app">
     <div class="hag">
       <router-link to="/">
         <h1>中泰风险
@@ -32,6 +32,7 @@
               <th v-for="(item, index) of titleData" :key="index" class="tableTh" width:100px>{{item}}</th>
             </tr>
             <tr v-for="(item, index) of dataList" :key="index">
+              <td>{{item.publish_datetime}}</td>
               <td class="tableTd">
                 <a :href="item.url" target="_bank">{{item.title}}</a>
               </td>
@@ -40,7 +41,6 @@
                 {{item.content}}
                 <span @click="details(item, index)"> {{item.details}}</span>
               </td>
-              <td>{{item.publish_datetime}}</td>
               <td>{{item.author}}</td>
               <td>{{item.detail_source}}</td>
             </tr>
@@ -102,7 +102,7 @@ export default {
         total_Count: 0,
         current: 1
       },
-      titleData: ['标题', '正文', '日期', '作者', '来源'],
+      titleData: ['日期', '标题', '正文', '作者', '来源'],
       dataList: [],
     };
   },
@@ -115,7 +115,7 @@ export default {
     details(item, index) {
       if (item.details == '收起') {
         item.details = '...详情';
-        item.content = item.content.slice(0, 200) + '...';
+        item.content = item.content.slice(0, 25) + '...';
       } else {
         item.details = '收起';
         item.content = this.resultData[index].content;
@@ -142,8 +142,8 @@ export default {
           // item.publish_datetime = item.publish_datetime ? commonMethods.formatDateTime(new Date(item.publish_datetime)) : '';
           item.author = item.author;
           item.detail_source = item.detail_source;
-          if (item.content && item.content.length > 200) {
-            item.content = item.content.slice(0, 200) + '...';
+          if (item.content && item.content.length > 25) {
+            item.content = item.content.slice(0, 25) + '...';
             item.details = '...详情';
           }
         });
@@ -175,8 +175,8 @@ export default {
         this.paginationData.total_Count = response.data.result.Total_Count;
         this.dataList.forEach(item => {
           item.title = item.title;
-          if (item.content && item.content.length > 200) {
-            item.content = item.content.slice(0, 200) + '...';
+          if (item.content && item.content.length > 25) {
+            item.content = item.content.slice(0, 25) + '...';
             item.details = '...详情';
           }
           // item.publish_datetime = item.publish_datetime ? commonMethods.formatDateTime(new Date(item.publish_datetime)) : '';
@@ -193,6 +193,12 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.app {
+  height: 800px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+
 body {
   font-size: 14px;
   font-family: "Arial";
@@ -305,13 +311,13 @@ h1 {
       }
     }
     .tableTh:nth-child(1) {
-      width: 145px;
-    }
-    .tableTh:nth-child(2) {
       width: 200px;
     }
+    .tableTh:nth-child(2) {
+      width: 250px;
+    }
     .tableTh:nth-child(3) {
-      width: 120px;
+      width: 400px;
     }
     .tableTh:nth-child(4) {
       width: 200px;
@@ -339,9 +345,9 @@ h1 {
   background-color: #f0f0f0;
 }
 
-.mttg{
-      margin-left: -63px;
-    margin-right: -90px;
+.mttg {
+  margin-left: -63px;
+  margin-right: -90px;
 }
 </style>
 

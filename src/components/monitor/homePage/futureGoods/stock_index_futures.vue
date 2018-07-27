@@ -107,20 +107,20 @@ export default {
     paginationSelect(pageNumber) {
       const sendData = JSON.parse(JSON.stringify(this.sendData));
       sendData.page = pageNumber;
-      this.$_axios.get(this.url,{
-        params:sendData
+      this.$_axios.get(this.url, {
+        params: sendData
       }).then(response => {
-          console.log('股指期货交易规则查询结果', response.data.result);
-          this.dataList = JSON.parse(JSON.stringify(response.data.result.Announce_List));
-          this.resultData = response.data.result.Announce_List;
-          this.dataList.forEach(item => {
-            // item.NOTICEDATE = item.NOTICEDATE ? new Date(item.NOTICEDATE).toLocaleDateString() : '-';
-            if (item.INFOBODYCONTENT && item.INFOBODYCONTENT.length > 175) {
-              item.INFOBODYCONTENT = item.INFOBODYCONTENT.slice(0, 175) + '...';
-              item.details = '...详情';
-            }
-          });
-        })
+        console.log('股指期货交易规则查询结果', response.data.result);
+        this.dataList = JSON.parse(JSON.stringify(response.data.result.Announce_List));
+        this.resultData = response.data.result.Announce_List;
+        this.dataList.forEach(item => {
+          // item.NOTICEDATE = item.NOTICEDATE ? new Date(item.NOTICEDATE).toLocaleDateString() : '-';
+          if (item.INFOBODYCONTENT && item.INFOBODYCONTENT.length > 175) {
+            item.INFOBODYCONTENT = item.INFOBODYCONTENT.slice(0, 175) + '...';
+            item.details = '...详情';
+          }
+        });
+      })
         .catch(err => {
           console.log(err);
         });
@@ -135,30 +135,30 @@ export default {
         }
       }
       console.log('sendData', this.sendData)
-      this.$_axios.get(this.url,{
-        params:this.sendData
+      this.$_axios.get(this.url, {
+        params: this.sendData
       }).then(response => {
-          this.hasResultData = true;
-          console.log('股指期货交易规则查询结果', response);
-          this.paginationData.page_Count = response.data.result.Page_Count;
-          this.paginationData.total_Count = response.data.result.Total_Count;
+        this.hasResultData = true;
+        console.log('股指期货交易规则查询结果', response);
+        this.paginationData.page_Count = response.data.result.Page_Count;
+        this.paginationData.total_Count = response.data.result.Total_Count;
 
-          this.dataList = JSON.parse(JSON.stringify(response.data.result.Announce_List));
-          this.resultData = response.data.result.Announce_List;
+        this.dataList = JSON.parse(JSON.stringify(response.data.result.Announce_List));
+        this.resultData = response.data.result.Announce_List;
 
-          this.dataList.forEach(item => {
-            // item.NOTICEDATE = item.NOTICEDATE ? new Date(item.NOTICEDATE).toLocaleDateString() : '-';
-            if (item.INFOBODYCONTENT && item.INFOBODYCONTENT.length > 175) {
-              item.INFOBODYCONTENT = item.INFOBODYCONTENT.slice(0, 175) + '...';
-              item.details = '...详情';
-            }
-          });
-        })
+        this.dataList.forEach(item => {
+          // item.NOTICEDATE = item.NOTICEDATE ? new Date(item.NOTICEDATE).toLocaleDateString() : '-';
+          if (item.INFOBODYCONTENT && item.INFOBODYCONTENT.length > 175) {
+            item.INFOBODYCONTENT = item.INFOBODYCONTENT.slice(0, 175) + '...';
+            item.details = '...详情';
+          }
+        });
+      })
         .catch(err => {
           console.log(err);
         });
     },
-    inputEvent(){
+    inputEvent() {
       this.queryCondition.keyword = commonMethods.checkName(this.queryCondition.keyword);
     },
     details(item, index) {
@@ -170,7 +170,7 @@ export default {
         item.INFOBODYCONTENT = this.resultData[index].INFOBODYCONTENT;
       }
     },
-    keywordEvent(...data){
+    keywordEvent(...data) {
       this.queryCondition.keyword = data[0];
     },
     startDateEvent(...data) {
@@ -217,7 +217,7 @@ export default {
 }
 .queryResult {
   table {
-    width: 900px;
+    width: 1180px;
     margin-top: 20px;
     border: 1px solid #797979;
     border-collapse: collapse;

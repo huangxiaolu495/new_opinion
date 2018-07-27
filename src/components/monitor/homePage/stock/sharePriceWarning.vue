@@ -135,14 +135,14 @@ export default {
     datePicker
   },
   methods: {
-    inputEvent(){
+    inputEvent() {
       const numberReg = /^[0-9]*$/;
       this.queryCondition.sec_code = commonMethods.checkName(this.queryCondition.sec_code.trim());
       let arr = this.queryCondition.sec_code.split('');
       let arr2 = [];
       console.log(arr)
       arr.forEach(item => {
-        if(numberReg.test(item)){
+        if (numberReg.test(item)) {
           arr2.push(item)
         }
       });
@@ -174,6 +174,19 @@ export default {
         });
     },
     query() {
+      const _year = 31536000000;
+      const _startDate = new Date(this.queryCondition.start_date).getTime()
+      const _endDate = new Date(this.queryCondition.end_date).getTime()
+      if (!this.queryCondition.start_date || !this.queryCondition.end_date) {
+        alert('请输入日期时间段');
+        return;
+      }
+      if (!this.queryCondition.sec_code.length) {
+        if (_endDate - _startDate > 31536000000) {
+          alert('未选定证券代码，仅可查询最近一年的数据');
+          return;
+        }
+      }
       this.isShowQueryResult = true;
       this.hasResultData = false;
       this.sendData = JSON.parse(JSON.stringify(this.queryCondition));
@@ -191,9 +204,9 @@ export default {
         console.log('股票 > 股价异动预警', response.data.result);
         this.dataList = JSON.parse(JSON.stringify(response.data.result.result));
         this.resultData = response.data.result;
-        if(this.resultData.total_count){
+        if (this.resultData.total_count) {
           this.paginationData.page_Count = Math.ceil(this.resultData.total_count / 10);
-        } else{
+        } else {
           this.paginationData.page_Count = 0;
         }
         this.paginationData.total_Count = this.resultData.total_count;

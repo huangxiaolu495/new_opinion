@@ -421,14 +421,25 @@ input {
 }
 
 .risk_type_data,
-.assets_code_data,
 .announcement_code_data,
 .market_code_data,
 .public_code_data,
 .modify_ul {
   position: absolute;
+  top: 36px;
+  left: 64px;
+  width: 340px;
+  z-index: 999;
+  background-color: #fff;
+  border: 1px solid #ddd;
+  padding: 0 0 10px 15px;
+  display: none;
+}
+
+.assets_code_data {
+  position: absolute;
   top: 77px;
-  left: 240px;
+  left: 235px;
   width: 340px;
   z-index: 999;
   background-color: #fff;
@@ -680,18 +691,21 @@ p.modify_p:hover {
   text-align: center;
   background-color: #fff;
   border-radius: 10px;
-  width: 1100px;
-  height: auto !important;
+  width: 600px;
+  /* height: auto !important; */
   min-height: 200px;
   margin: auto;
-  position: absolute;
-  top: 6%;
+  position: fixed;
+  top: 22%;
   left: 0;
   right: 0;
   z-index: 9999;
   padding: 30px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  height: 300px;
 }
 
-/* tr td:nth-child(3) {
-  text-align: left !important;
-} */
+a {
+  color: blue;
+}

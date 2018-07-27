@@ -84,7 +84,7 @@
             <span class="label">&nbsp;&nbsp;&nbsp;关键词：</span>
             <input type="text" id="keyword" onchange="check()" />
           </div> -->
-           <div>
+          <div>
             <span class="label">资产类型：</span>
             <input id="assets_Code" type="text" />
             <ul class="assets_code_data">
@@ -92,7 +92,7 @@
           </div>
           <div class="assets">
             <span class="label">证券名称或代码：</span>
-            <input id="Stock_Info" type="text"  class="stock_code"/>
+            <input id="Stock_Info" type="text" class="stock_code" />
           </div>
           <div>
             <span class="label">开始日期：</span>
@@ -118,9 +118,9 @@
           </div>
         </div>
         <div class="searchShow">
-                  <div class="risk">
+          <div class="risk">
             <span class="label">&nbsp;&nbsp;&nbsp;关键词：</span>
-            <input type="text" id="keyword" onchange="check()" />
+            <input type="text" id="keyword" />
           </div>
           <!-- <div>
             <span class="label">资产类型：</span>
@@ -134,11 +134,11 @@
             <ul class="announcement_code_data">
             </ul>
           </div>
-          <div>
+          <!-- <div>
             <span class="label">市场类型：</span>
             <input id="market_Code" type="text" />
             <ul class="market_code_data"></ul>
-          </div>
+          </div> -->
           <div class="report_public">
             <span class="label">公告类型：</span>
             <input id="public_Code" type="text" />
@@ -220,16 +220,24 @@
   <script type="text/javascript" src="./res/js/core/b.selectpage.js"></script>
   <script type="text/javascript" src="res/js/page/fx.credit.js"></script>
   <!-- page JS stop -->
-<script>
-window.onload=function(){
-$("#Stock_Info_text").val("");
-}
-</script>
-<style>
-tr td:nth-child(3) {
-  text-align: left !important;
-}
-</style>
+  <script type="text/javascript">
+    window.onload = function () {
+      $("#Stock_Info_text").val("");
+      if (window.name != "credit") {
+        location.reload();
+        window.name = "credit";
+      } else {
+        window.name = "";
+      }
+    }
+
+  </script>
+  <style>
+    tr td:nth-child(3) {
+      text-align: left !important;
+    }
+
+  </style>
 </body>
 
 </html>

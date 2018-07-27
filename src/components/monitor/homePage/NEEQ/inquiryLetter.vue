@@ -16,10 +16,19 @@
             </div>
           </div>
           <div>
-            <keyword @keywordEvent="keywordEvent"></keyword>
+            <pull-down-list :prop="pullDownListData" @pullDownListEvent='pullDownListEvent'></pull-down-list>
           </div>
+           <div v-if="queryType == '按证券代码查询'" class="marginLeft20">
+              证券代码：<input v-model="queryCondition.equity_no" type="text">
+            </div>
+            <div v-else class="marginLeft20">
+              <pull-down-list :prop="modulesNameList" @modulesNameEvent='modulesNameEvent'></pull-down-list>
+            </div>
+            <div class="marginLeft20">
+              <keyword @keywordEvent="keywordEvent"></keyword>
+            </div>
           <div class="queryBtn">
-            <span @click="query">查询</span>
+            <span @click="query(queryType)">查询</span>
           </div>
         </div>
       </div>
@@ -68,6 +77,7 @@ export default {
     return{
       url: 'http://10.25.24.51:10189/api/risk/neeq_pub_info3',
       isQueryResult: false,
+      queryType: '按证券代码查询',
       inquiryLetterType:{
         title: '', 
         parentEvent: 'inquiryLetter', 
@@ -91,12 +101,36 @@ export default {
         page: 0,
         pagesize: 10
       },
+      sector: '',
       sendData:{},
       paginationData: {
         parentEvent: 'paginationSelect',
         page_Count: 0,
         total_Count: 0,
         current: 1
+      },
+      pullDownListData: {
+        title: '查询方式：',
+        parentEvent: 'pullDownListEvent',
+        default: '按证券代码查询',
+        listWidth: 143,
+        nowSelectWidth: 145,
+        nowSelectHeight: 25,
+        nowSelectFontSize: 13,
+        list: [
+          '按证券代码查询',
+          '按自定义板块范围查询'
+        ]
+      },
+      modulesNameList: {
+        title: '板块名：',
+        parentEvent: 'modulesNameEvent',
+        default: '请选择',
+        listWidth: 143,
+        nowSelectWidth: 145,
+        nowSelectHeight: 25,
+        nowSelectFontSize: 13,
+        list: []
       },
       startDatePicker:{
         title: '日期：',
@@ -107,6 +141,16 @@ export default {
         title: '至：',
         parentEvent: 'endDateEvent',
         defaultDate: new Date()
+      },
+      startDatePicker2:{
+        title: '日期：',
+        parentEvent: 'startDateEvent',
+        defaultDate: new Date(week)
+      },
+      endDatePicker2:{
+        title: '至：',
+        parentEvent: 'endDateEvent',
+        defaultDate: new Date()
       }
     }
   },
@@ -114,12 +158,32 @@ export default {
     pullDownList,
     pagination,
     datePicker,
-    keyword
+    keyword,
   },
   methods:{
-    query(){
+    query(queryType){
       this.isQueryResult = false;
-      this.sendData = JSON.parse(JSON.stringify(this.queryCondition));
+      if(queryType == '按证券代码查询'){
+        this.sendData = JSON.parse(JSON.stringify(this.queryCondition));
+        this.url = 'http://10.25.24.51:10189/api/risk/neeq_pub_info3';
+        this.sector = '';
+      } else {
+        this.sendData = {
+          start_date: this.queryCondition.start_date,
+          end_date: this.queryCondition.end_date,
+          page: this.queryCondition.page,
+          pagesize: this.queryCondition.pagesize,
+          keyword: this.queryCondition.keyword,
+          sector: this.sector,
+          userid: 'risk',
+        }
+        if(!this.sector){
+          alert('请选择板块');
+          return;
+        }
+        this.url = 'http://10.25.24.51:10189/api/risk/neeq_pub_sector3';
+      }
+      
       for(let key in this.sendData){
         if(this.sendData[key] === ''){
           delete this.sendData[key];
@@ -162,7 +226,7 @@ export default {
       });
     },
     inputEvent(){
-      this.queryCondition.keyword = commonMethods.checkName(this.queryCondition.keyword);
+      this.queryCondition2.sector = commonMethods.checkName(this.queryCondition2.sector.trim());
     },
     inquiryLetter(...data){
       this.queryCondition.type = data[0];
@@ -175,11 +239,47 @@ export default {
     },
     endDateEvent(...data){
       this.queryCondition.end_date = data[0];
-    }
+    },
+    pullDownListEvent(...data){
+      this.queryType = data[0];
+      this.moduleInit();
+    },
+    modulesNameEvent(...data){
+      this.sector = data[0];
+    },
+    moduleInit(){
+      const url = 'http://10.25.24.51:10189/api/risk/sector_set/query'
+      const sendData = {
+        userid: 'risk'
+      };
+      this.$_axios.get(url, {
+          params: sendData
+        }).then((response) => {
+          if(!response.data){
+            this.modulesNameList.list = [];
+            this.modulesNameList.default = '没有可选择板块';
+            this.sector = '';
+          } else {
+            if(response.data.code == '0'){
+              console.log(response.data.sectorlist)
+              this.modulesNameList.list = JSON.parse(JSON.stringify(response.data.sectorlist));
+              this.modulesNameList.default = response.data.sectorlist[0];
+              this.sector = response.data.sectorlist[0];
+            } else {
+              this.modulesNameList.list = [];
+              this.modulesNameList.default = '没有可选择板块';
+              this.sector = '';
+            }
+          }
+        }).catch((err) => {
+          
+        });
+    },
   },
   mounted(){
     this.queryCondition.start_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
     this.queryCondition.end_date = commonMethods.formatDateTime2(this.endDatePicker.defaultDate);
+    this.moduleInit();
   }
 }
 </script>

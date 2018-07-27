@@ -1,9 +1,9 @@
 <template>
   <div>
-    <!-- 我已关注的公司舆情 -->
+    <!-- 公司信息查询 -->
     <div>
       <div class="queryCondition-top">
-        <div class="queryCondition-title">我已关注的公司舆情</div>
+        <div class="queryCondition-title">公司信息查询</div>
         <div class="middle clearFloat">
           <!-- 查询条件框 -->
           <div>

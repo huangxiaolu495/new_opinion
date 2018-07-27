@@ -37,13 +37,13 @@
         <div class="left mt64">
           <input type="file" @change="handleFileChange($event)" ref="inputer" id="fileExport">
         </div> -->
-         <div class="uploadFiles">
-              <label for="fileExport">上传文件(csv、txt)等
-                <span class="fileExportBtn">{{selectFileName}}</span>
-              </label>
-              <span v-if="selectFileName !== '选择文件'" @click="clearFile" class="clearFile">清除文件</span>
-              <input type="file" id="fileExport" @change="handleFileChange($event)" ref="inputer">
-            </div>
+        <div class="uploadFiles">
+          <label for="fileExport">上传文件(csv、txt)等
+            <span class="fileExportBtn">{{selectFileName}}</span>
+          </label>
+          <span v-if="selectFileName !== '选择文件'" @click="clearFile" class="clearFile">清除文件</span>
+          <input type="file" id="fileExport" @change="handleFileChange($event)" ref="inputer">
+        </div>
         <div class="left mt130">
           <div @click="hightselect" class="queryBtn">高级搜索</div>
         </div>
@@ -79,7 +79,7 @@
                 {{item.news_content}}
                 <span @click="details(item, index)"> {{item.details}}</span>
               </td>
-              <td>{{item.risk_type}}</td>
+              <td id="risk_type">{{item.risk_type}}</td>
               <td class="data-content">
                 <input type="text" placeholder="请输入" class="input mtt2" v-model="item.signtag" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')">
                 <div @click="tagbtn(item,index)" class="queryBtn mtt">确定</div>
@@ -116,8 +116,8 @@
       </div>
     </div>
 
-    <div class="cover" v-show="maskshow"></div>
-    <div class="usercollection" v-show="usercollshow">
+    <div class="cover" v-if="maskshow"></div>
+    <div class="usercollection" v-if="usercollshow">
       <div class="modal">
         <div class="close" @click="close()">关闭弹框</div>
         <div v-if="isShowQueryResult2" class="queryResult mtll">
@@ -340,9 +340,9 @@ export default {
   methods: {
     handleFileChange(event) {
       this.file = event.target.files[0];
-      if(this.file){
+      if (this.file) {
         const type = this.file.name.slice(-4).toLowerCase();
-        if(type != '.txt' && type != '.csv'){
+        if (type != '.txt' && type != '.csv') {
           this.file = '';
           event.target.value = '';
           this.selectFileName = '选择文件';
@@ -350,11 +350,16 @@ export default {
           return;
         }
         event.target.value = '';
-        this.selectFileName = this.file.name;
+        if (this.file.name.length > 10) {
+          this.selectFileName = this.file.name.slice(0, 10) + '...';
+        }
+        else {
+          this.selectFileName = this.file.name;
+        }
       }
       console.log('file', this.file)
     },
-    clearFile(){
+    clearFile() {
       // inputer
       this.$refs.inputer = null;
       this.selectFileName = '选择文件';
@@ -390,14 +395,14 @@ export default {
       if (data[0] === '请选择') {
         this.selecttype = 0;
       }
-      this.selectdetail="";
+      this.selectdetail = "";
     },
     hightselect() {
-      if(this.show){
-        this.show=false;
+      if (this.show) {
+        this.show = false;
       }
-      else{
-      this.show = true;
+      else {
+        this.show = true;
       }
     },
     close() {
@@ -522,7 +527,7 @@ export default {
           else {
             item.is_favorite = "收藏";
           }
-          if (item.news_content && item.news_content.length >150) {
+          if (item.news_content && item.news_content.length > 150) {
             item.news_content = item.news_content.slice(0, 150) + '...';
             item.details = '...详情';
           }
@@ -557,17 +562,16 @@ export default {
     },
     tagbtn(item, index) {
       this.url = "http://10.25.24.51:10194/api/rest/nlp/bod/update_type?";
-      this.sendData = {
+      let sendData = {
         news_id: item.id,
         risk_type: item.signtag,
       };
       this.$_axios.get(this.url, {
-        params: this.sendData
+        params: sendData
       }).then(response => {
         // 显示查询结果
         if (response.data.result.update_result > 0) {
           alert("标签更新成功");
-
           this.dataList[index].risk_type = item.signtag;
           item.signtag = "";
         }
@@ -582,8 +586,12 @@ export default {
     //   this.items = search_item(this.msg);
     // },
     paginationSelect(pageNumber) {
+      this.url = "http://10.25.24.51:10194/api/rest/nlp/bod/query_news?";
       const sendData = JSON.parse(JSON.stringify(this.sendData));
       sendData.page = pageNumber;
+      sendData.pageSize = 10;
+      delete sendData.is_favorite;
+      delete sendData.news_id;
       console.log('sendData', sendData)
       let formData = new FormData();
       for (let key in sendData) {
@@ -611,7 +619,7 @@ export default {
           else {
             item.is_favorite = "收藏";
           }
-          if (item.news_content && item.news_content.length >150) {
+          if (item.news_content && item.news_content.length > 150) {
             item.news_content = item.news_content.slice(0, 150) + '...';
             item.details = '...详情';
           }
@@ -622,8 +630,10 @@ export default {
         });
     },
     paginationSelect2(pageNumber) {
+      this.url = "http://10.25.24.51:10194/api/rest/nlp/bod/query_news?";
       const sendData = JSON.parse(JSON.stringify(this.sendData));
       sendData.page = pageNumber;
+      sendData.pageSize = 10;
       console.log('sendData', sendData)
       let formData = new FormData();
       for (let key in sendData) {
@@ -651,7 +661,7 @@ export default {
           else {
             item.is_favorite = "收藏";
           }
-          if (item.news_content && item.news_content.length >150) {
+          if (item.news_content && item.news_content.length > 150) {
             item.news_content = item.news_content.slice(0, 150) + '...';
             item.details = '...详情';
           }
@@ -803,7 +813,7 @@ export default {
     // },
 
     exportExecl() {
-        this.sendFile = this.file;
+      this.sendFile = this.file;
       for (let key in this.sendData) {
         if (this.sendData[key] === '') {
           delete this.sendData[key];
@@ -823,9 +833,19 @@ export default {
       this.sendFile && formData.append('file', this.sendFile);
       formData.append('export', 1);
       console.log('sendData', this.sendData)
+      if (this.queryCondition.from_date && this.queryCondition.to_date) {
+        window.location.href = "http://10.25.24.51:10194/api/rest/nlp/bod/query_news?is_favorite=" + this.queryCondition.is_favorite + "&risk_type=" + this.queryCondition.risk_type + "&page=" + this.queryCondition.page + "&page_size=" + this.queryCondition.pageSize + "&file=" + this.sendFile + "&user=&key_info=" + this.queryCondition.key_info + "&from_date=" + this.queryCondition.from_date + "&to_date=" + this.queryCondition.to_date + "&export=1";
+      } else if (this.queryCondition.from_date && !this.queryCondition.to_date) {
+        window.location.href = "http://10.25.24.51:10194/api/rest/nlp/bod/query_news?is_favorite=" + this.queryCondition.is_favorite + "&risk_type=" + this.queryCondition.risk_type + "&page=" + this.queryCondition.page + "&page_size=" + this.queryCondition.pageSize + "&file=" + this.sendFile + "&user=&key_info=" + this.queryCondition.key_info + "&from_date=" + this.queryCondition.from_date + "&export=1";
+      }
+      else if (this.queryCondition.to_date && !this.queryCondition.from_date) {
+        window.location.href = "http://10.25.24.51:10194/api/rest/nlp/bod/query_news?is_favorite=" + this.queryCondition.is_favorite + "&risk_type=" + this.queryCondition.risk_type + "&page=" + this.queryCondition.page + "&page_size=" + this.queryCondition.pageSize + "&file=" + this.sendFile + "&user=&key_info=" + this.queryCondition.key_info + "&to_date=" + this.queryCondition.to_date + "&export=1";
+      }
+      else {
+        window.location.href = "http://10.25.24.51:10194/api/rest/nlp/bod/query_news?is_favorite=" + this.queryCondition.is_favorite + "&risk_type=" + this.queryCondition.risk_type + "&page=" + this.queryCondition.page + "&page_size=" + this.queryCondition.pageSize + "&file=" + this.sendFile + "&user=&key_info=" + this.queryCondition.key_info + "&export=1";
+      }
       // this.$_axios.post('http://10.25.26.232:10194/api/rest/nlp/bod/query_news?', formData, config).then(response => {
       // });
-      window.location.href = "http://10.25.24.51:10194/api/rest/nlp/bod/query_news?is_favorite=" + this.queryCondition.is_favorite + "&risk_type=" + this.queryCondition.risk_type + "&page=" + this.queryCondition.page + "&page_size=" + this.queryCondition.pageSize + "&file=" + this.sendFile + "&user=&key_info=" + this.queryCondition.key_info + "&from_date="+this.queryCondition.from_date+"&to_date="+this.queryCondition.to_date+"&export=1";
       // this.$_axios.post("http://10.25.24.51:10194/api/rest/nlp/bod/query_news?is_favorite=&risk_type=&page=1&page_size=10&keyword=&checked=&user=&key_info=&export=1").then(response => {
       // })
       //   .catch(err => {
@@ -842,7 +862,6 @@ body {
   font-size: 14px;
   font-family: "Arial";
   color: #000000;
-  overflow-x: hidden;
 }
 
 .execl {
@@ -856,9 +875,6 @@ body {
   .execlText {
     margin-left: -50px;
   }
-}
-html {
-  overflow-x: hidden;
 }
 
 h1 {
@@ -942,7 +958,7 @@ h2 {
   display: block;
 }
 .input {
-  width: 160px;
+  width: 130px;
   height: 25px;
   border: 1px solid #797979;
 }
@@ -972,18 +988,20 @@ h2 {
 .select {
   position: absolute;
   top: 95px;
-  left: 510px;
+  left: 520px;
 }
 .mt88 {
   margin-left: -88px;
 }
 
 .drop-down-box {
+  background-color: #fff;
   position: absolute;
   top: 24px;
   left: 178px;
   width: 129px;
   border: 1px solid #797979;
+  z-index: 2;
   span {
     display: inline-block;
     width: 100%;
@@ -1042,7 +1060,7 @@ h2 {
       width: 200px;
     }
     .tableTh:nth-child(3) {
-      width: 600px;
+      width: 400px;
     }
     .tableTh:nth-child(4) {
       width: 150px;
@@ -1134,41 +1152,41 @@ h2 {
   background-color: #f0f0f0;
 }
 
-.mttg{
-      margin-left: -63px;
-    margin-right: -90px;
+.mttg {
+  margin-left: -63px;
+  margin-right: -90px;
 }
 
-  .uploadFiles {
+.uploadFiles {
+  float: left;
+  input {
+    position: absolute;
+    width: 0;
+    height: 0;
+    opacity: 0;
+    z-index: -2;
+  }
+  label {
     float: left;
-    input {
-      position: absolute;
-      width: 0;
-      height: 0;
-      opacity: 0;
-      z-index: -2;
-    }
-    label{
-      float: left;
-      // width: 200px;
-      cursor: pointer;
-    }
-    .clearFile,
-    .fileExportBtn{
-      background-color: #EAEAEA;
-      padding: 5px;
-      border: 1px solid #797979;
-      border-radius: 5px;
-      cursor: pointer;
-    }
-    .fileExportBtn{
-      pointer-events: none;
-    }
+    // width: 200px;
+    cursor: pointer;
   }
+  .clearFile,
+  .fileExportBtn {
+    background-color: #eaeaea;
+    padding: 5px;
+    border: 1px solid #797979;
+    border-radius: 5px;
+    cursor: pointer;
+  }
+  .fileExportBtn {
+    pointer-events: none;
+  }
+}
 
-  .mt130{
-    margin-left:130px;
-  }
+.mt130 {
+  margin-left: 90px;
+}
 </style>
 
 

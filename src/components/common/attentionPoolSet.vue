@@ -5,7 +5,8 @@
         <h4 @click="switchTab(1)" :class="{active: nowTab == '1'}">我的关注池</h4>
         <h4 @click="switchTab(2)" class="marginLeft15" :class="{active: nowTab == '2'}">查找发行人</h4>
         <h4 @click="switchTab(3)" class="marginLeft15" :class="{active: nowTab == '3'}">发行人证券信息</h4>
-        <span @click="closeAttentionPool" class="close marginLeft85">×</span>
+        <!-- <span @click="closeAttentionPool" class="close marginLeft85">×</span> -->
+        <span onclick="window.history.go(-1)" class="close marginLeft85">×</span>
       </div>
       <div v-show="nowTab == '1'">
         <div class="poolList">
@@ -439,14 +440,27 @@ export default {
         this.isShowQueryResult = true;
         this.isShowIssuer = true;
         this.isShowSecurities = false;
-        const resultData = response.data.result.seccodes_names;
-        console.log(resultData)
-        this.securitiesList = JSON.parse(JSON.stringify(resultData));
-        this.paginationData.page_Count = Math.floor(this.securitiesList.length / 30)
-        this.paginationData.total_Count = this.securitiesList.length;
-        this.nowSecuritiesList = this.securitiesList.slice(0, 30);
+        console.log(response.data )
+        if(response.data.code == 0 && response.data.msg == 'query success'){
+          const resultData = response.data.result.seccodes_names;
+          this.securitiesList = JSON.parse(JSON.stringify(resultData));
+          this.paginationData.page_Count = Math.floor(this.securitiesList.length / 30)
+          this.paginationData.total_Count = this.securitiesList.length;
+          this.nowSecuritiesList = this.securitiesList.slice(0, 30);
+        } else {
+          this.paginationData.page_Count = 0;
+          this.paginationData.total_Count = 0;
+          this.nowSecuritiesList = [];
+        }
+        
       }).catch(err => {
         console.log(err);
+        this.isShowQueryResult = true;
+        this.isShowIssuer = true;
+        this.isShowSecurities = false;
+        this.paginationData.page_Count = 0;
+        this.paginationData.total_Count = 0;
+        this.nowSecuritiesList = [];
       });
     },
     typeListEvent(...data){

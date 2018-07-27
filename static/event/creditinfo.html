@@ -120,12 +120,7 @@
               <th style="width: 50px;">证券代码</th>
               <th style="width: 50px;">证券名称</th>
               <th style="width: 50px;">今日交易状态</th>
-              <th style="width: 10%;">同类事件数量</th>
               <th style="width: 100px;">来源</th>
-              <th style="width: 100px;">发生同类事件后股价上涨事件数占比(%)</th>
-              <th style="width: 100px;">发生同类事件后股价下降事件数占比(%)</th>
-              <th style="width: 50px;">平均涨幅(元)</th>
-              <th style="width: 50px;">平均跌幅(元)</th>
               <th style="width: 80px;">今日折算率</th>
               <th style="width: 80px;">今日融资保证金比例</th>
               <th style="width: 80px;">今日融券保证金比例</th>
@@ -135,9 +130,24 @@
           </tbody>
         </table>
 
-        <div class="ui-page-item">
+        <table class="mp-chart-table" style="margin-top:50px">
+          <thead>
+            <tr>
+              <th style="width: 80px;">风险类型</th>
+              <th style="width: 10%;">同类事件数量</th>
+              <th style="width: 100px;">发生同类事件后股价上涨事件数占比(%)</th>
+              <th style="width: 100px;">发生同类事件后股价下降事件数占比(%)</th>
+              <th style="width: 50px;">平均涨幅(元)</th>
+              <th style="width: 50px;">平均跌幅(元)</th>
+            </tr>
+          </thead>
+          <tbody id="detailData2">
+          </tbody>
+        </table>
+
+        <!-- <div class="ui-page-item">
           <div class="ui-public-page hide" id="_page_"></div>
-        </div>
+        </div> -->
       </div>
     </div>
 

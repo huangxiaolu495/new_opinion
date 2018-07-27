@@ -34,7 +34,9 @@
               <tr v-for="(item, index) of dataList" :key="index">
                 <td class="tableTd">{{item.SHOWTIME}}</td>
                 <!-- <td class="tableTd colorBule"><a :href="item.SOURCEURL" target="_bank">{{item.NOTICETITLE}}</a></td> -->
-                <td class="tableTd colorBule"><a :href="item.PURL" target="_bank">{{item.TITLE}}</a></td>
+                <td class="tableTd colorBule">
+                  <a :href="item.PURL" target="_bank">{{item.TITLE}}</a>
+                </td>
                 <td class="tableTd data-content">
                   <p v-html="item.CONTENT"></p>
                   <span @click="details(item, index)">{{item.details}}</span>
@@ -168,7 +170,7 @@ export default {
           console.log(err);
         });
     },
-    inputEvent(){
+    inputEvent() {
       this.queryCondition.keyword = commonMethods.checkName(this.queryCondition.keyword);
     },
     details(item, index) {
@@ -180,7 +182,7 @@ export default {
         item.CONTENT = this.resultData[index].CONTENT;
       }
     },
-    keywordEvent(...data){
+    keywordEvent(...data) {
       this.queryCondition.keyword = data[0];
     },
     startDateEvent(...data) {
@@ -227,7 +229,7 @@ export default {
 }
 .queryResult {
   table {
-    width: 900px;
+    width: 1180px;
     margin-top: 20px;
     border: 1px solid #797979;
     border-collapse: collapse;
@@ -248,13 +250,16 @@ export default {
       border: 1px solid #797979;
     }
     .tableTd:nth-child(1) {
-      width: 100px;
+      width: 150px;
     }
     .tableTd:nth-child(2) {
-      width: 160px;
+      width: 260px;
+    }
+    .tableTd:nth-child(3) {
+      width: 360px;
     }
     .tableTd:nth-child(4) {
-      width: 100px;
+      width: 150px;
     }
     .data-content {
       position: relative;

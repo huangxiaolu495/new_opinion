@@ -43,7 +43,7 @@ export default {
       this.$emit('keywordEvent',this.allKeyword);
     },
     inputEvent(){
-      this.nowKeyword = this.checkName(this.nowKeyword.trim());
+      // this.nowKeyword = this.checkName(this.nowKeyword.trim());
     },
     addKeyword(){
       if(this.nowKeyword){

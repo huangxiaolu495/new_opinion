@@ -32,7 +32,9 @@
                 <th v-for="(item, index) of titleData" :key="index" class="tableTh" width:100px>{{item}}</th>
               </tr>
               <tr v-for="(item, index) of dataList" :key="index">
-                <td class="colorBule"><a :href="item.URL" target="_bank">{{item.TITLE}}</a></td>
+                <td class="colorBule">
+                  <a :href="item.URL" target="_bank">{{item.TITLE}}</a>
+                </td>
                 <td>{{item.SHOWTIME}}</td>
                 <td class="data-content">
                   <p v-html="item.CONTENT"></p>
@@ -106,7 +108,7 @@ export default {
     keyword
   },
   methods: {
-    inputEvent(){
+    inputEvent() {
       this.queryCondition.keyword = commonMethods.checkName(this.queryCondition.keyword);
     },
     paginationSelect(pageNumber) {
@@ -180,12 +182,11 @@ export default {
         item.CONTENT = this.resultData[index].CONTENT;
       }
     },
-    keywordEvent(...data){
+    keywordEvent(...data) {
       this.queryCondition.keyword = data[0];
     },
     startDateEvent(...data) {
       this.queryCondition.from_date = data[0];
-      console.log(this.queryCondition)
     },
     endDateEvent(...data) {
       this.queryCondition.to_date = data[0];

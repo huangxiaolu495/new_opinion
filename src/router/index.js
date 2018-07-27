@@ -4,19 +4,16 @@ import opinion from '@/components/opinion'
 import monitor from '@/components/monitor/monitor'
 // 首页
 import homePage from '@/components/monitor/homePage/homePage'
-// 风险查询
-import riskQuery from '@/components/monitor/riskQuery/riskQuery'
 // 关联公司预警
 import companyWarning from '@/components/monitor/companyWarning/companyWarning'
-// 关注的公司舆情
-import concerncompany from '@/components/monitor/companyWarning/concerncompany'
 // 子公司舆情监控
 import subMonitoring from '@/components/monitor/subMonitoring/subMonitoring'
-// 子公司关注的公司舆情
-import subconcerncompany from '@/components/monitor/subMonitoring/subconcerncompany'
 // 黑天鹅事件
 import blackSwan from '@/components/monitor/blackSwan/blackSwan'
-
+// 用户管理
+import userSystem from '@/components/common/userSystemManagement'
+// 重点关注池
+import attentionPoolSet from '@/components/common/attentionPoolSet'
 
 // >>>首页子页面
 import homeContent from '@/components/monitor/homePage/homeContent'
@@ -111,20 +108,38 @@ import legislation from '@/components/monitor/homePage/legislation/legislation'
 // >>>首页子页面
 
 // >>>黑天鹅事件子页面
-
 import delistingWarning from '@/components/monitor/blackSwan/delistingWarning'
 import executives from '@/components/monitor/blackSwan/executives'
 import importantEvent from '@/components/monitor/blackSwan/importantEvent'
 
+// >>>关联公司预警子页面
+import queryInformation from '@/components/monitor/companyWarning/queryInformation'
+import concerncompany from '@/components/monitor/companyWarning/concerncompany'
+
+// >>>子公司舆情监控子页面
+import sub_queryInformation from '@/components/monitor/subMonitoring/queryInformation'
+import sub_concerncompany from '@/components/monitor/subMonitoring/concerncompany'
+
 Vue.use(Router)
 
 export default new Router({
-  mode: 'history',
+  // mode: 'history',
   base: './',
-  routes: [{
+  routes: [
+    {
       path: '/',
       name: 'opinion',
       component: opinion
+    },
+    {
+      path: '/userSystem',
+      name: 'userSystem',
+      component: userSystem
+    },
+    {
+      path: '/attentionPoolSet',
+      name: 'attentionPoolSet',
+      component: attentionPoolSet
     },
     {
       path: '/monitor',
@@ -316,12 +331,8 @@ export default new Router({
             },
             // >> 监管要求
           ]
-        },
+        }, 
         {
-          path: '/monitor/riskQuery',
-          name: 'riskQuery',
-          component: riskQuery
-        }, {
           path: '/monitor/companyWarning',
           name: 'companyWarning',
           component: companyWarning
@@ -336,11 +347,7 @@ export default new Router({
           name: 'subMonitoring',
           component: subMonitoring
         },
-        {
-          path: '/monitor/subconcerncompany',
-          name: 'subconcerncompany',
-          component: subconcerncompany
-        },
+        // 黑天鹅
         {
           path: '/monitor/blackSwan',
           name: 'blackSwan',
@@ -360,6 +367,42 @@ export default new Router({
               path: '/monitor/blackSwan/importantEvent',
               name: 'importantEvent',
               component: importantEvent
+            },
+          ]
+        },
+        // 关联公司预警
+        {
+          path: '/monitor/companyWarning',
+          name: 'companyWarning',
+          redirect: '/monitor/companyWarning/queryInformation',
+          component: companyWarning,
+          children: [{
+              path: '/monitor/companyWarning/queryInformation',
+              name: 'queryInformation',
+              component: queryInformation
+            },
+            {
+              path: '/monitor/companyWarning/concerncompany',
+              name: 'concerncompany',
+              component: concerncompany
+            },
+          ]
+        },
+        // 子公司舆情监控
+        {
+          path: '/monitor/subMonitoring',
+          name: 'subMonitoring',
+          redirect: '/monitor/subMonitoring/queryInformation',
+          component: subMonitoring,
+          children: [{
+              path: '/monitor/subMonitoring/queryInformation',
+              name: 'queryInformation',
+              component: sub_queryInformation
+            },
+            {
+              path: '/monitor/subMonitoring/concerncompany',
+              name: 'concerncompany',
+              component: sub_concerncompany
             },
           ]
         }

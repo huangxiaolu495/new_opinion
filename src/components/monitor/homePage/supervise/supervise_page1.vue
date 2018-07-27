@@ -34,12 +34,13 @@
             </thead>
             <tbody>
               <tr v-for="(item, index) of dataList" :key="index">
-                <td class="tableTd" @click="showDetails(item)">{{item.title}}</td>
+                <!-- @click="showDetails(item)" -->
+                <td class="tableTd colorBule"><a :href="item.url" target="_bank">{{item.title}}</a></td>
                 <td class="tableTd">{{item.category}}</td>
                 <td class="tableTd">{{item.publish_date}}</td>
-                <td class="tableTd">
+                <!-- <td class="tableTd">
                   <a :href="item.url" target="_bank">查看</a>
-                </td>
+                </td> -->
               </tr>
             </tbody>
           </table>
@@ -116,7 +117,7 @@ export default {
       },
       detailsData: {},
       categoryData: { title: '分类：', parentEvent: 'categoryEvent', default: '请选择', listWidth: 108, nowSelectWidth: 110, list: ['全部', '行政处罚', '市场禁入', '行政复议'] },
-      titleData: ['标题', '分类', '发文日期', '链接'],
+      titleData: ['标题', '分类', '发文日期'],
       dataList: [
         // {NOTICEDATE: '2018-01-01', NOTICETITLE: '2018-02-02',INFOBODYCONTENT: '正文内容正文内容正文内容', SOURCENAME: 'wwww'},
         // {NOTICEDATE: '2018-01-01', NOTICETITLE: '2018-02-02',INFOBODYCONTENT: '正文内容正文内容正文内容', SOURCENAME: 'wwww'},

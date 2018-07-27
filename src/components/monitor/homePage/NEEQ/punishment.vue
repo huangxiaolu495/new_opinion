@@ -18,8 +18,8 @@
             </div>
             <div class="floatLeft">
               <div class="Excel">
-              <span @click="exportExcel()" class="ExcelText">导出Excel</span>
-            </div>
+                <span @click="exportExcel()" class="ExcelText">导出Excel</span>
+              </div>
             </div>
           </div>
           <!-- 查询按钮 -->
@@ -33,24 +33,24 @@
         <table>
           <tbody>
             <tr>
-              <th v-for="(item, index) of tableData.th" 
-                  :key="index" class="title">
-                  {{item}}
+              <th v-for="(item, index) of tableData.th" :key="index" class="title">
+                {{item}}
               </th>
             </tr>
-            <tr v-for="(item, index) of tableData.tr" 
-                :key="index">
-                <td>{{item.news_date}}</td>
-                <td>{{item.news_title}}</td>
-                <td>
-                  <span v-for="(secondItem, secondIndex) of item.news_subject" :key="secondIndex" class="portionSpan">{{secondItem}}</span>
-                </td>
-                <td>
-                  <span v-for="(secondItem, secondIndex) of item.subject_legal_status" :key="secondIndex" class="portionSpan">{{secondItem}}</span>
-                </td>
-                <td>
-                  <span v-for="(secondItem, secondIndex) of item.disci_punishment" :key="secondIndex" class="portionSpan">{{secondItem}}</span>
-                </td>
+            <tr v-for="(item, index) of tableData.tr" :key="index">
+              <td>{{item.news_date}}</td>
+              <td>
+                <a :href="item.news_content" target="_bank">{{item.news_title}}</a>
+              </td>
+              <td>
+                <span v-for="(secondItem, secondIndex) of item.news_subject" :key="secondIndex" class="portionSpan">{{secondItem}}</span>
+              </td>
+              <td>
+                <span v-for="(secondItem, secondIndex) of item.subject_legal_status" :key="secondIndex" class="portionSpan">{{secondItem}}</span>
+              </td>
+              <td>
+                <span v-for="(secondItem, secondIndex) of item.disci_punishment" :key="secondIndex" class="portionSpan">{{secondItem}}</span>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -60,24 +60,22 @@
         <table id="ta">
           <tbody>
             <tr>
-              <th v-for="(item, index) of tableData.th" 
-                  :key="index" class="title">
-                  {{item}}
+              <th v-for="(item, index) of tableData.th" :key="index" class="title">
+                {{item}}
               </th>
             </tr>
-            <tr v-for="(item, index) of allData" 
-                :key="index">
-                <td>{{item.news_date}}</td>
-                <td>{{item.news_title}}</td>
-                <td>
-                  <span v-for="(secondItem, secondIndex) of item.news_subject" :key="secondIndex" class="portionSpan">{{secondItem}}</span>
-                </td>
-                <td>
-                  <span v-for="(secondItem, secondIndex) of item.subject_legal_status" :key="secondIndex" class="portionSpan">{{secondItem}}</span>
-                </td>
-                <td>
-                  <span v-for="(secondItem, secondIndex) of item.disci_punishment" :key="secondIndex" class="portionSpan">{{secondItem}}</span>
-                </td>
+            <tr v-for="(item, index) of allData" :key="index">
+              <td>{{item.news_date}}</td>
+              <td>{{item.news_title}}</td>
+              <td>
+                <span v-for="(secondItem, secondIndex) of item.news_subject" :key="secondIndex" class="portionSpan">{{secondItem}}</span>
+              </td>
+              <td>
+                <span v-for="(secondItem, secondIndex) of item.subject_legal_status" :key="secondIndex" class="portionSpan">{{secondItem}}</span>
+              </td>
+              <td>
+                <span v-for="(secondItem, secondIndex) of item.disci_punishment" :key="secondIndex" class="portionSpan">{{secondItem}}</span>
+              </td>
             </tr>
           </tbody>
         </table>
@@ -92,14 +90,14 @@ import datePicker from '@/components/common/datePicker'
 import commonMethods from '@/common/common.js'
 import keyword from '@/components/common/keyword'
 export default {
-  data(){
-    const now  = new Date();
+  data() {
+    const now = new Date();
     const week = now.getTime() - 31536000000;
-    return{
+    return {
       url: 'http://10.25.24.51:10189/api/risk/neeq_pub_info2?',
       isQueryResult: false,
       isExportExcel: false,
-      queryCondition:{
+      queryCondition: {
         keyword: '',
         start_date: '',
         end_date: '',
@@ -108,62 +106,62 @@ export default {
         page_size: 10
       },
       sendData: {},
-      paginationData:{
+      paginationData: {
         parentEvent: 'paginationSelect',
         page_Count: 0,
         total_Count: 0,
         current: 1
       },
-      startDatePicker:{
+      startDatePicker: {
         title: '日期：',
         parentEvent: 'startDateEvent',
         defaultDate: new Date(week)
       },
-      endDatePicker:{
+      endDatePicker: {
         title: '至：',
         parentEvent: 'endDateEvent',
         defaultDate: new Date()
       },
-      tableData:{
-        th:['日期', '监管公告', '责任主体', '主体法律身份', '纪律处分'],
+      tableData: {
+        th: ['日期', '监管公告', '责任主体', '主体法律身份', '纪律处分'],
         tr: [
-          {news_date: '2017-09-07', news_title: '关于给予唐山处分的决定', news_subject:['监管公告', '责任主体'], subject_legal_status: ['监管公告', '责任主体'], disci_punishment: ['监管公告', '责任主体']}
+          { news_date: '2017-09-07', news_title: '关于给予唐山处分的决定', news_subject: ['监管公告', '责任主体'], subject_legal_status: ['监管公告', '责任主体'], disci_punishment: ['监管公告', '责任主体'] }
         ]
       },
-      allData:[],
+      allData: [],
     }
   },
-  components:{
+  components: {
     pagination,
     datePicker,
     keyword
   },
-  methods:{
-    query(){
+  methods: {
+    query() {
       this.isQueryResult = false;
       this.isExportExcel = false;
       this.sendData = JSON.parse(JSON.stringify(this.queryCondition));
       console.log('sendData', this.sendData)
-      for(let key in this.sendData){
-        if(this.sendData[key] === ''){
+      for (let key in this.sendData) {
+        if (this.sendData[key] === '') {
           delete this.sendData[key];
         }
       }
-      console.log('sendData',this.sendData)
-      this.$_axios.get(this.url,{
-        params:this.sendData
+      console.log('sendData', this.sendData)
+      this.$_axios.get(this.url, {
+        params: this.sendData
       }).then(response => {
         const resultData = response.data.result;
         this.isQueryResult = true;
         console.log('监管公开信息-纪律处分', resultData);
         this.tableData.tr = JSON.parse(JSON.stringify(resultData.neeq_news));
         this.paginationData.total_Count = resultData.total_count;
-        if(resultData.total_count){
+        if (resultData.total_count) {
           this.paginationData.page_Count = Math.ceil(resultData.total_count / 10);
         } else {
           this.paginationData.page_Count = 0;
         }
-        
+
         this.tableData.tr.forEach(item => {
           item.news_subject = item.news_subject.split('&');
           item.subject_legal_status = item.subject_legal_status.split('&');
@@ -173,8 +171,8 @@ export default {
         const sendData = JSON.parse(JSON.stringify(this.sendData));
         sendData.page = 0;
         sendData.pagesize = 50;
-        this.$_axios.get(this.url,{
-          params:sendData
+        this.$_axios.get(this.url, {
+          params: sendData
         }).then(response => {
           const resultData = response.data.result;
           this.allData = JSON.parse(JSON.stringify(resultData.neeq_news));
@@ -185,20 +183,20 @@ export default {
           });
           this.isExportExcel = true;
         })
+          .catch(err => {
+            console.log(err);
+          });
+      })
         .catch(err => {
           console.log(err);
         });
-      })
-      .catch(err => {
-        console.log(err);
-      });
     },
-    paginationSelect(pageNumber){
+    paginationSelect(pageNumber) {
       const sendData = JSON.parse(JSON.stringify(this.sendData));
       sendData.page = pageNumber - 1;
-      console.log('sendData',sendData)
-      this.$_axios.get(this.url,{
-        params:sendData
+      console.log('sendData', sendData)
+      this.$_axios.get(this.url, {
+        params: sendData
       }).then(response => {
         this.isQueryResult = true;
         console.log('监管公开信息-纪律处分', response);
@@ -209,27 +207,27 @@ export default {
           item.disci_punishment = item.disci_punishment.split('&');
         });
       })
-      .catch(err => {
-        console.log(err);
-      });
+        .catch(err => {
+          console.log(err);
+        });
     },
-    inputEvent(){
+    inputEvent() {
       this.queryCondition.keyword = commonMethods.checkName(this.queryCondition.keyword);
     },
-    keywordEvent(...data){
+    keywordEvent(...data) {
       this.queryCondition.keyword = data[0];
     },
-    startDateEvent(...data){
+    startDateEvent(...data) {
       this.queryCondition.start_date = data[0];
     },
-    endDateEvent(...data){
+    endDateEvent(...data) {
       this.queryCondition.end_date = data[0];
     },
-    newsDateEvent(...data){
+    newsDateEvent(...data) {
       this.queryCondition.news_date = data[0];
     },
-    exportExcel(){
-      if(!this.isExportExcel) return;
+    exportExcel() {
+      if (!this.isExportExcel) return;
       function getExplorer() {
         let explorer = window.navigator.userAgent;
         //ie
@@ -299,20 +297,20 @@ export default {
         CollectGarbage();
       }
       var tableToExcel = (function () {
-      var uri = 'data:application/vnd.ms-excel;base64,',
-        template =
-        '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
-        base64 = function (s) {
-          return window.btoa(unescape(encodeURIComponent(s)))
-        },
-        // 下面这段函数作用是：将template中的变量替换为页面内容ctx获取到的值
-        format = function (s, c) {
-          return s.replace(/{(\w+)}/g,
-            function (m, p) {
-              return c[p];
-            }
-          )
-        };
+        var uri = 'data:application/vnd.ms-excel;base64,',
+          template =
+            '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
+          base64 = function (s) {
+            return window.btoa(unescape(encodeURIComponent(s)))
+          },
+          // 下面这段函数作用是：将template中的变量替换为页面内容ctx获取到的值
+          format = function (s, c) {
+            return s.replace(/{(\w+)}/g,
+              function (m, p) {
+                return c[p];
+              }
+            )
+          };
         return function (table, name) {
           if (!table.nodeType) {
             table = document.getElementById(table)
@@ -330,7 +328,7 @@ export default {
       method1('ta');
     }
   },
-  mounted(){
+  mounted() {
     this.queryCondition.start_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
     this.queryCondition.end_date = commonMethods.formatDateTime2(this.endDatePicker.defaultDate);
   }
@@ -338,7 +336,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.Excel{
+.Excel {
   width: 100px;
   height: 30px;
   margin-left: 45px;
@@ -346,51 +344,51 @@ export default {
   background-color: #fff;
   line-height: 30px;
   cursor: pointer;
-  .ExcelText{
+  .ExcelText {
     margin-left: 15px;
   }
 }
-.queryResult{
-  table{
+.queryResult {
+  table {
     width: 100%;
     border-collapse: collapse;
     border-top: 2px solid #a9a9a9;
-    background: #FFFFFF;
+    background: #ffffff;
   }
-  tbody{
+  tbody {
     // display: table-row-group;
     vertical-align: middle;
     border-color: inherit;
     border-collapse: collapse;
     word-wrap: break-word;
     word-break: break-all;
-    th{
+    th {
       height: 40px;
       line-height: 40px;
       border: 1px solid #797979;
       background-color: #f0f5f9;
     }
-    td{
+    td {
       border: 1px solid #797979;
       text-align: center;
       vertical-align: middle;
     }
-    .portionSpan{
+    .portionSpan {
       display: block;
       width: 100%;
       line-height: 25px;
       border-top: 1px solid #797979;
     }
-    .portionSpan:nth-child(1){
+    .portionSpan:nth-child(1) {
       border-top: none;
     }
-    .title:nth-child(1){
+    .title:nth-child(1) {
       width: 130px;
     }
-    .title:nth-child(3){
+    .title:nth-child(3) {
       width: 100px;
     }
-    .title:nth-child(4){
+    .title:nth-child(4) {
       width: 240px;
     }
   }

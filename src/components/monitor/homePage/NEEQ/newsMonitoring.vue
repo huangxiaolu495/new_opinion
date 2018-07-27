@@ -34,8 +34,12 @@
               <tr v-for="(item, index) of dataList" :key="index">
                 <td class="tableTd">{{item.NOTICEDATE}}</td>
                 <td class="tableTd">{{item.NOTICETITLE}}</td>
-                <td class="tableTd data-content">{{item.INFOBODYCONTENT}}<span @click="details(item, index)">{{item.details}}</span></td>
-                <td class="tableTd"><a :href="item.SOURCEURL" target="_bank">查看</a></td>
+                <td class="tableTd data-content">{{item.INFOBODYCONTENT}}
+                  <span @click="details(item, index)">{{item.details}}</span>
+                </td>
+                <td class="tableTd">
+                  <a :href="item.SOURCEURL" target="_bank">查看</a>
+                </td>
                 <td class="tableTd">{{item.SOURCENAME}}</td>
               </tr>
             </tbody>
@@ -53,12 +57,12 @@ import datePicker from '@/components/common/datePicker'
 import keyword from '@/components/common/keyword'
 import commonMethods from '@/common/common.js'
 export default {
-  data(){
+  data() {
     const week = new Date().getTime() - 86400000 * 7;
     return {
       url: 'http://10.25.24.51:10192/api/rest/nlp/risk/new_OTC_market',
       isQueryResult: false,
-      queryCondition:{
+      queryCondition: {
         keyword: '',
         page: 1,
         page_size: 10
@@ -74,28 +78,28 @@ export default {
         parentEvent: 'endDateEvent',
         defaultDate: new Date()
       },
-      paginationData:{
+      paginationData: {
         parentEvent: 'paginationSelect',
         page_Count: 0,
         total_Count: 0,
         current: 1
       },
-      titleData: [ '日期', '标题', '内容', '链接', '来源'],
+      titleData: ['日期', '标题', '内容', '链接', '来源'],
       dataList: [
-        {NOTICEDATE: '2018-01-01', NOTICETITLE: '2018-02-02',INFOBODYCONTENT: '正文内容正文内容正文内容', SOURCENAME: 'wwww'},
-        {NOTICEDATE: '2018-01-01', NOTICETITLE: '2018-02-02',INFOBODYCONTENT: '正文内容正文内容正文内容', SOURCENAME: 'wwww'},
-        {NOTICEDATE: '2018-01-01', NOTICETITLE: '2018-02-02',INFOBODYCONTENT: '正文内容正文内容正文内容', SOURCENAME: 'wwww'},
-        {NOTICEDATE: '2018-01-01', NOTICETITLE: '2018-02-02',INFOBODYCONTENT: '正文内容正文内容正文内容', SOURCENAME: 'wwww'},
+        { NOTICEDATE: '2018-01-01', NOTICETITLE: '2018-02-02', INFOBODYCONTENT: '正文内容正文内容正文内容', SOURCENAME: 'wwww' },
+        { NOTICEDATE: '2018-01-01', NOTICETITLE: '2018-02-02', INFOBODYCONTENT: '正文内容正文内容正文内容', SOURCENAME: 'wwww' },
+        { NOTICEDATE: '2018-01-01', NOTICETITLE: '2018-02-02', INFOBODYCONTENT: '正文内容正文内容正文内容', SOURCENAME: 'wwww' },
+        { NOTICEDATE: '2018-01-01', NOTICETITLE: '2018-02-02', INFOBODYCONTENT: '正文内容正文内容正文内容', SOURCENAME: 'wwww' },
       ],
     }
   },
-  components:{
+  components: {
     pagination,
     datePicker,
     keyword,
   },
-  methods:{
-    query(){
+  methods: {
+    query() {
       this.isQueryResult = false;
       this.sendData = JSON.parse(JSON.stringify(this.queryCondition));
       for (let key in this.sendData) {
@@ -107,62 +111,62 @@ export default {
       this.$_axios.get(this.url, {
         params: this.sendData
       }).then(response => {
-          console.log('新三板持仓股票舆情监控',response);
-          this.isQueryResult = true;
-          this.dataList = JSON.parse(JSON.stringify(response.data.result.Announce_List));
-          this.resultData = response.data.result.Announce_List;
-          this.paginationData.page_Count = response.data.result.Page_Count;
-          this.paginationData.total_Count = response.data.result.Total_Count;
-          this.dataList.forEach(item => {
-            // item.NOTICEDATE = item.NOTICEDATE ? new Date(item.NOTICEDATE).toLocaleDateString() : '';
-            if(item.INFOBODYCONTENT && item.INFOBODYCONTENT.length > 175){
-              item.INFOBODYCONTENT  = item.INFOBODYCONTENT.slice(0,175) + '...';
-              item.details  = '...详情';
-            }
-          });
-        })
+        console.log('新三板持仓股票舆情监控', response);
+        this.isQueryResult = true;
+        this.dataList = JSON.parse(JSON.stringify(response.data.result.Announce_List));
+        this.resultData = response.data.result.Announce_List;
+        this.paginationData.page_Count = response.data.result.Page_Count;
+        this.paginationData.total_Count = response.data.result.Total_Count;
+        this.dataList.forEach(item => {
+          // item.NOTICEDATE = item.NOTICEDATE ? new Date(item.NOTICEDATE).toLocaleDateString() : '';
+          if (item.INFOBODYCONTENT && item.INFOBODYCONTENT.length > 175) {
+            item.INFOBODYCONTENT = item.INFOBODYCONTENT.slice(0, 175) + '...';
+            item.details = '...详情';
+          }
+        });
+      })
         .catch(err => {
           console.log(err);
         });
     },
-    paginationSelect(pageNumber){
+    paginationSelect(pageNumber) {
       const sendData = JSON.parse(JSON.stringify(this.sendData));
       sendData.page = pageNumber;
       this.$_axios.get(this.url, {
         params: sendData
       }).then(response => {
-          console.log('新三板持仓股票舆情监控',response);
-          this.isQueryResult = true;
-          this.dataList = JSON.parse(JSON.stringify(response.data.result.Announce_List));
-          this.resultData = response.data.result.Announce_List;
-          this.dataList.forEach(item => {
-            // item.NOTICEDATE = item.NOTICEDATE ? new Date(item.NOTICEDATE).toLocaleDateString() : '';
-            if(item.INFOBODYCONTENT && item.INFOBODYCONTENT.length > 175){
-              item.INFOBODYCONTENT  = item.INFOBODYCONTENT.slice(0,175) + '...';
-              item.details  = '...详情';
-            }
-          });
-        })
+        console.log('新三板持仓股票舆情监控', response);
+        this.isQueryResult = true;
+        this.dataList = JSON.parse(JSON.stringify(response.data.result.Announce_List));
+        this.resultData = response.data.result.Announce_List;
+        this.dataList.forEach(item => {
+          // item.NOTICEDATE = item.NOTICEDATE ? new Date(item.NOTICEDATE).toLocaleDateString() : '';
+          if (item.INFOBODYCONTENT && item.INFOBODYCONTENT.length > 175) {
+            item.INFOBODYCONTENT = item.INFOBODYCONTENT.slice(0, 175) + '...';
+            item.details = '...详情';
+          }
+        });
+      })
         .catch(err => {
           console.log(err);
         });
     },
-    inputEvent(){
+    inputEvent() {
       this.queryCondition.keyword = commonMethods.checkName(this.queryCondition.keyword);
     },
-    keywordEvent(...data){
+    keywordEvent(...data) {
       this.queryCondition.keyword = data[0];
     },
-    startDateEvent(...data){
+    startDateEvent(...data) {
       this.queryCondition.from_date = data[0];
     },
-    endDateEvent(...data){
+    endDateEvent(...data) {
       this.queryCondition.to_date = data[0];
     },
-    details(item, index){
-      if(item.details == '收起'){
+    details(item, index) {
+      if (item.details == '收起') {
         item.details = '...详情';
-        item.INFOBODYCONTENT  = item.INFOBODYCONTENT.slice(0,175) + '...';
+        item.INFOBODYCONTENT = item.INFOBODYCONTENT.slice(0, 175) + '...';
       } else {
         item.details = '收起';
         item.INFOBODYCONTENT = this.resultData[index].INFOBODYCONTENT;
@@ -177,21 +181,21 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.queryConditionBox{
+.queryConditionBox {
   width: 100%;
   height: 70px;
   margin-top: 30px;
   border-bottom: 1px solid #797979;
-  >div{
+  > div {
     float: left;
   }
-  input{
+  input {
     width: 110px;
     height: 25px;
     text-align: left;
     line-height: 25px;
   }
-  .queryBtn{
+  .queryBtn {
     width: 75px;
     height: 30px;
     margin-left: 200px;
@@ -203,30 +207,30 @@ export default {
     border-radius: 5px;
   }
 }
-.queryResult{
-  table{
-    width: 900px;
+.queryResult {
+  table {
+    width: 1180px;
     margin-top: 20px;
     border: 1px solid #797979;
     border-collapse: collapse;
-    th{
+    th {
       height: 40px;
       line-height: 40px;
       border: 1px solid #797979;
       background-color: #f0f5f9;
     }
-    tr{
+    tr {
       border: 1px solid #797979;
     }
-    td{
+    td {
       text-align: center;
       vertical-align: middle;
       border: 1px solid #797979;
     }
-    .data-content{
+    .data-content {
       position: relative;
       text-align: left;
-      span{
+      span {
         position: absolute;
         bottom: 0;
         right: 0;
@@ -234,16 +238,16 @@ export default {
         color: blue;
       }
     }
-    .tableTd:nth-child(1){
+    .tableTd:nth-child(1) {
       width: 100px;
     }
-    .tableTd:nth-child(2){
+    .tableTd:nth-child(2) {
       width: 150px;
     }
-    .tableTd:nth-child(4){
+    .tableTd:nth-child(4) {
       width: 50px;
     }
-    .tableTd:nth-child(5){
+    .tableTd:nth-child(5) {
       width: 120px;
     }
   }

@@ -161,9 +161,9 @@ export default {
           console.log(err);
         });
     },
-    inputEvent(){
-      this.queryCondition.keyword = commonMethods.checkName(this.queryCondition.keyword);
-    },
+    // inputEvent(){
+    //   this.queryCondition.keyword = commonMethods.checkName(this.queryCondition.keyword);
+    // },
     details(item, index) {
       if (item.details == '收起') {
         item.details = '...详情';
