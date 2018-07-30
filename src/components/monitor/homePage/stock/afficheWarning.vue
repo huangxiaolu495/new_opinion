@@ -34,10 +34,12 @@
               <tr v-for="(item, index) of dataList" :key="index">
                 <td>{{item.stock_name}}</td>
                 <td>{{item.stock_code}}</td>
-                <td>{{item.notice_title}}</td>
-                <td class="data-content">{{item.notice_detail}}
+                <td>
+                   <a :href="item.file_url" target="_bank">{{item.notice_title}}</a>
+                  </td>
+                <!-- <td class="data-content">{{item.file_url}}
                   <span @click="details(item, index)">{{item.details}}</span>
-                </td>
+                </td> -->
                 <td>{{item.notice_date}}</td>
                 <td>{{item.notice_source}}</td>
                 <td>{{item.notice_type}}</td>
@@ -102,7 +104,7 @@ export default {
         total_Count: 0,
         current: 1
       },
-      titleData: ['股票名称', '股票代码', '公告标题', '公告内容', '公告时间', '公告源', '公告类别'],
+      titleData: ['股票名称', '股票代码', '公告标题', '公告时间', '公告源', '公告类别'],
       dataList: [],
     }
   },
@@ -130,10 +132,10 @@ export default {
         this.resultData = response.data.result.Announce_List;
         this.dataList.forEach(item => {
           // item.notice_date = item.notice_date ? commonMethods.formatDateTime(new Date(item.notice_date)) : '-';
-          if (item.notice_detail && item.notice_detail.length > 220) {
-            item.notice_detail = item.notice_detail.slice(0, 220) + '...';
-            item.details = '...详情';
-          }
+          // if (item.notice_detail && item.notice_detail.length > 220) {
+          //   item.notice_detail = item.notice_detail.slice(0, 220) + '...';
+          //   item.details = '...详情';
+          // }
         });
       })
         .catch(err => {
@@ -162,10 +164,10 @@ export default {
         this.paginationData.total_Count = response.data.result.Total_Count;
         this.dataList.forEach(item => {
           // item.notice_date = item.notice_date ? commonMethods.formatDateTime(new Date(item.notice_date)) : '-';
-          if (item.notice_detail && item.notice_detail.length > 220) {
-            item.notice_detail = item.notice_detail.slice(0, 220) + '...';
-            item.details = '...详情';
-          }
+          // if (item.notice_detail && item.notice_detail.length > 220) {
+          //   item.notice_detail = item.notice_detail.slice(0, 220) + '...';
+          //   item.details = '...详情';
+          // }
         });
       })
         .catch(err => {
