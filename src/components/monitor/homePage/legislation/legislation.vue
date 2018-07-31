@@ -38,9 +38,9 @@
                 <td>{{item.PUBLISHDATE}}</td>
                 <td>{{item.RULETYPENAME}}</td>
                 <td>{{item.COMPANYNAME}}</td>
-                <td class="data-content">{{item.INFOBODYCONTENT}}
+                <!-- <td class="data-content">{{item.INFOBODYCONTENT}}
                   <span @click="details(item, index)">{{item.details}}</span>
-                </td>
+                </td> -->
               </tr>
             </tbody>
           </table>
@@ -101,7 +101,7 @@ export default {
         total_Count: 0,
         current: 1
       },
-      titleData: ['标题', '发布日期', '法律法规类型', '发文机关名称', '正文内容'],
+      titleData: ['标题', '发布日期', '法律法规类型', '发文机关名称'],
       dataList: [],
       legislationList: {
         title: '发文机关名称：',

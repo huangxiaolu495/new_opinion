@@ -47,7 +47,10 @@
                 <td>{{item.columnname}}</td>
                 <td>{{item.importlevel}}</td>
                 <td>{{item.securitycode}}</td>
-                <td>{{item.securityname}}</td>
+                <td class="data-content">
+                    <p v-html="item.securityname"></p>
+                  <span @click="details(item, index)">{{item.details}}</span>
+                </td>
                 <td>{{item.securitytype}}</td>
               </tr>
             </tbody>
@@ -137,6 +140,16 @@ export default {
 
   },
   methods: {
+
+        details(item, index) {
+      if (item.details == '收起') {
+        item.details = '...详情';
+        item.securityname = item.securityname.slice(0,45) + '...';
+      } else {
+        item.details = '收起';
+        item.securityname = this.resultData[index].securityname.join('\r\n');
+      }
+    },
     inputCode(){
       const numberReg = /^[0-9]*$/;
       this.nowEquityNo = commonMethods.checkName(this.nowEquityNo.trim());
@@ -189,6 +202,10 @@ export default {
         this.resultData = response.data.result.result;
         this.dataList.forEach(item => {
           item.securityname = item.securityname.join('\r\n');
+            if (item.securityname && item.securityname.length > 45) {
+              item.securityname = `${item.securityname.slice(0, 45) + '...'}`;
+              item.details = '...详情';
+            }
         });
       })
         .catch(err => {
@@ -236,15 +253,19 @@ export default {
         this.hasResultData = true;
         console.log('基金 公告预警', response.data.result);
         this.dataList = JSON.parse(JSON.stringify(response.data.result.result));
-        this.resultData = response.data.result;
-        if(this.resultData.total_count){
-          this.paginationData.page_Count = Math.ceil(this.resultData.total_count / 10);
+        this.resultData = response.data.result.result;
+        if(response.data.result.total_count){
+          this.paginationData.page_Count = Math.ceil(response.data.result.total_count / 10);
         } else{
           this.paginationData.page_Count = 0;
         }
-        this.paginationData.total_Count = this.resultData.total_count;
+        this.paginationData.total_Count = response.data.result.total_count;
         this.dataList.forEach(item => {
           item.securityname = item.securityname.join('\r\n');
+            if (item.securityname && item.securityname.length >45) {
+              item.securityname = `${item.securityname.slice(0, 45) + '...'}`;
+              item.details = '...详情';
+            }
         });
       })
         .catch(err => {
