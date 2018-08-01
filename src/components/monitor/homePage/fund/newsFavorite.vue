@@ -131,6 +131,14 @@
                     <span @click="details(item, index)">{{item.details}}</span>
                   </td>
                   <td>{{item.SOURCE}}</td>
+                   <td>
+                    <div class="floatLeft2">
+                      <select class="form-control" style="width:100px;" v-model="item.risk_code">
+                        <option v-for="s in risk_codeList" :value="s.code" :key="s.code">{{s.title}}</option>
+                      </select>
+                      <button type="button" @click="saveItem(item)" class="btn btn-default">确定</button>
+                    </div>
+                  </td>
                   <td class="starBox">
                     <div class="starBg">
                       <span @click="choiceStar(secondItem, item, index)" v-for="secondItem of starNumber" :key="secondItem" class="iconfont icon-star"></span>
@@ -151,10 +159,12 @@
                       <div v-else></div>
                     </div>
                   </td>
-                  <!-- <td>
-                      <span v-if="item.is_favorite">已收藏<span @click="favorite(item, index, false)" class="updateBtn">取消</span></span>
-                      <span v-else @click="favorite(item, index, true)" class="updateBtn">加入收藏夹</span>
-                    </td> -->
+                <td>
+                    <span v-if="item.is_favorite">已收藏
+                      <span @click="favorite(item, index, false)" class="updateBtn">取消</span>
+                    </span>
+                    <span v-else @click="favorite(item, index, true)" class="updateBtn">加入收藏夹</span>
+                  </td>
                   <td>
                     <span v-if="item.finished">zhangxx已处理
                       <span @click="dispose(item, index, false)" class="updateBtn">取消</span>
@@ -237,7 +247,7 @@ export default {
         total_Count: 0,
         current: 1
       },
-      titleData: ['新闻时间', '新闻标题', '新闻内容', '新闻源', '重要性', '处理情况'],
+      titleData: ['新闻时间', '新闻标题', '新闻内容', '新闻源','风险类型', '重要性', '收藏','处理情况'],
       dataList: [],
       firstTypeList: [
         { type: '全部', check: false },
@@ -320,6 +330,72 @@ export default {
             { code: '590100', check: false, title: '其他风险类事件' },
           ]        },
       ],
+            risk_codeList: [
+        { code: " ", title: "无" },
+        { code: "518", title: "产品预警" },
+        { code: "519", title: "监管预警" },
+        { code: "510101", title: "债务违约、合同失信、债务展期" },
+        { code: "510102", title: "评级下调、列入观察或负面类展望、推迟评级" },
+        { code: "510103", title: "欺诈造假" },
+        { code: "510104", title: "承诺失信" },
+        { code: "510105", title: "公司挪用资金、未按约定使用资金" },
+        { code: "511100", title: "暂停交易、退市" },
+        { code: "511101", title: "股权质押、冻结或爆仓" },
+        { code: "511102", title: "股份解禁或减持" },
+        { code: "511103", title: "证券价格异常波动" },
+        { code: "512100", title: "发生亏损" },
+        { code: "512101", title: "盈利能力下降" },
+        { code: "512102", title: "公司资金流动性不足或资金来源异常" },
+        { code: "512103", title: "资不抵债、资产负债率过高" },
+        { code: "512104", title: "资产重大减值、资产异常" },
+        { code: "512105", title: "财务造假、不透明，财务数据存在真实性问题" },
+        { code: "512106", title: "放弃债权和财产" },
+        { code: "512107", title: "对外借款或对外担保过多,存在代偿风险" },
+        { code: "513100", title: "重组失败、重组取消或重组存在问题" },
+        { code: "513101", title: "经营方针、主营业务、经营范围发生重大变化" },
+        {
+          code: "513102",
+          title: "对外投资失误、参与其他公司股权之争、抛售公司资产"
+        },
+        { code: "513103", title: "虚假注资、抽逃资金、转移资产" },
+        { code: "513104", title: "国家或地方政府政策变动而造成影响" },
+        { code: "513105", title: "公司资产被查封、扣押、冻结、司法划转" },
+        {
+          code: "513106",
+          title: "公司经营出现问题、公司（项目）停产或半停产、业务减少"
+        },
+        { code: "513107", title: "公司发生减资、合并、分立、解散、破产" },
+        {
+          code: "513108",
+          title:
+            "关联企业或人（实际控制人、控股股东、供应商、客户、被担保企业、其他关联企业）出现问题"
+        },
+        {
+          code: "513109",
+          title: "投诉和诉讼事件、经济纠纷和环保问题等公共纠纷"
+        },
+        { code: "513110", title: "公司产品存在缺陷或存在问题" },
+        { code: "513111", title: "审批不通过事项或撤销公司某项经营资格" },
+        { code: "513112", title: "犯罪事件" },
+        { code: "513113", title: "公司违规或被问询" },
+        {
+          code: "514100",
+          title:
+            "公司控制权斗争、实际控制人发生变动、公司性质变动、公司股东持有的股份被司法划转"
+        },
+        { code: "514101", title: "处罚事件或问询事件" },
+        { code: "514102", title: "高管变动（异动）" },
+        { code: "514103", title: "员工（含高管）违规" },
+        { code: "514104", title: "拖欠员工工资、大量辞工或员工大面积离职" },
+        { code: "515100", title: "公司项目发生延期、手续不全、陷入问题" },
+        { code: "515101", title: "项目产能未达到预期或情况备受质疑的" },
+        { code: "516100", title: "担保人或抵押物出现纠纷或问题" },
+        {
+          code: "517100",
+          title: "地震、水灾、火灾、恐怖袭击；通讯、电力中断；战争"
+        },
+        { code: "590100", title: "其他风险类事件" }
+      ],
       file: '',
       sendFile: '',
     }
@@ -329,6 +405,35 @@ export default {
     datePicker,
   },
   methods: {
+        saveItem(s) {
+      let m = Object.assign({}, s);
+      m.news_id = m.INFOCODE;
+      m.imp_score = m.starNumber;
+      delete m.CONTENT;
+      delete m.details;
+      delete m.SHOWTIME;
+      delete m.SOURCE;
+      delete m.TITLE;
+      delete m.URL;
+      delete m.INFOCODE;
+
+      this.$_axios
+        .get(this.updateUrl, {
+          params: m
+        })
+        .then(response => {
+          // 结果
+          const resultData = response.data.result;
+          console.log("dispose处理数据", resultData);
+          if (resultData.update_result === 1) {
+            alert("风险类型设置成功");
+          }
+        })
+        .catch(err => {
+          debugger;
+          console.log(err);
+        });
+    },
     handleFileChange(event) {
       this.file = event.target.files[0];
       if(this.file){
@@ -548,6 +653,7 @@ export default {
       } else {
         sendData.is_favorite = '';
       }
+       sendData.imp_score = this.$store.startnumber;
       console.log('item', item)
       console.log('sendData', sendData)
       this.$_axios.get(this.updateUrl, {
@@ -580,6 +686,7 @@ export default {
           delete sendData[key];
         }
       }
+       sendData.imp_score = this.$store.startnumber;
       if (flag) {
         sendData.finished = '1';
       } else {
@@ -955,7 +1062,7 @@ export default {
       .nowStarNumber {
         position: absolute;
         top: 50%;
-        left: 25px;
+        left: 26px;
         transform: translate(0px, -10px);
         pointer-events: none;
         span {
@@ -981,21 +1088,50 @@ export default {
       border-radius: 5px;
       background-color: #f3f3f3;
     }
+    // .tableTh:nth-child(1) {
+    //   width: 75px;
+    // }
+    // .tableTh:nth-child(2) {
+    //   width: 145px;
+    // }
+    // .tableTh:nth-child(4) {
+    //   width: 90px;
+    // }
+    // .tableTh:nth-child(5){
+    //   width: 100px;
+    // }
+    // .tableTh:nth-child(6) {
+    //   width: 150px;
+    // }
+
     .tableTh:nth-child(1) {
       width: 75px;
     }
     .tableTh:nth-child(2) {
-      width: 145px;
+      width: 165px;
+    }
+    .tableTh:nth-child(3) {
+      width: 260px;
     }
     .tableTh:nth-child(4) {
-      width: 90px;
+      width: 75px;
     }
-    .tableTh:nth-child(5){
-      width: 100px;
+    .tableTh:nth-child(5) {
+      width: 180px;
     }
     .tableTh:nth-child(6) {
-      width: 150px;
+      width: 95px;
+    }
+    .tableTh:nth-child(7) {
+      width: 100px;
+    }
+    .tableTh:nth-child(8) {
+      width: 140px;
     }
   }
+}
+
+.floatLeft2 {
+  margin-left: 20px;
 }
 </style>

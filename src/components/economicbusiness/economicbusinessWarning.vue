@@ -23,7 +23,6 @@
         </div>
       </div>
     </div>
-
     <div v-if="isShowQueryResult" class="queryResult">
       <div v-if="hasResultData">
         <table>
@@ -49,6 +48,7 @@
         <pagination :prop="paginationData" @paginationSelect="paginationSelect"></pagination>
       </div>
       <div v-else>
+        <!-- <img class="center" src="@/img/loading.gif"/> -->
         <div class="loadEffect">
           <span></span>
           <span></span>

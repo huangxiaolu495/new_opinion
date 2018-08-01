@@ -1,5 +1,9 @@
 /*loading动画 */
 
+.center{
+  text-align: center
+}
+
 .loadEffect {
   width: 100px;
   height: 100px;

@@ -24,8 +24,8 @@
         </div>
       </div>
       <!-- 查询结果 -->
-      <div v-if="isQueryResult" class="queryResult">
-        <div>
+      <div v-if="isShowQueryResult" class="queryResult">
+        <div v-if="hasResultData">
           <table>
             <thead>
               <th v-for="(item, index) of titleData" :key="index">{{item}}</th>
@@ -46,12 +46,25 @@
           </table>
           <pagination :prop="paginationData" @paginationSelect="paginationSelect"></pagination>
         </div>
+        <div v-else>
+            <div class="loadEffect">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
+          </div>
       </div>
     </div>
   </div>
 </template>
 
 <script>
+import pullDownList from '@/components/common/pullDownList'
 import pagination from '@/components/common/pagination'
 import datePicker from '@/components/common/datePicker'
 import keyword from '@/components/common/keyword'
@@ -61,7 +74,8 @@ export default {
     const week = new Date().getTime() - 86400000 * 7;
     return {
       url: 'http://10.25.24.51:10192/api/rest/nlp/risk/new_OTC_market',
-      isQueryResult: false,
+      isShowQueryResult: false,
+           hasResultData: false,
       queryCondition: {
         keyword: '',
         page: 1,
@@ -94,13 +108,15 @@ export default {
     }
   },
   components: {
+    pullDownList,
     pagination,
     datePicker,
-    keyword,
+    keyword
   },
   methods: {
     query() {
-      this.isQueryResult = false;
+      this.isShowQueryResult = false;
+      this.hasResultData = false;
       this.sendData = JSON.parse(JSON.stringify(this.queryCondition));
       for (let key in this.sendData) {
         if (this.sendData[key] === '') {
@@ -112,7 +128,8 @@ export default {
         params: this.sendData
       }).then(response => {
         console.log('新三板持仓股票舆情监控', response);
-        this.isQueryResult = true;
+        this.isShowQueryResult = true;
+        this.hasResultData = true;
         this.dataList = JSON.parse(JSON.stringify(response.data.result.Announce_List));
         this.resultData = response.data.result.Announce_List;
         this.paginationData.page_Count = response.data.result.Page_Count;
@@ -136,7 +153,8 @@ export default {
         params: sendData
       }).then(response => {
         console.log('新三板持仓股票舆情监控', response);
-        this.isQueryResult = true;
+        this.isShowQueryResult = true;
+        this.hasResultData = true;
         this.dataList = JSON.parse(JSON.stringify(response.data.result.Announce_List));
         this.resultData = response.data.result.Announce_List;
         this.dataList.forEach(item => {

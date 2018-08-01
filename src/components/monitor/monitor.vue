@@ -102,8 +102,8 @@ export default {
 <style lang="less" scoped>
 .app {
   margin-left: 18px;
-  overflow-x: hidden;
-  overflow-y: auto;
+  // overflow-x: hidden;
+  // overflow-y: auto;
 }
 .monitor_top {
   width: 1455px;

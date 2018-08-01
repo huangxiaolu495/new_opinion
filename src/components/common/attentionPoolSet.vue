@@ -239,7 +239,7 @@ export default {
     },
     addToList(){
       const tempArr = [];
-      const url = 'http://10.25.24.51:10193/api/risk/attention_pool_set'
+      const url = 'http://10.29.137.74:10193/api/risk/attention_pool_set'
       const sendData = {
         userid: 'zhangxx',
         action: 'insert',
@@ -277,7 +277,7 @@ export default {
       this.isShowAddListQuery = false;
       this.isShowAddListPage = false;
       this.hasResultDataAddList = false;
-      const url = 'http://10.25.24.51:10193/api/risk/attention_base_query';
+      const url = 'http://10.29.137.74:10193/api/risk/attention_base_query';
       this.addListSendData = {
         companytype: this.queryAddList.companytype,
         keyword: this.queryAddList.keyword,
@@ -318,7 +318,7 @@ export default {
         userid: 'zhangxx',
         action: 'drop'
       }
-      this.$_axios.get('http://10.25.24.51:10193/api/risk/attention_pool_set', {
+      this.$_axios.get('http://10.29.137.74:10193/api/risk/attention_pool_set', {
         params: sendData
       }).then(response => {
         // 显示查询结果
@@ -333,7 +333,7 @@ export default {
       });
     },
     deleteList(){
-      const url = 'http://10.25.24.51:10193/api/risk/attention_pool_set';
+      const url = 'http://10.29.137.74:10193/api/risk/attention_pool_set';
       const tempArr = [];
       const indexArr = [];
       const sendData = {
@@ -378,7 +378,7 @@ export default {
       this.isShowSecurities = false;
       this.isShowQueryResult = false;
       this.isShowIssuer = false;
-      const url = 'http://10.25.24.51:10193/api/risk/seccode_issue_mapper';
+      const url = 'http://10.29.137.74:10193/api/risk/seccode_issue_mapper';
       const sendData = {
         seccode: this.queryIssuer.seccode,
         secname: this.queryIssuer.secname
@@ -428,7 +428,7 @@ export default {
     // 查询证券信息
     querySecuritiesEvent(){
       this.isShowQueryResult = false;
-      const url = 'http://10.25.24.51:10193/api/risk/issue_seccode_mapper';
+      const url = 'http://10.29.137.74:10193/api/risk/issue_seccode_mapper';
       const sendData = {
         issue: this.querySecurities.issue
       }
@@ -489,7 +489,7 @@ export default {
     }
   },
   mounted(){
-    const url = 'http://10.25.24.51:10193/api/risk/attention_pool_set';
+    const url = 'http://10.29.137.74:10193/api/risk/attention_pool_set';
     const sendData = {
       userid: 'zhangxx',
       action: 'query'
