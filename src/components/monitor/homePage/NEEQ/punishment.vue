@@ -163,9 +163,9 @@ export default {
         }
 
         this.tableData.tr.forEach(item => {
-          item.news_subject = item.news_subject.split('&');
-          item.subject_legal_status = item.subject_legal_status.split('&');
-          item.disci_punishment = item.disci_punishment.split('&');
+          item.news_subject = item.news_subject.split(' ');
+          item.subject_legal_status = item.subject_legal_status.split(' ');
+          item.disci_punishment = item.disci_punishment.split(' ');
         });
         // 请求所有数据
         const sendData = JSON.parse(JSON.stringify(this.sendData));
@@ -177,9 +177,9 @@ export default {
           const resultData = response.data.result;
           this.allData = JSON.parse(JSON.stringify(resultData.neeq_news));
           this.allData.forEach(item => {
-            item.news_subject = item.news_subject.split('&');
-            item.subject_legal_status = item.subject_legal_status.split('&');
-            item.disci_punishment = item.disci_punishment.split('&');
+            item.news_subject = item.news_subject.split(' ');
+            item.subject_legal_status = item.subject_legal_status.split(' ');
+            item.disci_punishment = item.disci_punishment.split(' ');
           });
           this.isExportExcel = true;
         })
@@ -202,9 +202,9 @@ export default {
         console.log('监管公开信息-纪律处分', response);
         this.tableData.tr = JSON.parse(JSON.stringify(response.data.result.neeq_news));
         this.tableData.tr.forEach(item => {
-          item.news_subject = item.news_subject.split('&');
-          item.subject_legal_status = item.subject_legal_status.split('&');
-          item.disci_punishment = item.disci_punishment.split('&');
+          item.news_subject = item.news_subject.split(' ');
+          item.subject_legal_status = item.subject_legal_status.split(' ');
+          item.disci_punishment = item.disci_punishment.split(' ');
         });
       })
         .catch(err => {
@@ -376,7 +376,8 @@ export default {
     .portionSpan {
       display: block;
       width: 100%;
-      line-height: 25px;
+      height: 80px;
+      padding: 30px;
       border-top: 1px solid #797979;
     }
     .portionSpan:nth-child(1) {
@@ -386,7 +387,7 @@ export default {
       width: 130px;
     }
     .title:nth-child(3) {
-      width: 100px;
+      width: 240px;
     }
     .title:nth-child(4) {
       width: 240px;
