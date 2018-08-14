@@ -115,6 +115,7 @@ import importantEvent from '@/components/monitor/blackSwan/importantEvent'
 // >>>关联公司预警子页面
 import queryInformation from '@/components/monitor/companyWarning/queryInformation'
 import concerncompany from '@/components/monitor/companyWarning/concerncompany'
+import companylist from '@/components/monitor/companyWarning/companylist'
 
 // >>>子公司舆情监控子页面
 import sub_queryInformation from '@/components/monitor/subMonitoring/queryInformation'
@@ -125,8 +126,7 @@ Vue.use(Router)
 export default new Router({
   // mode: 'history',
   base: './',
-  routes: [
-    {
+  routes: [{
       path: '/',
       name: 'opinion',
       component: opinion
@@ -331,7 +331,7 @@ export default new Router({
             },
             // >> 监管要求
           ]
-        }, 
+        },
         {
           path: '/monitor/companyWarning',
           name: 'companyWarning',
@@ -341,6 +341,11 @@ export default new Router({
           path: '/monitor/concerncompany',
           name: 'concerncompany',
           component: concerncompany
+        },
+        {
+          path: '/monitor/companylist',
+          name: 'companylist',
+          component: companylist
         },
         {
           path: '/monitor/subMonitoring',
@@ -385,6 +390,11 @@ export default new Router({
               path: '/monitor/companyWarning/concerncompany',
               name: 'concerncompany',
               component: concerncompany
+            },
+            {
+              path: '/monitor/companyWarning/companylist',
+              name: 'companylist',
+              component: companylist
             },
           ]
         },

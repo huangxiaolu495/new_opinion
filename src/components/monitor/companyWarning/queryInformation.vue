@@ -8,24 +8,17 @@
           <!-- 查询条件框 -->
           <div>
             <div class="floatLeft">
-              <date-picker :prop="startDatePicker" @startDateEvent="startDateEvent"></date-picker>
-            </div>
-            <div class="floatLeft">
-              <date-picker :prop="endDatePicker" @endDateEvent="endDateEvent"></date-picker>
-            </div>
-            <div class="floatLeft">
-              <keyword @keywordEvent="keywordEvent"></keyword>
+              公司名称关联词：<input type="text" placeholder="请输入关联公司名称" class="input" v-model="Keyword">
             </div>
           </div>
           <!-- 查询按钮 -->
           <div class="queryBtn">
-            <!-- <span @click="query">查询</span> -->
-            <span>查询</span>
+            <span @click="query">查询</span>
+            <!-- <span>查询</span> -->
           </div>
         </div>
       </div>
       <!-- 查询结果 -->
-      <div>数据筹备中，敬请期待！</div>
       <div v-if="isShowQueryResult" class="queryResult">
         <div v-if="hasResultData">
           <table>
@@ -34,13 +27,13 @@
                 <th v-for="(item, index) of titleData" :key="index" class="tableTh" width:100px>{{item}}</th>
               </tr>
               <tr v-for="(item, index) of dataList" :key="index">
-                <td class="colorBule"><a :href="item.URL" target="_bank">{{item.TITLE}}</a></td>
-                <td>{{item.SHOWTIME}}</td>
-                <td class="data-content">
-                  <p v-html="item.CONTENT"></p>
-                  <span @click="details(item, index)">{{item.details}}</span>
-                </td>
-                <td>{{item.SOURCE}}</td>
+                <!-- <td @click="companylist(item,index)">
+                  {{item.COMPANYNAME}}
+                </td> -->
+                <router-link :to="{name:'companylist',params:{companycode:item.COMPANYCODE}}">{{item.COMPANYNAME}}</router-link>
+                <td>{{item.COMPANYSNAME}}</td>
+                <td>{{item.ORGTYPE}}</td>
+                <td>{{item.NODETYPE}}</td>
               </tr>
             </tbody>
           </table>
@@ -72,7 +65,8 @@ export default {
   data() {
     const oneDayAfter = new Date().getTime() + 86400000;
     return {
-      url: 'http://10.25.24.51:10192/api/rest/nlp/risk/delist_caution?news_type=0&',
+      url: "http://10.25.24.51:10192/api/rest/nlp/risk/company_search?",
+      Keyword: "",
       isShowQueryResult: false,
       hasResultData: false,
       resultData: null,
@@ -82,23 +76,13 @@ export default {
         page_size: 10,
       },
       sendData: {},
-      startDatePicker: {
-        title: '日期：',
-        parentEvent: 'startDateEvent',
-        defaultDate: new Date()
-      },
-      endDatePicker: {
-        title: '至：',
-        parentEvent: 'endDateEvent',
-        defaultDate: new Date(oneDayAfter)
-      },
       paginationData: {
         parentEvent: 'paginationSelect',
         page_Count: 0,
         total_Count: 0,
         current: 1
       },
-      titleData: ['新闻标题', '新闻日期', '新闻内容', '新闻来源'],
+      titleData: ['公司名称', '公司简称', '公司类型', '实体类型'],
       dataList: [],
     }
   },
@@ -108,9 +92,6 @@ export default {
     keyword
   },
   methods: {
-    inputEvent(){
-      this.queryCondition.keyword = commonMethods.checkName(this.queryCondition.keyword);
-    },
     paginationSelect(pageNumber) {
       const sendData = JSON.parse(JSON.stringify(this.sendData));
       sendData.page = pageNumber;
@@ -119,18 +100,18 @@ export default {
         params: sendData
       }).then(response => {
         console.log('法律法规查询结果', response.data.result);
-        this.resultData = response.data.result.Announce_List;
+        this.resultData = response.data.result.Company_List;
         this.resultData.forEach(item => {
           item.CONTENT = item.CONTENT.toString().replace(/\\r\\n\\r\\n/g, "<br>");
           item.CONTENT = item.CONTENT.toString().replace(/\\r\\n/g, "<br>");
         });
         this.dataList = JSON.parse(JSON.stringify(this.resultData));
         this.dataList.forEach(item => {
-          // item.SHOWTIME = item.SHOWTIME ? commonMethods.formatDateTime(new Date(item.SHOWTIME)) : '-';
-          if (item.CONTENT && item.CONTENT.length > 210) {
-            item.CONTENT = item.CONTENT.slice(0, 210) + '...';
-            item.details = '...详情';
-          }
+          item.COMPANYSNAME = item.COMPANYSNAME;
+          item.COMPANYNAME = item.COMPANYNAME;
+          item.NODETYPE = item.NODETYPE;
+          item.ORGTYPE = item.ORGTYPE;
+          item.COMPANYCODE = item.COMPANYCODE;
         });
       })
         .catch(err => {
@@ -140,6 +121,7 @@ export default {
     query() {
       this.isShowQueryResult = true;
       this.hasResultData = false;
+      this.queryCondition.keyword = this.keyword;
       this.sendData = JSON.parse(JSON.stringify(this.queryCondition));
       for (let key in this.sendData) {
         if (!this.sendData[key]) {
@@ -147,60 +129,39 @@ export default {
         }
       }
       console.log('sendData', this.sendData)
+      this.url = "http://10.25.24.51:10192/api/rest/nlp/risk/company_search?";
       this.$_axios.get(this.url, {
         params: this.sendData
       }).then(response => {
         // 显示查询结果
         this.hasResultData = true;
-        console.log('法律法规查询结果', response.data.result);
-        this.resultData = response.data.result.Announce_List;
-        this.resultData.forEach(item => {
-          item.CONTENT = item.CONTENT.toString().replace(/\\r\\n\\r\\n/g, "<br>");
-          item.CONTENT = item.CONTENT.toString().replace(/\\r\\n/g, "<br>");
-        });
+        this.resultData = response.data.result.Company_List;
         this.dataList = JSON.parse(JSON.stringify(this.resultData));
         this.paginationData.page_Count = response.data.result.Page_Count;
         this.paginationData.total_Count = response.data.result.Total_Count;
         this.dataList.forEach(item => {
-          // item.SHOWTIME = item.SHOWTIME ? commonMethods.formatDateTime(new Date(item.SHOWTIME)) : '-';
-          if (item.CONTENT && item.CONTENT.length > 210) {
-            item.CONTENT = item.CONTENT.slice(0, 210) + '...';
-            item.details = '...详情';
-          }
+          item.COMPANYSNAME = item.COMPANYSNAME;
+          item.COMPANYNAME = item.COMPANYNAME;
+          item.NODETYPE = item.NODETYPE;
+          item.ORGTYPE = item.ORGTYPE;
+          item.COMPANYCODE = item.COMPANYCODE;
         });
       })
         .catch(err => {
           console.log(err);
         });
-    },
-    details(item, index) {
-      if (item.details == '收起') {
-        item.details = '...详情';
-        item.CONTENT = item.CONTENT.slice(0, 210) + '...';
-      } else {
-        item.details = '收起';
-        item.CONTENT = this.resultData[index].CONTENT;
-      }
-    },
-    keywordEvent(...data){
-      this.queryCondition.keyword = data[0];
-    },
-    startDateEvent(...data) {
-      this.queryCondition.from_date = data[0];
-      console.log(this.queryCondition)
-    },
-    endDateEvent(...data) {
-      this.queryCondition.to_date = data[0];
-    },
+    }
   },
   mounted() {
-    this.queryCondition.from_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
-    this.queryCondition.to_date = commonMethods.formatDateTime2(this.endDatePicker.defaultDate);
+
   }
 }
 </script>
 
 <style lang="less" scoped>
+.input {
+  width: 300px !important;
+}
 .queryConditionBox {
   width: 100%;
   height: 70px;
@@ -210,7 +171,7 @@ export default {
     float: left;
   }
   input {
-    width: 120px;
+    width: 320px;
     height: 25px;
     line-height: 25px;
   }
@@ -243,6 +204,11 @@ export default {
     tr {
       overflow: hidden;
       border: 1px solid #797979;
+      a {
+        display: block;
+        margin-top: 30px;
+        text-align: center;
+      }
     }
     td {
       height: 84px;
@@ -262,13 +228,13 @@ export default {
       }
     }
     .tableTh:nth-child(1) {
-      width: 145px;
+      width: 450px;
     }
     .tableTh:nth-child(2) {
-      width: 80px;
+      width: 150px;
     }
     .tableTh:nth-child(4) {
-      width: 90px;
+      width: 150px;
     }
   }
 }

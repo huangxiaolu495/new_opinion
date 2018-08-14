@@ -16,64 +16,64 @@
 
 <script>
 export default {
-  data(){
-    return{
+  data() {
+    return {
       sidebarData: [
-        {title: '公司信息查询', path: '/monitor/companyWarning/queryInformation'},
-        {title: '我已关注的公司舆情', path: '/monitor/companyWarning/concerncompany'},
+        { title: '公司信息查询', path: '/monitor/companyWarning/queryInformation' },
+        { title: '我已关注的公司舆情', path: '/monitor/companyWarning/concerncompany' },
       ]
     }
   },
-  computed:{
-    isRouterGoNow(){
+  computed: {
+    isRouterGoNow() {
       return this.$store.state.routerGoNow;
     }
   },
-  methods:{
-    routerGoNow(){
-        // this.$router.go(0)
-        // console.log(2222)
-        this.$store.state.routerGoNow = false;
-        let timer = window.setInterval(()=>{
-            this.$store.state.routerGoNow = true;
-            window.clearInterval(timer)
-            // console.log(0)
-        },0);
+  methods: {
+    routerGoNow() {
+      // this.$router.go(0)
+      // console.log(2222)
+      this.$store.state.routerGoNow = false;
+      let timer = window.setInterval(() => {
+        this.$store.state.routerGoNow = true;
+        window.clearInterval(timer)
+        // console.log(0)
+      }, 0);
     }
   }
 }
 </script>
 
 <style lang="less" scoped>
-.blackSwanBox{
+.blackSwanBox {
   width: 1500px;
 }
-.sidebarBox{
+.sidebarBox {
   float: left;
   width: 235px;
   margin-top: 45px;
   margin-left: 50px;
   border: 1px solid #797979;
-  li{
+  li {
     width: 100%;
     height: 46px;
     line-height: 46px;
     text-align: center;
     border-bottom: 1px solid #797979;
-    a{
+    a {
       display: inline-block;
       width: 100%;
       height: 100%;
       color: #fff;
       text-decoration: none;
-      background-color: #B50229;
+      background-color: #b50229;
     }
   }
-  li:nth-last-child(1){
+  li:nth-last-child(1) {
     border-bottom: none;
   }
 }
-.content{
+.content {
   float: left;
   width: 1180px;
   margin-top: 10px;
