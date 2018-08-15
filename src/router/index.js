@@ -116,6 +116,7 @@ import importantEvent from '@/components/monitor/blackSwan/importantEvent'
 import queryInformation from '@/components/monitor/companyWarning/queryInformation'
 import concerncompany from '@/components/monitor/companyWarning/concerncompany'
 import companylist from '@/components/monitor/companyWarning/companylist'
+import negativenews from '@/components/monitor/companyWarning/negativenews'
 
 // >>>子公司舆情监控子页面
 import sub_queryInformation from '@/components/monitor/subMonitoring/queryInformation'
@@ -337,16 +338,16 @@ export default new Router({
           name: 'companyWarning',
           component: companyWarning
         },
-        {
-          path: '/monitor/concerncompany',
-          name: 'concerncompany',
-          component: concerncompany
-        },
-        {
-          path: '/monitor/companylist',
-          name: 'companylist',
-          component: companylist
-        },
+        // {
+        //   path: '/monitor/concerncompany',
+        //   name: 'concerncompany',
+        //   component: concerncompany
+        // },
+        // {
+        //   path: '/monitor/companylist',
+        //   name: 'companylist',
+        //   component: companylist
+        // },
         {
           path: '/monitor/subMonitoring',
           name: 'subMonitoring',
@@ -396,6 +397,12 @@ export default new Router({
               name: 'companylist',
               component: companylist
             },
+            {
+              path: '/monitor/companyWarning/negativenews',
+              name: 'negativenews',
+              component: negativenews
+            },
+
           ]
         },
         // 子公司舆情监控

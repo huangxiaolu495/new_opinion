@@ -206,12 +206,12 @@ export default {
       border: 1px solid #797979;
       a {
         display: block;
-        margin-top: 30px;
+        margin-top: 20px;
         text-align: center;
       }
     }
     td {
-      height: 84px;
+      height: 60px;
       text-align: center;
       vertical-align: middle;
       border: 1px solid #797979;

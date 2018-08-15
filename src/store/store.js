@@ -18,7 +18,8 @@ export default new Vuex.Store({
     // 基金情况-基金列表
     fundList: [],
     startnumber: "",
-
+    //关联公司代码
+    company_code_list: "",
   },
 
 })

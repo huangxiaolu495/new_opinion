@@ -19,8 +19,7 @@ export default {
   data() {
     return {
       sidebarData: [
-        { title: '公司信息查询', path: '/monitor/companyWarning/queryInformation' },
-        { title: '我已关注的公司舆情', path: '/monitor/companyWarning/concerncompany' },
+        { title: '公司信息查询', path: '/monitor/companyWarning/queryInformation' }
       ]
     }
   },
