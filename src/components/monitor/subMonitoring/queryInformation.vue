@@ -3,7 +3,7 @@
     <!-- 公司信息查询 -->
     <div>
       <div class="queryCondition-top">
-        <div class="queryCondition-title">公司信息查询</div>
+        <div class="queryCondition-title">子公司信息查询</div>
         <div class="middle clearFloat">
           <!-- 查询条件框 -->
           <div>
@@ -16,16 +16,17 @@
             <div class="floatLeft">
               <keyword @keywordEvent="keywordEvent"></keyword>
             </div>
+            <div class="floatLeft ml10">
+              <pull-down-list :prop="selectList" @selectListEvent='selectListEvent'></pull-down-list>
+            </div>
           </div>
           <!-- 查询按钮 -->
           <div class="queryBtn">
-            <!-- <span @click="query">查询</span> -->
-            <span>查询</span>
+            <span @click="query">查询</span>
           </div>
         </div>
       </div>
       <!-- 查询结果 -->
-      <div>数据筹备中，敬请期待！</div>
       <div v-if="isShowQueryResult" class="queryResult">
         <div v-if="hasResultData">
           <table>
@@ -34,13 +35,12 @@
                 <th v-for="(item, index) of titleData" :key="index" class="tableTh" width:100px>{{item}}</th>
               </tr>
               <tr v-for="(item, index) of dataList" :key="index">
-                <td class="colorBule"><a :href="item.URL" target="_bank">{{item.TITLE}}</a></td>
-                <td>{{item.SHOWTIME}}</td>
-                <td class="data-content">
-                  <p v-html="item.CONTENT"></p>
-                  <span @click="details(item, index)">{{item.details}}</span>
+                <td>{{item.news_title}}</td>
+                <td>{{item.news_time}}</td>
+                <td class="colorBule">
+                  <a :href="item.news_url" target="_bank">{{item.news_url}}</a>
                 </td>
-                <td>{{item.SOURCE}}</td>
+                <td>{{item.news_source}}</td>
               </tr>
             </tbody>
           </table>
@@ -64,19 +64,23 @@
 </template>
 
 <script>
+import pullDownList from '@/components/common/pullDownList'
 import pagination from '@/components/common/pagination'
 import commonMethods from '@/common/common.js'
 import datePicker from '@/components/common/datePicker'
 import keyword from '@/components/common/keyword'
 export default {
   data() {
-    const oneDayAfter = new Date().getTime() + 86400000;
+    // const oneDayAfter = new Date().getTime() + 86400000;
     return {
-      url: 'http://10.25.24.51:10192/api/rest/nlp/risk/delist_caution?news_type=0&',
+      url: 'http://10.25.24.51:10194/api/rest/nlp/bod/query_subsidiary_news?',
       isShowQueryResult: false,
       hasResultData: false,
       resultData: null,
       queryCondition: {
+        from_date: '',
+        to_date: '',
+        key_info: '',
         keyword: '',
         page: 1,
         page_size: 10,
@@ -85,12 +89,12 @@ export default {
       startDatePicker: {
         title: '日期：',
         parentEvent: 'startDateEvent',
-        defaultDate: new Date()
+        // defaultDate: new Date()
       },
       endDatePicker: {
         title: '至：',
         parentEvent: 'endDateEvent',
-        defaultDate: new Date(oneDayAfter)
+        // defaultDate: new Date(oneDayAfter)
       },
       paginationData: {
         parentEvent: 'paginationSelect',
@@ -100,17 +104,34 @@ export default {
       },
       titleData: ['新闻标题', '新闻日期', '新闻内容', '新闻来源'],
       dataList: [],
+      selectList: {
+        title: '公司:',
+        parentEvent: 'selectListEvent',
+        default: '请选择',
+        listWidth: 143,
+        nowSelectWidth: 140,
+        nowSelectHeight: 25,
+        nowSelectFontSize: 13,
+        list: [
+          "万家基金",
+          "鲁证期货",
+          "鲁证创投",
+          "中泰资管",
+          "中泰国际",
+          "中泰创投",
+          "鲁证经贸",
+          "万家共赢",
+        ]
+      },
     }
   },
   components: {
+    pullDownList,
     pagination,
     datePicker,
     keyword
   },
   methods: {
-    inputEvent(){
-      this.queryCondition.keyword = commonMethods.checkName(this.queryCondition.keyword);
-    },
     paginationSelect(pageNumber) {
       const sendData = JSON.parse(JSON.stringify(this.sendData));
       sendData.page = pageNumber;
@@ -118,20 +139,8 @@ export default {
       this.$_axios.get(this.url, {
         params: sendData
       }).then(response => {
-        console.log('法律法规查询结果', response.data.result);
         this.resultData = response.data.result.Announce_List;
-        this.resultData.forEach(item => {
-          item.CONTENT = item.CONTENT.toString().replace(/\\r\\n\\r\\n/g, "<br>");
-          item.CONTENT = item.CONTENT.toString().replace(/\\r\\n/g, "<br>");
-        });
         this.dataList = JSON.parse(JSON.stringify(this.resultData));
-        this.dataList.forEach(item => {
-          // item.SHOWTIME = item.SHOWTIME ? commonMethods.formatDateTime(new Date(item.SHOWTIME)) : '-';
-          if (item.CONTENT && item.CONTENT.length > 210) {
-            item.CONTENT = item.CONTENT.slice(0, 210) + '...';
-            item.details = '...详情';
-          }
-        });
       })
         .catch(err => {
           console.log(err);
@@ -146,43 +155,21 @@ export default {
           delete this.sendData[key];
         }
       }
-      console.log('sendData', this.sendData)
       this.$_axios.get(this.url, {
         params: this.sendData
       }).then(response => {
         // 显示查询结果
         this.hasResultData = true;
-        console.log('法律法规查询结果', response.data.result);
         this.resultData = response.data.result.Announce_List;
-        this.resultData.forEach(item => {
-          item.CONTENT = item.CONTENT.toString().replace(/\\r\\n\\r\\n/g, "<br>");
-          item.CONTENT = item.CONTENT.toString().replace(/\\r\\n/g, "<br>");
-        });
         this.dataList = JSON.parse(JSON.stringify(this.resultData));
         this.paginationData.page_Count = response.data.result.Page_Count;
         this.paginationData.total_Count = response.data.result.Total_Count;
-        this.dataList.forEach(item => {
-          // item.SHOWTIME = item.SHOWTIME ? commonMethods.formatDateTime(new Date(item.SHOWTIME)) : '-';
-          if (item.CONTENT && item.CONTENT.length > 210) {
-            item.CONTENT = item.CONTENT.slice(0, 210) + '...';
-            item.details = '...详情';
-          }
-        });
       })
         .catch(err => {
           console.log(err);
         });
     },
-    details(item, index) {
-      if (item.details == '收起') {
-        item.details = '...详情';
-        item.CONTENT = item.CONTENT.slice(0, 210) + '...';
-      } else {
-        item.details = '收起';
-        item.CONTENT = this.resultData[index].CONTENT;
-      }
-    },
-    keywordEvent(...data){
+    keywordEvent(...data) {
       this.queryCondition.keyword = data[0];
     },
     startDateEvent(...data) {
@@ -191,6 +178,12 @@ export default {
     },
     endDateEvent(...data) {
       this.queryCondition.to_date = data[0];
+    },
+    selectListEvent(...data) {
+      this.queryCondition.key_info = data[0];
+      if (data[0] === '请选择') {
+        this.queryCondition.key_info = 0;
+      }
     },
   },
   mounted() {
@@ -201,6 +194,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.ml10 {
+  margin-left: 10px;
+}
 .queryConditionBox {
   width: 100%;
   height: 70px;
@@ -262,13 +258,16 @@ export default {
       }
     }
     .tableTh:nth-child(1) {
-      width: 145px;
+      width: 100x;
     }
     .tableTh:nth-child(2) {
-      width: 80px;
+      width: 150px;
+    }
+    .tableTh:nth-child(3) {
+      width: 450px;
     }
     .tableTh:nth-child(4) {
-      width: 90px;
+      width: 150px;
     }
   }
 }

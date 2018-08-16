@@ -16,16 +16,23 @@
             <div class="floatLeft">
               <keyword @keywordEvent="keywordEvent"></keyword>
             </div>
+            <div class="floatLeft ml10">
+              <pull-down-list :prop="selectList" @selectListEvent='selectListEvent'></pull-down-list>
+            </div>
+            <div class="floatLeft ml10" v-on:mouseleave="isShowDropDownList = false">
+              <input type="text" v-model="queryCondition.key_info" @input="inputCode" placeholder="请输入" class="input">
+              <span v-if="isShowDropDownList" class="drop-down-box">
+                <span v-for="(item, index) of dropDownList" :key="index" @click="dropDownEvent(item)">{{item}}</span>
+              </span>
+            </div>
           </div>
           <!-- 查询按钮 -->
           <div class="queryBtn">
-            <!-- <span @click="query">查询</span> -->
-            <span>查询</span>
+            <span @click="query">查询</span>
           </div>
         </div>
       </div>
       <!-- 查询结果 -->
-      <div>数据筹备中，敬请期待！</div>
       <div v-if="isShowQueryResult" class="queryResult">
         <div v-if="hasResultData">
           <table>
@@ -34,7 +41,9 @@
                 <th v-for="(item, index) of titleData" :key="index" class="tableTh" width:100px>{{item}}</th>
               </tr>
               <tr v-for="(item, index) of dataList" :key="index">
-                <td class="colorBule"><a :href="item.URL" target="_bank">{{item.TITLE}}</a></td>
+                <td class="colorBule">
+                  <a :href="item.URL" target="_bank">{{item.TITLE}}</a>
+                </td>
                 <td>{{item.SHOWTIME}}</td>
                 <td class="data-content">
                   <p v-html="item.CONTENT"></p>
@@ -64,6 +73,7 @@
 </template>
 
 <script>
+import pullDownList from '@/components/common/pullDownList'
 import pagination from '@/components/common/pagination'
 import commonMethods from '@/common/common.js'
 import datePicker from '@/components/common/datePicker'
@@ -72,10 +82,13 @@ export default {
   data() {
     const oneDayAfter = new Date().getTime() + 86400000;
     return {
-      url: 'http://10.25.24.51:10192/api/rest/nlp/risk/delist_caution?news_type=0&',
+      url: 'http://10.25.24.51:10194/api/rest/nlp/bod/query_project_news?',
       isShowQueryResult: false,
       hasResultData: false,
+      isShowDropDownList: false,
       resultData: null,
+      selecttype: "",
+      selectdetail: "",
       queryCondition: {
         keyword: '',
         page: 1,
@@ -100,38 +113,128 @@ export default {
       },
       titleData: ['新闻标题', '新闻日期', '新闻内容', '新闻来源'],
       dataList: [],
+      selectList: {
+        title: '公司:',
+        parentEvent: 'selectListEvent',
+        default: '请选择',
+        listWidth: 143,
+        nowSelectWidth: 140,
+        nowSelectHeight: 25,
+        nowSelectFontSize: 13,
+        list: [
+          "鲁证创投",
+          "鲁证新天使",
+          "齐鲁中泰",
+          "中泰创投",
+        ]
+      },
+      select1: [
+        "浙江京新药业股份有限公司",
+        "江苏五洋停车产业集团股份有限公司",
+        "山东双一科技股份有限公司",
+        "山东联诚精密制造股份有限公司",
+        "广州建通测绘地理信息技术股份有限公司",
+        "内蒙古金海新能源科技股份有限公司",
+        "大同新成新材料股份有限公司",
+        "大民种业股份有限公司",
+        "明冠新材料股份有限公司",
+        "山东明仁福瑞达制药股份有限公司",
+        "山东宏力热泵能源股份有限公司",
+        "山东思源水业工程有限公司",
+        "上海华师京城高新技术（集团）有限公司",
+        "湖北久顺畜禽实业有限公司",
+        "北京微吼时代科技有限公司",
+
+      ],
+      select2: [
+        "烟台三重技术股份有限公司",
+        "北京天天美尚信息科技股份有限公司",
+        "北京全景视觉网络科技股份有限公司",
+        "湖南咖啡之翼品牌管理股份有限公司",
+        "北京亲亲宝贝科技管理有限公司",
+        "新道科技股份有限公司",
+        "北京卡车之家信息技术股份有限公司",
+        "北京友宝在线科技股份有限公司",
+        "山东海钰生物股份有限公司",
+        "天津森罗科技股份有限公司",
+        "青岛容大高科软件股份有限公司",
+        "天天艾米（北京）网络科技有限公司",
+        "美核电气（济南）股份有限公司",
+        "山东省莱芜市汶河化工有限公司",
+        "金凯（辽宁）化工有限公司",
+        "中际联合（北京）科技股份有限公司",
+        "山大地纬软件股份有限公司",
+        "上海合全药业股份有限公司",
+        "翰博高新材料（合肥）股份有限公司",
+        "阿尔特汽车技术股份有限公司",
+        "北京友宝在线科技股份有限公司",
+        "北京影谱科技股份有限公司",
+        "山东泰莱电气股份有限公司",
+        "山大地纬软件股份有限公司",
+        "上海合全药业股份有限公司",
+        "新道科技股份有限公司",
+        "翰博高新材料（合肥）股份有限公司",
+        "北京卡车之家信息技术股份有限公司",
+        "阿尔特汽车技术股份有限公司",
+        "北京友宝在线科技股份有限公司",
+        "天天艾米（北京）网络科技有限公司",
+        "山东天业国际能源有限公司",
+        "重庆笛女影视传媒股份有限公司",
+        "北京流金岁月文化传播股份有限公司",
+        "山东地矿集团有限公司",
+        "滨州容众教育科技有限公司",
+        "莱芜中泰股权投资基金",
+        "莱芜中泰安盈创业投资基金",
+        "山东中泰天使创业投资基金企业",
+      ],
+      select3: [
+        "威海恒瑞新型包装材料有限公司",
+        "厦门福慧达果蔬股份有限公司",
+        "大洋泊车股份有限公司",
+        "中悦浦利莱环保科技有限公司",
+        "青岛青禾人造草坪股份有限公司",
+        "山东远大特材科技股份有限公司",
+        "江苏日久光电股份有限公司",
+        "威海恒瑞新型包装材料有限公司",
+        "江苏日久光电股份有限公司",
+        "大洋泊车股份有限公司",
+        "青岛青禾人造草坪股份有限公司",
+        "山东同科供应链股份有限公司",
+        "江苏日久光电股份有限公司",
+        "威海恒瑞新型包装材料有限公司",
+        "山大地纬软件股份有限公司",
+        "万华化学集团股份有限公司",
+        "威海市中泰齐东投资中心",
+        "山东中泰齐东世华节能投资中心",
+        "山东中泰齐东信息产业发展投资中心",
+        "威海中泰齐东蓝色并购投资中心",
+      ],
+      select4: [
+        "山东红牛金融服务有限公司",
+        "鸿禧能源",
+        "海尔厨房",
+      ],
+      dropDownList: [],
     }
   },
   components: {
+    pullDownList,
     pagination,
     datePicker,
     keyword
   },
   methods: {
-    inputEvent(){
+    inputEvent() {
       this.queryCondition.keyword = commonMethods.checkName(this.queryCondition.keyword);
     },
     paginationSelect(pageNumber) {
       const sendData = JSON.parse(JSON.stringify(this.sendData));
       sendData.page = pageNumber;
-      console.log('sendData', sendData)
       this.$_axios.get(this.url, {
         params: sendData
       }).then(response => {
-        console.log('法律法规查询结果', response.data.result);
         this.resultData = response.data.result.Announce_List;
-        this.resultData.forEach(item => {
-          item.CONTENT = item.CONTENT.toString().replace(/\\r\\n\\r\\n/g, "<br>");
-          item.CONTENT = item.CONTENT.toString().replace(/\\r\\n/g, "<br>");
-        });
         this.dataList = JSON.parse(JSON.stringify(this.resultData));
-        this.dataList.forEach(item => {
-          // item.SHOWTIME = item.SHOWTIME ? commonMethods.formatDateTime(new Date(item.SHOWTIME)) : '-';
-          if (item.CONTENT && item.CONTENT.length > 210) {
-            item.CONTENT = item.CONTENT.slice(0, 210) + '...';
-            item.details = '...详情';
-          }
-        });
       })
         .catch(err => {
           console.log(err);
@@ -146,43 +249,21 @@ export default {
           delete this.sendData[key];
         }
       }
-      console.log('sendData', this.sendData)
       this.$_axios.get(this.url, {
         params: this.sendData
       }).then(response => {
         // 显示查询结果
         this.hasResultData = true;
-        console.log('法律法规查询结果', response.data.result);
         this.resultData = response.data.result.Announce_List;
-        this.resultData.forEach(item => {
-          item.CONTENT = item.CONTENT.toString().replace(/\\r\\n\\r\\n/g, "<br>");
-          item.CONTENT = item.CONTENT.toString().replace(/\\r\\n/g, "<br>");
-        });
         this.dataList = JSON.parse(JSON.stringify(this.resultData));
         this.paginationData.page_Count = response.data.result.Page_Count;
         this.paginationData.total_Count = response.data.result.Total_Count;
-        this.dataList.forEach(item => {
-          // item.SHOWTIME = item.SHOWTIME ? commonMethods.formatDateTime(new Date(item.SHOWTIME)) : '-';
-          if (item.CONTENT && item.CONTENT.length > 210) {
-            item.CONTENT = item.CONTENT.slice(0, 210) + '...';
-            item.details = '...详情';
-          }
-        });
       })
         .catch(err => {
           console.log(err);
         });
     },
-    details(item, index) {
-      if (item.details == '收起') {
-        item.details = '...详情';
-        item.CONTENT = item.CONTENT.slice(0, 210) + '...';
-      } else {
-        item.details = '收起';
-        item.CONTENT = this.resultData[index].CONTENT;
-      }
-    },
-    keywordEvent(...data){
+    keywordEvent(...data) {
       this.queryCondition.keyword = data[0];
     },
     startDateEvent(...data) {
@@ -191,6 +272,42 @@ export default {
     },
     endDateEvent(...data) {
       this.queryCondition.to_date = data[0];
+    },
+    selectListEvent(...data) {
+      this.selecttype = data[0];
+    },
+    inputCode() {
+      const tempArr = [];
+      if (this.selecttype == "鲁证创投") {
+        this.select1.forEach(element => {
+          tempArr.push(element);
+        });
+      }
+      else if (this.selecttype == "鲁证新天使") {
+        this.select2.forEach(element => {
+          tempArr.push(element);
+        });
+      }
+      else if (this.selecttype == "齐鲁中泰") {
+        this.select3.forEach(element => {
+          tempArr.push(element);
+        });
+      }
+      else if (this.selecttype == "中泰创投") {
+        this.select4.forEach(element => {
+          tempArr.push(element);
+        });
+      }
+      if (tempArr.length > 5) {
+        this.dropDownList = tempArr.slice(0, 5);
+      } else {
+        this.dropDownList = tempArr;
+      }
+      this.isShowDropDownList = true;
+    },
+    dropDownEvent(item) {
+      this.queryCondition.key_info = item;
+      this.isShowDropDownList = false;
     },
   },
   mounted() {
@@ -201,6 +318,32 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.ml10 {
+  margin-left: 10px;
+}
+
+.drop-down-box {
+  background-color: #fff;
+  position: absolute;
+  top: 73px;
+  left: 683px;
+  width: 129px;
+  border: 1px solid #797979;
+  z-index: 2;
+  span {
+    display: inline-block;
+    width: 100%;
+    height: 25px;
+    line-height: 25px;
+    cursor: pointer;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+  }
+  span:hover {
+    background-color: deepskyblue;
+  }
+}
 .queryConditionBox {
   width: 100%;
   height: 70px;
@@ -262,13 +405,16 @@ export default {
       }
     }
     .tableTh:nth-child(1) {
-      width: 145px;
+      width: 100x;
     }
     .tableTh:nth-child(2) {
-      width: 80px;
+      width: 150px;
+    }
+    .tableTh:nth-child(3) {
+      width: 450px;
     }
     .tableTh:nth-child(4) {
-      width: 90px;
+      width: 150px;
     }
   }
 }

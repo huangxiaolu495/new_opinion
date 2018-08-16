@@ -53,7 +53,6 @@
           <pull-down-list :prop="selectList" @selectListEvent='selectListEvent'></pull-down-list>
         </div>
         <div class="width265 left mt88" v-on:mouseleave="isShowDropDownList = false">
-          <!-- <input type="text" placeholder="请输入" class="input" v-model="msg"> -->
           <input type="text" v-model="selectdetail" @input="inputCode" placeholder="请输入" class="input">
           <span v-if="isShowDropDownList" class="drop-down-box">
             <span v-for="(item, index) of dropDownList" :key="index" @click="dropDownEvent(item)">{{item}}</span>
@@ -180,6 +179,7 @@ export default {
       selectFileName: '选择文件',
       flKeyword: "",
       Keyword: "",
+      dropDownList: [],
       show: false,
       maskshow: false,
       usercollshow: false,
