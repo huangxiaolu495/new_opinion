@@ -71,7 +71,7 @@ import datePicker from '@/components/common/datePicker'
 import keyword from '@/components/common/keyword'
 export default {
   data() {
-    // const oneDayAfter = new Date().getTime() + 86400000;
+    const oneDayAfter = new Date().getTime() + 86400000;
     return {
       url: 'http://10.25.24.51:10194/api/rest/nlp/bod/query_subsidiary_news?',
       isShowQueryResult: false,
@@ -89,12 +89,12 @@ export default {
       startDatePicker: {
         title: '日期：',
         parentEvent: 'startDateEvent',
-        // defaultDate: new Date()
+        defaultDate: new Date()
       },
       endDatePicker: {
         title: '至：',
         parentEvent: 'endDateEvent',
-        // defaultDate: new Date(oneDayAfter)
+        defaultDate: new Date(oneDayAfter)
       },
       paginationData: {
         parentEvent: 'paginationSelect',

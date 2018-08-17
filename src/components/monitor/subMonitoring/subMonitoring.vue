@@ -20,7 +20,7 @@ export default {
     return {
       sidebarData: [
         { title: '子公司舆情', path: '/monitor/subMonitoring/queryInformation' },
-        { title: '我已关注的公司舆情', path: '/monitor/subMonitoring/concerncompany' },
+        { title: '投资项目舆情', path: '/monitor/subMonitoring/concerncompany' },
       ]
     }
   },

@@ -3,7 +3,7 @@
     <!-- 我已关注的公司舆情 -->
     <div>
       <div class="queryCondition-top">
-        <div class="queryCondition-title">我已关注的公司舆情</div>
+        <div class="queryCondition-title">投资项目舆情</div>
         <div class="middle clearFloat">
           <!-- 查询条件框 -->
           <div>
@@ -16,20 +16,25 @@
             <div class="floatLeft">
               <keyword @keywordEvent="keywordEvent"></keyword>
             </div>
-            <div class="floatLeft ml10">
-              <pull-down-list :prop="selectList" @selectListEvent='selectListEvent'></pull-down-list>
-            </div>
-            <div class="floatLeft ml10" v-on:mouseleave="isShowDropDownList = false">
-              <input type="text" v-model="queryCondition.key_info" @input="inputCode" placeholder="请输入" class="input">
-              <span v-if="isShowDropDownList" class="drop-down-box">
-                <span v-for="(item, index) of dropDownList" :key="index" @click="dropDownEvent(item)">{{item}}</span>
-              </span>
-            </div>
           </div>
-          <!-- 查询按钮 -->
-          <div class="queryBtn">
-            <span @click="query">查询</span>
+        </div>
+        <div class="mt15 clearFloat">
+          <div class="floatLeft">
+            <pull-down-list :prop="selectList" @selectListEvent='selectListEvent'></pull-down-list>
           </div>
+          <div class="floatLeft ml10" v-on:mouseleave="isShowDropDownList = false">
+            <input type="text" v-model="queryCondition.key_info" @input="inputCode" placeholder="请输入" class="input">
+            <span v-if="isShowDropDownList" class="drop-down-box">
+              <span v-for="(item, index) of dropDownList" :key="index" @click="dropDownEvent(item)">{{item}}</span>
+            </span>
+          </div>
+          <div class="floatLeft ml10">
+            <pull-down-list :prop="selectList2" @selectListEvent2='selectListEvent2'></pull-down-list>
+          </div>
+        </div>
+        <!-- 查询按钮 -->
+        <div class="queryBtn">
+          <span @click="query">查询</span>
         </div>
       </div>
       <!-- 查询结果 -->
@@ -42,14 +47,13 @@
               </tr>
               <tr v-for="(item, index) of dataList" :key="index">
                 <td class="colorBule">
-                  <a :href="item.URL" target="_bank">{{item.TITLE}}</a>
+                  {{item.news_title}}
                 </td>
-                <td>{{item.SHOWTIME}}</td>
-                <td class="data-content">
-                  <p v-html="item.CONTENT"></p>
-                  <span @click="details(item, index)">{{item.details}}</span>
+                <td>{{item.news_time}}</td>
+                <td>
+                  <a :href="item.news_url" target="_bank">{{item.news_url}}</a>
                 </td>
-                <td>{{item.SOURCE}}</td>
+                <td>{{item.news_source}}</td>
               </tr>
             </tbody>
           </table>
@@ -81,6 +85,7 @@ import keyword from '@/components/common/keyword'
 export default {
   data() {
     const oneDayAfter = new Date().getTime() + 86400000;
+    const oneweek = new Date().getTime() - 604800000;
     return {
       url: 'http://10.25.24.51:10194/api/rest/nlp/bod/query_project_news?',
       isShowQueryResult: false,
@@ -89,6 +94,7 @@ export default {
       resultData: null,
       selecttype: "",
       selectdetail: "",
+      updatetime: "",
       queryCondition: {
         keyword: '',
         page: 1,
@@ -126,6 +132,19 @@ export default {
           "鲁证新天使",
           "齐鲁中泰",
           "中泰创投",
+        ]
+      },
+      selectList2: {
+        title: '',
+        parentEvent: 'selectListEvent2',
+        default: '请选择',
+        listWidth: 143,
+        nowSelectWidth: 140,
+        nowSelectHeight: 25,
+        nowSelectFontSize: 13,
+        list: [
+          "存续舆情事件",
+          "新增舆情事件"
         ]
       },
       select1: [
@@ -268,13 +287,28 @@ export default {
     },
     startDateEvent(...data) {
       this.queryCondition.from_date = data[0];
-      console.log(this.queryCondition)
     },
     endDateEvent(...data) {
       this.queryCondition.to_date = data[0];
     },
     selectListEvent(...data) {
       this.selecttype = data[0];
+    },
+    selectListEvent2(...data) {
+      this.updatetime = data[0];
+      if (this.updatetime == "存续舆情事件") {
+        const oneweek = new Date().getTime() - 604800000;
+        this.startDatePicker.defaultDate = new Date(oneweek);
+        this.$emit("startDateEvent", new Date(oneweek));
+        // this.$set(new Date(), this.startDatePicker.defaultDate, this.startDatePicker.value);
+        this.queryCondition.from_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
+        this.queryCondition.to_date = "";
+      } else if (this.updatetime == "新增舆情事件") {
+        const eightday = new Date().getTime() - 691200000;
+        this.endDatePicker.defaultDate = new Date(eightday);
+        this.queryCondition.to_date = commonMethods.formatDateTime2(this.endDatePicker.defaultDate);
+        this.queryCondition.from_date = "";
+      }
     },
     inputCode() {
       const tempArr = [];
@@ -310,6 +344,11 @@ export default {
       this.isShowDropDownList = false;
     },
   },
+  watch: {
+    defaultDate(val, oldval) {
+      console.log("a: " + val, oldVal);
+    }
+  },
   mounted() {
     this.queryCondition.from_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
     this.queryCondition.to_date = commonMethods.formatDateTime2(this.endDatePicker.defaultDate);
@@ -318,6 +357,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.mt15 {
+  padding: 0 0 15px;
+}
 .ml10 {
   margin-left: 10px;
 }
@@ -325,9 +367,9 @@ export default {
 .drop-down-box {
   background-color: #fff;
   position: absolute;
-  top: 73px;
-  left: 683px;
-  width: 129px;
+  top: 115px;
+  left: 182px;
+  width: 120px;
   border: 1px solid #797979;
   z-index: 2;
   span {
@@ -344,6 +386,26 @@ export default {
     background-color: deepskyblue;
   }
 }
+input {
+  width: 120px;
+  height: 25px;
+  line-height: 25px;
+}
+
+.queryBtn {
+  position: absolute;
+  top: 60px;
+  left: 650px;
+  width: 75px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid #797979;
+  background-color: #fff;
+  border-radius: 5px;
+}
+
 .queryConditionBox {
   width: 100%;
   height: 70px;
@@ -351,22 +413,6 @@ export default {
   border-bottom: 1px solid #797979;
   > div {
     float: left;
-  }
-  input {
-    width: 120px;
-    height: 25px;
-    line-height: 25px;
-  }
-  .queryBtn {
-    width: 75px;
-    height: 30px;
-    margin-left: 200px;
-    line-height: 30px;
-    text-align: center;
-    cursor: pointer;
-    border: 1px solid #797979;
-    background-color: #fff;
-    border-radius: 5px;
   }
 }
 .queryResult {

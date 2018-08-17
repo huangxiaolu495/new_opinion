@@ -27,7 +27,7 @@
         <router-link to="/monitor/homePage/homeContent">首页</router-link>
       </div>
       <div class="link-companyWarning">
-        <router-link to="/monitor/companyWarning/queryInformation">关联公司预警</router-link>
+        <router-link to="/monitor/companyWarning/queryInformation">关联公司舆情</router-link>
       </div>
       <div class="link-subsidiryMonitoring">
         <router-link to="/monitor/subMonitoring/queryInformation">子公司舆情监控</router-link>
