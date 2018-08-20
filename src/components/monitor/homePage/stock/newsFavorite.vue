@@ -159,7 +159,7 @@
                       <div v-else></div>
                     </div>
                   </td>
-               <td>
+                  <td>
                     <span v-if="item.is_favorite">已收藏
                       <span @click="favorite(item, index, false)" class="updateBtn">取消</span>
                     </span>
@@ -195,10 +195,10 @@
 </template>
 
 <script>
+import datePicker from '@/components/common/datePicker'
 import pullDownList from '@/components/common/pullDownList'
 import pagination from '@/components/common/pagination'
 import commonMethods from '@/common/common.js'
-import datePicker from '@/components/common/datePicker'
 
 export default {
   data() {
@@ -248,7 +248,7 @@ export default {
         total_Count: 0,
         current: 1
       },
-      titleData: ['新闻时间', '新闻标题', '新闻内容', '新闻源','风险类型', '重要性', '收藏','处理情况'],
+      titleData: ['新闻时间', '新闻标题', '新闻内容', '新闻源', '风险类型', '重要性', '收藏', '处理情况'],
       dataList: [],
       firstTypeList: [
         { type: '全部', check: false },
@@ -331,7 +331,7 @@ export default {
             { code: '590100', check: false, title: '其他风险类事件' },
           ]        },
       ],
-            risk_codeList: [
+      risk_codeList: [
         { code: " ", title: "无" },
         { code: "518", title: "产品预警" },
         { code: "519", title: "监管预警" },
@@ -404,7 +404,7 @@ export default {
     datePicker,
   },
   methods: {
-      saveItem(s) {
+    saveItem(s) {
       let m = Object.assign({}, s);
       m.news_id = m.INFOCODE;
       m.imp_score = m.starNumber;
@@ -435,9 +435,9 @@ export default {
     },
     handleFileChange(event) {
       this.file = event.target.files[0];
-      if(this.file){
+      if (this.file) {
         const type = this.file.name.slice(-4).toLowerCase();
-        if(type != '.txt' && type != '.csv'){
+        if (type != '.txt' && type != '.csv') {
           this.file = '';
           event.target.value = '';
           this.selectFileName = '选择文件';
@@ -449,7 +449,7 @@ export default {
       }
       console.log('file', this.file)
     },
-    clearFile(){
+    clearFile() {
       // inputer
       this.$refs.inputer = null;
       this.selectFileName = '选择文件';
@@ -476,7 +476,7 @@ export default {
           'Content-Type': 'multipart/form-data'
         }
       }
-      console.log('sendData',this.sendData)
+      console.log('sendData', this.sendData)
       this.sendFile && formData.append('file', this.sendFile);
       this.$_axios.post(this.url.toUrl(), formData, config).then(response => {
         // 显示查询结果
@@ -648,7 +648,7 @@ export default {
           delete sendData[key];
         }
       }
-       sendData.imp_score = this.$store.startnumber;
+      sendData.imp_score = this.$store.startnumber;
       if (flag) {
         sendData.is_favorite = '1';
       } else {
@@ -691,7 +691,7 @@ export default {
       } else {
         sendData.finished = '';
       }
-       sendData.imp_score = this.$store.startnumber;
+      sendData.imp_score = this.$store.startnumber;
       console.log('item', item)
       console.log('sendData', sendData)
       this.$_axios.get(this.updateUrl, {
@@ -709,11 +709,11 @@ export default {
     },
     startDateEvent(...data) {
       this.queryCondition.from_date = data[0];
-      this.startDatePicker.defaultDate = new Date(data[0]);
+      // this.startDatePicker.defaultDate = new Date(data[0]);
     },
     endDateEvent(...data) {
       this.queryCondition.to_date = data[0];
-      this.endDatePicker.defaultDate = new Date(data[0]);
+      // this.endDatePicker.defaultDate = new Date(data[0]);
     },
     // 点击一级风险类型
     checkFirstType(item, index) {
@@ -812,7 +812,7 @@ export default {
       this.queryCondition.risk_code = '';
     }
   },
-  mounted(){
+  mounted() {
     this.queryCondition.from_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
     this.queryCondition.to_date = commonMethods.formatDateTime2(this.endDatePicker.defaultDate);
   }
@@ -899,20 +899,20 @@ export default {
       opacity: 0;
       z-index: -2;
     }
-    label{
+    label {
       float: left;
       // width: 200px;
       cursor: pointer;
     }
     .clearFile,
-    .fileExportBtn{
-      background-color: #EAEAEA;
+    .fileExportBtn {
+      background-color: #eaeaea;
       padding: 5px;
       border: 1px solid #797979;
       border-radius: 5px;
       cursor: pointer;
     }
-    .fileExportBtn{
+    .fileExportBtn {
       pointer-events: none;
     }
   }
@@ -1088,7 +1088,7 @@ export default {
       border-radius: 5px;
       background-color: #f3f3f3;
     }
-   .tableTh:nth-child(1) {
+    .tableTh:nth-child(1) {
       width: 75px;
     }
     .tableTh:nth-child(2) {

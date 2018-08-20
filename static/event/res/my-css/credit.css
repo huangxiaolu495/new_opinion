@@ -7,6 +7,26 @@
   }
 }
 
+.mt60 {
+  margin-left: 60px;
+}
+
+.mt150 {
+  margin-left: 150px;
+}
+
+.mygz {
+  display: block;
+  line-height: 25px;
+  width: 85px;
+  position: absolute;
+  right: -30px;
+  top: -54px;
+  font-size: 16px;
+  background-color: #d7d7d7;
+  color: black;
+}
+
 .rt {
   float: right;
 }
@@ -169,6 +189,7 @@
 
 .warper {
   width: 100%;
+  height: 700px;
   position: relative;
   -webkit-transition: all ease-out .3s;
   transition: all ease-out .3s;

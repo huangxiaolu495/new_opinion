@@ -14,17 +14,30 @@ window.onload = (function (M) {
     page: null,
     pageNum: 1,
     risk_type_data: [
-       '暂停上市',
-      '吸收合并',
-      '重大投诉', '要约收购',
-      '终止', '处罚',
-      '减持', '预亏',
-      '异常', '折算',
-      '兑付', '赎回',
-      '风险', '冻结',
-      '分立', '退市',
-      '首日', '调查',
-      '诉讼',
+      "可能暂停上市",
+      "暂停上市",
+      "被实施退市风险警示",
+      "被实施其他风险警示",
+      "可能退市风险警示",
+      "可能其他风险警示",
+      "股份被冻结",
+      "公司银行账户被冻结",
+      "公司被立案调查",
+      "公司关联方被立案调查",
+      "要约收购",
+      "终止上市",
+      "终止重大事项",
+      "异常波动",
+      "上市首日风险",
+      "摘牌",
+      "退市整理期",
+      "可能不定期份额折算",
+      "实施不定期份额折算",
+      "可转债提前赎回",
+      "债券提前兑付",
+      "业绩预亏",
+      "诉讼仲裁",
+      "被处罚",
     ],
     dataPublic: [{
         index: 0,
@@ -859,6 +872,8 @@ window.onload = (function (M) {
       var $market_Code = M('#market_Code');
       //公告类型
       var $public_Code = M('#public_Code');
+            //风险类型
+            var $Risk_Type = M('#Risk_Type');
       // 页面中资产类型输入框获得信息
       var $risk_type_data = M('.assets_code_data');
       $assets_Code.focus(function (e) {
@@ -994,6 +1009,7 @@ window.onload = (function (M) {
           return data.content;
         }
       });
+
       // 	}, undefined, 'get');
       //     }
       // });
@@ -1172,8 +1188,8 @@ window.onload = (function (M) {
           if (str == "确定") {
             $(_p).hide();
           } else {
-            p.text(str.replace('确定', ''));
-            $(".Risk_Type").html(str.replace('确定', ''));
+            p.text(str.replace('确定', '').trim());
+            $(".Risk_Type").html(str.replace('确定', '').trim());
             $(this).parent().fadeOut();
             if (p.text().replace(' ', '')) {
               $(_p).hide();
@@ -1181,7 +1197,7 @@ window.onload = (function (M) {
             }
             var par = {
               Announce_Id: id,
-              Risk_Type: p.text() == ' ' ? p.text().replace(" ", '') : p.text()
+              Risk_Type: p.text().trim() == ' ' ? p.text().replace(" ", '') : p.text().trim()
             };
             that.resolve(M.path + 'api/rest/nlp/Credit_Announce/Update_Risktype', par, function (data) {}, undefined, 'get');
           }

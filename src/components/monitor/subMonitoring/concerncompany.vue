@@ -296,18 +296,19 @@ export default {
     },
     selectListEvent2(...data) {
       this.updatetime = data[0];
+      const dateStr = null;
       if (this.updatetime == "存续舆情事件") {
-        const oneweek = new Date().getTime() - 604800000;
-        this.startDatePicker.defaultDate = new Date(oneweek);
-        this.$emit("startDateEvent", new Date(oneweek));
-        // this.$set(new Date(), this.startDatePicker.defaultDate, this.startDatePicker.value);
-        this.queryCondition.from_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
-        this.queryCondition.to_date = "";
-      } else if (this.updatetime == "新增舆情事件") {
         const eightday = new Date().getTime() - 691200000;
         this.endDatePicker.defaultDate = new Date(eightday);
-        this.queryCondition.to_date = commonMethods.formatDateTime2(this.endDatePicker.defaultDate);
-        this.queryCondition.from_date = "";
+        this.startDatePicker.defaultDate = new Date(dateStr);
+        this.queryCondition.to_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
+        delete this.queryCondition.from_date;
+      } else if (this.updatetime == "新增舆情事件") {
+        const oneweek = new Date().getTime() - 604800000;
+        this.startDatePicker.defaultDate = new Date(oneweek);
+        this.endDatePicker.defaultDate = new Date(dateStr);
+        this.queryCondition.from_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
+        delete this.queryCondition.to_date;
       }
     },
     inputCode() {

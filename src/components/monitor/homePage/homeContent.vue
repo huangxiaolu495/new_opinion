@@ -1916,37 +1916,37 @@ export default {
     },
     startDateEvent(...data) {
       this.queryCondition.from_date = data[0];
-      this.startDatePicker.defaultDate = new Date(data[0]);
+      // this.startDatePicker.defaultDate = new Date(data[0]);
     },
     startDateEvent1(...data) {
       this.queryCondition1.from_date = data[0];
-      this.startDatePicker1.defaultDate = new Date(data[0]);
+      // this.startDatePicker1.defaultDate = new Date(data[0]);
     },
     startDateEvent2(...data) {
       this.queryCondition2.from_date = data[0];
-      this.startDatePicker2.defaultDate = new Date(data[0]);
+      // this.startDatePicker2.defaultDate = new Date(data[0]);
     },
     startDateEvent3(...data) {
       this.queryCondition3.from_date = data[0];
-      this.startDatePicker3.defaultDate = new Date(data[0]);
+      // this.startDatePicker3.defaultDate = new Date(data[0]);
     },
     endDateEvent(...data) {
       this.queryCondition.to_date = data[0];
-      this.endDatePicker.defaultDate = new Date(data[0]);
+      // this.endDatePicker.defaultDate = new Date(data[0]);
     },
     endDateEvent1(...data) {
       // this.endDateEvent(...data);
       this.queryCondition1.to_date = data[0];
-      this.endDatePicker1.defaultDate = new Date(data[0]);
+      // this.endDatePicker1.defaultDate = new Date(data[0]);
     },
     endDateEvent2(...data) {
       this.queryCondition2.to_date = data[0];
-      this.endDatePicker2.defaultDate = new Date(data[0]);
+      // this.endDatePicker2.defaultDate = new Date(data[0]);
       // this.endDateEvent(...data);
     },
     endDateEvent3(...data) {
       this.queryCondition3.to_date = data[0];
-      this.endDatePicker3.defaultDate = new Date(data[0]);
+      // this.endDatePicker3.defaultDate = new Date(data[0]);
       // this.endDateEvent(...data);
     },
     // 点击一级风险类型

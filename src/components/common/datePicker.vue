@@ -4,7 +4,7 @@
       {{prop.title}}
     </div>
     <div class="date-check">
-      <input @click="showTable" @blur="inputBlur" @input="inputEvent" v-model="showDate.dateStr" type="text">
+      <input @click="showTable" @blur="inputBlur" @input="inputEvent" v-model="_dateStr" type="text">
       <!-- <div @click="showTable" class="nowCheckDate">{{showDate.dateStr}}</div> -->
       <div v-if="isShowTable" v-on:mouseleave="isShowTable = false" class="calendarBox">
         <div>
@@ -91,7 +91,32 @@ export default {
       nowStrLength: 0,
     }
   },
+  watch: {
+    propDefaultDate(newVal, oldVal) {
+      console.log(newVal)
+      let defaultDateStr = '';
+      let y = this.prop.defaultDate.getFullYear();
+      let m = this.prop.defaultDate.getMonth() + 1;
+      m = m < 10 ? '0' + m : m;
+      let d = this.prop.defaultDate.getDate();
+      d = d < 10 ? '0' + d : d;
+      defaultDateStr = y + '-' + m + '-' + d;
+      this._dateStr = defaultDateStr;
+      console.log(defaultDateStr)
+    }
+  },
   computed: {
+    _dateStr: {
+      get() {
+        return this.showDate.dateStr;
+      },
+      set(newVal) {
+        this.showDate.dateStr = newVal;
+      }
+    },
+    propDefaultDate() {
+      return this.prop.defaultDate;
+    },
     minDate() {
       if (this.prop.minDate) {
         if (typeof this.prop.minDate === 'string') {
