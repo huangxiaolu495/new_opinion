@@ -30,6 +30,8 @@ import economicbusinessWarning from '@/components/economicbusiness/economicbusin
 import bond_negativeNews from '@/components/monitor/homePage/bond/negativeNews'
 // 新闻预警 > 新闻收藏夹
 import bond_newsFavorite from '@/components/monitor/homePage/bond/newsFavorite'
+// 公告预警
+import bond_ratingwarning from '@/components/monitor/homePage/bond/ratingwarning'
 // 公告预警 > 债券发行人公告
 import bond_issuerNotice from '@/components/monitor/homePage/bond/issuerNotice'
 // 公告预警 >  受托管理人、主承销商发布的公告
@@ -206,6 +208,11 @@ export default new Router({
               path: '/monitor/homePage/bond_manageNotice',
               name: 'bond_manageNotice',
               component: bond_manageNotice
+            },
+            {
+              path: '/monitor/homePage/bond_ratingwarning',
+              name: 'bond_ratingwarning',
+              component: bond_ratingwarning
             },
             {
               path: '/monitor/homePage/bond_ratingInformation',
