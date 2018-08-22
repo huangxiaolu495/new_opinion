@@ -29,7 +29,7 @@ export default {
 
         {          title: '债券', isShowList: false, list: [
             {              title: '新闻预警', isShowList: false, path: '/monitor/homePage/homeContent', list: [
-                // {title: '债券发行人负面新闻', path: '/monitor/homePage/bond_negativeNews'},
+                { title: '债券发行人负面新闻', path: '/monitor/homePage/bond_negativeNews' },
                 { title: '新闻收藏夹', path: '/monitor/homePage/bond_newsFavorite' }
               ]            },
             // {title: '公告预警', isShowList: false, path: '/monitor/homePage/homeContent', list: [
@@ -49,7 +49,10 @@ export default {
                 { title: '基金管理人新闻', path: '/monitor/homePage/fund_managerNews' },
                 { title: '新闻收藏夹', path: '/monitor/homePage/fund_newsFavorite' }
               ]            },
-            { title: '公告预警', path: '/monitor/homePage/fund_issuerNotice', list: [] },
+            {              title: '公告预警', isShowList: false, path: '/monitor/homePage/fund_issuerNotice', list: [
+                { title: '基本公告', path: '/monitor/homePage/fund_Basicannounce' },
+                { title: '自定义板块模板公告', path: '/monitor/homePage/fund_Template' }
+              ]            },
             { title: '基金情况', path: '/monitor/homePage/fund_info', list: [] }
           ]        },
 

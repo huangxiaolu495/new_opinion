@@ -23,6 +23,27 @@
           <span @click="deleteList">删除</span>
           <span @click="clearList">清空</span>
         </div>
+        <!-- 右侧表单添加内容 -->
+        <div class="my_content">
+            <span>相关新闻</span>
+            <button>更多筛选>></button>
+              <div class="content_more">
+                <div class="content_more_first">
+                  <span>发行人:</span>
+                  <div class="content_more_second">
+                    <label for="quanbu"><input type="checkbox" id='quanbu'>全部</label><br>
+                    <ul>
+                      <li><label for="faxingren"><input type="checkbox" id="faxingren">发行人一</label></li>
+                    </ul>
+                  </div>
+                </div>
+                <div>日期</div>
+            </div>
+            <ul>
+              <li><span class="content_time">发布时间</span><span class="content_between">标题</span><span class="content_news">新闻来源</span></li>
+            </ul>
+        </div>
+       <!-- ------------------------------------------------------------------------------------------ -->
       </div>
       <div v-show="nowTab == '3'" class="queryBox">
         <div class="clearFloat">
@@ -212,6 +233,7 @@ export default {
           params: sendData
         }).then(response => {
           // 显示查询结果
+          console.log(response);
           const resultData = response.data.result.attention_list;
           console.log(resultData)
           this.poolList = resultData.map(item => {
@@ -682,5 +704,43 @@ table {
   th:nth-child(2){
     width: 600px;
   }
+}
+.my_content{
+    background-color:gray;
+    width: 524px;
+    height: 584px;
+    position: absolute;
+    top: 84px;
+    right: 60px;
+}
+.my_content ul span{
+  display:inline-block;
+  height: 50px;
+  text-align: center
+
+}
+.content_time{
+  width: 100px;
+  height: 20px;
+}
+.content_between{
+  height: 20px;
+  width: 300px;
+}
+.content_news{
+  height: 20px;
+  width: 100px;
+}
+.content_more{
+  width: 510px;
+  border: 1px solid #000
+  
+}
+.content_more_second{
+    margin-left: 60px;
+    margin-top: -20px;
+}
+.content_more_first{
+  border-bottom:1px dashed #000;
 }
 </style>

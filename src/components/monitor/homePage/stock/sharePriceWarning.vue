@@ -25,6 +25,13 @@
               震荡阈值：<input v-model="queryCondition.threshold" @input="threshold" type="text">
             </div>
           </div>
+
+          <!-- 连续跌停信息 -->
+          <div class="fallstop-left">
+            
+            <pull-down-list :prop="selectList" @selectListEvent='selectListEvent'></pull-down-list>
+            <span class="dieting">天跌停</span>
+          </div>
           <!-- 查询按钮 -->
           <div class="queryBtn">
             <span @click="query">查询</span>
@@ -95,6 +102,37 @@ export default {
         page: 0,
         page_size: 10,
       },
+      selectList: {
+        title: '连续',
+        parentEvent: 'selectListEvent',
+        default: '1',
+        listWidth: 40,
+        nowSelectWidth: 42,
+        nowSelectHeight: 25,
+        nowSelectFontSize: 13,
+        list: [
+          '1',
+          '2',
+          '3',
+          '4',
+          '5',
+          '6',
+          '7',
+          '8',
+          '9',
+          '10',
+          '11',
+          '12',
+          '13',
+          '14',
+          '15',
+          '16',
+          '17',
+          '18',
+          '19',
+          '20',
+        ]
+      },
       startDatePicker: {
         title: '日期：',
         parentEvent: 'startDateEvent',
@@ -135,6 +173,9 @@ export default {
     datePicker
   },
   methods: {
+    selectListEvent(...data) {
+      this.queryCondition.threshold = data[0];
+    },
     inputEvent() {
       const numberReg = /^[0-9]*$/;
       this.queryCondition.sec_code = commonMethods.checkName(this.queryCondition.sec_code.trim());
@@ -177,6 +218,7 @@ export default {
       const _year = 31536000000;
       const _startDate = new Date(this.queryCondition.start_date).getTime()
       const _endDate = new Date(this.queryCondition.end_date).getTime()
+
       if (!this.queryCondition.start_date || !this.queryCondition.end_date) {
         alert('请输入日期时间段');
         return;
@@ -187,8 +229,16 @@ export default {
           return;
         }
       }
+      if(this.queryCondition.threshold > 1){
+        if(_endDate - _startDate > 2592000000){
+          alert("仅可查询不超过一个月间隔的连续跌停");
+          return;
+        }
+      }
+  
       this.isShowQueryResult = true;
       this.hasResultData = false;
+      this.sendData = this.selectList.parentEvent;
       this.sendData = JSON.parse(JSON.stringify(this.queryCondition));
       for (let key in this.sendData) {
         if (this.sendData[key] === '') {
@@ -287,5 +337,14 @@ export default {
       width: 90px;
     }
   }
+}
+.fallstop-left{
+  margin-left: 20px;
+  position: relative;
+}
+.dieting{
+  position: absolute;
+  top: 0px;
+  right: -44px;
 }
 </style>

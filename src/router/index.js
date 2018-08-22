@@ -51,9 +51,16 @@ import fund_managerNews from '@/components/monitor/homePage/fund/managerNews'
 import fund_newsFavorite from '@/components/monitor/homePage/fund/newsFavorite'
 // 公告预警
 import fund_issuerNotice from '@/components/monitor/homePage/fund/issuerNotice'
+//公告預警 > 基本公告
+import fund_Basicannounce from '@/components/monitor/homePage/fund/fund_Basicannounce'
+//公告預警 > 自定义模板公告
+import fund_Template from '@/components/monitor/homePage/fund/fund_Template'
 // 基金情况
 import fund_info from '@/components/monitor/homePage/fund/fund_info'
 // >> 基金
+//基金公告详情
+import fundDetail from '@/components/monitor/homePage/fund/fundDetail'
+
 
 // >> 期货
 // 期货交易规则
@@ -179,6 +186,22 @@ export default new Router({
               path: '/monitor/homePage/fund_issuerNotice',
               name: 'fund_issuerNotice',
               component: fund_issuerNotice
+            },
+            //公告预警
+            {
+              path: '/monitor/homePage/fund_Basicannounce',
+              name: 'fund_Basicannounce',
+              component: fund_Basicannounce
+            },
+            {
+              path: '/monitor/homePage/fund_Template',
+              name: 'fund_Template',
+              component: fund_Template
+            },
+            {
+              path: '/monitor/homePage/fundDetail',
+              name: 'fundDetail',
+              component: fundDetail
             },
             // 基金情况
             {
