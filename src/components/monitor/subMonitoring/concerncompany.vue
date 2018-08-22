@@ -46,7 +46,7 @@
                 <th v-for="(item, index) of titleData" :key="index" class="tableTh" width:100px>{{item}}</th>
               </tr>
               <tr v-for="(item, index) of dataList" :key="index">
-                <td class="colorBule">
+                <td>
                   {{item.news_title}}
                 </td>
                 <td>{{item.news_time}}</td>
@@ -117,7 +117,7 @@ export default {
         total_Count: 0,
         current: 1
       },
-      titleData: ['新闻标题', '新闻日期', '新闻内容', '新闻来源'],
+      titleData: ['新闻标题', '新闻日期', '新闻链接', '新闻来源'],
       dataList: [],
       selectList: {
         title: '公司:',
@@ -358,6 +358,20 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.queryBtn {
+  position: absolute;
+  top: 60px;
+  left: 650px;
+  width: 60px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  cursor: pointer;
+  background-color: #c82c37;
+  color: white;
+  border-radius: 5px;
+  font-size: 16px;
+}
 .mt15 {
   padding: 0 0 15px;
 }
@@ -387,25 +401,6 @@ export default {
     background-color: deepskyblue;
   }
 }
-input {
-  width: 120px;
-  height: 25px;
-  line-height: 25px;
-}
-
-.queryBtn {
-  position: absolute;
-  top: 60px;
-  left: 650px;
-  width: 75px;
-  height: 30px;
-  line-height: 30px;
-  text-align: center;
-  cursor: pointer;
-  border: 1px solid #797979;
-  background-color: #fff;
-  border-radius: 5px;
-}
 
 .queryConditionBox {
   width: 100%;
@@ -414,6 +409,11 @@ input {
   border-bottom: 1px solid #797979;
   > div {
     float: left;
+  }
+  input {
+    width: 120px;
+    height: 25px;
+    line-height: 25px;
   }
 }
 .queryResult {
