@@ -25,22 +25,35 @@
         </div>
         <!-- 右侧表单添加内容 -->
         <div class="my_content">
-            <span>相关新闻</span>
-            <button>更多筛选>></button>
-              <div class="content_more">
+            <span class="news_content">相关新闻</span>
+            <button @click="morenews">更多筛选>></button>
+              <div v-show="ismorechoose" class="content_more">
                 <div class="content_more_first">
                   <span>发行人:</span>
                   <div class="content_more_second">
-                    <label for="quanbu"><input type="checkbox" id='quanbu'>全部</label><br>
+                    <!-- <label for="quanbu"><input type="checkbox" id='quanbu'>全部</label><br> -->
                     <ul>
-                      <li><label for="faxingren"><input type="checkbox" id="faxingren">发行人一</label></li>
+                      <li v-for="(item , index) of sencondResult" :key="index" :class="{active: 0 == index}"><label for="faxingren"><input type="checkbox" id="faxingren" :value="item"  @click='btnCheck(item,index)'>{{item}}</label></li>
                     </ul>
                   </div>
                 </div>
-                <div>日期</div>
+                <div>
+                  <div class="floatLeft">
+                    <date-picker :prop="startDatePicker" @startDateEvent="startDateEvent" ></date-picker>
+                  </div>
+                              <!-- 结束时间 -->
+                  <div class="floatLeft">
+                    <date-picker :prop="endDatePicker" @endDateEvent="endDateEvent"></date-picker>
+                  </div>
+                </div>
+                          <!-- 查询按钮 -->
+                <div class="queryBtn">
+                  <span @click="query" class="btnquery">查询</span>
+                </div>
             </div>
-            <ul>
+            <ul class="newUl">
               <li><span class="content_time">发布时间</span><span class="content_between">标题</span><span class="content_news">新闻来源</span></li>
+              <li v-for="(item , index) of resultData" :key="index"><span class="content_time">{{item.showtime}}</span><span class="content_between"><a :href="item.purl">{{item.title}}</a></span><span class="content_news">{{item.source}}</span></li>
             </ul>
         </div>
        <!-- ------------------------------------------------------------------------------------------ -->
@@ -153,9 +166,21 @@
 import commonMethods from '@/common/common.js'
 import pagination from '@/components/common/pagination'
 import pullDownList from '@/components/common/pullDownList'
+import datePicker from '@/components/common/datePicker'
 export default {
   data(){
     return {
+      startDatePicker: {
+        title: '日期：',
+        parentEvent: 'startDateEvent',
+        defaultDate: new Date()
+      },
+      endDatePicker: {
+        title: '至：',
+        parentEvent: 'endDateEvent',
+        defaultDate: new Date()
+      },
+      ismorechoose:false,
       nowTab: true,
       isAddList: false,
       isShowQueryResult: false,
@@ -175,10 +200,16 @@ export default {
       querySecurities:{
         issue: ''
       },
+      resultData:[],
       queryAddList:{
         companytype: 'S',
         keyword: '',
       },
+      queryCondition:{
+        start_date:'',
+        end_date:''
+      },
+      sencondResult:[],
       addListSendData: {},
       securitiesList: null,
       nowSecuritiesList: [],
@@ -196,6 +227,16 @@ export default {
         total_Count: 0,
         current: 1
       },
+      peopleDate:{
+        companylist:[],
+        userid: 'risk',
+        start_date:'',
+        end_date:'',
+        pagesize: 10,
+        page:0
+      },
+      sendData:{},
+      dataList:[],
       typeList: {
         title: '类型：',
         parentEvent: 'typeListEvent',
@@ -215,9 +256,70 @@ export default {
   },
   components:{
     pagination,
-    pullDownList
+    pullDownList,
+    datePicker
+  },
+  created(){
+    const url = 'http://10.25.24.51:10193/api/risk/issue_news';
+    const dateList = {
+      userid: 'zhangxx',
+      start_date: '',
+      end_date: '',
+      companylist: ''
+    }
+    this.$_axios.get(url, {
+          params: dateList
+        }).then(response => {
+          // 显示查询结果
+          console.log(response);
+          this.resultData = response.data.result.result;
+          console.log(this.resultData)
+          // this.poolList = resultData.map(item => {
+          //   return {
+          //     title: item,
+          //     check: false
+          //   }
+          // });
+        })
+        // .catch(err => {
+        //   console.log(err);
+        // });
+    const newUrl = 'http://10.25.24.51:10193/api/risk/attention_pool_set';
+    const newDateList = {
+          userid: 'risk',
+          action: 'query'
+    }
+    this.$_axios.get(newUrl,{
+      params: newDateList
+    }).then(response=>{
+      //显示结果
+      console.log(response)
+      this.sencondResult = response.data.result.attention_list;
+      this.sencondResult.unshift("全部")
+      console.log(this.sencondResult);
+    })
+
   },
   methods:{
+    btnCheck(item,index){
+      console.log(item,index)
+      if(item =='全部'){
+        this.peopleDate.companylist = [];
+      }else{  
+
+        this.peopleDate.companylist.push(item)
+
+        // this.peopleDate.companylist = this.peopleDate.companylist.join(',')
+        
+      }
+      // this.peopleDate.companylist = this.peopleDate.companylist.join()
+      
+      console.log(this.peopleDate)
+    },
+    //点击更多显示
+    morenews(){
+      this.ismorechoose = !this.ismorechoose
+    },
     switchTab(flag){
       this.nowTab = flag;
       this.isAddList = false;
@@ -246,6 +348,103 @@ export default {
           console.log(err);
         });
       }
+    },
+    query() {
+      // const _year = 31536000000;
+      // const _startDate = new Date(this.peopleDate.start_date).getTime()
+      // const _endDate = new Date(this.peopleDate.end_date).getTime();
+      const searchUrl = 'http://10.25.24.51:10193/api/risk/issue_news'
+      if (!this.peopleDate.start_date || !this.peopleDate.end_date) {
+        alert('请输入日期时间段');
+        return;
+      }
+      // this.isShowQueryResult = true;
+      // this.hasResultData = false;
+      // this.sendData = this.selectList.parentEvent;
+      for (let key in this.peopleDate) {
+        if (this.peopleDate[key] === '') {
+          delete this.peopleDate[key];
+        }
+      }
+      this.peopleDate.companylist = this.peopleDate.companylist.join(',')
+      console.log(this.peopleDate)
+     
+
+      // this.sendData = JSON.parse(JSON.stringify(this.queryCondition));
+
+      // console.log(this.sendData)
+      // console.log(this.sendData);
+      //  securiycode: 基金代码
+
+        //  start_date:  公告开始日期
+
+        // end_date: 公告结束日期
+
+        // page: 第几页（从0开始），默认为0
+
+        // pagesize:每页条数，默认为10条
+
+        // notice_type: 公告类型
+      this.$_axios.get(searchUrl, {
+        params: this.peopleDate
+      }).then(res => {
+        console.log(res);
+        this.resultData = res.data.result.result
+        // console.log(res.data.result.result)
+
+    //将数据companylist保持为初始状态的数组
+        this.peopleDate.companylist = [];
+        
+        
+        
+        // console.log('基金 > 基本公告', res.data.result.result)
+        // 显示查询结果
+        // this.hasResultData = true;
+        // this.dataList = JSON.parse(JSON.stringify(res.data.result.result))
+        // console.log(this.dataList);
+
+        // if (this.resultData.total_count) {
+        //   this.paginationData.page_Count = Math.ceil(this.resultData.total_count / 10);
+        // } else {
+        //   this.paginationData.page_Count = 0;
+        // }
+
+        
+      })
+
+
+      // if (!this.queryCondition.start_date || !this.queryCondition.end_date) {
+      //   alert('请输入日期时间段');
+      //   return;
+      // }
+      // this.isShowQueryResult = true;
+      // this.hasResultData = false;
+      // this.sendData = this.selectList.parentEvent;
+      // for (let key in this.sendData) {
+      //   if (this.sendData[key] === '') {
+      //     delete this.sendData[key];
+      //   }
+      // }
+      // console.log('sendData', this.sendData)
+      // this.$_axios.get(this.url, {
+      //   params: this.sendData
+      // }).then(response => {
+        // 显示查询结果
+        // this.hasResultData = true;
+        // console.log('股票 > 股价异动预警', response.data.result);
+        // this.dataList = JSON.parse(JSON.stringify(response.data.result.result));
+        // this.resultData = response.data.result;
+        // if (this.resultData.total_count) {
+        //   this.paginationData.page_Count = Math.ceil(this.resultData.total_count / 10);
+        // } else {
+        //   this.paginationData.page_Count = 0;
+        // }
+        // this.paginationData.total_Count = this.resultData.total_count;
+        
+      // })
+      //   .catch(err => {
+      //     console.log(err);
+      //   });
     },
     closeAttentionPool(){
       this.$store.state.isAttentionPool = false;
@@ -354,6 +553,7 @@ export default {
         console.log(err);
       });
     },
+
     deleteList(){
       const url = 'http://10.29.137.74:10193/api/risk/attention_pool_set';
       const tempArr = [];
@@ -395,6 +595,13 @@ export default {
       }).catch(err => {
         console.log(err);
       });
+    },
+
+    startDateEvent(...data) {
+      this.peopleDate.start_date = data[0];
+    },
+    endDateEvent(...data) {
+      this.peopleDate.end_date = data[0];
     },
     queryIssuerEvent(){
       this.isShowSecurities = false;
@@ -706,8 +913,8 @@ table {
   }
 }
 .my_content{
-    background-color:gray;
-    width: 524px;
+    // background-color:gray;
+    // width: 524px;
     height: 584px;
     position: absolute;
     top: 84px;
@@ -720,27 +927,61 @@ table {
 
 }
 .content_time{
-  width: 100px;
+  width: 154px;
   height: 20px;
 }
 .content_between{
   height: 20px;
-  width: 300px;
+  width: 448px;
 }
 .content_news{
   height: 20px;
-  width: 100px;
+  width: 126px;
 }
 .content_more{
   width: 510px;
-  border: 1px solid #000
-  
+  height:196px;
+  border: 1px solid #000;
+  margin-top:16px;
+  padding-left: 26px;
+  padding-top: 10px;
+
 }
 .content_more_second{
     margin-left: 60px;
     margin-top: -20px;
 }
+.content_more_second > ul{
+  overflow: hidden;
+}
+.content_more_second > ul > li{
+  margin-bottom:10px;
+  float: left;
+}
+.content_more_second > ul >li.active{
+  margin-right:20px;
+}
 .content_more_first{
   border-bottom:1px dashed #000;
+  margin-bottom:10px;
 }
+.news_content{
+  margin-right:376px;
+}
+.btnquery{
+  border:1px solid #ccc;
+  display:inline-block;
+  border-radius: 5px;
+  width:68px;
+  height: 30px;
+  text-align: center;
+  line-height: 30px;
+  cursor: pointer;
+  font-size:15px;
+  margin-left:100px;
+}
+.newUl{
+  margin-top:20px;
+}
+
 </style>

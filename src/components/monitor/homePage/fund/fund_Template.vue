@@ -89,9 +89,9 @@ export default {
       resultData: null,
       queryType: '板块一',
       queryCondition: {
-        userid: '',  
+        userid: 'risk',  
         sector: '',
-        notice_type: '',
+        notice_type: '002',
         start_date: '',
         end_date: '',
         page: 0,
@@ -333,6 +333,7 @@ export default {
   },
     //获取板块名称 进入页面发送请求
   created(){
+    console.log(this.queryCondition.notice_type)
       const url = 'http://10.25.24.51:10189/api/risk/sector_set/query'
       const sendData = {
         userid: 'risk'
@@ -432,8 +433,8 @@ export default {
       // this.sendData = this.selectList.parentEvent;
       // console.log(this.queryCondition)
       this.sendData = JSON.parse(JSON.stringify(this.queryCondition));
-      this.sendData.userid = 'risk';
-      this.sendData.notice_type = '002'
+      // this.sendData.userid = 'risk';
+      // this.sendData.notice_type = '002'
       console.log(this.sendData)
       // for (let key in this.sendData) {
       //   if (this.sendData[key] === '') {

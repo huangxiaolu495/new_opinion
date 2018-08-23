@@ -1,7 +1,7 @@
 <template>
  <div>
     <div class="detail_top">
-        <span  @click="detailShow(index)"  :class="{active:0 ==categoryIndex}">基本内容</span>
+        <span  @click="detailShow()"  :class="{active:0 ==categoryIndex}">基本内容</span>
         <span  @click="messageShow"  :class="{active:1 ==categoryIndex}">关联信息</span>
     </div>
     <div class="detail_content" v-show='detailContent'>{{dataList.content}}</div>
@@ -52,7 +52,7 @@ export default {
             },
             sendData: {},
             dataList:{},
-            categoryIndex:0
+            categoryIndex:0,
         }
     },
     created(){
@@ -97,7 +97,7 @@ export default {
         messageShow(){
             this.detailContent = false
             this.messageLink = true
-            this.categoryIndex = 1
+            this.categoryIndex =1
         }
     }
 }

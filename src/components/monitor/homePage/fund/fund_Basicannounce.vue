@@ -95,7 +95,7 @@ export default {
         securiycode:'',
         // userid: '',  
         // sector: '',
-        notice_type: '',
+        notice_type: '002',
         start_date: '',
         end_date: '',
         page: 0,
@@ -124,6 +124,10 @@ export default {
       titleData: ['公告标题','公告日期','详情'],
       dataList: [],
       listtemp:[
+          {
+            code:"002",
+            content:"基金",
+          },
           {
             code:"002001",
             content:"基金招募及设立",
@@ -267,7 +271,7 @@ export default {
         nowSelectFontSize: 13,
         
         list: [
-          '全部',
+          '基金',
           '基金招募及设立',
           '基金定期报告',
           '年度报告',
@@ -303,7 +307,6 @@ export default {
           '其他公告',
           '澄清公告',
           '基金其他公告'
-
         ]
       }
     }
@@ -316,8 +319,8 @@ export default {
   methods: {
     inputEvent() {
       const numberReg = /^[0-9]*$/;
-      this.queryCondition.sec_code = commonMethods.checkName(this.queryCondition.sec_code.trim());
-      let arr = this.queryCondition.sec_code.split('');
+      this.queryCondition.securiycode = commonMethods.checkName(this.queryCondition.securiycode.trim());
+      let arr = this.queryCondition.securiycode.split('');
       let arr2 = [];
       console.log(arr)
       arr.forEach(item => {
@@ -326,7 +329,7 @@ export default {
         }
       });
       console.log(arr)
-      this.queryCondition.sec_code = arr2.join('');
+      this.queryCondition.securiycode = arr2.join('');
     },
     // 父组件接受子组件传过来的文本数据   
     legislationEvent(data) {

@@ -1952,12 +1952,17 @@ export default {
     // 点击一级风险类型
     checkFirstType(item, index) {
       item.check = !item.check;
+      // console.log(item.check)
       if (item.type === "全部") {
         this["firstTypeList" + this.nowCategroy.toString()].forEach(val => {
+          console.log(this.nowCategroy,'我打印的')  
+          // console.log(val)
+          //val是
           val.check = item.check;
         });
         this["secondTypeList" + this.nowCategroy.toString()].forEach(
           firstVal => {
+            console.log(firstVal)
             firstVal.check = item.check;
             firstVal.list.forEach(secondVal => {
               secondVal.check = item.check;
