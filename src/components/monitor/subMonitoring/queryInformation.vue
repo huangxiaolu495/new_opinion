@@ -196,6 +196,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.icon-link:before {
+  content: "\e652";
+}
 .ml10 {
   margin-left: 10px;
 }
