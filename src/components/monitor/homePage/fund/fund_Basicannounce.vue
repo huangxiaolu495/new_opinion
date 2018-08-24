@@ -47,7 +47,7 @@
               <tr v-for="(item, index) of dataList" :key="index">
                 <td><a target="_blank" :href="item.sourceurl">{{item.noticetitle}}</a></td>
                 <td>{{item.noticedate}}</td>
-                <td><button><router-link  target='_blank' :to="'/monitor/homePage/fundDetail?id='+ item.infocode">详情>></router-link></button></td>
+                <td><button><router-link target="_blank" :to="'/monitor/homePage/fundDetail?id='+ item.infocode">详情>></router-link></button></td>
               </tr>
             </tbody>
           </table>
