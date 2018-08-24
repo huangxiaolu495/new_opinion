@@ -2,7 +2,7 @@
   <div class="app">
     <div class="hag">
       <router-link to="/">
-        <h1>中泰风险
+        <h1 v-if="$route.path != '/monitor/homePage/fundDetail'">中泰风险
           <span class="war_c">预警</span>系统
         </h1>
       </router-link>

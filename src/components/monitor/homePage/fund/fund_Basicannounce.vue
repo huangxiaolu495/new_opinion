@@ -51,7 +51,7 @@
               </tr>
             </tbody>
           </table>
-          <!-- <pagination :prop="paginationData" @paginationSelect="paginationSelect"></pagination> -->
+          <pagination :prop="paginationData" @paginationSelect="paginationSelect"></pagination>
         </div>
         <div v-else>
           <div class="loadEffect">
@@ -358,6 +358,7 @@ export default {
         });
     },
     query() {
+      console.log(this.$route);
       const _year = 31536000000;
       const _startDate = new Date(this.queryCondition.start_date).getTime()
       const _endDate = new Date(this.queryCondition.end_date).getTime();
@@ -393,12 +394,33 @@ export default {
       this.$_axios.get(this.url, {
         params: this.sendData
       }).then(res => {
-        // console.log(res);
+        console.log(res);
         console.log('基金 > 基本公告', res.data.result.result)
         // 显示查询结果
         this.hasResultData = true;
         this.dataList = JSON.parse(JSON.stringify(res.data.result.result))
+        this.resultData = res.data.result;
         console.log(this.dataList);
+        if (this.resultData.total_count) {
+          this.paginationData.page_Count = Math.ceil(this.resultData.total_count / 10);
+        } else {
+          this.paginationData.page_Count = 0;
+        }
+        this.paginationData.total_Count = this.resultData.total_count;
+
+       
+     
+        // this.dataList = JSON.parse(JSON.stringify(res.data.result.total_count));
+        // this.resultData = res.data.result.total_count;
+        // this.paginationData.page_Count = res.data.result.Page_Count;
+        // this.paginationData.total_Count = res.data.result.Total_Count;
+        // this.dataList.forEach(item => {
+          // item.notice_date = item.notice_date ? commonMethods.formatDateTime(new Date(item.notice_date)) : '-';
+          // if (item.notice_detail && item.notice_detail.length > 220) {
+          //   item.notice_detail = item.notice_detail.slice(0, 220) + '...';
+          //   item.details = '...详情';
+          // }
+        // });
 
         // if (this.resultData.total_count) {
         //   this.paginationData.page_Count = Math.ceil(this.resultData.total_count / 10);

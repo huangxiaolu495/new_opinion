@@ -89,6 +89,7 @@ export default {
     },
     methods:{
         detailShow(){
+            console.log(this.$route.path)
             this.detailContent = true
             this.messageLink = false
             this.categoryIndex = 0
@@ -107,7 +108,7 @@ export default {
 <style scoped>
     .detail_top{
         position: absolute;
-        top: 171px;
+        top: 78px;
         left: 425px;
     }
     span{
@@ -127,7 +128,7 @@ export default {
     .detail_content{
         position: absolute;
         border: 1px solid #000;
-        top: 226px;
+        top: 128px;
         left: 424px;
         width: 700px;
     }

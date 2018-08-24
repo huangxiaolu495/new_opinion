@@ -1,5 +1,5 @@
 <template>
-    <div class="homePageSidebar clearFloat">
+    <div class="homePageSidebar clearFloat" v-show="$route.path != '/monitor/homePage/fundDetail'">
         <!-- 第一级循环 -->
         <div v-for="(item,index) of prop" 
             :key="index">

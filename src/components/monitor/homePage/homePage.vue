@@ -51,7 +51,7 @@ export default {
               ]            },
             {              title: '公告预警', isShowList: false, path: '/monitor/homePage/fund_issuerNotice', list: [
                 { title: '基本公告', path: '/monitor/homePage/fund_Basicannounce' },
-                { title: '自定义板块模板公告', path: '/monitor/homePage/fund_Template' }
+                { title: '自定义板块范围公告', path: '/monitor/homePage/fund_Template' }
               ]            },
             { title: '基金情况', path: '/monitor/homePage/fund_info', list: [] }
           ]        },

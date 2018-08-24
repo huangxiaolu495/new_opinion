@@ -27,7 +27,7 @@
           </div>
 
           <!-- 连续跌停信息 -->
-          <div class="fallstop-left">
+          <div class="fallstop-left" v-if="queryCondition.abnormal_type !== 2">
             
             <pull-down-list :prop="selectList" @selectListEvent='selectListEvent'></pull-down-list>
             <span class="dieting">天跌停</span>
@@ -218,6 +218,7 @@ export default {
       const _year = 31536000000;
       const _startDate = new Date(this.queryCondition.start_date).getTime()
       const _endDate = new Date(this.queryCondition.end_date).getTime()
+      // console.log(new Date(this.queryCondition.end_date))
 
       if (!this.queryCondition.start_date || !this.queryCondition.end_date) {
         alert('请输入日期时间段');

@@ -53,8 +53,10 @@
             </div>
             <ul class="newUl">
               <li><span class="content_time">发布时间</span><span class="content_between">标题</span><span class="content_news">新闻来源</span></li>
-              <li v-for="(item , index) of resultData" :key="index"><span class="content_time">{{item.showtime}}</span><span class="content_between"><a :href="item.purl">{{item.title}}</a></span><span class="content_news">{{item.source}}</span></li>
+              <li v-for="(item , index) of dataList" :key="index"><span class="content_time">{{item.showtime}}</span><span class="content_between"><a :href="item.purl">{{item.title}}</a></span><span class="content_news">{{item.source}}</span></li>
             </ul>
+            <!-- <pagination :prop="paginationData" @paginationSelect="paginationSelect"></pagination> -->
+             <pagination :prop="paginationData" @paginationSelect="paginationSelect"></pagination>
         </div>
        <!-- ------------------------------------------------------------------------------------------ -->
       </div>
@@ -84,7 +86,7 @@
                 </tr>
               </tbody>
             </table>
-          <pagination :prop="paginationData" @paginationSelect="paginationSelect"></pagination>
+          <!-- <pagination :prop="paginationData" @paginationSelect="paginationSelect"></pagination> -->
           </div>
           <div v-if="isShowSecurities && !isShowIssuer" class="queryIssuerDataList">
             <EasyScrollbar>
@@ -169,11 +171,13 @@ import pullDownList from '@/components/common/pullDownList'
 import datePicker from '@/components/common/datePicker'
 export default {
   data(){
+       const now = new Date();
+       const week = now.getTime() - 604800000;
     return {
       startDatePicker: {
         title: '日期：',
         parentEvent: 'startDateEvent',
-        defaultDate: new Date()
+        defaultDate: new Date(week)
       },
       endDatePicker: {
         title: '至：',
@@ -262,7 +266,7 @@ export default {
   created(){
     const url = 'http://10.25.24.51:10193/api/risk/issue_news';
     const dateList = {
-      userid: 'zhangxx',
+      userid: 'risk',
       start_date: '',
       end_date: '',
       companylist: ''
@@ -272,8 +276,23 @@ export default {
         }).then(response => {
           // 显示查询结果
           console.log(response);
-          this.resultData = response.data.result.result;
-          console.log(this.resultData)
+          // this.resultData = response.data.result.result;
+          // console.log(this.resultData)
+                  // 显示查询结果
+            this.hasResultData = true;
+            this.dataList = JSON.parse(JSON.stringify(response.data.result.result))
+            const resultData = response.data.result;
+            console.log(resultData.total_count)
+            console.log(this.dataList);
+            // if (resultData.total_count) {
+            //   this.paginationData.page_Count = Math.ceil(resultData.total_count / 10);
+            // } else {
+            //   this.paginationData.page_Count = 0;
+            // }
+            
+            this.paginationData.page_Count = Math.ceil(resultData.total_count / 10);
+            this.paginationData.total_Count = resultData.total_count;
+            console.log("pc"+this.paginationData.page_Count);
           // this.poolList = resultData.map(item => {
           //   return {
           //     title: item,
@@ -328,7 +347,7 @@ export default {
       if(flag == '1'){
         const url = 'http://10.25.24.51:10193/api/risk/attention_pool_set';
         const sendData = {
-          userid: 'zhangxx',
+          userid: 'risk',
           action: 'query'
         }
         this.$_axios.get(url, {
@@ -354,18 +373,18 @@ export default {
       // const _startDate = new Date(this.peopleDate.start_date).getTime()
       // const _endDate = new Date(this.peopleDate.end_date).getTime();
       const searchUrl = 'http://10.25.24.51:10193/api/risk/issue_news'
-      if (!this.peopleDate.start_date || !this.peopleDate.end_date) {
-        alert('请输入日期时间段');
-        return;
-      }
+      // if (!this.peopleDate.start_date || !this.peopleDate.end_date) {
+      //   alert('请输入日期时间段');
+      //   return;
+      // }
       // this.isShowQueryResult = true;
       // this.hasResultData = false;
       // this.sendData = this.selectList.parentEvent;
-      for (let key in this.peopleDate) {
-        if (this.peopleDate[key] === '') {
-          delete this.peopleDate[key];
-        }
-      }
+      // for (let key in this.peopleDate) {
+      //   if (this.peopleDate[key] === '') {
+      //     delete this.peopleDate[key];
+      //   }
+      // }
       this.peopleDate.companylist = this.peopleDate.companylist.join(',')
       console.log(this.peopleDate)
      
@@ -392,7 +411,7 @@ export default {
         this.resultData = res.data.result.result
         // console.log(res.data.result.result)
 
-    //将数据companylist保持为初始状态的数组
+    //将数据companylist的字符串变成数组
         this.peopleDate.companylist = [];
         
         
@@ -460,9 +479,9 @@ export default {
     },
     addToList(){
       const tempArr = [];
-      const url = 'http://10.29.137.74:10193/api/risk/attention_pool_set'
+      const url = 'http://10.25.24.51:10193/api/risk/attention_pool_set'
       const sendData = {
-        userid: 'zhangxx',
+        userid: 'risk',
         action: 'insert',
         companytype: this.addListSendData.companytype,
         companylist: '',
@@ -494,11 +513,33 @@ export default {
     addToListCheck(item, index){
       item.check = !item.check;
     },
+    paginationSelect(pageNumber) {
+      const url = 'http://10.25.24.51:10193/api/risk/issue_news';
+      const dateList = {
+      userid: 'risk',
+      start_date: '',
+      end_date: '',
+      companylist: ''
+    }
+      const sendData = JSON.parse(JSON.stringify(this.sendData));
+      sendData.page = pageNumber - 1;
+      console.log('sendData', sendData)
+      this.$_axios.get(url, {
+        params: dateList
+      }).then(response => {
+        console.log('股票 > 股价异动预警', response.data.result);
+        this.dataList = JSON.parse(JSON.stringify(response.data.result.result));
+        this.resultData = response.data.result;
+      })
+        .catch(err => {
+          console.log(err);
+        });
+    },
     addListQuery(){
       this.isShowAddListQuery = false;
       this.isShowAddListPage = false;
       this.hasResultDataAddList = false;
-      const url = 'http://10.29.137.74:10193/api/risk/attention_base_query';
+      const url = 'http://10.25.24.51:10193/api/risk/attention_base_query';
       this.addListSendData = {
         companytype: this.queryAddList.companytype,
         keyword: this.queryAddList.keyword,
@@ -536,10 +577,10 @@ export default {
     clearList(){
       // http://localhost:10193/api/risk/attention_pool_set?userid=zhangxx &action=drop
       const sendData = {
-        userid: 'zhangxx',
+        userid: 'risk',
         action: 'drop'
       }
-      this.$_axios.get('http://10.29.137.74:10193/api/risk/attention_pool_set', {
+      this.$_axios.get('http://10.25.24.51:10193/api/risk/attention_pool_set', {
         params: sendData
       }).then(response => {
         // 显示查询结果
@@ -555,11 +596,11 @@ export default {
     },
 
     deleteList(){
-      const url = 'http://10.29.137.74:10193/api/risk/attention_pool_set';
+      const url = 'http://10.25.24.51:10193/api/risk/attention_pool_set';
       const tempArr = [];
       const indexArr = [];
       const sendData = {
-        userid: 'zhangxx',
+        userid: 'risk',
         companylist: '',
         action: 'delete'
       }
@@ -607,7 +648,7 @@ export default {
       this.isShowSecurities = false;
       this.isShowQueryResult = false;
       this.isShowIssuer = false;
-      const url = 'http://10.29.137.74:10193/api/risk/seccode_issue_mapper';
+      const url = 'http://10.25.24.51:10193/api/risk/seccode_issue_mapper';
       const sendData = {
         seccode: this.queryIssuer.seccode,
         secname: this.queryIssuer.secname
@@ -657,7 +698,7 @@ export default {
     // 查询证券信息
     querySecuritiesEvent(){
       this.isShowQueryResult = false;
-      const url = 'http://10.29.137.74:10193/api/risk/issue_seccode_mapper';
+      const url = 'http://10.25.24.51:10193/api/risk/issue_seccode_mapper';
       const sendData = {
         issue: this.querySecurities.issue
       }
@@ -718,9 +759,9 @@ export default {
     }
   },
   mounted(){
-    const url = 'http://10.29.137.74:10193/api/risk/attention_pool_set';
+    const url = 'http://10.25.24.51:10193/api/risk/attention_pool_set';
     const sendData = {
-      userid: 'zhangxx',
+      userid: 'risk',
       action: 'query'
     }
     this.$_axios.get(url, {
@@ -758,6 +799,7 @@ export default {
     background: linear-gradient(#ffffff, #d7d7d7);;
   }
   .poolList{
+    margin-top:100px;
     width: 700px;
     .checkBox{
       position: relative;
@@ -866,6 +908,7 @@ export default {
 }
 .tab{
   line-height: 50px;
+  margin-left: 352px;
   h4{
     float: left;
     width: 200px;
@@ -940,7 +983,7 @@ table {
 }
 .content_more{
   width: 510px;
-  height:196px;
+  height:150px;
   border: 1px solid #000;
   margin-top:16px;
   padding-left: 26px;
