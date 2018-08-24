@@ -1,9 +1,11 @@
 <template>
  <div>
     <div class="detail_top">
-        <span  @click="detailShow()"  :class="{active:0 ==categoryIndex}">基本内容</span>
+        <span  @click="detailShow()"  :class="{active:0 ==categoryIndex}" >基本内容</span>
         <span  @click="messageShow"  :class="{active:1 ==categoryIndex}">关联信息</span>
+        <!-- <span onclick="window.opener=null;window.close()" class="return_back">关闭</span> -->
     </div>
+    <i onclick="window.opener=null;window.close()" class="return_back">×</i>
     <div class="detail_content" v-show='detailContent'>{{dataList.content}}</div>
     <div class="messagelink" v-show='messageLink'>
         <div class="messageLink_one">
@@ -111,6 +113,12 @@ export default {
         top: 78px;
         left: 425px;
     }
+    .detail_top span{
+        width: 140px;
+        height: 46px;
+        line-height: 46px;
+        display: inline-block;
+    }
     span{
         display: inline-block;
         cursor: pointer;
@@ -149,23 +157,40 @@ export default {
         border-top:1px solid #000;
     }
 
-        .messageLink_one > ul > li:nth-child(9){
-        height: 90px;
+        .messageLink_one > ul > li:nth-child(1){
+        /* height: 90px; */
+        background-color: #F0F5F9;
     }
-        .messageLink_one > ul > li:nth-child(10){
-        height: 90px;
+        .messageLink_one > ul > li:nth-child(2){
+        /* height: 90px; */
+        background-color: #F0F5F9;
     }
-        .messageLink_one > ul > li:nth-child(11){
-        height: 90px;
+        .messageLink_one > ul > li:nth-child(3){
+        /* height: 90px; */
+        background-color: #F0F5F9;
     }
-        .messageLink_one > ul > li:nth-child(12){
-        height: 90px;
+        .messageLink_one > ul > li:nth-child(4){
+        /* height: 90px; */
+        background-color: #F0F5F9;
     }
     .messagelink{
         position: absolute;
         top: 226px;
         left: 424px;
     }
+    /* .detail_top .close{
+    font-size: 40px;
+    cursor: pointer;
+    font-weight: 500;
+  } */
+  .return_back{
+      font-size:70px;
+      position: absolute;
+      top: 0px;
+      right: 100px;
+      cursor: pointer;
+      color: #b50229;
+  }
 
 </style>
 

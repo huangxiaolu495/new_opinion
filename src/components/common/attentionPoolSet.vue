@@ -52,7 +52,7 @@
                 </div>
             </div>
             <ul class="newUl">
-              <li><span class="content_time">发布时间</span><span class="content_between">标题</span><span class="content_news">新闻来源</span></li>
+              <li><span class="content_time_top">发布时间</span><span class="content_between_top">标题</span><span class="content_news_top">新闻来源</span></li>
               <li v-for="(item , index) of dataList" :key="index"><span class="content_time">{{item.showtime}}</span><span class="content_between"><a :href="item.purl">{{item.title}}</a></span><span class="content_news">{{item.source}}</span></li>
             </ul>
             <!-- <pagination :prop="paginationData" @paginationSelect="paginationSelect"></pagination> -->
@@ -981,6 +981,24 @@ table {
   height: 20px;
   width: 126px;
 }
+.content_time_top{
+  width: 154px;
+  height: 20px;
+  line-height:50px;
+  background-color: #EBFFF9;
+}
+.content_between_top{
+  height: 20px;
+  width: 448px;
+  line-height:50px;
+  background-color: #EBFFF9;
+}
+.content_news_top{
+  height: 20px;
+  width: 126px;
+  line-height:50px;
+  background-color: #EBFFF9;
+}
 .content_more{
   width: 510px;
   height:150px;
@@ -1025,6 +1043,7 @@ table {
 }
 .newUl{
   margin-top:20px;
+  height:1000px;
 }
 
 </style>

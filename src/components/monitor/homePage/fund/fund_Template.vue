@@ -54,7 +54,7 @@
           </table>
           <pagination :prop="paginationData" @paginationSelect="paginationSelect"></pagination>
         </div>
-        <div v-else>
+        <!-- <div v-else>
           <div class="loadEffect">
             <span></span>
             <span></span>
@@ -65,7 +65,7 @@
             <span></span>
             <span></span>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -448,9 +448,10 @@ export default {
       }).then(response => {
         // 显示查询结果
         console.log(response)
-        this.hasResultData = true;
+        // this.hasResultData = true;
         if(response.data.code=='410'){
           alert(response.data.msg)
+          return;
         }else{
                    // 显示查询结果
               this.hasResultData = true;
