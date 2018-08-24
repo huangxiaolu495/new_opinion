@@ -2,18 +2,18 @@
   <div class="app">
     <!-- 舆情监控 opinion monitor -->
     <div class="monitor_top clearFloat">
-      <div class="floatLeft">
+      <div class="floatLeft" v-show="$route.path !='/monitor/homePage/fundDetail'">
         <router-link to="/">
           <h1>中泰风险
             <span>预警</span>系统</h1>
         </router-link>
       </div>
-      <div class="floatRight userSystemBox" v-if="$route.path != '/monitor/homePage/fundDetail'" >
+      <div class="floatRight userSystemBox" v-show="$route.path != '/monitor/homePage/fundDetail'" >
         <span>我的账户
           <i class="iconfont icon-icon_on_the_down"></i>
         </span>
         <span class="pullDown">
-          <router-link to="/userSystem">系统管理</router-link>
+          <router-link to="/userSystem">自定义板块管理</router-link>
           <!-- <p @click="enterUserSystem">系统管理</p> -->
           <p>我的收藏夹</p>
           <router-link to="/attentionPoolSet">我的关注池</router-link>

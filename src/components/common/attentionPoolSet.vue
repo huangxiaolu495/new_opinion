@@ -301,22 +301,22 @@ export default {
           // });
         })
         // .catch(err => {
-        //   console.log(err);
-        // });
-    const newUrl = 'http://10.25.24.51:10193/api/risk/attention_pool_set';
-    const newDateList = {
-          userid: 'risk',
-          action: 'query'
-    }
-    this.$_axios.get(newUrl,{
-      params: newDateList
-    }).then(response=>{
-      //显示结果
-      console.log(response)
-      this.sencondResult = response.data.result.attention_list;
-      this.sencondResult.unshift("全部")
-      console.log(this.sencondResult);
-    })
+    //     //   console.log(err);
+    //     // });
+    // const newUrl = 'http://10.25.24.51:10193/api/risk/attention_pool_set';
+    // const newDateList = {
+    //       userid: 'risk',
+    //       action: 'query'
+    // }
+    // this.$_axios.get(newUrl,{
+    //   params: newDateList
+    // }).then(response=>{
+    //   //显示结果
+    //   console.log(response)
+    //   this.sencondResult = response.data.result.attention_list;
+    //   this.sencondResult.unshift("全部")
+    //   console.log(this.sencondResult);
+    // })
 
   },
   methods:{
@@ -338,6 +338,22 @@ export default {
     //点击更多显示
     morenews(){
       this.ismorechoose = !this.ismorechoose
+              //   console.log(err);
+        // });
+        const newUrl = 'http://10.25.24.51:10193/api/risk/attention_pool_set';
+        const newDateList = {
+              userid: 'risk',
+              action: 'query'
+        }
+        this.$_axios.get(newUrl,{
+          params: newDateList
+        }).then(response=>{
+          //显示结果
+          console.log(response)
+          this.sencondResult = response.data.result.attention_list;
+          this.sencondResult.unshift("全部")
+          console.log(this.sencondResult);
+        })
     },
     switchTab(flag){
       this.nowTab = flag;
@@ -985,19 +1001,19 @@ table {
   width: 154px;
   height: 20px;
   line-height:50px;
-  background-color: #EBFFF9;
+  background-color: #F0F5F9;
 }
 .content_between_top{
   height: 20px;
   width: 448px;
   line-height:50px;
-  background-color: #EBFFF9;
+  background-color: #F0F5F9;
 }
 .content_news_top{
   height: 20px;
   width: 126px;
   line-height:50px;
-  background-color: #EBFFF9;
+  background-color: #F0F5F9;
 }
 .content_more{
   width: 510px;

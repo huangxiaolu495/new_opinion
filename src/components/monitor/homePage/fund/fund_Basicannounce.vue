@@ -8,7 +8,7 @@
           <!-- 查询条件框 -->
           <div>
             <div class="floatLeft marginLeft10">
-              基金代码：<input @input="inputEvent" v-model="queryCondition.securiycode" type="text">
+              基金代码：<input @input="inputEvent" v-model="queryCondition.securitycode" type="text">
             </div>
           </div>  
         <!-- 公告类型 -->
@@ -92,7 +92,7 @@ export default {
       queryCondition: {
         
         
-        securiycode:'',
+        securitycode:'',
         // userid: '',  
         // sector: '',
         notice_type: '002',
@@ -319,8 +319,8 @@ export default {
   methods: {
     inputEvent() {
       const numberReg = /^[0-9]*$/;
-      this.queryCondition.securiycode = commonMethods.checkName(this.queryCondition.securiycode.trim());
-      let arr = this.queryCondition.securiycode.split('');
+      this.queryCondition.securitycode = commonMethods.checkName(this.queryCondition.securitycode.trim());
+      let arr = this.queryCondition.securitycode.split('');
       let arr2 = [];
       console.log(arr)
       arr.forEach(item => {
@@ -329,7 +329,7 @@ export default {
         }
       });
       console.log(arr)
-      this.queryCondition.securiycode = arr2.join('');
+      this.queryCondition.securitycode = arr2.join('');
     },
     // 父组件接受子组件传过来的文本数据   
     legislationEvent(data) {
