@@ -8,10 +8,10 @@
           <!-- 查询条件框 -->
           <div>
             <div class="floatLeft">
-              <date-picker :prop="startDatePicker" @startDateEvent="startDateEvent"></date-picker>
+              <date-picker :prop="startDatePicker" @startDateEvent="startDateEvent" ref="startdata"></date-picker>
             </div>
             <div class="floatLeft">
-              <date-picker :prop="endDatePicker" @endDateEvent="endDateEvent"></date-picker>
+              <date-picker :prop="endDatePicker" @endDateEvent="endDateEvent" ref="enddata"></date-picker>
             </div>
             <div class="floatLeft">
               <keyword @keywordEvent="keywordEvent"></keyword>
@@ -23,7 +23,7 @@
             <pull-down-list :prop="selectList" @selectListEvent='selectListEvent'></pull-down-list>
           </div>
           <div class="floatLeft ml10" v-on:mouseleave="isShowDropDownList = false">
-            <input type="text" v-model="queryCondition.key_info" @click="inputCode" placeholder="请输入" class="input">
+            <input type="text" v-model="queryCondition.key_info" @click="inputCode" placeholder="请输入" class="input" ref="clearText">
             <span v-if="isShowDropDownList" class="drop-down-box">
               <span v-for="(item, index) of dropDownList" :key="index" @click="dropDownEvent(item)">{{item}}</span>
             </span>
@@ -50,8 +50,9 @@
                   {{item.news_title}}
                 </td>
                 <td>{{item.news_time}}</td>
-                <td>
-                  <a :href="item.news_url" target="_bank">{{item.news_url}}</a>
+                <td class="tableTd">
+                  <a :href="item.news_url" target="_bank">
+                    <span class="iconfont icon-link"></span>网页链接</a>
                 </td>
                 <td>{{item.news_source}}</td>
               </tr>
@@ -128,6 +129,7 @@ export default {
         nowSelectHeight: 25,
         nowSelectFontSize: 13,
         list: [
+          "请选择",
           "鲁证创投",
           "鲁证新天使",
           "齐鲁中泰",
@@ -143,6 +145,7 @@ export default {
         nowSelectHeight: 25,
         nowSelectFontSize: 13,
         list: [
+          "请选择",
           "存续舆情事件",
           "新增舆情事件"
         ]
@@ -293,27 +296,41 @@ export default {
     },
     selectListEvent(...data) {
       this.selecttype = data[0];
+      if (data[0] === '请选择') {
+        this.queryCondition.key_info = "";
+        this.$refs.clearText.value = "";
+      }
     },
     selectListEvent2(...data) {
       this.updatetime = data[0];
-      const dateStr = null;
-      if (this.updatetime == "存续舆情事件") {
+      const oneDayAfter = new Date().getTime() + 86400000;
+      if (this.updatetime == "请选择") {
+        this.startDatePicker.defaultDate = new Date();
+        this.endDatePicker.defaultDate = new Date(oneDayAfter);
+        this.queryCondition.from_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
+        this.queryCondition.to_date = commonMethods.formatDateTime2(this.endDatePicker.defaultDate);
+      }
+      else if (this.updatetime == "存续舆情事件") {
         const eightday = new Date().getTime() - 691200000;
         this.endDatePicker.defaultDate = new Date(eightday);
-        this.startDatePicker.defaultDate = new Date(dateStr);
+        this.$refs.startdata.setNullDate();
         this.queryCondition.to_date = commonMethods.formatDateTime2(this.endDatePicker.defaultDate);
         delete this.queryCondition.from_date;
       } else if (this.updatetime == "新增舆情事件") {
         const oneweek = new Date().getTime() - 604800000;
         this.startDatePicker.defaultDate = new Date(oneweek);
-        this.endDatePicker.defaultDate = new Date(dateStr);
+        this.$refs.enddata.setNullDate();
         this.queryCondition.from_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
         delete this.queryCondition.to_date;
       }
     },
     inputCode() {
       const tempArr = [];
-      if (this.selecttype == "鲁证创投") {
+      if (this.selecttype == "请选择") {
+        this.queryCondition.key_info = "";
+        return;
+      }
+      else if (this.selecttype == "鲁证创投") {
         this.select1.forEach(element => {
           tempArr.push(element);
         });
@@ -349,7 +366,7 @@ export default {
   watch: {
     defaultDate(val, oldval) {
       console.log("a: " + val, oldVal);
-    }
+    },
   },
   mounted() {
     this.queryCondition.from_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
@@ -359,6 +376,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.icon-link:before {
+  content: "\e652";
+}
 .queryBtn {
   position: absolute;
   top: 60px;

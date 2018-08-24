@@ -37,8 +37,9 @@
               <tr v-for="(item, index) of dataList" :key="index">
                 <td>{{item.news_title}}</td>
                 <td>{{item.news_time}}</td>
-                <td class="colorBule">
-                  <a :href="item.news_url" target="_bank">{{item.news_url}}</a>
+                <td class="tableTd">
+                  <a :href="item.news_url" target="_bank">
+                    <span class="iconfont icon-link"></span>网页链接</a>
                 </td>
                 <td>{{item.news_source}}</td>
               </tr>
@@ -113,6 +114,7 @@ export default {
         nowSelectHeight: 25,
         nowSelectFontSize: 13,
         list: [
+          "请选择",
           "万家基金",
           "鲁证期货",
           "鲁证创投",

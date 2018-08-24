@@ -8,7 +8,7 @@
           <!-- 查询条件框 -->
           <div>
             <div class="floatLeft">
-              公司名称关联词：<input type="text" placeholder="请输入关联公司名称" class="input" v-model="queryCondition.Keyword">
+              公司名称关联词：<input type="text" placeholder="请输入关联公司名称" class="input" v-model="keyword">
             </div>
           </div>
           <!-- 查询按钮 -->
@@ -66,7 +66,7 @@ export default {
     const oneDayAfter = new Date().getTime() + 86400000;
     return {
       url: "http://10.25.24.51:10192/api/rest/nlp/risk/company_search?",
-      Keyword: "",
+      keyword: "",
       isShowQueryResult: false,
       hasResultData: false,
       resultData: null,
