@@ -102,7 +102,7 @@ export default {
         total_Count: 0,
         current: 1
       },
-      titleData: ['新闻标题', '新闻日期', '新闻内容', '新闻来源'],
+      titleData: ['新闻标题', '新闻日期', '新闻链接', '新闻来源'],
       dataList: [],
       selectList: {
         title: '公司:',
@@ -211,14 +211,16 @@ export default {
     line-height: 25px;
   }
   .queryBtn {
+    position: absolute;
+    top: 60px;
+    left: 650px;
     width: 75px;
     height: 30px;
-    margin-left: 200px;
     line-height: 30px;
     text-align: center;
     cursor: pointer;
     border: 1px solid #797979;
-    background-color: #fff;
+    background-color: #c82c37;
     border-radius: 5px;
   }
 }
