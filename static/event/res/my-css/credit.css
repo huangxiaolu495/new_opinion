@@ -7,6 +7,10 @@
   }
 }
 
+.center {
+  text-align: center;
+}
+
 .mt60 {
   margin-left: 60px;
 }

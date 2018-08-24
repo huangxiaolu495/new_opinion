@@ -42,7 +42,9 @@
               </tr>
               <tr v-for="(item, index) of dataList" :key="index">
                 <td>{{item.SECURITYNAME}}</td>
-                <td>{{item.TITLE}}</td>
+                <td>
+                  <a :href="item.PURL" target="_bank">{{item.TITLE}}</a>
+                </td>
                 <td>{{item.SHOWTIME}}</td>
                 <td>{{item.SOURCE}}</td>
               </tr>

@@ -23,7 +23,7 @@
             <pull-down-list :prop="selectList" @selectListEvent='selectListEvent'></pull-down-list>
           </div>
           <div class="floatLeft ml10" v-on:mouseleave="isShowDropDownList = false">
-            <input type="text" v-model="queryCondition.key_info" @input="inputCode" placeholder="请输入" class="input">
+            <input type="text" v-model="queryCondition.key_info" @click="inputCode" placeholder="请输入" class="input">
             <span v-if="isShowDropDownList" class="drop-down-box">
               <span v-for="(item, index) of dropDownList" :key="index" @click="dropDownEvent(item)">{{item}}</span>
             </span>
@@ -301,7 +301,7 @@ export default {
         const eightday = new Date().getTime() - 691200000;
         this.endDatePicker.defaultDate = new Date(eightday);
         this.startDatePicker.defaultDate = new Date(dateStr);
-        this.queryCondition.to_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
+        this.queryCondition.to_date = commonMethods.formatDateTime2(this.endDatePicker.defaultDate);
         delete this.queryCondition.from_date;
       } else if (this.updatetime == "新增舆情事件") {
         const oneweek = new Date().getTime() - 604800000;
@@ -333,11 +333,12 @@ export default {
           tempArr.push(element);
         });
       }
-      if (tempArr.length > 5) {
-        this.dropDownList = tempArr.slice(0, 5);
-      } else {
-        this.dropDownList = tempArr;
-      }
+      // if (tempArr.length > 5) {
+      //   this.dropDownList = tempArr.slice(0, 5);
+      // } else {
+      //   this.dropDownList = tempArr;
+      // }
+      this.dropDownList = tempArr;
       this.isShowDropDownList = true;
     },
     dropDownEvent(item) {
@@ -378,13 +379,17 @@ export default {
 .ml10 {
   margin-left: 10px;
 }
-
+input {
+  width: 120px;
+  height: 25px;
+  line-height: 25px;
+}
 .drop-down-box {
   background-color: #fff;
   position: absolute;
-  top: 115px;
+  top: 114px;
   left: 182px;
-  width: 120px;
+  width: 173px;
   border: 1px solid #797979;
   z-index: 2;
   span {
@@ -409,11 +414,6 @@ export default {
   border-bottom: 1px solid #797979;
   > div {
     float: left;
-  }
-  input {
-    width: 120px;
-    height: 25px;
-    line-height: 25px;
   }
 }
 .queryResult {
