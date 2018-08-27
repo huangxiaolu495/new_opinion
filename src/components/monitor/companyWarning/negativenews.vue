@@ -108,10 +108,16 @@ export default {
     keyword,
   },
   created() {
+    const code = window.localStorage.getItem("company_code_list");
+    this.queryCondition.from_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
+    this.queryCondition.to_date = commonMethods.formatDateTime2(this.endDatePicker.defaultDate);
     if (!window.localStorage.getItem("company_code_list")) {
       if (this.$store.state.company_code_list) {
         window.localStorage.setItem("company_code_list", this.$store.state.company_code_list);
       }
+    }
+    else if (code != this.$store.state.company_code_list && this.$store.state.company_code_list) {
+      window.localStorage.setItem("company_code_list", this.$store.state.company_code_list);
     }
     this.query();
   },

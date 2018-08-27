@@ -15,7 +15,8 @@
       <div v-if="isShowQueryResult1" class="queryResult">
         <div v-if="hasResultData1">
           <div class="queryCondition-top mt10">
-            <div class="">控股母公司列表</div>
+            <div class="">控股公司列表
+            </div>
             <div class="middle clearFloat">
             </div>
           </div>
@@ -40,7 +41,7 @@
       <div v-if="isShowQueryResult2" class="queryResult">
         <div v-if="hasResultData2">
           <div class="queryCondition-top mt10">
-            <div class="">参股母公司列表</div>
+            <div class="">参股公司列表</div>
             <div class="middle clearFloat">
             </div>
           </div>
@@ -65,7 +66,7 @@
       <div v-if="isShowQueryResult3" class="queryResult">
         <div v-if="hasResultData3">
           <div class="queryCondition-top mt10">
-            <div class="">全资母公司列表</div>
+            <div class="">全资公司列表</div>
             <div class="middle clearFloat">
             </div>
           </div>
@@ -90,7 +91,7 @@
       <div v-if="isShowQueryResult4" class="queryResult">
         <div v-if="hasResultData4">
           <div class="queryCondition-top mt10">
-            <div class="">联营母公司列表</div>
+            <div class="">联营公司列表</div>
             <div class="middle clearFloat">
             </div>
           </div>
@@ -122,13 +123,12 @@
           <table>
             <tbody>
               <tr>
-                <th v-for="(item, index) of titleData" :key="index" class="tableTh" width:100px>{{item}}</th>
+                <th v-for="(item, index) of titleData2" :key="index" class="tableTh" width:100px>{{item}}</th>
               </tr>
               <tr v-for="(item, index) of dataList5" :key="index">
                 <td>
                   {{item.ASSOCIATEDNAME}}
                 </td>
-                <td>{{item.HOLDINGTYPE}}</td>
                 <td>{{item.RELATION}}</td>
               </tr>
             </tbody>
@@ -208,6 +208,7 @@ export default {
         current: 1
       },
       titleData: ['公司名称', '公司类型', '关系'],
+      titleData2: ['公司名称', '关系'],
       dataList1: [],
       dataList2: [],
       dataList3: [],
@@ -221,10 +222,14 @@ export default {
     keyword
   },
   created() {
+    const code = window.localStorage.getItem("company_code");
     if (!window.localStorage.getItem("company_code")) {
       if (this.$route.params.companycode) {
         window.localStorage.setItem("company_code", this.$route.params.companycode);
       }
+    }
+    else if (code != this.$route.params.companycode && this.$route.params.companycode) {
+      window.localStorage.setItem("company_code", this.$route.params.companycode);
     }
     this.url = "http://10.25.24.51:10192/api/rest/nlp/risk/relation_company?";
     this.query();
@@ -237,12 +242,7 @@ export default {
       this.$_axios.get(this.url, {
         params: sendData
       }).then(response => {
-        console.log('法律法规查询结果', response.data.result);
         this.resultData = response.data.result.Company_List;
-        this.resultData.forEach(item => {
-          item.CONTENT = item.CONTENT.toString().replace(/\\r\\n\\r\\n/g, "<br>");
-          item.CONTENT = item.CONTENT.toString().replace(/\\r\\n/g, "<br>");
-        });
         this.dataList = JSON.parse(JSON.stringify(this.resultData));
         this.dataList.forEach(item => {
           item.COMPANYSNAME = item.COMPANYSNAME;
@@ -364,7 +364,7 @@ export default {
       this.isShowQueryResult4 = false;
       this.isShowQueryResult5 = true;
       this.hasResultData5 = false;
-      this.queryCondition.company_code = this.$route.params.companycode;
+      this.queryCondition.company_code = window.localStorage.getItem("company_code");
       this.sendData = JSON.parse(JSON.stringify(this.queryCondition));
       for (let key in this.sendData) {
         if (!this.sendData[key]) {
@@ -386,7 +386,6 @@ export default {
         this.paginationData5.total_Count5 = response.data.result.holding_count;
         this.dataList5.forEach(item => {
           item.ASSOCIATEDNAME = item.ASSOCIATEDNAME;
-          item.HOLDINGTYPE = item.HOLDINGTYPE;
           item.RELATION = item.RELATION;
         });
       })

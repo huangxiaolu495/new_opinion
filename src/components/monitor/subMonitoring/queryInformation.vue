@@ -3,7 +3,7 @@
     <!-- 公司信息查询 -->
     <div>
       <div class="queryCondition-top">
-        <div class="queryCondition-title">投资项目舆情</div>
+        <div class="queryCondition-title">子公司信息舆情</div>
         <div class="middle clearFloat">
           <!-- 查询条件框 -->
           <div>
@@ -40,11 +40,15 @@
                 <th v-for="(item, index) of titleData" :key="index" class="tableTh" width:100px>{{item}}</th>
               </tr>
               <tr v-for="(item, index) of dataList" :key="index">
-                <td>{{item.news_title}}</td>
-                <td>{{item.news_time}}</td>
-                <td class="tableTd">
+                <td>
                   <a :href="item.news_url" target="_bank">
-                    <span class="iconfont icon-link"></span>网页链接</a>
+                    {{item.news_title}}
+                  </a>
+                </td>
+                <td>{{item.news_time}}</td>
+                <td class="data-content">
+                  {{item.news_content}}
+                  <span @click="details(item, index)"> {{item.details}}</span>
                 </td>
                 <td>{{item.news_source}}</td>
               </tr>
@@ -109,7 +113,7 @@ export default {
         total_Count: 0,
         current: 1
       },
-      titleData: ['新闻标题', '新闻日期', '新闻链接', '新闻来源'],
+      titleData: ['新闻标题', '新闻日期', '新闻内容', '新闻来源'],
       dataList: [],
       selectList: {
         title: '公司:',
@@ -154,6 +158,15 @@ export default {
     keyword
   },
   methods: {
+    details(item, index) {
+      if (item.details == '收起') {
+        item.details = '...详情';
+        item.news_content = item.news_content.slice(0, 150) + '...';
+      } else {
+        item.details = '收起';
+        item.news_content = this.resultData[index].news_content;
+      }
+    },
     paginationSelect(pageNumber) {
       const sendData = JSON.parse(JSON.stringify(this.sendData));
       sendData.page = pageNumber;
@@ -163,6 +176,12 @@ export default {
       }).then(response => {
         this.resultData = response.data.result.Announce_List;
         this.dataList = JSON.parse(JSON.stringify(this.resultData));
+        this.dataList.forEach(item => {
+          if (item.news_content && item.news_content.length > 150) {
+            item.news_content = item.news_content.slice(0, 150) + '...';
+            item.details = '...详情';
+          }
+        });
       })
         .catch(err => {
           console.log(err);
@@ -186,6 +205,12 @@ export default {
         this.dataList = JSON.parse(JSON.stringify(this.resultData));
         this.paginationData.page_Count = response.data.result.Page_Count;
         this.paginationData.total_Count = response.data.result.Total_Count;
+        this.dataList.forEach(item => {
+          if (item.news_content && item.news_content.length > 150) {
+            item.news_content = item.news_content.slice(0, 150) + '...';
+            item.details = '...详情';
+          }
+        });
       })
         .catch(err => {
           console.log(err);

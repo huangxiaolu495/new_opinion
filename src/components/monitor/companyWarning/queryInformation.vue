@@ -27,9 +27,6 @@
                 <th v-for="(item, index) of titleData" :key="index" class="tableTh" width:100px>{{item}}</th>
               </tr>
               <tr v-for="(item, index) of dataList" :key="index">
-                <!-- <td @click="companylist(item,index)">
-                  {{item.COMPANYNAME}}
-                </td> -->
                 <router-link :to="{name:'companylist',params:{companycode:item.COMPANYCODE}}">{{item.COMPANYNAME}}</router-link>
                 <td>{{item.COMPANYSNAME}}</td>
                 <td>{{item.ORGTYPE}}</td>
@@ -95,16 +92,10 @@ export default {
     paginationSelect(pageNumber) {
       const sendData = JSON.parse(JSON.stringify(this.sendData));
       sendData.page = pageNumber;
-      console.log('sendData', sendData)
       this.$_axios.get(this.url, {
         params: sendData
       }).then(response => {
-        console.log('法律法规查询结果', response.data.result);
         this.resultData = response.data.result.Company_List;
-        this.resultData.forEach(item => {
-          item.CONTENT = item.CONTENT.toString().replace(/\\r\\n\\r\\n/g, "<br>");
-          item.CONTENT = item.CONTENT.toString().replace(/\\r\\n/g, "<br>");
-        });
         this.dataList = JSON.parse(JSON.stringify(this.resultData));
         this.dataList.forEach(item => {
           item.COMPANYSNAME = item.COMPANYSNAME;
