@@ -3,27 +3,32 @@
     <!-- 公司信息查询 -->
     <div>
       <div class="queryCondition-top">
-        <div class="queryCondition-title">子公司信息查询</div>
+        <div class="queryCondition-title">投资项目舆情</div>
         <div class="middle clearFloat">
           <!-- 查询条件框 -->
           <div>
             <div class="floatLeft">
-              <date-picker :prop="startDatePicker" @startDateEvent="startDateEvent"></date-picker>
+              <date-picker :prop="startDatePicker" @startDateEvent="startDateEvent" ref="startdata"></date-picker>
             </div>
             <div class="floatLeft">
-              <date-picker :prop="endDatePicker" @endDateEvent="endDateEvent"></date-picker>
+              <date-picker :prop="endDatePicker" @endDateEvent="endDateEvent" ref="enddata"></date-picker>
             </div>
             <div class="floatLeft">
               <keyword @keywordEvent="keywordEvent"></keyword>
             </div>
-            <div class="floatLeft ml10">
-              <pull-down-list :prop="selectList" @selectListEvent='selectListEvent'></pull-down-list>
-            </div>
           </div>
-          <!-- 查询按钮 -->
-          <div class="queryBtn">
-            <span @click="query">查询</span>
+        </div>
+        <div class="mt15 clearFloat">
+          <div class="floatLeft">
+            <pull-down-list :prop="selectList" @selectListEvent='selectListEvent'></pull-down-list>
           </div>
+          <div class="floatLeft ml10">
+            <pull-down-list :prop="selectList2" @selectListEvent2='selectListEvent2'></pull-down-list>
+          </div>
+        </div>
+        <!-- 查询按钮 -->
+        <div class="queryBtn">
+          <span @click="query">查询</span>
         </div>
       </div>
       <!-- 查询结果 -->
@@ -78,6 +83,7 @@ export default {
       isShowQueryResult: false,
       hasResultData: false,
       resultData: null,
+      updatetime: "",
       queryCondition: {
         from_date: '',
         to_date: '',
@@ -123,6 +129,20 @@ export default {
           "中泰创投",
           "鲁证经贸",
           "万家共赢",
+        ]
+      },
+      selectList2: {
+        title: '',
+        parentEvent: 'selectListEvent2',
+        default: '请选择',
+        listWidth: 143,
+        nowSelectWidth: 140,
+        nowSelectHeight: 25,
+        nowSelectFontSize: 13,
+        list: [
+          "请选择",
+          "存续舆情事件",
+          "新增舆情事件"
         ]
       },
     }
@@ -187,6 +207,29 @@ export default {
         this.queryCondition.key_info = 0;
       }
     },
+    selectListEvent2(...data) {
+      this.updatetime = data[0];
+      const oneDayAfter = new Date().getTime() + 86400000;
+      if (this.updatetime == "请选择") {
+        this.startDatePicker.defaultDate = new Date();
+        this.endDatePicker.defaultDate = new Date(oneDayAfter);
+        this.queryCondition.from_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
+        this.queryCondition.to_date = commonMethods.formatDateTime2(this.endDatePicker.defaultDate);
+      }
+      else if (this.updatetime == "存续舆情事件") {
+        const eightday = new Date().getTime() - 691200000;
+        this.endDatePicker.defaultDate = new Date(eightday);
+        this.$refs.startdata.setNullDate();
+        this.queryCondition.to_date = commonMethods.formatDateTime2(this.endDatePicker.defaultDate);
+        delete this.queryCondition.from_date;
+      } else if (this.updatetime == "新增舆情事件") {
+        const oneweek = new Date().getTime() - 604800000;
+        this.startDatePicker.defaultDate = new Date(oneweek);
+        this.$refs.enddata.setNullDate();
+        this.queryCondition.from_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
+        delete this.queryCondition.to_date;
+      }
+    },
   },
   mounted() {
     this.queryCondition.from_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
@@ -198,6 +241,23 @@ export default {
 <style lang="less" scoped>
 .icon-link:before {
   content: "\e652";
+}
+.mt15 {
+  padding: 0 0 15px;
+}
+.queryBtn {
+  position: absolute;
+  top: 60px;
+  left: 650px;
+  width: 60px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  cursor: pointer;
+  background-color: #c82c37;
+  color: white;
+  border-radius: 5px;
+  font-size: 16px;
 }
 .ml10 {
   margin-left: 10px;
@@ -214,19 +274,6 @@ export default {
     width: 120px;
     height: 25px;
     line-height: 25px;
-  }
-  .queryBtn {
-    position: absolute;
-    top: 60px;
-    left: 650px;
-    width: 75px;
-    height: 30px;
-    line-height: 30px;
-    text-align: center;
-    cursor: pointer;
-    border: 1px solid #797979;
-    background-color: #c82c37;
-    border-radius: 5px;
   }
 }
 .queryResult {
