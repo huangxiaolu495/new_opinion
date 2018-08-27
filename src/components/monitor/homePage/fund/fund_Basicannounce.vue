@@ -15,7 +15,7 @@
         <div>
             <div class="floatLeft">
               <!-- 源代码 -->
-              <pull-down-list :prop="legislationList" @legislationEvent='legislationEvent' ></pull-down-list>
+              <pull-down-listt :prop="legislationList" @legislationEvent='legislationEvent' ></pull-down-listt>
               <!-- myself code -->
               
             </div>
@@ -71,7 +71,7 @@
 </template>
 
 <script>
-import pullDownList from '@/components/common/pullDownList'
+import pullDownListt from '@/components/common/pullDownListt'
 import pagination from '@/components/common/pagination'
 import commonMethods from '@/common/common.js'
 import datePicker from '@/components/common/datePicker'
@@ -126,7 +126,7 @@ export default {
       listtemp:[
           {
             code:"002",
-            content:"基金",
+            content:"全部",
           },
           {
             code:"002001",
@@ -143,6 +143,10 @@ export default {
           {
             code:"002002002",
             content:"半年度报告",
+          },
+          {
+            code:"002002003",
+            content:"季度报告"
           },
           {
             code:"002002004",
@@ -265,17 +269,18 @@ export default {
         title: '公告类型：',
         parentEvent: 'legislationEvent',
         default: '全部',
-        listWidth: 200,
+        listWidth: 340,
         nowSelectWidth:200,
         nowSelectHeight: 25,
         nowSelectFontSize: 13,
         
         list: [
-          '基金',
+          '全部',
           '基金招募及设立',
           '基金定期报告',
           '年度报告',
           '半年度报告',
+          "季度报告",
           '基金资产净值公告',
           '其他报告',
           '基金当事人公告',
@@ -312,7 +317,7 @@ export default {
     }
   },
   components: {
-    pullDownList,
+    pullDownListt,
     pagination,
     datePicker
   },

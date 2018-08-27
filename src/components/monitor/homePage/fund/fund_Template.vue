@@ -17,7 +17,7 @@
         <!-- 公告类型 -->
         <div>
             <div class="floatLeft">
-              <pull-down-list :prop="legislationList" @legislationEvent2='legislationEvent2'></pull-down-list>
+              <pull-down-listt :prop="legislationList" @legislationEvent2='legislationEvent2'></pull-down-listt>
             </div>
           </div>
           <div>
@@ -73,6 +73,7 @@
 
 <script>
 import pullDownList from '@/components/common/pullDownList'
+import pullDownListt from '@/components/common/pullDownListt'
 import pagination from '@/components/common/pagination'
 import commonMethods from '@/common/common.js'
 import datePicker from '@/components/common/datePicker'
@@ -127,7 +128,7 @@ export default {
       listtemp:[
           {
             code:"002",
-            content:"基金",
+            content:"全部",
           },
           {
             code:"002001",
@@ -144,6 +145,10 @@ export default {
           {
             code:"002002002",
             content:"半年度报告",
+          },
+          {
+            code:"002002003",
+            content:"季度报告"
           },
           {
             code:"002002004",
@@ -268,16 +273,19 @@ export default {
         title: '公告类型：',
         parentEvent: 'legislationEvent2',
         default: '全部',
-        listWidth: 200,
+        listWidth: 340,
         nowSelectWidth: 215,
         nowSelectHeight: 25,
         nowSelectFontSize: 13,
+        // list1:[  ['基金','基金招募及设立' ], [11, 2,2], []   ],
         list: [
-          '基金',
-          '\t\t\t\t\t基金招募及设立',
+          // ['基金','基金招募及设立' ],
+          '全部',
+          '基金招募及设立',
           '基金定期报告',
           '年度报告',
           '半年度报告',
+          '季度公告',
           '基金资产净值公告',
           '其他报告',
           '基金当事人公告',
@@ -329,7 +337,8 @@ export default {
   components: {
     pullDownList,
     pagination,
-    datePicker
+    datePicker,
+    pullDownListt
   },
     //获取板块名称 进入页面发送请求
   created(){
@@ -506,7 +515,104 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less" >
+.pullDownListBoxTwo{
+  height: 500px;
+  overflow-y: scroll;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(4){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(5){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(6){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(7){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(8){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(10){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(11){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(12){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(13){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(14){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(15){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(16){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(17){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(18){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(19){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(21){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(22){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(23){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(24){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(25){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(26){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(27){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(28){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(29){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(30){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(31){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(32){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(33){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(34){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(36){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(37){
+  padding-left: 40px;
+}
 .queryResult {
   table {
     width: 1180px;

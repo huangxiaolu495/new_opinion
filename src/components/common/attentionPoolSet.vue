@@ -31,9 +31,11 @@
                 <div class="content_more_first">
                   <span>发行人:</span>
                   <div class="content_more_second">
-                    <!-- <label for="quanbu"><input type="checkbox" id='quanbu'>全部</label><br> -->
+                    <label for="quanbu"><input type="checkbox" id='quanbu' v-model="checked"  @click="checkedAll">全部</label><br>
                     <ul>
-                      <li v-for="(item , index) of sencondResult" :key="index" :class="{active: 0 == index}"><label for="faxingren"><input type="checkbox" id="faxingren" :value="item"  @click='btnCheck(item,index)'>{{item}}</label></li>
+                      <!-- 复选框渲染 -->
+                      <li v-for="(item , index) of sencondResult" :key="index"><label for="faxingren"><input type="checkbox" @click='btnCheck(item.value)' id="faxingren" v-model="checkboxModel" :value='item.id' >{{item.value}}</label></li>
+                                                                                                                       <!-- @click='btnCheck(item,index)' -->
                     </ul>
                   </div>
                 </div>
@@ -174,6 +176,8 @@ export default {
        const now = new Date();
        const week = now.getTime() - 604800000;
     return {
+
+
       startDatePicker: {
         title: '日期：',
         parentEvent: 'startDateEvent',
@@ -213,7 +217,12 @@ export default {
         start_date:'',
         end_date:''
       },
+      //全选反选数据
       sencondResult:[],
+      checkboxModel:[],
+      // 全选反选数据
+      checked:true,
+
       addListSendData: {},
       securitiesList: null,
       nowSecuritiesList: [],
@@ -319,20 +328,45 @@ export default {
     // })
 
   },
-  methods:{
-    btnCheck(item,index){
-      console.log(item,index)
-      if(item =='全部'){
-        this.peopleDate.companylist = [];
-      }else{  
-
-        this.peopleDate.companylist.push(item)
-
-        // this.peopleDate.companylist = this.peopleDate.companylist.join(',')
-        
+  watch: {//深度 watcher
+  'checkboxModel': {
+    handler: function (val, oldVal) { 
+      if (this.checkboxModel.length === this.sencondResult.length) {
+        this.checked=true;
+      }else{
+        this.checked=false;
       }
+    },
+    deep: true
+  }
+},
+  methods:{
+    //全选反选功能
+      checkedAll() {
+          var _this = this;
+          console.log(this.checkboxModel);
+          console.log(this.sencondResult)
+          if (this.checked) {//实现反选
+            _this.checkboxModel = [];
+          }else{//实现全选
+          console.log(_this.sencondResult)
+          console.log(_this.checkboxModel);
+            _this.checkboxModel = [];
+            _this.sencondResult.forEach((v,i)=> {
+              _this.checkboxModel.push(v.id);
+            });
+          }
+          this.companylist = '';
+       },
+
+
+
+
+    btnCheck(item){
+      console.log(item)
+        this.peopleDate.companylist.push(item)
+        // this.peopleDate.companylist = this.peopleDate.companylist.join(',')
       // this.peopleDate.companylist = this.peopleDate.companylist.join()
-      
       console.log(this.peopleDate)
     },
     //点击更多显示
@@ -351,10 +385,26 @@ export default {
           //显示结果
           console.log(response)
           this.sencondResult = response.data.result.attention_list;
-          this.sencondResult.unshift("全部")
+
+          let len = this.sencondResult.length
+          
+          for(let i = 1 ; i <= len ; i++ ){
+            this.checkboxModel.push(i)
+          }
+          console.log(this.checkboxModel)
+          // this.sencondResult.unshift("全部")
+          this.sencondResult = this.sencondResult.map((v,i)=>{
+            return {
+              id: i + 1,
+              value: v
+            }
+          })
+
           console.log(this.sencondResult);
+
         })
     },
+
     switchTab(flag){
       this.nowTab = flag;
       this.isAddList = false;
@@ -388,7 +438,7 @@ export default {
       // const _year = 31536000000;
       // const _startDate = new Date(this.peopleDate.start_date).getTime()
       // const _endDate = new Date(this.peopleDate.end_date).getTime();
-      const searchUrl = 'http://10.25.24.51:10193/api/risk/issue_news'
+     
       // if (!this.peopleDate.start_date || !this.peopleDate.end_date) {
       //   alert('请输入日期时间段');
       //   return;
@@ -401,8 +451,15 @@ export default {
       //     delete this.peopleDate[key];
       //   }
       // }
-      this.peopleDate.companylist = this.peopleDate.companylist.join(',')
+      // console.log(''===[])
       console.log(this.peopleDate)
+      if(this.peopleDate.companylist){
+          this.peopleDate.companylist = this.peopleDate.companylist.join(',')
+      }
+      
+      console.log(this.peopleDate)
+      // console.log(boolean([]))
+       const searchUrl = 'http://10.25.24.51:10193/api/risk/issue_news'
      
 
       // this.sendData = JSON.parse(JSON.stringify(this.queryCondition));
