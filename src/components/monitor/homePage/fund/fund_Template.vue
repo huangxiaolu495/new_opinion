@@ -134,6 +134,42 @@ export default {
             code:"002001",
             content:"基金招募及设立",
           },
+          {                                                          
+            code:"002001001",
+            content:"招募所明书"
+          },             
+          {
+            code:"002001002",
+            content:"招募说明书更新"
+          },  
+          {
+            code:"002001003",
+            content:"发行公告"
+          },
+          {
+            code:"002001004",
+            content:"基金募集期变动公告"
+          },
+          {
+            code:"002001005",
+            content:"发行结果公告"
+          },
+          {
+            code:"002001006",
+            content:"基金成立或基金合同生效报告"
+          },
+          {
+            code:"002001007",
+            content:"基金份额上市交易公告书"
+          },
+          {
+            code:"002001008",
+            content:"基金合同"
+          },
+          {
+            code:"002001009",
+            content:"其他发行事项公告"
+          },
           {
             code:"002002",
             content:"基金定期报告",
@@ -282,6 +318,15 @@ export default {
           // ['基金','基金招募及设立' ],
           '全部',
           '基金招募及设立',
+          '招募所明书',
+          '招募说明书更新',
+          '发行公告',
+          '基金募集期变动公告',
+          '发行结果公告',
+          '基金成立或基金合同生效报告',
+          '基金份额上市交易公告书',
+          '基金合同',
+          '其他发行事项公告',
           '基金定期报告',
           '年度报告',
           '半年度报告',
@@ -520,6 +565,9 @@ export default {
   height: 500px;
   overflow-y: scroll;
 }
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(3){
+  padding-left: 40px;
+}
 .pullDownListContentTwo .pullDownListBoxTwo li:nth-child(4){
   padding-left: 40px;
 }
@@ -535,15 +583,16 @@ export default {
 .pullDownListContentTwo .pullDownListBoxTwo li:nth-child(8){
   padding-left: 40px;
 }
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(9){
+  padding-left: 40px;
+}
 .pullDownListContentTwo .pullDownListBoxTwo li:nth-child(10){
   padding-left: 40px;
 }
 .pullDownListContentTwo .pullDownListBoxTwo li:nth-child(11){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(12){
-  padding-left: 40px;
-}
+
 .pullDownListContentTwo .pullDownListBoxTwo li:nth-child(13){
   padding-left: 40px;
 }
@@ -559,10 +608,11 @@ export default {
 .pullDownListContentTwo .pullDownListBoxTwo li:nth-child(17){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(18){
+
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(19){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(19){
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(20){
   padding-left: 40px;
 }
 .pullDownListContentTwo .pullDownListBoxTwo li:nth-child(21){
@@ -589,12 +639,10 @@ export default {
 .pullDownListContentTwo .pullDownListBoxTwo li:nth-child(28){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(29){
-  padding-left: 40px;
-}
 .pullDownListContentTwo .pullDownListBoxTwo li:nth-child(30){
   padding-left: 40px;
 }
+
 .pullDownListContentTwo .pullDownListBoxTwo li:nth-child(31){
   padding-left: 40px;
 }
@@ -607,10 +655,37 @@ export default {
 .pullDownListContentTwo .pullDownListBoxTwo li:nth-child(34){
   padding-left: 40px;
 }
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(35){
+  padding-left: 40px;
+}
 .pullDownListContentTwo .pullDownListBoxTwo li:nth-child(36){
   padding-left: 40px;
 }
 .pullDownListContentTwo .pullDownListBoxTwo li:nth-child(37){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(38){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(39){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(40){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(41){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(42){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(43){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(45){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(46){
   padding-left: 40px;
 }
 .queryResult {

@@ -34,7 +34,7 @@
                     <label for="quanbu"><input type="checkbox" id='quanbu' v-model="checked"  @click="checkedAll">全部</label><br>
                     <ul>
                       <!-- 复选框渲染 -->
-                      <li v-for="(item , index) of sencondResult" :key="index"><label for="faxingren"><input type="checkbox" @click='btnCheck(item.value)' id="faxingren" v-model="checkboxModel" :value='item.id' >{{item.value}}</label></li>
+                      <li v-for="(item , index) of sencondResult" :key="index"><label for="faxingren"><input type="checkbox" @click='btnCheck(index)' id="faxingren" v-model="checkboxModel" :value='item.id' >{{item.value}}</label></li>
                                                                                                                        <!-- @click='btnCheck(item,index)' -->
                     </ul>
                   </div>
@@ -58,7 +58,7 @@
               <li v-for="(item , index) of dataList" :key="index"><span class="content_time">{{item.showtime}}</span><span class="content_between"><a :href="item.purl">{{item.title}}</a></span><span class="content_news">{{item.source}}</span></li>
             </ul>
             <!-- <pagination :prop="paginationData" @paginationSelect="paginationSelect"></pagination> -->
-             <pagination :prop="paginationData" @paginationSelect="paginationSelect"></pagination>
+              <pagination :prop="paginationData" @paginationSelect="paginationSelect"></pagination>
         </div>
        <!-- ------------------------------------------------------------------------------------------ -->
       </div>
@@ -177,7 +177,7 @@ export default {
        const week = now.getTime() - 604800000;
     return {
 
-
+      ischecked:false,
       startDatePicker: {
         title: '日期：',
         parentEvent: 'startDateEvent',
@@ -222,13 +222,14 @@ export default {
       checkboxModel:[],
       // 全选反选数据
       checked:true,
+      groupArr:[],
 
       addListSendData: {},
       securitiesList: null,
       nowSecuritiesList: [],
       addListQueryData: null,
       nowAddListQueryData: [],
-      paginationData: {
+       paginationData: {
         parentEvent: 'paginationSelect',
         page_Count: 0,
         total_Count: 0,
@@ -283,24 +284,11 @@ export default {
     this.$_axios.get(url, {
           params: dateList
         }).then(response => {
-          // 显示查询结果
-          console.log(response);
-          // this.resultData = response.data.result.result;
-          // console.log(this.resultData)
                   // 显示查询结果
             this.hasResultData = true;
-            this.dataList = JSON.parse(JSON.stringify(response.data.result.result))
-            const resultData = response.data.result;
-            console.log(resultData.total_count)
-            console.log(this.dataList);
-            // if (resultData.total_count) {
-            //   this.paginationData.page_Count = Math.ceil(resultData.total_count / 10);
-            // } else {
-            //   this.paginationData.page_Count = 0;
-            // }
-            
-            this.paginationData.page_Count = Math.ceil(resultData.total_count / 10);
-            this.paginationData.total_Count = resultData.total_count;
+            this.dataList = JSON.parse(JSON.stringify(response.data.result.result)); 
+            this.paginationData.page_Count = Math.floor(response.data.result.total_count / 10);
+            this.paginationData.total_Count = response.data.result.total_count;
             console.log("pc"+this.paginationData.page_Count);
           // this.poolList = resultData.map(item => {
           //   return {
@@ -356,18 +344,53 @@ export default {
               _this.checkboxModel.push(v.id);
             });
           }
-          this.companylist = '';
+          this.peopleDate.companylist = '';
        },
 
 
 
 
-    btnCheck(item){
-      console.log(item)
-        this.peopleDate.companylist.push(item)
+    btnCheck(){
+   
+      console.log(this.checkboxModel)
+      // this.sencondResult.forEach((v,i)=>{
+      //   this.checkboxModel.forEach(item=>{
+      //     v.id = item
+      //   })
+      // })
+      let shujuArr =[]
+      this.checkboxModel.forEach((item)=>{
+        let shuju = this.sencondResult.filter((v)=>{
+            if(v.id ==item){
+              return v.value
+            }
+        })
+        shujuArr.push(shuju)
+      })
+      let targetArr = shujuArr.map(v=>v[0].value)
+      // console.log(targetArr)
+      this.peopleDate.companylist = targetArr
+    
+ 
+
+      // if(!this.ischecked){
+      //   console.log(1)
+      //   if(arr.indexOf(item)>-1){
+      //     arr.splice(arr.indexOf(item),1)
+      //   }
+      // }else{
+      //   console.log(2)
+      //   if(arr.indexOf(item) > 0){
+      //     return
+      //   }else{
+      //     arr.push(item)
+      //   }
+      // }
+      console.log(this.groupArr)
+        // this.peopleDate.companylist.push(item)
         // this.peopleDate.companylist = this.peopleDate.companylist.join(',')
       // this.peopleDate.companylist = this.peopleDate.companylist.join()
-      console.log(this.peopleDate)
+      // console.log(this.peopleDate)
     },
     //点击更多显示
     morenews(){
@@ -385,12 +408,16 @@ export default {
           //显示结果
           console.log(response)
           this.sencondResult = response.data.result.attention_list;
+          
+          console.log(this.groupArr)
+          // this.checkboxModel = this.sencondResult
 
           let len = this.sencondResult.length
           
           for(let i = 1 ; i <= len ; i++ ){
             this.checkboxModel.push(i)
           }
+
           console.log(this.checkboxModel)
           // this.sencondResult.unshift("全部")
           this.sencondResult = this.sencondResult.map((v,i)=>{
@@ -483,6 +510,7 @@ export default {
         console.log(res);
         this.resultData = res.data.result.result
         // console.log(res.data.result.result)
+        this.dataList = JSON.parse(JSON.stringify(res.data.result.result))
 
     //将数据companylist的字符串变成数组
         this.peopleDate.companylist = [];
@@ -600,7 +628,6 @@ export default {
       this.$_axios.get(url, {
         params: dateList
       }).then(response => {
-        console.log('股票 > 股价异动预警', response.data.result);
         this.dataList = JSON.parse(JSON.stringify(response.data.result.result));
         this.resultData = response.data.result;
       })
@@ -1116,7 +1143,7 @@ table {
 }
 .newUl{
   margin-top:20px;
-  height:1000px;
+  // height:1000px;
 }
 
 </style>
