@@ -99,7 +99,6 @@ export default {
       selectdetail: "",
       updatetime: "",
       queryCondition: {
-        keyword: '',
         page: 1,
         page_size: 10,
       },
@@ -320,9 +319,14 @@ export default {
     },
     selectListEvent(...data) {
       this.selecttype = data[0];
+      this.$refs.clearText.value = "";
+      this.queryCondition.key_info = "";
       if (data[0] === '请选择') {
         this.queryCondition.key_info = "";
-        this.$refs.clearText.value = "";
+        this.queryCondition.company = "";
+      }
+      else {
+        this.queryCondition.company = this.selecttype;
       }
     },
     selectListEvent2(...data) {
