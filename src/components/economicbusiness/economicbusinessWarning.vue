@@ -2,7 +2,7 @@
   <div class="app">
     <div class="hag" v-if="$route.path != '/monitor/homePage/fundDetail'">
       <router-link to="/">
-        <h1 >中泰风险
+        <h1>中泰风险
           <span class="war_c">预警</span>系统
         </h1>
       </router-link>
@@ -194,7 +194,7 @@ export default {
 
 <style lang="less" scoped>
 .app {
-  height: 800px;
+  // height: 800px;
   overflow-x: hidden;
   overflow-y: auto;
 }

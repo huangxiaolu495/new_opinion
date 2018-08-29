@@ -11,8 +11,17 @@
   text-align: center;
 }
 
+.mtmt {
+  margin-left: 700px;
+  margin-top: 30px;
+}
+
 .mt60 {
   margin-left: 60px;
+}
+
+.mt30 {
+  margin-left: 30px;
 }
 
 .mt150 {
