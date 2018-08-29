@@ -56,10 +56,13 @@
             <ul class="newUl">
               <li><span class="content_time_top">发布时间</span><span class="content_between_top">标题</span><span class="content_news_top">新闻来源</span></li>
               <li v-for="(item , index) of dataList" :key="index"><span class="content_time">{{item.showtime}}</span><span class="content_between"><a :href="item.purl">{{item.title}}</a></span><span class="content_news">{{item.source}}</span></li>
+              
             </ul>
-            <!-- <pagination :prop="paginationData" @paginationSelect="paginationSelect"></pagination> -->
-              <pagination :prop="paginationData" @paginationSelect="paginationSelect"></pagination>
+              <pagination :prop="paginationData1" @paginationSelect="paginationSelect"></pagination>
+             
         </div>
+        
+        
        <!-- ------------------------------------------------------------------------------------------ -->
       </div>
       <div v-show="nowTab == '3'" class="queryBox">
@@ -229,7 +232,7 @@ export default {
       nowSecuritiesList: [],
       addListQueryData: null,
       nowAddListQueryData: [],
-       paginationData: {
+      paginationData1: {
         parentEvent: 'paginationSelect',
         page_Count: 0,
         total_Count: 0,
@@ -284,18 +287,22 @@ export default {
     this.$_axios.get(url, {
           params: dateList
         }).then(response => {
-                  // 显示查询结果
+        // 显示查询结果
             this.hasResultData = true;
             this.dataList = JSON.parse(JSON.stringify(response.data.result.result)); 
-            this.paginationData.page_Count = Math.floor(response.data.result.total_count / 10);
-            this.paginationData.total_Count = response.data.result.total_count;
-            console.log("pc"+this.paginationData.page_Count);
-          // this.poolList = resultData.map(item => {
-          //   return {
-          //     title: item,
-          //     check: false
-          //   }
-          // });
+            this.paginationData1.page_Count = Math.ceil(response.data.result.total_count / 10);
+            console.log(Math.ceil(response.data.result.total_count / 10))
+            this.paginationData1.total_Count = response.data.result.total_count;
+            console.log(response.data.result.total_count)
+            console.log("pc"+this.paginationData1.page_Count);
+            console.log("pc"+this.paginationData1.total_Count);
+            
+        // this.poolList = resultData.map(item => {
+        //   return {
+        //     title: item,
+        //     check: false
+        //   }
+        // });
         })
         // .catch(err => {
     //     //   console.log(err);
@@ -352,12 +359,14 @@ export default {
 
     btnCheck(){
    
-      console.log(this.checkboxModel)
+    
       // this.sencondResult.forEach((v,i)=>{
       //   this.checkboxModel.forEach(item=>{
       //     v.id = item
       //   })
       // })
+      //根据checkboxModel对应的数，查找sencondResult对应value
+      //并将其添加到peopleDate中
       let shujuArr =[]
       this.checkboxModel.forEach((item)=>{
         let shuju = this.sencondResult.filter((v)=>{
@@ -367,10 +376,12 @@ export default {
         })
         shujuArr.push(shuju)
       })
+        console.log(this.checkboxModel)
       let targetArr = shujuArr.map(v=>v[0].value)
       // console.log(targetArr)
       this.peopleDate.companylist = targetArr
-    
+
+      console.log(this.peopleDate.companylist)
  
 
       // if(!this.ischecked){
@@ -386,7 +397,7 @@ export default {
       //     arr.push(item)
       //   }
       // }
-      console.log(this.groupArr)
+    
         // this.peopleDate.companylist.push(item)
         // this.peopleDate.companylist = this.peopleDate.companylist.join(',')
       // this.peopleDate.companylist = this.peopleDate.companylist.join()
@@ -414,7 +425,7 @@ export default {
 
           let len = this.sencondResult.length
           
-          for(let i = 1 ; i <= len ; i++ ){
+          for(let i = 1 ; i <=len ; i++ ){
             this.checkboxModel.push(i)
           }
 
@@ -740,9 +751,11 @@ export default {
 
     startDateEvent(...data) {
       this.peopleDate.start_date = data[0];
+      console.log(data[0])
     },
     endDateEvent(...data) {
       this.peopleDate.end_date = data[0];
+      console.log(data[0])
     },
     queryIssuerEvent(){
       this.isShowSecurities = false;
@@ -878,6 +891,8 @@ export default {
     }).catch(err => {
       console.log(err);
     });
+    this.peopleDate.start_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
+    this.peopleDate.end_date = commonMethods.formatDateTime2(new Date());
   }
 }
 </script>
