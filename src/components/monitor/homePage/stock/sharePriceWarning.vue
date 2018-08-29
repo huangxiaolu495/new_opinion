@@ -96,7 +96,7 @@ export default {
       queryCondition: {
         sec_code: '',
         abnormal_type: 1,
-        threshold: '',
+        threshold: 1,
         start_date: '',
         end_date: '',
         page: 0,
@@ -277,9 +277,11 @@ export default {
     },
     startDateEvent(...data) {
       this.queryCondition.start_date = data[0];
+      console.log(data[0])
     },
     endDateEvent(...data) {
       this.queryCondition.end_date = data[0];
+      console.log(data[0])
     },
   },
   mounted() {
