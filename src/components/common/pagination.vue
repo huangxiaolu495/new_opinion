@@ -52,6 +52,17 @@ export default {
       goToNumber: ''
     }
   },
+  watch:{
+    'prop':{
+      handler:function(val,oldVal) {
+          this.allpage = this.prop.page_Count,
+          this.allDate = this.prop.total_Count,
+          this.current = this.prop.current
+      },
+      deep:true,
+      immediate: true
+    }
+  },
   computed: {
     pages(){
       let pag = [];

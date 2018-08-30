@@ -56,10 +56,9 @@
             <ul class="newUl">
               <li><span class="content_time_top">发布时间</span><span class="content_between_top">标题</span><span class="content_news_top">新闻来源</span></li>
               <li v-for="(item , index) of dataList" :key="index"><span class="content_time">{{item.showtime}}</span><span class="content_between"><a :href="item.purl">{{item.title}}</a></span><span class="content_news">{{item.source}}</span></li>
-              
-            </ul>
+            </ul>  
               <pagination :prop="paginationData1" @paginationSelect="paginationSelect"></pagination>
-             
+                       
         </div>
         
         
@@ -278,59 +277,44 @@ export default {
   },
   created(){
     const url = 'http://10.25.24.51:10193/api/risk/issue_news';
-    const dateList = {
-      userid: 'risk',
-      start_date: '',
-      end_date: '',
-      companylist: ''
-    }
+    // const dateList = {
+    //   userid: 'risk',
+    //   start_date: '',
+    //   end_date: '',
+    //   companylist: ''
+    // }
     this.$_axios.get(url, {
-          params: dateList
+          params: this.peopleDate
         }).then(response => {
         // 显示查询结果
             this.hasResultData = true;
             this.dataList = JSON.parse(JSON.stringify(response.data.result.result)); 
             this.paginationData1.page_Count = Math.ceil(response.data.result.total_count / 10);
+            // this.$set(this.paginationData1, "total_Count", response.data.result.total_count)
+            console.log(response.data.result.total_count)
+            // this.$set(this.paginationData1, "page_Count", Math.ceil(response.data.result.total_count / 10))
             console.log(Math.ceil(response.data.result.total_count / 10))
             this.paginationData1.total_Count = response.data.result.total_count;
             console.log(response.data.result.total_count)
             console.log("pc"+this.paginationData1.page_Count);
             console.log("pc"+this.paginationData1.total_Count);
-            
-        // this.poolList = resultData.map(item => {
-        //   return {
-        //     title: item,
-        //     check: false
-        //   }
-        // });
+
         })
-        // .catch(err => {
-    //     //   console.log(err);
-    //     // });
-    // const newUrl = 'http://10.25.24.51:10193/api/risk/attention_pool_set';
-    // const newDateList = {
-    //       userid: 'risk',
-    //       action: 'query'
-    // }
-    // this.$_axios.get(newUrl,{
-    //   params: newDateList
-    // }).then(response=>{
-    //   //显示结果
-    //   console.log(response)
-    //   this.sencondResult = response.data.result.attention_list;
-    //   this.sencondResult.unshift("全部")
-    //   console.log(this.sencondResult);
-    // })
+      
 
   },
   watch: {//深度 watcher
   'checkboxModel': {
     handler: function (val, oldVal) { 
+      
       if (this.checkboxModel.length === this.sencondResult.length) {
         this.checked=true;
       }else{
         this.checked=false;
       }
+      this.checkboxModel = val
+      // this.checkboxModel = JSON.parse(JSON.stringify(val));
+      console.log(this.checkboxModel);
     },
     deep: true
   }
@@ -351,23 +335,19 @@ export default {
               _this.checkboxModel.push(v.id);
             });
           }
-          this.peopleDate.companylist = '';
+          this.peopleDate.companylist = [];
        },
 
 
 
 
     btnCheck(){
-   
-    
-      // this.sencondResult.forEach((v,i)=>{
-      //   this.checkboxModel.forEach(item=>{
-      //     v.id = item
-      //   })
-      // })
-      //根据checkboxModel对应的数，查找sencondResult对应value
-      //并将其添加到peopleDate中
-      let shujuArr =[]
+
+      setTimeout(() => {
+        
+        console.log(this.checkboxModel);
+
+         let shujuArr =[]
       this.checkboxModel.forEach((item)=>{
         let shuju = this.sencondResult.filter((v)=>{
             if(v.id ==item){
@@ -382,6 +362,19 @@ export default {
       this.peopleDate.companylist = targetArr
 
       console.log(this.peopleDate.companylist)
+
+
+
+      }, 0);
+      // this.sencondResult.forEach((v,i)=>{
+      //   this.checkboxModel.forEach(item=>{
+      //     v.id = item
+      //   })
+      // })
+      //根据checkboxModel对应的数，查找sencondResult对应value
+      //并将其添加到peopleDate中
+
+     
  
 
       // if(!this.ischecked){
@@ -473,58 +466,36 @@ export default {
       }
     },
     query() {
-      // const _year = 31536000000;
-      // const _startDate = new Date(this.peopleDate.start_date).getTime()
-      // const _endDate = new Date(this.peopleDate.end_date).getTime();
-     
-      // if (!this.peopleDate.start_date || !this.peopleDate.end_date) {
-      //   alert('请输入日期时间段');
-      //   return;
-      // }
-      // this.isShowQueryResult = true;
-      // this.hasResultData = false;
-      // this.sendData = this.selectList.parentEvent;
-      // for (let key in this.peopleDate) {
-      //   if (this.peopleDate[key] === '') {
-      //     delete this.peopleDate[key];
-      //   }
-      // }
-      // console.log(''===[])
-      console.log(this.peopleDate)
-      if(this.peopleDate.companylist){
+
+      console.log(this.peopleDate.companylist)
+      let myselfArr = this.peopleDate.companylist;
+      if(Object.prototype.toString.call(this.peopleDate.companylist).slice(8, -1)=="Array"){
+
           this.peopleDate.companylist = this.peopleDate.companylist.join(',')
+          console.log(this.peopleDate.companylist)
       }
-      
       console.log(this.peopleDate)
       // console.log(boolean([]))
        const searchUrl = 'http://10.25.24.51:10193/api/risk/issue_news'
      
 
-      // this.sendData = JSON.parse(JSON.stringify(this.queryCondition));
-
-      // console.log(this.sendData)
-      // console.log(this.sendData);
-      //  securiycode: 基金代码
-
-        //  start_date:  公告开始日期
-
-        // end_date: 公告结束日期
-
-        // page: 第几页（从0开始），默认为0
-
-        // pagesize:每页条数，默认为10条
-
-        // notice_type: 公告类型
       this.$_axios.get(searchUrl, {
         params: this.peopleDate
       }).then(res => {
         console.log(res);
         this.resultData = res.data.result.result
         // console.log(res.data.result.result)
+        this.hasResultData = true;
         this.dataList = JSON.parse(JSON.stringify(res.data.result.result))
+        this.resultData = res.data.result;
+        console.log(this.dataList);
+
+        this.paginationData1.page_Count = Math.ceil(this.resultData.total_count / 10);
+  
+        this.paginationData1.total_Count = this.resultData.total_count;
 
     //将数据companylist的字符串变成数组
-        this.peopleDate.companylist = [];
+        this.peopleDate.companylist = myselfArr;
         
         
         
@@ -542,40 +513,6 @@ export default {
 
         
       })
-
-
-      // if (!this.queryCondition.start_date || !this.queryCondition.end_date) {
-      //   alert('请输入日期时间段');
-      //   return;
-      // }
-      // this.isShowQueryResult = true;
-      // this.hasResultData = false;
-      // this.sendData = this.selectList.parentEvent;
-      // for (let key in this.sendData) {
-      //   if (this.sendData[key] === '') {
-      //     delete this.sendData[key];
-      //   }
-      // }
-      // console.log('sendData', this.sendData)
-      // this.$_axios.get(this.url, {
-      //   params: this.sendData
-      // }).then(response => {
-        // 显示查询结果
-        // this.hasResultData = true;
-        // console.log('股票 > 股价异动预警', response.data.result);
-        // this.dataList = JSON.parse(JSON.stringify(response.data.result.result));
-        // this.resultData = response.data.result;
-        // if (this.resultData.total_count) {
-        //   this.paginationData.page_Count = Math.ceil(this.resultData.total_count / 10);
-        // } else {
-        //   this.paginationData.page_Count = 0;
-        // }
-        // this.paginationData.total_Count = this.resultData.total_count;
-        
-      // })
-      //   .catch(err => {
-      //     console.log(err);
-      //   });
     },
     closeAttentionPool(){
       this.$store.state.isAttentionPool = false;
@@ -627,17 +564,12 @@ export default {
     },
     paginationSelect(pageNumber) {
       const url = 'http://10.25.24.51:10193/api/risk/issue_news';
-      const dateList = {
-      userid: 'risk',
-      start_date: '',
-      end_date: '',
-      companylist: ''
-    }
+
       const sendData = JSON.parse(JSON.stringify(this.sendData));
-      sendData.page = pageNumber - 1;
+      this.peopleDate.page = pageNumber - 1;
       console.log('sendData', sendData)
       this.$_axios.get(url, {
-        params: dateList
+        params: this.peopleDate
       }).then(response => {
         this.dataList = JSON.parse(JSON.stringify(response.data.result.result));
         this.resultData = response.data.result;
@@ -862,10 +794,22 @@ export default {
           break;
       }
     },
-    paginationSelect(number){
-      this.nowSecuritiesPage = number;
-      this.nowSecuritiesList = this.securitiesList.slice(this.nowSecuritiesPage * 30, (Number(this.nowSecuritiesPage) + 1) * 30);
-    },
+    //   paginationSelect(pageNumber) {
+    //   const sendData = JSON.parse(JSON.stringify(this.sendData));
+    //   sendData.page = pageNumber - 1;
+    //   console.log('sendData', sendData)
+    //   this.$_axios.get(this.url, {
+    //     params: sendData
+    //   }).then(response => {
+    //     console.log('股票 > 股价异动预警', response.data.result);
+    //     this.dataList = JSON.parse(JSON.stringify(response.data.result.result));
+    //     this.resultData = response.data.result;
+    //   })
+    //     .catch(err => {
+    //       console.log(err);
+    //     });
+    // },
+
     paginationSelectList(number){
       this.nowAddListPage = number;
       this.nowAddListQueryData = this.addListQueryData.slice(this.nowAddListPage * 60, (Number(this.nowAddListPage) + 1) * 60);
