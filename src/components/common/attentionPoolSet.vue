@@ -490,8 +490,12 @@ export default {
         this.resultData = res.data.result;
         console.log(this.dataList);
 
-        this.paginationData1.page_Count = Math.ceil(this.resultData.total_count / 10);
-  
+
+        if (this.resultData.total_count) {
+          this.paginationData1.page_Count = Math.ceil(this.resultData.total_count / 10);
+        } else {
+          this.paginationData1.page_Count = 0;
+        }
         this.paginationData1.total_Count = this.resultData.total_count;
 
     //将数据companylist的字符串变成数组

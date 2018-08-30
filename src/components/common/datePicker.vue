@@ -94,6 +94,7 @@ export default {
   watch: {
     propDefaultDate(newVal, oldVal) {
       console.log(newVal)
+      console.log(newVal)
       let defaultDateStr = '';
       let y = this.prop.defaultDate.getFullYear();
       let m = this.prop.defaultDate.getMonth() + 1;
@@ -144,6 +145,7 @@ export default {
       }, 300);
     },
     inputEvent() {
+      console.log(1)
       this.showDate.dateStr
       const nowStr = this.showDate.dateStr;
       const tempArr = nowStr.split('');
