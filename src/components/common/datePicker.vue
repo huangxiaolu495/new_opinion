@@ -4,7 +4,7 @@
       {{prop.title}}
     </div>
     <div class="date-check">
-      <input @click="showTable" @blur="inputBlur" @input="inputEvent" v-model="_dateStr" type="text">
+      <input @click="showTable" @blur="inputBlur" @input="inputEvent" v-model="_dateStr" type="text" readonly="readonly">
       <!-- <div @click="showTable" class="nowCheckDate">{{showDate.dateStr}}</div> -->
       <div v-if="isShowTable" v-on:mouseleave="isShowTable = false" class="calendarBox">
         <div>
