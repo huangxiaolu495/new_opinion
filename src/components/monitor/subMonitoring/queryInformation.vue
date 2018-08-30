@@ -8,10 +8,10 @@
           <!-- 查询条件框 -->
           <div>
             <div class="floatLeft">
-              <date-picker :prop="startDatePicker" @startDateEvent="startDateEvent" ref="startdata"></date-picker>
+              <date-picker :prop="startDatePicker" @startDateEvent="startDateEvent" ref="startdata" readonly="readonly"></date-picker>
             </div>
             <div class="floatLeft">
-              <date-picker :prop="endDatePicker" @endDateEvent="endDateEvent" ref="enddata"></date-picker>
+              <date-picker :prop="endDatePicker" @endDateEvent="endDateEvent" ref="enddata" readonly="readonly"></date-picker>
             </div>
             <div class="floatLeft">
               <keyword @keywordEvent="keywordEvent"></keyword>

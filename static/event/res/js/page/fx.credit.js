@@ -15,7 +15,7 @@ window.onload = (function (M) {
     pageNum: 1,
     risk_type_data: [
       "可能暂停上市",
-      "暂停上市",
+      "被暂停上市",
       "被实施退市风险警示",
       "被实施其他风险警示",
       "可能退市风险警示",
