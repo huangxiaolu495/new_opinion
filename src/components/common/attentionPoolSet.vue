@@ -477,7 +477,7 @@ export default {
       console.log(this.peopleDate)
       // console.log(boolean([]))
        const searchUrl = 'http://10.25.24.51:10193/api/risk/issue_news'
-     
+     this.peopleDate.page = 0;
 
       this.$_axios.get(searchUrl, {
         params: this.peopleDate
