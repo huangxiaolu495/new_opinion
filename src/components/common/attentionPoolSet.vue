@@ -399,6 +399,8 @@ export default {
     //点击更多显示
     morenews(){
       this.ismorechoose = !this.ismorechoose
+      this.checked = true
+      
               //   console.log(err);
         // });
         const newUrl = 'http://10.25.24.51:10193/api/risk/attention_pool_set';
@@ -442,6 +444,7 @@ export default {
       this.isShowSecurities = false;
       this.isShowQueryResult = false;
       if(flag == '1'){
+        window.history.go(0);
         const url = 'http://10.25.24.51:10193/api/risk/attention_pool_set';
         const sendData = {
           userid: 'risk',
