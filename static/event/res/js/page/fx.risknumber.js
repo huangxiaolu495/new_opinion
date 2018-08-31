@@ -95,12 +95,12 @@ window.onload = (function (M) {
       var str = "";
       var par = {
         page: opt.num || that.pageNum,
-        pageSize: 50,
+        pageSize: 10,
         from_Date: M('#month_start').val() || '',
         to_Date: M('#month_stop').val() || '',
       };
-      var url = "http://10.25.24.51:10188/api/rest/nlp/Credit_Announce/count_risk?from_Date=" + par.from_Date + "&to_Date=" + par.to_Date;
-      that.resolve(url, null, function (data) {
+      var url = "http://10.25.24.51:10188/api/rest/nlp/Credit_Announce/count_risk?";
+      that.resolve(url, par, function (data) {
         var d = data.result.Announce_List;
         $.each(d, function (index, item) {
           str += '<tr>\
@@ -115,7 +115,7 @@ window.onload = (function (M) {
         that.page = M.ui.page.init({
           container: this.node.page,
           total: data.result.Total_Count == '' ? (data.result.Page_Count * 10) : (data.result.Total_Count),
-          items: 50,
+          items: 10,
           number: 8,
           isInput: true,
           isText: true,
