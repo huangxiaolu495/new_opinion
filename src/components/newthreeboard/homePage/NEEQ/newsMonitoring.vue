@@ -1,8 +1,9 @@
 <template>
   <div>
+    <!-- 新三板 > 新闻预警 > 新三板持仓股票舆情监控 -->
     <div>
       <div class="queryCondition-top">
-        <div class="queryCondition-title">新三板挂牌企业新闻预警</div>
+        <div class="queryCondition-title">新三板持仓股票舆情监控</div>
         <div class="middle clearFloat">
           <!-- 查询条件框 -->
           <div>
@@ -11,6 +12,9 @@
             </div>
             <div class="floatLeft">
               <date-picker :prop="endDatePicker" @endDateEvent="endDateEvent"></date-picker>
+            </div>
+            <div class="floatLeft">
+              <keyword @keywordEvent="keywordEvent"></keyword>
             </div>
           </div>
           <!-- 查询按钮 -->
@@ -43,17 +47,17 @@
           <pagination :prop="paginationData" @paginationSelect="paginationSelect"></pagination>
         </div>
         <div v-else>
-          <div class="loadEffect">
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
-            <span></span>
+            <div class="loadEffect">
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+              <span></span>
+            </div>
           </div>
-        </div>
       </div>
     </div>
   </div>
@@ -67,11 +71,11 @@ import keyword from '@/components/common/keyword'
 import commonMethods from '@/common/common.js'
 export default {
   data() {
-    const oneDayAfter = new Date().getTime() - 86400000;
+    const week = new Date().getTime() - 86400000 * 7;
     return {
-      url: '',
+      url: 'http://10.25.24.51:10192/api/rest/nlp/risk/new_OTC_market',
       isShowQueryResult: false,
-      hasResultData: false,
+           hasResultData: false,
       queryCondition: {
         keyword: '',
         page: 1,
@@ -81,7 +85,7 @@ export default {
       startDatePicker: {
         title: '日期：',
         parentEvent: 'startDateEvent',
-        defaultDate: new Date(oneDayAfter)
+        defaultDate: new Date(week)
       },
       endDatePicker: {
         title: '至：',
@@ -94,8 +98,13 @@ export default {
         total_Count: 0,
         current: 1
       },
-      titleData: ['标题', '发布时间', '链接', '新闻来源'],
-      dataList: [],
+      titleData: ['日期', '标题', '内容', '链接', '来源'],
+      dataList: [
+        { NOTICEDATE: '2018-01-01', NOTICETITLE: '2018-02-02', INFOBODYCONTENT: '正文内容正文内容正文内容', SOURCENAME: 'wwww' },
+        { NOTICEDATE: '2018-01-01', NOTICETITLE: '2018-02-02', INFOBODYCONTENT: '正文内容正文内容正文内容', SOURCENAME: 'wwww' },
+        { NOTICEDATE: '2018-01-01', NOTICETITLE: '2018-02-02', INFOBODYCONTENT: '正文内容正文内容正文内容', SOURCENAME: 'wwww' },
+        { NOTICEDATE: '2018-01-01', NOTICETITLE: '2018-02-02', INFOBODYCONTENT: '正文内容正文内容正文内容', SOURCENAME: 'wwww' },
+      ],
     }
   },
   components: {
@@ -118,12 +127,20 @@ export default {
       this.$_axios.get(this.url, {
         params: this.sendData
       }).then(response => {
+        console.log('新三板持仓股票舆情监控', response);
         this.isShowQueryResult = true;
         this.hasResultData = true;
         this.dataList = JSON.parse(JSON.stringify(response.data.result.Announce_List));
         this.resultData = response.data.result.Announce_List;
         this.paginationData.page_Count = response.data.result.Page_Count;
         this.paginationData.total_Count = response.data.result.Total_Count;
+        this.dataList.forEach(item => {
+          // item.NOTICEDATE = item.NOTICEDATE ? new Date(item.NOTICEDATE).toLocaleDateString() : '';
+          if (item.INFOBODYCONTENT && item.INFOBODYCONTENT.length > 175) {
+            item.INFOBODYCONTENT = item.INFOBODYCONTENT.slice(0, 175) + '...';
+            item.details = '...详情';
+          }
+        });
       })
         .catch(err => {
           console.log(err);
@@ -135,10 +152,18 @@ export default {
       this.$_axios.get(this.url, {
         params: sendData
       }).then(response => {
+        console.log('新三板持仓股票舆情监控', response);
         this.isShowQueryResult = true;
         this.hasResultData = true;
         this.dataList = JSON.parse(JSON.stringify(response.data.result.Announce_List));
         this.resultData = response.data.result.Announce_List;
+        this.dataList.forEach(item => {
+          // item.NOTICEDATE = item.NOTICEDATE ? new Date(item.NOTICEDATE).toLocaleDateString() : '';
+          if (item.INFOBODYCONTENT && item.INFOBODYCONTENT.length > 175) {
+            item.INFOBODYCONTENT = item.INFOBODYCONTENT.slice(0, 175) + '...';
+            item.details = '...详情';
+          }
+        });
       })
         .catch(err => {
           console.log(err);
@@ -147,12 +172,24 @@ export default {
     inputEvent() {
       this.queryCondition.keyword = commonMethods.checkName(this.queryCondition.keyword);
     },
+    keywordEvent(...data) {
+      this.queryCondition.keyword = data[0];
+    },
     startDateEvent(...data) {
       this.queryCondition.from_date = data[0];
     },
     endDateEvent(...data) {
       this.queryCondition.to_date = data[0];
     },
+    details(item, index) {
+      if (item.details == '收起') {
+        item.details = '...详情';
+        item.INFOBODYCONTENT = item.INFOBODYCONTENT.slice(0, 175) + '...';
+      } else {
+        item.details = '收起';
+        item.INFOBODYCONTENT = this.resultData[index].INFOBODYCONTENT;
+      }
+    }
   },
   mounted() {
     this.queryCondition.from_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);

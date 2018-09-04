@@ -74,7 +74,7 @@
             <div>
               <h3>投行委/新三板业务版</h3>
               <p>服务于投行委/新三板业务部，提供新三板挂牌企业负面新闻预警</p>
-              <router-link to="/">试用</router-link>
+              <router-link to="/newthreeboard/homePage/homeContent">试用</router-link>
             </div>
           </li>
         </ul>
