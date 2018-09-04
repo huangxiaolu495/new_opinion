@@ -3,7 +3,7 @@
     <!-- 期权 >> 场内期权业务其他舆情监控 -->
     <div>
       <div class="queryCondition-top">
-        <div class="queryCondition-title">场内期权业务其他舆情监控</div>
+        <div class="queryCondition-title">其他舆情监控</div>
         <div class="middle clearFloat">
           <!-- 查询条件框 -->
           <div>

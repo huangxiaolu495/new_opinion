@@ -60,9 +60,9 @@ export default {
             { title: '股指期货交易规则', path: '/monitor/homePage/stock_index_futures', list: [] }
           ]        },
 
-        {          title: '期权', isShowList: false, list: [
-            { title: '场内期权业务交易所公告信息监控', wordWrapping: true, path: '/monitor/homePage/shareOption_page1', list: [] },
-            { title: '场内期权业务其他舆情监控', path: '/monitor/homePage/shareOption_page2', list: [] }
+        {          title: '期权/商品', isShowList: false, list: [
+            { title: '交易所公告信息监控', path: '/monitor/homePage/shareOption_page1', list: [] },
+            { title: '其他舆情监控', path: '/monitor/homePage/shareOption_page2', list: [] }
           ]        },
 
         {          title: '新三板', isShowList: false, list: [

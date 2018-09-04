@@ -35,7 +35,9 @@
             <tbody>
               <tr v-for="(item, index) of dataList" :key="index">
                 <!-- @click="showDetails(item)" -->
-                <td class="tableTd colorBule"><a :href="item.url" target="_bank">{{item.title}}</a></td>
+                <td class="tableTd colorBule">
+                  <a :href="item.url" target="_bank">{{item.title}}</a>
+                </td>
                 <td class="tableTd">{{item.category}}</td>
                 <td class="tableTd">{{item.publish_date}}</td>
                 <!-- <td class="tableTd">
@@ -84,7 +86,8 @@ import keyword from '@/components/common/keyword'
 export default {
   data() {
     const now = new Date();
-    const week = now.getTime() - 31536000000;
+    // const week = now.getTime() - 31536000000;
+    const oneDayAfter = new Date().getTime() - 86400000;
     return {
       url: 'http://10.25.24.51:10189/aip/risk/regulatory?',
       isShowQueryResult: false,
@@ -108,7 +111,7 @@ export default {
       startDatePicker: {
         title: '日期：',
         parentEvent: 'startDateEvent',
-        defaultDate: new Date(week)
+        defaultDate: new Date(oneDayAfter)
       },
       endDatePicker: {
         title: '至：',
@@ -147,12 +150,12 @@ export default {
         const resultData = response.data.result;
         this.hasResultData = true;
         console.log('监管对挂牌公司处罚情况', resultData);
-        if(resultData.total_count){
+        if (resultData.total_count) {
           this.paginationData.page_Count = Math.ceil(resultData.total_count / 10);
-        } else{
+        } else {
           this.paginationData.page_Count = 0;
         }
-        
+
         this.paginationData.total_Count = resultData.total_count;
         this.dataList = JSON.parse(JSON.stringify(resultData.regulatory_news));
       })
@@ -176,7 +179,7 @@ export default {
           console.log(err);
         });
     },
-    inputEvent(){
+    inputEvent() {
       this.queryCondition.keyword = commonMethods.checkName(this.queryCondition.keyword);
     },
     categoryEvent(...data) {
@@ -207,7 +210,7 @@ export default {
           console.log(err);
         });
     },
-    keywordEvent(...data){
+    keywordEvent(...data) {
       this.queryCondition.keyword = data[0];
     },
     startDateEvent(...data) {

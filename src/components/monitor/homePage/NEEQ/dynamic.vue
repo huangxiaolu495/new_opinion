@@ -39,8 +39,9 @@ import datePicker from '@/components/common/datePicker'
 import commonMethods from '@/common/common.js'
 import keyword from '@/components/common/keyword'
 export default {
-  data(){
-    const _year = new Date().getTime() - 31536000000;
+  data() {
+    // const _year = new Date().getTime() - 31536000000;
+    const oneDayAfter = new Date().getTime() - 86400000;
     return {
       url: 'http://10.25.24.51:10189/api/risk/neeq_news?',
       isQueryResult: false,
@@ -58,43 +59,43 @@ export default {
         total_Count: 0,
         current: 1
       },
-      startDatePicker:{
+      startDatePicker: {
         title: '日期：',
         parentEvent: 'startDateEvent',
-        defaultDate: new Date(_year)
+        defaultDate: new Date(oneDayAfter)
       },
-      endDatePicker:{
+      endDatePicker: {
         title: '至：',
         parentEvent: 'endDateEvent',
         defaultDate: new Date()
       },
-      newsDatePicker:{
+      newsDatePicker: {
         title: '日期：',
         parentEvent: 'newsDateEvent'
       },
       announcementData: []
     }
   },
-  components:{
+  components: {
     messageList,
     pagination,
     datePicker,
     keyword
   },
-  methods:{
-    query(){
+  methods: {
+    query() {
       this.isQueryResult = false;
       this.sendData = JSON.parse(JSON.stringify(this.queryCondition));
       this.sendData.neeq_type = '股转动态';
-      console.log('sendData',this.sendData)
-      this.$_axios.get(this.url,{
-        params:this.sendData
+      console.log('sendData', this.sendData)
+      this.$_axios.get(this.url, {
+        params: this.sendData
       }).then(response => {
         const resultData = response.data.result;
         this.isQueryResult = true;
         console.log(resultData)
         console.log(resultData.total_count)
-        if(resultData.total_count){
+        if (resultData.total_count) {
           this.paginationData.page_Count = Math.ceil(resultData.total_count / 10);
         } else {
           this.paginationData.page_Count = 0;
@@ -113,16 +114,16 @@ export default {
           }
         });
       })
-      .catch(err => {
-        console.log(err);
-      });
+        .catch(err => {
+          console.log(err);
+        });
     },
-    paginationSelect(pageNumber){
+    paginationSelect(pageNumber) {
       const sendData = JSON.parse(JSON.stringify(this.sendData));
       sendData.page = pageNumber - 1;
-      console.log('sendData',sendData)
-      this.$_axios.get(this.url,{
-        params:sendData
+      console.log('sendData', sendData)
+      this.$_axios.get(this.url, {
+        params: sendData
       }).then(response => {
         const resultData = response.data.result;
         this.isQueryResult = true;
@@ -139,27 +140,27 @@ export default {
           }
         });
       })
-      .catch(err => {
-        console.log(err);
-      });
+        .catch(err => {
+          console.log(err);
+        });
     },
-    keywordEvent(...data){
+    keywordEvent(...data) {
       this.queryCondition.keyword = data[0];
     },
-    inputEvent(){
+    inputEvent() {
       this.queryCondition.keyword = commonMethods.checkName(this.queryCondition.keyword);
     },
-    startDateEvent(...data){
+    startDateEvent(...data) {
       this.queryCondition.start_date = data[0];
     },
-    endDateEvent(...data){
+    endDateEvent(...data) {
       this.queryCondition.end_date = data[0];
     },
-    newsDateEvent(...data){
+    newsDateEvent(...data) {
       this.queryCondition.news_date = data[0];
     }
   },
-  mounted(){
+  mounted() {
     this.queryCondition.start_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
     this.queryCondition.end_date = commonMethods.formatDateTime2(this.endDatePicker.defaultDate);
   }
@@ -167,5 +168,4 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
 </style>

@@ -92,7 +92,8 @@ import keyword from '@/components/common/keyword'
 export default {
   data() {
     const now = new Date();
-    const week = now.getTime() - 31536000000;
+    // const week = now.getTime() - 31536000000;
+    const oneDayAfter = new Date().getTime() - 86400000;
     return {
       url: 'http://10.25.24.51:10189/api/risk/neeq_pub_info2?',
       isQueryResult: false,
@@ -115,7 +116,7 @@ export default {
       startDatePicker: {
         title: '日期：',
         parentEvent: 'startDateEvent',
-        defaultDate: new Date(week)
+        defaultDate: new Date(oneDayAfter)
       },
       endDatePicker: {
         title: '至：',
