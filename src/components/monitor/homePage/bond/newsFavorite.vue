@@ -201,7 +201,7 @@ import commonMethods from '@/common/common.js'
 import datePicker from '@/components/common/datePicker'
 export default {
   data() {
-    const oneDayAfter = new Date().getTime() + 86400000;
+    const oneDayAfter = new Date().getTime() - 86400000;
     return {
       url: 'http://10.25.24.51:10192/api/rest/nlp/risk/query_favorite',
       updateUrl: 'http://10.25.24.51:10192/api/rest/nlp/risk/update_news_factor?',
@@ -234,12 +234,12 @@ export default {
       startDatePicker: {
         title: '新闻日期：',
         parentEvent: 'startDateEvent',
-        defaultDate: new Date()
+        defaultDate: new Date(oneDayAfter)
       },
       endDatePicker: {
         title: '至：',
         parentEvent: 'endDateEvent',
-        defaultDate: new Date(oneDayAfter)
+        defaultDate: new Date()
       },
       paginationData: {
         parentEvent: 'paginationSelect',

@@ -35,8 +35,8 @@
                 <td>{{item.stock_name}}</td>
                 <td>{{item.stock_code}}</td>
                 <td>
-                   <a :href="item.file_url" target="_bank">{{item.notice_title}}</a>
-                  </td>
+                  <a :href="item.file_url" target="_bank">{{item.notice_title}}</a>
+                </td>
                 <!-- <td class="data-content">{{item.file_url}}
                   <span @click="details(item, index)">{{item.details}}</span>
                 </td> -->
@@ -73,14 +73,14 @@ import keyword from '@/components/common/keyword'
 
 export default {
   data() {
-    const oneDayAfter = new Date().getTime() + 86400000;
+    const oneDayAfter = new Date().getTime() - 86400000;
     return {
       url: 'http://10.25.24.51:10191/api/rest/nlp/risk/query_announce_risk?',
       isShowQueryResult: false,
       hasResultData: false,
       resultData: {},
       queryCondition: {
-        keyword:'',
+        keyword: '',
         page: 1,
         page_size: 10,
         from_date: '',
@@ -90,12 +90,12 @@ export default {
       startDatePicker: {
         title: '日期：',
         parentEvent: 'startDateEvent',
-        defaultDate: new Date()
+        defaultDate: new Date(oneDayAfter)
       },
       endDatePicker: {
         title: '至：',
         parentEvent: 'endDateEvent',
-        defaultDate: new Date(oneDayAfter)
+        defaultDate: new Date()
       },
       sendData: {},
       paginationData: {
@@ -116,8 +116,8 @@ export default {
   computed: {
 
   },
-  methods: {      
-    keywordEvent(...data){
+  methods: {
+    keywordEvent(...data) {
       this.queryCondition.keyword = data[0];
     },
     paginationSelect(pageNumber) {
@@ -194,7 +194,7 @@ export default {
       this.queryCondition.to_date = data[0];
     },
   },
-  mounted(){
+  mounted() {
     this.queryCondition.from_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
     this.queryCondition.to_date = commonMethods.formatDateTime2(this.endDatePicker.defaultDate);
   }

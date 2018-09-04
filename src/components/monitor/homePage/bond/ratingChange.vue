@@ -7,22 +7,22 @@
         <!-- 查询条件框 -->
         <div class="clearFloat width1100">
           <div class="floatLeft">
-              <date-picker :prop="startDatePicker" @startDateEvent="startDateEvent"></date-picker>
-            </div>
-            <div class="floatLeft">
-              <date-picker :prop="endDatePicker" @endDateEvent="endDateEvent"></date-picker>
-            </div>
-            <div class="floatLeft">
-              <date-picker :prop="changeDatePicker" @changeDateEvent="changeDateEvent"></date-picker>
-            </div>
+            <date-picker :prop="startDatePicker" @startDateEvent="startDateEvent"></date-picker>
+          </div>
+          <div class="floatLeft">
+            <date-picker :prop="endDatePicker" @endDateEvent="endDateEvent"></date-picker>
+          </div>
+          <div class="floatLeft">
+            <date-picker :prop="changeDatePicker" @changeDateEvent="changeDateEvent"></date-picker>
+          </div>
         </div>
         <div class="clearFloat">
-          <div class="floatLeft"> 
-              <pull-down-list :prop="changeDirection"  @changeEvent = "changeEvent"></pull-down-list>
-            </div>
-            <div class="floatLeft">
-              <pull-down-list :prop="ratingNameData" @ratingName = "ratingName"></pull-down-list>
-            </div>
+          <div class="floatLeft">
+            <pull-down-list :prop="changeDirection" @changeEvent="changeEvent"></pull-down-list>
+          </div>
+          <div class="floatLeft">
+            <pull-down-list :prop="ratingNameData" @ratingName="ratingName"></pull-down-list>
+          </div>
         </div>
         <!-- 查询按钮 -->
         <div class="queryBtn">
@@ -83,14 +83,14 @@ import pagination from '@/components/common/pagination'
 import datePicker from '@/components/common/datePicker'
 import commonMethods from '@/common/common.js'
 export default {
-  data(){
-    const oneDayAfter = new Date().getTime() + 86400000;
+  data() {
+    const oneDayAfter = new Date().getTime() - 86400000;
     return {
       url: 'http://10.25.24.51:10193/api/risk/bond_rate_change?',
-      isQueryResult:false,
+      isQueryResult: false,
       isShowDetails: false,
       ratingChangeData: [],
-      queryCondition:{
+      queryCondition: {
         start_date: '',
         end_date: '',
         changedate: '',
@@ -99,59 +99,59 @@ export default {
         page: 0,
         pagesize: 10
       },
-      sendData:{},
+      sendData: {},
       detailsData: {},
-      tableData:{
-        th:['公告日期', '变动日期', '评级机构名称', '债券组合代码', '评级展望', '信用评级', '评级类型', '评级变动方向', '变动原因', '机构名称', '最近评级'],
+      tableData: {
+        th: ['公告日期', '变动日期', '评级机构名称', '债券组合代码', '评级展望', '信用评级', '评级类型', '评级变动方向', '变动原因', '机构名称', '最近评级'],
         tr: [
-          {notice_date: '', changedate: '', creditcode: '', creditname: '', portfoliocode: '', ratefwd: '', rating: '', ratingstyle: '', ratingtype: '', changeway:'', reason: ''}
+          { notice_date: '', changedate: '', creditcode: '', creditname: '', portfoliocode: '', ratefwd: '', rating: '', ratingstyle: '', ratingtype: '', changeway: '', reason: '' }
           //  变动日期changedate changeway creditcode creditname notice_date portfoliocode ratefwd rating ratingstyle ratingtype reason
         ]
       },
-      paginationData:{
+      paginationData: {
         parentEvent: 'paginationSelect',
         page_Count: 0,
         total_Count: 0,
         current: 1
       },
-      changeDatePicker:{
+      changeDatePicker: {
         title: '变动日期：',
         parentEvent: 'changeDateEvent',
-        
+
       },
-      startDatePicker:{
+      startDatePicker: {
         title: '披露日期：',
         parentEvent: 'startDateEvent',
-        defaultDate: new Date()
-      },
-      endDatePicker:{
-        title: '至：',
-        parentEvent: 'endDateEvent',
         defaultDate: new Date(oneDayAfter)
       },
-      ratingNameData: {title: '评级机构名称：', parentEvent: 'ratingName', default: '全部', listWidth: 230, nowSelectWidth: 150, list: [ '全部', '大公国际资信评估有限公司', '上海新世纪资信评估投资服务有限公司', '东方金诚国际信用评估有限公司', '联合信用评级有限公司', '联合资信评估有限公司', '中诚信证券评估有限公司', '鹏元资信评估有限公司']},
-      changeDirection: {title: '评级变动方向：', parentEvent: 'changeEvent', default: '全部', listWidth: 150, nowSelectWidth: 150, list: [ '全部','下调', '维持', '上调', '首次', '撤销']},
+      endDatePicker: {
+        title: '至：',
+        parentEvent: 'endDateEvent',
+        defaultDate: new Date()
+      },
+      ratingNameData: { title: '评级机构名称：', parentEvent: 'ratingName', default: '全部', listWidth: 230, nowSelectWidth: 150, list: ['全部', '大公国际资信评估有限公司', '上海新世纪资信评估投资服务有限公司', '东方金诚国际信用评估有限公司', '联合信用评级有限公司', '联合资信评估有限公司', '中诚信证券评估有限公司', '鹏元资信评估有限公司'] },
+      changeDirection: { title: '评级变动方向：', parentEvent: 'changeEvent', default: '全部', listWidth: 150, nowSelectWidth: 150, list: ['全部', '下调', '维持', '上调', '首次', '撤销'] },
     }
   },
-  components:{
+  components: {
     ratingChange,
     pullDownList,
     pagination,
     datePicker
   },
-  methods:{
-    query(){
+  methods: {
+    query() {
       this.isQueryResult = false;
       this.sendData = JSON.parse(JSON.stringify(this.queryCondition));
-      for(let key in this.sendData){
-        if(this.sendData[key] === ''){
+      for (let key in this.sendData) {
+        if (this.sendData[key] === '') {
           delete this.sendData[key];
         }
       }
-      console.log('sendData',this.sendData)
+      console.log('sendData', this.sendData)
       this.sendData.changeway = this.queryCondition.changeway;
-      this.$_axios.get(this.url,{
-        params:this.sendData
+      this.$_axios.get(this.url, {
+        params: this.sendData
       }).then(response => {
         const resultData = response.data.result;
         console.log(JSON.stringify(response.data))
@@ -165,23 +165,23 @@ export default {
           }
         });
         this.paginationData.total_Count = resultData.total_count;
-        if(resultData.total_count){
+        if (resultData.total_count) {
           this.paginationData.page_Count = Math.ceil(resultData.total_count / 10);
         } else {
           this.paginationData.page_Count = 0;
         }
-        console.log('债券 > 评级预警 >  评级变动',resultData);
+        console.log('债券 > 评级预警 >  评级变动', resultData);
       })
-      .catch(err =>{
-        console.log('请求失败');
-      });
+        .catch(err => {
+          console.log('请求失败');
+        });
     },
-    paginationSelect(pageNumber){
+    paginationSelect(pageNumber) {
       const sendData = JSON.parse(JSON.stringify(this.sendData));
       sendData.page = pageNumber - 1;
-      console.log('sendData',sendData)
-      this.$_axios.get(this.url,{
-        params:sendData
+      console.log('sendData', sendData)
+      this.$_axios.get(this.url, {
+        params: sendData
       }).then(response => {
         const resultData = response.data.result;
         this.isQueryResult = true;
@@ -193,22 +193,22 @@ export default {
             item.details = '...详情';
           }
         });
-        console.log('债券 > 评级预警 >  评级变动',resultData);
+        console.log('债券 > 评级预警 >  评级变动', resultData);
       })
-      .catch(err =>{
-        console.log('请求失败');
-      });
+        .catch(err => {
+          console.log('请求失败');
+        });
     },
-    ratingName(...data){
-      console.log('allData:',data)
-      if(data[0] === '全部'){
+    ratingName(...data) {
+      console.log('allData:', data)
+      if (data[0] === '全部') {
         this.queryCondition.creditname = '';
       } else {
         this.queryCondition.creditname = data[0];
       }
     },
-    changeEvent(...data){
-      console.log('allData:',data)
+    changeEvent(...data) {
+      console.log('allData:', data)
       // '下调', '维持', '上调', '首次', '撤销'
       switch (data[0]) {
         case '下调':
@@ -231,21 +231,21 @@ export default {
           break;
       }
     },
-    portfoliocodeDetails(item){
+    portfoliocodeDetails(item) {
       this.isShowDetails = false;
       let url = 'http://10.25.24.51:10193/api/risk/bond_base_detail?'
         + 'portfoliocode=' + item.portfoliocode;
       this.$_axios.get(url)
-      .then(response => {
-        this.isShowDetails = true;
-        const resultData = response.data.result;
-        this.detailsData = JSON.parse(JSON.stringify(resultData.result));
-        console.log(resultData)
+        .then(response => {
+          this.isShowDetails = true;
+          const resultData = response.data.result;
+          this.detailsData = JSON.parse(JSON.stringify(resultData.result));
+          console.log(resultData)
 
-      })
-      .catch(err => {
-        console.log(err);
-      });
+        })
+        .catch(err => {
+          console.log(err);
+        });
     },
     details(item, index) {
       if (item.details == '收起') {
@@ -256,21 +256,21 @@ export default {
         item.reason = this.dataList[index].reason;
       }
     },
-    closeDetails(){
+    closeDetails() {
       this.isShowDetails = false;
       this.detailsData = {};
     },
-    startDateEvent(...data){
+    startDateEvent(...data) {
       this.queryCondition.start_date = data[0];
     },
-    endDateEvent(...data){
+    endDateEvent(...data) {
       this.queryCondition.end_date = data[0];
     },
-    changeDateEvent(...data){
+    changeDateEvent(...data) {
       this.queryCondition.changedate = data[0];
     },
   },
-  mounted(){
+  mounted() {
     this.queryCondition.changeway = '';
     this.queryCondition.start_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
     this.queryCondition.end_date = commonMethods.formatDateTime2(this.endDatePicker.defaultDate);
@@ -279,33 +279,33 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.floatLine{
+.floatLine {
   width: 1100px;
 }
-.floatLine2{
+.floatLine2 {
   width: 770px;
 }
-.queryCondition-top .middle .queryBtn{
+.queryCondition-top .middle .queryBtn {
   margin-top: -15px;
 }
-.queryResult{
-  table{
+.queryResult {
+  table {
     width: 100%;
     border-collapse: collapse;
     border-top: 2px solid #a9a9a9;
-    background: #FFFFFF;
+    background: #ffffff;
   }
-  tbody{
+  tbody {
     display: table-row-group;
     vertical-align: middle;
     border-color: inherit;
-    th{
+    th {
       border: 1px solid #797979;
       height: 40px;
       line-height: 40px;
       background-color: #f0f5f9;
     }
-    td{
+    td {
       border: 1px solid #797979;
       text-align: center;
       vertical-align: middle;
@@ -323,58 +323,58 @@ export default {
         color: blue;
       }
     }
-    .portfoliocode{
+    .portfoliocode {
       cursor: pointer;
       text-decoration: underline;
     }
     .title:nth-child(1),
-    .title:nth-child(2){
+    .title:nth-child(2) {
       width: 80px;
     }
-    .title:nth-child(3){
+    .title:nth-child(3) {
       width: 180px;
     }
-    .title:nth-child(4){
+    .title:nth-child(4) {
       width: 85px;
     }
     .title:nth-child(5),
-    .title:nth-child(6){
+    .title:nth-child(6) {
       width: 70px;
     }
-    .title:nth-child(7){
+    .title:nth-child(7) {
       width: 95px;
     }
-    .title:nth-child(8){
+    .title:nth-child(8) {
       width: 85px;
     }
-    .title:nth-child(9){
+    .title:nth-child(9) {
       width: 200px;
     }
-    .title:nth-child(10){
+    .title:nth-child(10) {
       // width: 200px;
     }
-    .title:nth-child(11){
+    .title:nth-child(11) {
       width: 70px;
     }
   }
 }
-.detailsPopUp{
+.detailsPopUp {
   position: fixed;
   top: 0px;
   left: 0px;
   width: 100%;
   height: 100%;
   border: 1px solid #797979;
-  word-break:break-all;
-  word-wrap:break-word;
+  word-break: break-all;
+  word-wrap: break-word;
   background-color: #fff;
   z-index: 3;
-  .detailsBox{
+  .detailsBox {
     position: relative;
     width: 630px;
     margin-left: auto;
     margin-right: auto;
-    .details{
+    .details {
       position: absolute;
       top: 100px;
       right: 0;
@@ -382,7 +382,7 @@ export default {
       left: 100px;
       margin: auto;
     }
-    .closeBtn{
+    .closeBtn {
       position: absolute;
       right: -50px;
       top: 30px;

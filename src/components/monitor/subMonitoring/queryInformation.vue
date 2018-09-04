@@ -81,7 +81,7 @@ import datePicker from '@/components/common/datePicker'
 import keyword from '@/components/common/keyword'
 export default {
   data() {
-    const oneDayAfter = new Date().getTime() + 86400000;
+    const oneDayAfter = new Date().getTime() - 86400000;
     return {
       url: 'http://10.25.24.51:10194/api/rest/nlp/bod/query_subsidiary_news?',
       isShowQueryResult: false,
@@ -100,12 +100,12 @@ export default {
       startDatePicker: {
         title: '日期：',
         parentEvent: 'startDateEvent',
-        defaultDate: new Date()
+        defaultDate: new Date(oneDayAfter)
       },
       endDatePicker: {
         title: '至：',
         parentEvent: 'endDateEvent',
-        defaultDate: new Date(oneDayAfter)
+        defaultDate: new Date()
       },
       paginationData: {
         parentEvent: 'paginationSelect',
@@ -234,10 +234,10 @@ export default {
     },
     selectListEvent2(...data) {
       this.updatetime = data[0];
-      const oneDayAfter = new Date().getTime() + 86400000;
+      const oneDayAfter = new Date().getTime() - 86400000;
       if (this.updatetime == "请选择") {
-        this.startDatePicker.defaultDate = new Date();
-        this.endDatePicker.defaultDate = new Date(oneDayAfter);
+        this.startDatePicker.defaultDate = new Date(oneDayAfter);
+        this.endDatePicker.defaultDate = new Date();
         this.queryCondition.from_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
         this.queryCondition.to_date = commonMethods.formatDateTime2(this.endDatePicker.defaultDate);
       }

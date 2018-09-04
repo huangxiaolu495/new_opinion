@@ -48,7 +48,7 @@
                 <td>{{item.importlevel}}</td>
                 <td>{{item.securitycode}}</td>
                 <td class="data-content">
-                    <p v-html="item.securityname"></p>
+                  <p v-html="item.securityname"></p>
                   <span @click="details(item, index)">{{item.details}}</span>
                 </td>
                 <td>{{item.securitytype}}</td>
@@ -93,7 +93,7 @@ import datePicker from '@/components/common/datePicker'
 
 export default {
   data() {
-    const oneDayAfter = new Date().getTime() + 86400000;
+    const oneDayAfter = new Date().getTime() - 86400000;
     return {
       url: 'http://10.25.24.51:10193/api/risk/fund_announce?',
       isShowQueryResult: false,
@@ -110,12 +110,12 @@ export default {
       startDatePicker: {
         title: '日期：',
         parentEvent: 'startDateEvent',
-        defaultDate: new Date()
+        defaultDate: new Date(oneDayAfter)
       },
       endDatePicker: {
         title: '至：',
         parentEvent: 'endDateEvent',
-        defaultDate: new Date(oneDayAfter)
+        defaultDate: new Date()
       },
       sendData: {},
       paginationData: {
@@ -141,23 +141,23 @@ export default {
   },
   methods: {
 
-        details(item, index) {
+    details(item, index) {
       if (item.details == '收起') {
         item.details = '...详情';
-        item.securityname = item.securityname.slice(0,45) + '...';
+        item.securityname = item.securityname.slice(0, 45) + '...';
       } else {
         item.details = '收起';
         item.securityname = this.resultData[index].securityname.join('\r\n');
       }
     },
-    inputCode(){
+    inputCode() {
       const numberReg = /^[0-9]*$/;
       this.nowEquityNo = commonMethods.checkName(this.nowEquityNo.trim());
       let arr = this.nowEquityNo.split('');
       let arr2 = [];
       console.log(arr)
       arr.forEach(item => {
-        if(numberReg.test(item)){
+        if (numberReg.test(item)) {
           arr2.push(item)
         }
       });
@@ -171,9 +171,9 @@ export default {
 
       let nowNumber = parseInt(this.nowEquityNo);
       // 输入数字过大
-      if(nowNumber > 999999){
+      if (nowNumber > 999999) {
         this.nowEquityNo = '';
-      } else if(this.nowEquityNo.toString().length > 0){
+      } else if (this.nowEquityNo.toString().length > 0) {
         const tempArr = [];
         this.isShowDropDownList = false;
         this.codeDataList.forEach(item => {
@@ -184,7 +184,7 @@ export default {
         this.dropDownList = tempArr.slice(0, 5);
       }
     },
-    dropDownEvent(item){
+    dropDownEvent(item) {
       return
       this.nowEquityNo = item;
       this.queryCondition.securitycode = item.split(' ')[0];
@@ -202,10 +202,10 @@ export default {
         this.resultData = response.data.result.result;
         this.dataList.forEach(item => {
           item.securityname = item.securityname.join('\r\n');
-            if (item.securityname && item.securityname.length > 45) {
-              item.securityname = `${item.securityname.slice(0, 45) + '...'}`;
-              item.details = '...详情';
-            }
+          if (item.securityname && item.securityname.length > 45) {
+            item.securityname = `${item.securityname.slice(0, 45) + '...'}`;
+            item.details = '...详情';
+          }
         });
       })
         .catch(err => {
@@ -238,7 +238,7 @@ export default {
       // } else {
       //   this.queryCondition.securitycode = '';
       // }
-      this.queryCondition.securitycode =  this.nowEquityNo;
+      this.queryCondition.securitycode = this.nowEquityNo;
       this.sendData = JSON.parse(JSON.stringify(this.queryCondition));
       for (let key in this.sendData) {
         if (this.sendData[key] === '') {
@@ -254,18 +254,18 @@ export default {
         console.log('基金 公告预警', response.data.result);
         this.dataList = JSON.parse(JSON.stringify(response.data.result.result));
         this.resultData = response.data.result.result;
-        if(response.data.result.total_count){
+        if (response.data.result.total_count) {
           this.paginationData.page_Count = Math.ceil(response.data.result.total_count / 10);
-        } else{
+        } else {
           this.paginationData.page_Count = 0;
         }
         this.paginationData.total_Count = response.data.result.total_count;
         this.dataList.forEach(item => {
           item.securityname = item.securityname.join('\r\n');
-            if (item.securityname && item.securityname.length >45) {
-              item.securityname = `${item.securityname.slice(0, 45) + '...'}`;
-              item.details = '...详情';
-            }
+          if (item.securityname && item.securityname.length > 45) {
+            item.securityname = `${item.securityname.slice(0, 45) + '...'}`;
+            item.details = '...详情';
+          }
         });
       })
         .catch(err => {
@@ -322,9 +322,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.drop-down{
+.drop-down {
   position: relative;
-  .drop-down-box{
+  .drop-down-box {
     position: absolute;
     top: 24px;
     left: 106px;
@@ -332,15 +332,15 @@ export default {
     border: 1px solid #797979;
     background-color: #fff;
     z-index: 1;
-    span{
+    span {
       float: left;
       width: 240px;
       cursor: pointer;
-      overflow:hidden;
-      text-overflow:ellipsis;
-      white-space:nowrap
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
-    span:hover{
+    span:hover {
       background-color: rgb(136, 179, 180);
     }
   }

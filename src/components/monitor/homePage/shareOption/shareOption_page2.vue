@@ -71,7 +71,7 @@ import datePicker from '@/components/common/datePicker'
 import keyword from '@/components/common/keyword'
 export default {
   data() {
-    const oneDayAfter = new Date().getTime() + 86400000;
+    const oneDayAfter = new Date().getTime() - 86400000;
     return {
       url: 'http://10.25.24.51:10192/api/rest/nlp/risk/option_news?',
       isShowQueryResult: false,
@@ -86,12 +86,12 @@ export default {
       startDatePicker: {
         title: '日期：',
         parentEvent: 'startDateEvent',
-        defaultDate: new Date()
+        defaultDate: new Date(oneDayAfter)
       },
       endDatePicker: {
         title: '至：',
         parentEvent: 'endDateEvent',
-        defaultDate: new Date(oneDayAfter)
+        defaultDate: new Date()
       },
       paginationData: {
         parentEvent: 'paginationSelect',

@@ -829,7 +829,7 @@ import commonMethods from "@/common/common.js";
 import datePicker from "@/components/common/datePicker";
 export default {
   data() {
-    const oneDayAfter = new Date().getTime() + 86400000;
+    const oneDayAfter = new Date().getTime() - 86400000;
     return {
       url: "http://10.25.24.51:10192/api/rest/nlp/risk/query_news",
       updateUrl:
@@ -933,42 +933,42 @@ export default {
       startDatePicker: {
         title: "新闻日期：",
         parentEvent: "startDateEvent",
-        defaultDate: new Date()
+        defaultDate: new Date(oneDayAfter)
       },
       endDatePicker: {
         title: "至：",
         parentEvent: "endDateEvent",
-        defaultDate: new Date(oneDayAfter)
+        defaultDate: new Date()
       },
       startDatePicker1: {
         title: "新闻日期：",
         parentEvent: "startDateEvent1",
-        defaultDate: new Date()
+        defaultDate: new Date(oneDayAfter)
       },
       endDatePicker1: {
         title: "至：",
         parentEvent: "endDateEvent1",
-        defaultDate: new Date(oneDayAfter)
+        defaultDate: new Date()
       },
       startDatePicker2: {
         title: "新闻日期：",
         parentEvent: "startDateEvent2",
-        defaultDate: new Date()
+        defaultDate: new Date(oneDayAfter)
       },
       endDatePicker2: {
         title: "至：",
         parentEvent: "endDateEvent2",
-        defaultDate: new Date(oneDayAfter)
+        defaultDate: new Date()
       },
       startDatePicker3: {
         title: "新闻日期：",
         parentEvent: "startDateEvent3",
-        defaultDate: new Date()
+        defaultDate: new Date(oneDayAfter)
       },
       endDatePicker3: {
         title: "至：",
         parentEvent: "endDateEvent3",
-        defaultDate: new Date(oneDayAfter)
+        defaultDate: new Date()
       },
       paginationData: {
         parentEvent: "paginationSelect",
@@ -1955,7 +1955,7 @@ export default {
       // console.log(item.check)
       if (item.type === "全部") {
         this["firstTypeList" + this.nowCategroy.toString()].forEach(val => {
-          console.log(this.nowCategroy,'我打印的')  
+          console.log(this.nowCategroy, '我打印的')
           // console.log(val)
           //val是
           val.check = item.check;
