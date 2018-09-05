@@ -540,6 +540,133 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.pullDownListBoxTwo{
+  height: 500px;
+  overflow-y: scroll;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(3){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(4){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(5){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(6){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(7){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(8){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(9){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(10){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(11){
+  padding-left: 40px;
+}
+
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(13){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(14){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(15){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(16){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(17){
+  padding-left: 40px;
+}
+
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(19){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(20){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(21){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(22){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(23){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(24){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(25){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(26){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(27){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(28){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(30){
+  padding-left: 40px;
+}
+
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(31){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(32){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(33){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(34){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(35){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(36){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(37){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(38){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(39){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(40){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(41){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(42){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(43){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(45){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(46){
+  padding-left: 40px;
+}
 .queryResult {
   table {
     width: 1180px;
