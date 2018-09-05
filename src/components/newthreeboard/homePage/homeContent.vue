@@ -24,19 +24,14 @@
         <div v-if="hasResultData">
           <table>
             <thead>
-              <th v-for="(item, index) of titleData" :key="index">{{item}}</th>
+              <th v-for="(item, index) of titleData" :key="index" class="tableTh">{{item}}</th>
             </thead>
             <tbody>
               <tr v-for="(item, index) of dataList" :key="index">
-                <td class="tableTd">{{item.NOTICEDATE}}</td>
-                <td class="tableTd">{{item.NOTICETITLE}}</td>
-                <td class="tableTd data-content">{{item.INFOBODYCONTENT}}
-                  <span @click="details(item, index)">{{item.details}}</span>
-                </td>
-                <td class="tableTd">
-                  <a :href="item.SOURCEURL" target="_bank">查看</a>
-                </td>
-                <td class="tableTd">{{item.SOURCENAME}}</td>
+                <td>{{item.title}}</td>
+                <td>{{item.showtime}}</td>
+                <td>{{item.purl}}</td>
+                <td>{{item.source}}</td>
               </tr>
             </tbody>
           </table>
@@ -69,11 +64,11 @@ export default {
   data() {
     const oneDayAfter = new Date().getTime() - 86400000;
     return {
-      url: '',
+      url: 'http://10.25.24.51:10193/api/risk/issue_news?',
       isShowQueryResult: false,
       hasResultData: false,
       queryCondition: {
-        keyword: '',
+        userid: 'risk',
         page: 1,
         page_size: 10
       },
@@ -101,8 +96,7 @@ export default {
   components: {
     pullDownList,
     pagination,
-    datePicker,
-    keyword
+    datePicker
   },
   methods: {
     query() {
@@ -114,16 +108,21 @@ export default {
           delete this.sendData[key];
         }
       }
-      console.log('sendData', this.sendData)
       this.$_axios.get(this.url, {
         params: this.sendData
       }).then(response => {
         this.isShowQueryResult = true;
         this.hasResultData = true;
-        this.dataList = JSON.parse(JSON.stringify(response.data.result.Announce_List));
-        this.resultData = response.data.result.Announce_List;
-        this.paginationData.page_Count = response.data.result.Page_Count;
-        this.paginationData.total_Count = response.data.result.Total_Count;
+        this.dataList = JSON.parse(JSON.stringify(response.data.result.result));
+        this.resultData = response.data.result.result;
+        this.paginationData.page_Count = Math.floor(response.data.result.total_count / 10);
+        this.paginationData.total_Count = response.data.result.total_count;
+        this.dataList.forEach(item => {
+          item.title = item.title;
+          item.showtime = item.showtime;
+          item.purl = item.purl;
+          item.source = item.source;
+        });
       })
         .catch(err => {
           console.log(err);
@@ -137,15 +136,18 @@ export default {
       }).then(response => {
         this.isShowQueryResult = true;
         this.hasResultData = true;
-        this.dataList = JSON.parse(JSON.stringify(response.data.result.Announce_List));
-        this.resultData = response.data.result.Announce_List;
+        this.dataList = JSON.parse(JSON.stringify(response.data.result.result));
+        this.resultData = response.data.result.result;
+        this.dataList.forEach(item => {
+          item.title = item.title;
+          item.showtime = item.showtime;
+          item.purl = item.purl;
+          item.source = item.source;
+        });
       })
         .catch(err => {
           console.log(err);
         });
-    },
-    inputEvent() {
-      this.queryCondition.keyword = commonMethods.checkName(this.queryCondition.keyword);
     },
     startDateEvent(...data) {
       this.queryCondition.from_date = data[0];
@@ -201,6 +203,8 @@ export default {
       background-color: #f0f5f9;
     }
     tr {
+      height: 30px;
+      line-height: 30px;
       border: 1px solid #797979;
     }
     td {
@@ -219,17 +223,17 @@ export default {
         color: blue;
       }
     }
-    .tableTd:nth-child(1) {
-      width: 100px;
+    .tableTh:nth-child(1) {
+      width: 200px;
     }
-    .tableTd:nth-child(2) {
+    .tableTh:nth-child(2) {
       width: 150px;
     }
-    .tableTd:nth-child(4) {
-      width: 50px;
+    .tableTh:nth-child(3) {
+      width: 400px;
     }
-    .tableTd:nth-child(5) {
-      width: 120px;
+    .tableTh:nth-child(4) {
+      width: 100px;
     }
   }
 }

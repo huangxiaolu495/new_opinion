@@ -17,7 +17,7 @@ export default {
       isShowList: false,
       sidebarData: [
         { title: '新三板挂牌企业新闻预警', path: '/newthreeboard/homePage/homeContent', isShowList: false, list: [] },
-        {          title: '新三板', isShowList: false, list: [
+        {          title: '其他', isShowList: false, list: [
             {              title: '新闻预警', isShowList: false, path: '/newthreeboard/homePage/NEEQ_NewsMonitoring', list: [
                 { title: '新三板持仓股票舆情监控', path: '/newthreeboard/homePage/NEEQ_NewsMonitoring' },
                 // {title: '新闻收藏夹', path: '/monitor/homePage/NEEQ_favorite'}

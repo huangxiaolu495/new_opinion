@@ -86,6 +86,8 @@ import NEEQ_selfMeasures from '@/components/newthreeboard/homePage/NEEQ/selfMeas
 import NEEQ_punishment from '@/components/newthreeboard/homePage/NEEQ/punishment'
 // 监管公开信息 > 问询函
 import NEEQ_inquiryLetter from '@/components/newthreeboard/homePage/NEEQ/inquiryLetter'
+// 我的关注池
+import NEEQ_attentionPoolSet from '@/components/newthreeboard/homePage/NEEQ/attentionPoolSet'
 // >> 新三板
 
 // >> 期权
@@ -205,6 +207,11 @@ export default new Router({
             path: '/newthreeboard/homePage/NEEQ_inquiryLetter',
             name: 'NEEQ_inquiryLetter',
             component: NEEQ_inquiryLetter
+          },
+          {
+            path: '/newthreeboard/homePage/NEEQ_attentionPoolSet',
+            name: 'NEEQ_attentionPoolSet',
+            component: NEEQ_attentionPoolSet
           },
           // >> 新三板
         ]
@@ -480,19 +487,11 @@ export default new Router({
       path: '/boardofdirectorsWarning',
       name: 'boardofdirectorsWarning',
       component: boardofdirectorsWarning,
-      //   children: [{
-      //     path: '/boardofdirectorsWarning',
-      //     component: boardofdirectorsWarning
-      //   }, ]
     },
     {
       path: '/economicbusinessWarning',
       name: 'economicbusinessWarning',
       component: economicbusinessWarning,
-      //   children: [{
-      //     path: '/boardofdirectorsWarning',
-      //     component: boardofdirectorsWarning
-      //   }, ]
     },
   ]
 })
