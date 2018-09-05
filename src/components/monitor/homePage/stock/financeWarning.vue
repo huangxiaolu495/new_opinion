@@ -67,7 +67,6 @@ import datePicker from '@/components/common/datePicker'
 import keyword from '@/components/common/keyword'
 export default {
   data() {
-    // const oneDayAfter = new Date().getTime() + 86400000;
     return {
       url: 'http://10.25.24.51:10192/api/rest/nlp/risk/query_finance_risk?',
       isShowQueryResult: false,
@@ -173,7 +172,7 @@ export default {
         item.INFOBODYCONTENT = this.resultData[index].INFOBODYCONTENT;
       }
     },
-    keywordEvent(...data){
+    keywordEvent(...data) {
       this.queryCondition.keyword = data[0];
     },
     startDateEvent(...data) {

@@ -72,7 +72,8 @@ import commonMethods from '@/common/common.js'
 import keyword from '@/components/common/keyword'
 export default {
   data() {
-    const _year = new Date().getTime() - 31536000000;
+    // const _year = new Date().getTime() - 31536000000;
+    const oneDayAfter = new Date().getTime() - 86400000;
     return {
       url: 'http://10.25.24.51:10189/api/risk/neeq_pub_info1?',
       isQueryResult: false,
@@ -121,7 +122,7 @@ export default {
       startDatePicker: {
         title: '日期：',
         parentEvent: 'startDateEvent',
-        defaultDate: new Date(_year)
+        defaultDate: new Date(oneDayAfter)
       },
       endDatePicker: {
         title: '至：',

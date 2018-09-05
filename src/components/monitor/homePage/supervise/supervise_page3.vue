@@ -76,7 +76,8 @@ import keyword from '@/components/common/keyword'
 export default {
   data() {
     const now = new Date();
-    const week = now.getTime() - 604800000;
+    // const week = now.getTime() - 604800000;
+    const oneDayAfter = new Date().getTime() - 86400000;
     return {
       url: 'http://10.25.24.51:10189/api/risk/supervise_rule?',
       isShowQueryResult: false,
@@ -110,7 +111,7 @@ export default {
       startDatePicker: {
         title: '日期：',
         parentEvent: 'startDateEvent',
-        defaultDate: new Date(week)
+        defaultDate: new Date(oneDayAfter)
       },
       endDatePicker: {
         title: '至：',
@@ -144,9 +145,9 @@ export default {
         const resultData = response.data.result;
         console.log('监管要求 > 最新监管规则解读', resultData);
         this.tableData.td = JSON.parse(JSON.stringify(resultData.news));
-        if(resultData.total_count){
+        if (resultData.total_count) {
           this.paginationData.page_Count = Math.ceil(resultData.total_count / 10);
-        } else{
+        } else {
           this.paginationData.page_Count = 0;
         }
         this.paginationData.total_Count = resultData.total_count;
@@ -171,7 +172,7 @@ export default {
           console.log(err);
         });
     },
-    inputEvent(){
+    inputEvent() {
       this.queryCondition.keyword = commonMethods.checkName(this.queryCondition.keyword);
     },
     closeDetails() {
@@ -202,7 +203,7 @@ export default {
         this.queryCondition.data_source = data[0];
       }
     },
-    keywordEvent(...data){
+    keywordEvent(...data) {
       this.queryCondition.keyword = data[0];
     },
     startDateEvent(...data) {

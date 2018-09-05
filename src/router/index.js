@@ -2,8 +2,10 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import opinion from '@/components/opinion'
 import monitor from '@/components/monitor/monitor'
+import monitor_ntb from '@/components/newthreeboard/monitor'
 // 首页
 import homePage from '@/components/monitor/homePage/homePage'
+import homePage_ntb from '@/components/newthreeboard/homePage/homePage'
 // 关联公司预警
 import companyWarning from '@/components/monitor/companyWarning/companyWarning'
 // 子公司舆情监控
@@ -17,6 +19,8 @@ import attentionPoolSet from '@/components/common/attentionPoolSet'
 
 // >>>首页子页面
 import homeContent from '@/components/monitor/homePage/homeContent'
+//新三板子页面
+import homeContent_ntb from '@/components/newthreeboard/homePage/homeContent'
 
 // >>>董事会模块
 import boardofdirectorsWarning from '@/components/boardofdirectors/boardofdirectorsWarning'
@@ -69,19 +73,19 @@ import stock_index_futures from '@/components/monitor/homePage/futureGoods/stock
 
 // >> 新三板
 // 新闻预警 > 新三板持仓股票舆情监控
-import NEEQ_NewsMonitoring from '@/components/monitor/homePage/NEEQ/newsMonitoring'
+import NEEQ_NewsMonitoring from '@/components/newthreeboard/homePage/NEEQ/newsMonitoring'
 // 新闻预警 > 收藏夹
-import NEEQ_favorite from '@/components/monitor/homePage/NEEQ/favorite'
+import NEEQ_favorite from '@/components/newthreeboard/homePage/NEEQ/favorite'
 // 最新动态 > 通知公告
-import NEEQ_announcement from '@/components/monitor/homePage/NEEQ/announcement'
+import NEEQ_announcement from '@/components/newthreeboard/homePage/NEEQ/announcement'
 // 最新动态 > 股转动态
-import NEEQ_dynamic from '@/components/monitor/homePage/NEEQ/dynamic'
+import NEEQ_dynamic from '@/components/newthreeboard/homePage/NEEQ/dynamic'
 // 监管公开信息 > 自律监管措施
-import NEEQ_selfMeasures from '@/components/monitor/homePage/NEEQ/selfMeasures'
+import NEEQ_selfMeasures from '@/components/newthreeboard/homePage/NEEQ/selfMeasures'
 // 监管公开信息 > 纪律处分
-import NEEQ_punishment from '@/components/monitor/homePage/NEEQ/punishment'
+import NEEQ_punishment from '@/components/newthreeboard/homePage/NEEQ/punishment'
 // 监管公开信息 > 问询函
-import NEEQ_inquiryLetter from '@/components/monitor/homePage/NEEQ/inquiryLetter'
+import NEEQ_inquiryLetter from '@/components/newthreeboard/homePage/NEEQ/inquiryLetter'
 // >> 新三板
 
 // >> 期权
@@ -150,6 +154,61 @@ export default new Router({
       path: '/attentionPoolSet',
       name: 'attentionPoolSet',
       component: attentionPoolSet
+    },
+    {
+      path: '/newthreeboard',
+      name: 'monitor_ntb',
+      redirect: '/newthreeboard/homePage/homeContent',
+      component: monitor_ntb,
+      children: [{
+        path: '/newthreeboard/homePage',
+        name: 'homePage_ntb',
+        redirect: '/newthreeboard/homePage/homeContent',
+        component: homePage_ntb,
+        children: [{
+            path: '/newthreeboard/homePage/homeContent',
+            name: 'homeContent_ntb',
+            component: homeContent_ntb
+          },
+          // >> 新三板
+          {
+            path: '/newthreeboard/homePage/NEEQ_NewsMonitoring',
+            name: 'NEEQ_NewsMonitoring',
+            component: NEEQ_NewsMonitoring
+          },
+          {
+            path: '/newthreeboard/homePage/NEEQ_favorite',
+            name: 'NEEQ_favorite',
+            component: NEEQ_favorite
+          },
+          {
+            path: '/newthreeboard/homePage/NEEQ_announcement',
+            name: 'NEEQ_announcement',
+            component: NEEQ_announcement
+          },
+          {
+            path: '/newthreeboard/homePage/NEEQ_dynamic',
+            name: 'NEEQ_dynamic',
+            component: NEEQ_dynamic
+          },
+          {
+            path: '/newthreeboard/homePage/NEEQ_punishment',
+            name: 'NEEQ_punishment',
+            component: NEEQ_punishment
+          },
+          {
+            path: '/newthreeboard/homePage/NEEQ_selfMeasures',
+            name: 'NEEQ_selfMeasures',
+            component: NEEQ_selfMeasures
+          },
+          {
+            path: '/newthreeboard/homePage/NEEQ_inquiryLetter',
+            name: 'NEEQ_inquiryLetter',
+            component: NEEQ_inquiryLetter
+          },
+          // >> 新三板
+        ]
+      }],
     },
     {
       path: '/monitor',
@@ -264,44 +323,6 @@ export default new Router({
               component: legislation
             },
             // >> 法律法规
-
-            // >> 新三板
-            {
-              path: '/monitor/homePage/NEEQ_NewsMonitoring',
-              name: 'NEEQ_NewsMonitoring',
-              component: NEEQ_NewsMonitoring
-            },
-            {
-              path: '/monitor/homePage/NEEQ_favorite',
-              name: 'NEEQ_favorite',
-              component: NEEQ_favorite
-            },
-            {
-              path: '/monitor/homePage/NEEQ_announcement',
-              name: 'NEEQ_announcement',
-              component: NEEQ_announcement
-            },
-            {
-              path: '/monitor/homePage/NEEQ_dynamic',
-              name: 'NEEQ_dynamic',
-              component: NEEQ_dynamic
-            },
-            {
-              path: '/monitor/homePage/NEEQ_punishment',
-              name: 'NEEQ_punishment',
-              component: NEEQ_punishment
-            },
-            {
-              path: '/monitor/homePage/NEEQ_selfMeasures',
-              name: 'NEEQ_selfMeasures',
-              component: NEEQ_selfMeasures
-            },
-            {
-              path: '/monitor/homePage/NEEQ_inquiryLetter',
-              name: 'NEEQ_inquiryLetter',
-              component: NEEQ_inquiryLetter
-            },
-            // >> 新三板
 
             // >> 期权
             {

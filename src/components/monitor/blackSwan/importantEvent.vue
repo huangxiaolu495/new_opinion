@@ -31,7 +31,9 @@
                 <th v-for="(item, index) of titleData" :key="index" class="tableTh" width:100px>{{item}}</th>
               </tr>
               <tr v-for="(item, index) of dataList" :key="index">
-                <td class="colorBule"><a :href="item.URL" target="_bank">{{item.TITLE}}</a></td>
+                <td class="colorBule">
+                  <a :href="item.URL" target="_bank">{{item.TITLE}}</a>
+                </td>
                 <td>{{item.SHOWTIME}}</td>
                 <td class="data-content">
                   <p v-html="item.CONTENT"></p>
@@ -67,7 +69,7 @@ import datePicker from '@/components/common/datePicker'
 import keyword from '@/components/common/keyword'
 export default {
   data() {
-    const oneDayAfter = new Date().getTime() + 86400000;
+    const oneDayAfter = new Date().getTime() - 86400000;
     return {
       url: 'http://10.25.24.51:10192/api/rest/nlp/risk/delist_caution?news_type=2&',
       isShowQueryResult: false,
@@ -82,12 +84,12 @@ export default {
       startDatePicker: {
         title: '日期：',
         parentEvent: 'startDateEvent',
-        defaultDate: new Date()
+        defaultDate: new Date(oneDayAfter)
       },
       endDatePicker: {
         title: '至：',
         parentEvent: 'endDateEvent',
-        defaultDate: new Date(oneDayAfter)
+        defaultDate: new Date()
       },
       paginationData: {
         parentEvent: 'paginationSelect',
@@ -105,7 +107,7 @@ export default {
     keyword,
   },
   methods: {
-    inputEvent(){
+    inputEvent() {
       this.queryCondition.keyword = commonMethods.checkName(this.queryCondition.keyword);
     },
     paginationSelect(pageNumber) {
@@ -179,7 +181,7 @@ export default {
         item.CONTENT = this.resultData[index].CONTENT;
       }
     },
-    keywordEvent(...data){
+    keywordEvent(...data) {
       this.queryCondition.keyword = data[0];
     },
     startDateEvent(...data) {
