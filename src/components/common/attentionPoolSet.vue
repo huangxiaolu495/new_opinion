@@ -19,12 +19,12 @@
             </li>
           </ul>
         </div>
-        <div class="poolBtnBox">
+        <div class="poolBtnBox" v-show="isClearList">
           <span @click="deleteList">删除</span>
           <span @click="clearList">清空</span>
         </div>
         <!-- 右侧表单添加内容 -->
-        <div class="my_content">
+        <div class="my_content" v-show="isContent">
             <span class="news_content">相关新闻</span>
             <button @click="morenews">更多筛选>></button>
               <div v-show="ismorechoose" class="content_more">
@@ -60,8 +60,6 @@
               <pagination :prop="paginationData1" @paginationSelect="paginationSelect"></pagination>
                        
         </div>
-        
-        
        <!-- ------------------------------------------------------------------------------------------ -->
       </div>
       <div v-show="nowTab == '3'" class="queryBox">
@@ -90,7 +88,7 @@
                 </tr>
               </tbody>
             </table>
-          <!-- <pagination :prop="paginationData" @paginationSelect="paginationSelect"></pagination> -->
+          <pagination :prop="paginationData2" @paginationSelect2="paginationSelect2"></pagination>
           </div>
           <div v-if="isShowSecurities && !isShowIssuer" class="queryIssuerDataList">
             <EasyScrollbar>
@@ -178,7 +176,8 @@ export default {
        const now = new Date();
        const week = now.getTime() - 604800000;
     return {
-
+      isContent:true,
+      isClearList:true,
       ischecked:false,
       startDatePicker: {
         title: '日期：',
@@ -233,6 +232,12 @@ export default {
       nowAddListQueryData: [],
       paginationData1: {
         parentEvent: 'paginationSelect',
+        page_Count: 0,
+        total_Count: 0,
+        current: 1
+      },
+      paginationData2: {
+        parentEvent: 'paginationSelect2',
         page_Count: 0,
         total_Count: 0,
         current: 1
@@ -533,6 +538,7 @@ export default {
       this.querySecurities.issue = commonMethods.checkName(this.querySecurities.issue.trim());
       this.queryAddList.keyword = commonMethods.checkName(this.queryAddList.keyword.trim());
     },
+    //添加到关注池
     addToList(){
       const tempArr = [];
       const url = 'http://10.25.24.51:10193/api/risk/attention_pool_set'
@@ -585,11 +591,29 @@ export default {
           console.log(err);
         });
     },
+    // paginationSelect2(pageNumber) {
+    //   const url = 'http://10.25.24.51:10193/api/risk/issue_seccode_mapper';
+
+    //   const sendData = JSON.parse(JSON.stringify(this.sendData));
+    //   this.peopleDate.page = pageNumber - 1;
+    //   console.log('sendData', sendData)
+    //   this.$_axios.get(url, {
+    //     params: this.peopleDate
+    //   }).then(response => {
+    //     this.dataList = JSON.parse(JSON.stringify(response.data.result.result));
+    //     this.resultData = response.data.result;
+    //   })
+    //     .catch(err => {
+    //       console.log(err);
+    //     });
+    // },
+    //搜索
     addListQuery(){
       this.isShowAddListQuery = false;
       this.isShowAddListPage = false;
       this.hasResultDataAddList = false;
       const url = 'http://10.25.24.51:10193/api/risk/attention_base_query';
+      //addListSendData 为对象
       this.addListSendData = {
         companytype: this.queryAddList.companytype,
         keyword: this.queryAddList.keyword,
@@ -611,7 +635,9 @@ export default {
         if(this.addListQueryData.length > 60){
           this.paginationData_list.page_Count = Math.floor(this.addListQueryData.length / 60)
           this.paginationData_list.total_Count = this.addListQueryData.length;
+          console.log(this.addListQueryData)
           this.nowAddListQueryData = this.addListQueryData.slice(0, 60);
+          console.log(this.addListQueryData.slice(0, 60))
           this.isShowAddListPage = true;
         } else {
           this.nowAddListQueryData = JSON.parse(JSON.stringify(this.addListQueryData));
@@ -625,6 +651,8 @@ export default {
       });
     },
     clearList(){
+      this.isClearList = false;
+      this.isContent = false;
       // http://localhost:10193/api/risk/attention_pool_set?userid=zhangxx &action=drop
       const sendData = {
         userid: 'risk',
@@ -752,38 +780,39 @@ export default {
       this.isShowQueryResult = false;
       const url = 'http://10.25.24.51:10193/api/risk/issue_seccode_mapper';
       const sendData = {
-        issue: this.querySecurities.issue
+        issue: this.querySecurities.issue,
       }
       console.log( 'sendData',sendData)
       this.$_axios.get( url, {
         params: sendData
       }).then(response => {
+        console.log(response)
         // 显示查询结果
         this.isShowQueryResult = true;
         this.isShowIssuer = true;
         this.isShowSecurities = false;
         console.log(response.data )
         if(response.data.code == 0 && response.data.msg == 'query success'){
+          //拿到的数据
           const resultData = response.data.result.seccodes_names;
           this.securitiesList = JSON.parse(JSON.stringify(resultData));
-          this.paginationData.page_Count = Math.floor(this.securitiesList.length / 30)
-          this.paginationData.total_Count = this.securitiesList.length;
-          this.nowSecuritiesList = this.securitiesList.slice(0, 30);
+          console.log(this.securitiesList)
+          console.log(this.securitiesList.length);
+          this.paginationData2.page_Count = Math.ceil(this.securitiesList.length /  10);
+          this.paginationData2.total_Count = this.securitiesList.length;
+          this.nowSecuritiesList = this.securitiesList.slice(0,10);
+          console.log(this.nowSecuritiesList)
         } else {
           this.paginationData.page_Count = 0;
           this.paginationData.total_Count = 0;
           this.nowSecuritiesList = [];
         }
         
-      }).catch(err => {
-        console.log(err);
-        this.isShowQueryResult = true;
-        this.isShowIssuer = true;
-        this.isShowSecurities = false;
-        this.paginationData.page_Count = 0;
-        this.paginationData.total_Count = 0;
-        this.nowSecuritiesList = [];
-      });
+      })
+    },
+    paginationSelect2(number){
+      this.nowAddListPage = number;
+      this.nowSecuritiesList = this.securitiesList.slice(this.nowAddListPage * 10, (Number(this.nowAddListPage) + 1) * 10);
     },
     typeListEvent(...data){
       switch (data[0]) {
@@ -891,7 +920,6 @@ export default {
     }
   }
   .poolBtnBox{
-    margin-top: 20px;
     span{
       cursor: pointer;
       padding: 6px;
@@ -901,6 +929,7 @@ export default {
     }
   }
   .queryBox{
+    height: 1000px;
     .top{
       width: 500px;
       height: 70px;
@@ -1067,7 +1096,6 @@ table {
 }
 .content_more{
   width: 510px;
-  height:150px;
   border: 1px solid #000;
   margin-top:16px;
   padding-left: 26px;
@@ -1111,5 +1139,10 @@ table {
   margin-top:20px;
   // height:1000px;
 }
-
+.poolBtnBox{
+  margin-top: 10px;
+}
+body{
+  overflow: scroll;
+}
 </style>
