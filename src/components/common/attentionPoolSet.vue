@@ -19,12 +19,12 @@
             </li>
           </ul>
         </div>
-        <div class="poolBtnBox">
+        <div class="poolBtnBox" v-show="isClearList">
           <span @click="deleteList">删除</span>
           <span @click="clearList">清空</span>
         </div>
         <!-- 右侧表单添加内容 -->
-        <div class="my_content">
+        <div class="my_content" v-show="isContent">
             <span class="news_content">相关新闻</span>
             <button @click="morenews">更多筛选>></button>
               <div v-show="ismorechoose" class="content_more">
@@ -34,7 +34,7 @@
                     <label for="quanbu"><input type="checkbox" id='quanbu' v-model="checked"  @click="checkedAll">全部</label><br>
                     <ul>
                       <!-- 复选框渲染 -->
-                      <li v-for="(item , index) of sencondResult" :key="index"><label for="faxingren"><input type="checkbox" @click='btnCheck(index)' id="faxingren" v-model="checkboxModel" :value='item.id' >{{item.value}}</label></li>
+                      <li v-for="(item , index) of sencondResult" :key="index"><label :for="index"><input type="checkbox" @click='btnCheck(index)' :id="index" v-model="checkboxModel" :value='item.id' >{{item.value}}</label></li>
                                                                                                                        <!-- @click='btnCheck(item,index)' -->
                     </ul>
                   </div>
@@ -60,13 +60,12 @@
               <pagination :prop="paginationData1" @paginationSelect="paginationSelect"></pagination>
                        
         </div>
-        
-        
        <!-- ------------------------------------------------------------------------------------------ -->
       </div>
       <div v-show="nowTab == '3'" class="queryBox">
         <div class="clearFloat">
           <div class="top floatLeft">
+            <!-- 通过注册input事件触发inputEventCheck -->
             证券代码：<input @input="inputEventCheck" v-model="queryIssuer.seccode" type="text" class="marginTop20">
             证券简称：<input @input="inputEventCheck" v-model="queryIssuer.secname" type="text">
             <span @click="queryIssuerEvent" class="queryBtn marginLeft10">查询发行人</span>
@@ -90,7 +89,7 @@
                 </tr>
               </tbody>
             </table>
-          <!-- <pagination :prop="paginationData" @paginationSelect="paginationSelect"></pagination> -->
+          <pagination :prop="paginationData2" @paginationSelect2="paginationSelect2"></pagination>
           </div>
           <div v-if="isShowSecurities && !isShowIssuer" class="queryIssuerDataList">
             <EasyScrollbar>
@@ -178,7 +177,8 @@ export default {
        const now = new Date();
        const week = now.getTime() - 604800000;
     return {
-
+      isContent:true,
+      isClearList:true,
       ischecked:false,
       startDatePicker: {
         title: '日期：',
@@ -237,6 +237,12 @@ export default {
         total_Count: 0,
         current: 1
       },
+      paginationData2: {
+        parentEvent: 'paginationSelect2',
+        page_Count: 0,
+        total_Count: 0,
+        current: 1
+      },
       paginationData_list: {
         parentEvent: 'paginationSelectList',
         page_Count: 0,
@@ -275,14 +281,10 @@ export default {
     pullDownList,
     datePicker
   },
+  //页面加载完之后展示内容
   created(){
     const url = 'http://10.25.24.51:10193/api/risk/issue_news';
-    // const dateList = {
-    //   userid: 'risk',
-    //   start_date: '',
-    //   end_date: '',
-    //   companylist: ''
-    // }
+
     this.$_axios.get(url, {
           params: this.peopleDate
         }).then(response => {
@@ -303,10 +305,10 @@ export default {
       
 
   },
+  //监听单个复选框，点击复选框判断获取内容
   watch: {//深度 watcher
   'checkboxModel': {
     handler: function (val, oldVal) { 
-      
       if (this.checkboxModel.length === this.sencondResult.length) {
         this.checked=true;
       }else{
@@ -340,15 +342,12 @@ export default {
 
 
 
-
+    //点击复选框，选取内容作为参数
     btnCheck(){
-
       setTimeout(() => {
-        
         console.log(this.checkboxModel);
-
-         let shujuArr =[]
-      this.checkboxModel.forEach((item)=>{
+        let shujuArr =[]
+        this.checkboxModel.forEach((item)=>{
         let shuju = this.sencondResult.filter((v)=>{
             if(v.id ==item){
               return v.value
@@ -362,47 +361,14 @@ export default {
       this.peopleDate.companylist = targetArr
 
       console.log(this.peopleDate.companylist)
-
-
-
       }, 0);
-      // this.sencondResult.forEach((v,i)=>{
-      //   this.checkboxModel.forEach(item=>{
-      //     v.id = item
-      //   })
-      // })
-      //根据checkboxModel对应的数，查找sencondResult对应value
-      //并将其添加到peopleDate中
 
-     
- 
-
-      // if(!this.ischecked){
-      //   console.log(1)
-      //   if(arr.indexOf(item)>-1){
-      //     arr.splice(arr.indexOf(item),1)
-      //   }
-      // }else{
-      //   console.log(2)
-      //   if(arr.indexOf(item) > 0){
-      //     return
-      //   }else{
-      //     arr.push(item)
-      //   }
-      // }
-    
-        // this.peopleDate.companylist.push(item)
-        // this.peopleDate.companylist = this.peopleDate.companylist.join(',')
-      // this.peopleDate.companylist = this.peopleDate.companylist.join()
-      // console.log(this.peopleDate)
     },
     //点击更多显示
     morenews(){
       this.ismorechoose = !this.ismorechoose
       this.checked = true
       
-              //   console.log(err);
-        // });
         const newUrl = 'http://10.25.24.51:10193/api/risk/attention_pool_set';
         const newDateList = {
               userid: 'risk',
@@ -432,12 +398,9 @@ export default {
               value: v
             }
           })
-
-          console.log(this.sencondResult);
-
         })
     },
-
+  //通过自带的flag参数，跳转到相应的页面（我的关注池，查找发行人，发行人证券信息）
     switchTab(flag){
       this.nowTab = flag;
       this.isAddList = false;
@@ -468,8 +431,8 @@ export default {
         });
       }
     },
+    //我的关注池查询请求
     query() {
-
       console.log(this.peopleDate.companylist)
       let myselfArr = this.peopleDate.companylist;
       if(Object.prototype.toString.call(this.peopleDate.companylist).slice(8, -1)=="Array"){
@@ -504,21 +467,6 @@ export default {
     //将数据companylist的字符串变成数组
         this.peopleDate.companylist = myselfArr;
         
-        
-        
-        // console.log('基金 > 基本公告', res.data.result.result)
-        // 显示查询结果
-        // this.hasResultData = true;
-        // this.dataList = JSON.parse(JSON.stringify(res.data.result.result))
-        // console.log(this.dataList);
-
-        // if (this.resultData.total_count) {
-        //   this.paginationData.page_Count = Math.ceil(this.resultData.total_count / 10);
-        // } else {
-        //   this.paginationData.page_Count = 0;
-        // }
-
-        
       })
     },
     closeAttentionPool(){
@@ -527,12 +475,15 @@ export default {
     poolCheck(item, index){
       item.check = !item.check;
     },
+    //获取相应的输入框的内容
     inputEventCheck(){
       this.queryIssuer.seccode = commonMethods.checkName(this.queryIssuer.seccode.trim());
       this.queryIssuer.secname = commonMethods.checkName(this.queryIssuer.secname.trim());
       this.querySecurities.issue = commonMethods.checkName(this.querySecurities.issue.trim());
       this.queryAddList.keyword = commonMethods.checkName(this.queryAddList.keyword.trim());
     },
+    //添加到关注池
+    //通过添加接口，将数据添加到数据库中
     addToList(){
       const tempArr = [];
       const url = 'http://10.25.24.51:10193/api/risk/attention_pool_set'
@@ -547,6 +498,7 @@ export default {
           tempArr.push(item.title);
         }
       });
+      //将数据切成字符串的形式
       sendData.companylist = tempArr.join(',');
       console.log(sendData)
       this.$_axios.get(url, {
@@ -555,6 +507,7 @@ export default {
         // 显示查询结果
         const resultData = response.data;
         console.log(resultData)
+        //根据返回的状态码进行判断是否返回添加成功
         if(resultData.code == '0'){
           alert('添加成功');
         } else if(resultData.code == '1') {
@@ -566,12 +519,13 @@ export default {
         console.log(err);
       });
     },
+    //点击搜索出来的内容，选中为item.check为true
     addToListCheck(item, index){
       item.check = !item.check;
     },
+    //点击分页按钮进行接口数据请求
     paginationSelect(pageNumber) {
       const url = 'http://10.25.24.51:10193/api/risk/issue_news';
-
       const sendData = JSON.parse(JSON.stringify(this.sendData));
       this.peopleDate.page = pageNumber - 1;
       console.log('sendData', sendData)
@@ -585,11 +539,13 @@ export default {
           console.log(err);
         });
     },
+    //搜索
     addListQuery(){
       this.isShowAddListQuery = false;
       this.isShowAddListPage = false;
       this.hasResultDataAddList = false;
       const url = 'http://10.25.24.51:10193/api/risk/attention_base_query';
+      //addListSendData 为对象
       this.addListSendData = {
         companytype: this.queryAddList.companytype,
         keyword: this.queryAddList.keyword,
@@ -602,6 +558,7 @@ export default {
         this.hasResultDataAddList = true;
         this.isShowAddListQuery = true;
         const resultData = response.data.result.result;
+        console.log(resultData)
         this.addListQueryData = resultData.map(item => {
           return {
             check: false,
@@ -611,7 +568,9 @@ export default {
         if(this.addListQueryData.length > 60){
           this.paginationData_list.page_Count = Math.floor(this.addListQueryData.length / 60)
           this.paginationData_list.total_Count = this.addListQueryData.length;
+          console.log(this.addListQueryData)
           this.nowAddListQueryData = this.addListQueryData.slice(0, 60);
+          console.log(this.addListQueryData.slice(0, 60))
           this.isShowAddListPage = true;
         } else {
           this.nowAddListQueryData = JSON.parse(JSON.stringify(this.addListQueryData));
@@ -624,7 +583,10 @@ export default {
         console.log(err);
       });
     },
+    //点击清空按钮，清空页面上所有内容
     clearList(){
+      this.isClearList = false;
+      this.isContent = false;
       // http://localhost:10193/api/risk/attention_pool_set?userid=zhangxx &action=drop
       const sendData = {
         userid: 'risk',
@@ -644,7 +606,7 @@ export default {
         console.log(err);
       });
     },
-
+    //点击删除按钮，通过接口删除数据库中对应的数据
     deleteList(){
       const url = 'http://10.25.24.51:10193/api/risk/attention_pool_set';
       const tempArr = [];
@@ -687,15 +649,17 @@ export default {
         console.log(err);
       });
     },
-
+    //开始时间
     startDateEvent(...data) {
       this.peopleDate.start_date = data[0];
       console.log(data[0])
     },
+    //结束时间
     endDateEvent(...data) {
       this.peopleDate.end_date = data[0];
       console.log(data[0])
     },
+    //点击查找发行人按钮请求接口
     queryIssuerEvent(){
       this.isShowSecurities = false;
       this.isShowQueryResult = false;
@@ -739,9 +703,10 @@ export default {
         }else{
           this.isShowSecurities = true;
           this.isShowQueryResult = true;
+          //若接口没有数据返回，在页面中显示没有匹配项
           this.queryIssuerData = [{issue: '无匹配', seccode: '无匹配', secname: '无匹配'}]
         }
-      }).catch(err => {
+      }).catch(err => {   //在输入不正确或者输入不合法的情况下调用这个方法
         this.isShowSecurities = true;
         this.isShowQueryResult = true;
         this.queryIssuerData = [{issue: '无匹配', seccode: '无匹配', secname: '无匹配'}]
@@ -752,39 +717,44 @@ export default {
       this.isShowQueryResult = false;
       const url = 'http://10.25.24.51:10193/api/risk/issue_seccode_mapper';
       const sendData = {
-        issue: this.querySecurities.issue
+        issue: this.querySecurities.issue,
       }
       console.log( 'sendData',sendData)
       this.$_axios.get( url, {
         params: sendData
       }).then(response => {
+        console.log(response)
         // 显示查询结果
         this.isShowQueryResult = true;
         this.isShowIssuer = true;
         this.isShowSecurities = false;
         console.log(response.data )
         if(response.data.code == 0 && response.data.msg == 'query success'){
+          //拿到的数据
           const resultData = response.data.result.seccodes_names;
           this.securitiesList = JSON.parse(JSON.stringify(resultData));
-          this.paginationData.page_Count = Math.floor(this.securitiesList.length / 30)
-          this.paginationData.total_Count = this.securitiesList.length;
-          this.nowSecuritiesList = this.securitiesList.slice(0, 30);
+          console.log(this.securitiesList)
+          console.log(this.securitiesList.length);
+          this.paginationData2.page_Count = Math.ceil(this.securitiesList.length /  10);
+          this.paginationData2.total_Count = this.securitiesList.length;
+          //将拿到的数据进行分割，每页显示
+          //this.nowSecuritieslist 已经接受到接口返回的所有数据
+          this.nowSecuritiesList = this.securitiesList.slice(0,9);
+          console.log(this.nowSecuritiesList)
         } else {
           this.paginationData.page_Count = 0;
           this.paginationData.total_Count = 0;
           this.nowSecuritiesList = [];
         }
         
-      }).catch(err => {
-        console.log(err);
-        this.isShowQueryResult = true;
-        this.isShowIssuer = true;
-        this.isShowSecurities = false;
-        this.paginationData.page_Count = 0;
-        this.paginationData.total_Count = 0;
-        this.nowSecuritiesList = [];
-      });
+      })
     },
+    paginationSelect2(number){
+      //点击分页将传进俩，返回新的页数进行展示
+      this.nowAddListPage = number;
+      this.nowSecuritiesList = this.securitiesList.slice(this.nowAddListPage * 10, (Number(this.nowAddListPage) + 1) * 10);
+    },
+    //查找发行人类型，通过pulldownList组件进行操作，通过返回的data数据,进行companytype参数的获取
     typeListEvent(...data){
       switch (data[0]) {
         case '股票发行人':
@@ -801,27 +771,13 @@ export default {
           break;
       }
     },
-    //   paginationSelect(pageNumber) {
-    //   const sendData = JSON.parse(JSON.stringify(this.sendData));
-    //   sendData.page = pageNumber - 1;
-    //   console.log('sendData', sendData)
-    //   this.$_axios.get(this.url, {
-    //     params: sendData
-    //   }).then(response => {
-    //     console.log('股票 > 股价异动预警', response.data.result);
-    //     this.dataList = JSON.parse(JSON.stringify(response.data.result.result));
-    //     this.resultData = response.data.result;
-    //   })
-    //     .catch(err => {
-    //       console.log(err);
-    //     });
-    // },
-
+    //分页数据展示
     paginationSelectList(number){
       this.nowAddListPage = number;
       this.nowAddListQueryData = this.addListQueryData.slice(this.nowAddListPage * 60, (Number(this.nowAddListPage) + 1) * 60);
     }
   },
+  //
   mounted(){
     const url = 'http://10.25.24.51:10193/api/risk/attention_pool_set';
     const sendData = {
@@ -891,7 +847,6 @@ export default {
     }
   }
   .poolBtnBox{
-    margin-top: 20px;
     span{
       cursor: pointer;
       padding: 6px;
@@ -901,6 +856,7 @@ export default {
     }
   }
   .queryBox{
+    height: 1000px;
     .top{
       width: 500px;
       height: 70px;
@@ -1024,10 +980,11 @@ table {
 .my_content{
     // background-color:gray;
     // width: 524px;
-    height: 584px;
+    height: 650px;
     position: absolute;
     top: 84px;
     right: 60px;
+    overflow-y: scroll;
 }
 .my_content ul span{
   display:inline-block;
@@ -1067,7 +1024,6 @@ table {
 }
 .content_more{
   width: 510px;
-  height:150px;
   border: 1px solid #000;
   margin-top:16px;
   padding-left: 26px;
@@ -1111,5 +1067,10 @@ table {
   margin-top:20px;
   // height:1000px;
 }
-
+.poolBtnBox{
+  margin-top: 10px;
+}
+body{
+  overflow: scroll;
+}
 </style>
