@@ -12,7 +12,7 @@
         <!-- 第二级循环 -->
         <li v-for="(secondItem,secondIndex) of item.list" :key="secondIndex" class="secondList">
           <div v-if="secondItem.list.length">
-            <div class="secondTitle" :class="{showChildList: secondItem.isShowList, secondTitleFirst: secondIndex === 0, wordWrapping: secondItem.wordWrapping}" @click="showList(secondItem, 'second')">
+            <div class="secondTitle" :class="{showChildList: secondItem.isShowList, secondTitleFirst: secondIndex === 0,wordWrapping: secondItem.wordWrapping}" @click="showList(secondItem, 'second')">
               {{secondItem.title}}
             </div>
             <ul v-show="secondItem.isShowList">
@@ -118,6 +118,10 @@ export default {
       color: #6acdfd;
     }
   }
+  .secondList:last-child .secondTitle {
+    border-bottom: 1px solid #797979;
+  }
+
   .secondTitleFirst {
     border-top: none;
   }

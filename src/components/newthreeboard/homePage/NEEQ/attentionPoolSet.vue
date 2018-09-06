@@ -124,6 +124,7 @@
             </EasyScrollbar>
           </div>
         </div>
+
       </div>
     </div>
   </div>
@@ -305,13 +306,13 @@ export default {
           }
         });
         if (this.addListQueryData.length > 60) {
-          this.paginationData_list.page_Count = Math.floor(this.addListQueryData.length / 60)
+          this.paginationData_list.page_Count = Math.ceil(this.addListQueryData.length / 60)
           this.paginationData_list.total_Count = this.addListQueryData.length;
           this.nowAddListQueryData = this.addListQueryData.slice(0, 60);
           this.isShowAddListPage = true;
         } else {
           this.nowAddListQueryData = JSON.parse(JSON.stringify(this.addListQueryData));
-          this.paginationData_list.page_Count = Math.floor(this.addListQueryData.length / 60)
+          this.paginationData_list.page_Count = Math.ceil(this.addListQueryData.length / 60)
           this.paginationData_list.total_Count = this.addListQueryData.length;
           this.isShowAddListPage = true;
         }
@@ -350,6 +351,11 @@ export default {
         console.log(resultData)
         if (resultData.code == '0') {
           alert('添加成功');
+          // this.nowAddListQueryData.forEach(item => {
+          //   if (item.check) {
+          //     item.check = !item.check;
+          //   }
+          // });
         } else if (resultData.code == '1') {
           alert('添加失败');
         } else {
@@ -363,7 +369,7 @@ export default {
       item.check = !item.check;
     },
     paginationSelectList(number) {
-      this.nowAddListPage = number;
+      this.nowAddListPage = number - 1;
       this.nowAddListQueryData = this.addListQueryData.slice(this.nowAddListPage * 60, (Number(this.nowAddListPage) + 1) * 60);
     },
     queryIssuerEvent() {

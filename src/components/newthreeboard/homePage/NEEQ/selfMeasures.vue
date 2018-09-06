@@ -14,9 +14,9 @@
             <div class="floatLeft">
               <date-picker :prop="endDatePicker" @endDateEvent="endDateEvent"></date-picker>
             </div>
-            <div class="floatLeft">
+            <!-- <div class="floatLeft">
               <pull-down-list :prop="pullDownListData" @pullDownListEvent='pullDownListEvent'></pull-down-list>
-            </div>
+            </div> -->
             <div v-if="queryType == '按证券代码查询'" class="floatLeft">
               <div v-on:mouseleave="isShowDropDownList = false" class="floatLeft drop-down">
                 公司名称/代码： <input type="text" v-model="nowEquityNo" @input="inputCode" placeholder="默认范围">

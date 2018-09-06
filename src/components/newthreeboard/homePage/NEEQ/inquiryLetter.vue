@@ -15,9 +15,9 @@
               <date-picker :prop="endDatePicker" @endDateEvent="endDateEvent"></date-picker>
             </div>
           </div>
-          <div>
+          <!-- <div>
             <pull-down-list :prop="pullDownListData" @pullDownListEvent='pullDownListEvent'></pull-down-list>
-          </div>
+          </div> -->
           <div v-if="queryType == '按证券代码查询'" class="marginLeft20">
             证券代码：<input v-model="queryCondition.equity_no" type="text">
           </div>

@@ -30,7 +30,9 @@
               <tr v-for="(item, index) of dataList" :key="index">
                 <td>{{item.title}}</td>
                 <td>{{item.showtime}}</td>
-                <td>{{item.purl}}</td>
+                <td>
+                  <a :href="item.purl" target="_bank">{{item.purl}}</a>
+                </td>
                 <td>{{item.source}}</td>
               </tr>
             </tbody>
@@ -69,7 +71,7 @@ export default {
       hasResultData: false,
       queryCondition: {
         userid: 'risk',
-        page: 1,
+        page: 0,
         page_size: 10
       },
       sendData: {},
@@ -115,7 +117,7 @@ export default {
         this.hasResultData = true;
         this.dataList = JSON.parse(JSON.stringify(response.data.result.result));
         this.resultData = response.data.result.result;
-        this.paginationData.page_Count = Math.floor(response.data.result.total_count / 10);
+        this.paginationData.page_Count = Math.ceil(response.data.result.total_count / 10);
         this.paginationData.total_Count = response.data.result.total_count;
         this.dataList.forEach(item => {
           item.title = item.title;
@@ -130,7 +132,7 @@ export default {
     },
     paginationSelect(pageNumber) {
       const sendData = JSON.parse(JSON.stringify(this.sendData));
-      sendData.page = pageNumber;
+      sendData.page = pageNumber - 1;
       this.$_axios.get(this.url, {
         params: sendData
       }).then(response => {

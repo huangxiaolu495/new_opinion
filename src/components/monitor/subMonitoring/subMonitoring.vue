@@ -1,5 +1,23 @@
 <template>
   <div class="blackSwanBox clearFloat">
+    <div v-if="isShow">
+      <table class="table">
+        <tbody>
+          <tr>
+            <th class="w8"></th>
+            <th>最新价</th>
+            <th>涨跌额</th>
+            <th>涨跌幅</th>
+          </tr>
+          <tr v-for="(item, index) of dataList" :key="index">
+            <td>{{item.name}}</td>
+            <td class="red">{{item.last_trade}}</td>
+            <td class="green">{{item.change}}</td>
+            <td class="green">{{item.chg}}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
     <!-- 关联公司预警 -->
     <div class="sidebarBox">
       <ul>
@@ -18,11 +36,16 @@
 export default {
   data() {
     return {
+      isShow: false,
+      dataList: [],
       sidebarData: [
         { title: '子公司舆情', path: '/monitor/subMonitoring/queryInformation' },
         { title: '投资项目舆情', path: '/monitor/subMonitoring/concerncompany' },
       ]
     }
+  },
+  created() {
+    this.created();
   },
   computed: {
     isRouterGoNow() {
@@ -39,19 +62,79 @@ export default {
         window.clearInterval(timer)
         // console.log(0)
       }, 0);
-    }
+    },
+    created() {
+      this.isShow = true;
+      const url = "http://10.25.24.51:10191/api/rest/nlp/risk/macro_index";
+      this.$_axios.get(url, {}).then(response => {
+        // 显示查询结果
+        this.isShow = true;
+        this.dataList = JSON.parse(JSON.stringify(response.data.result));
+        this.dataList.forEach(item => {
+          item.name = item.name;
+          item.last_trade = item.last_trade;
+          item.change = item.change;
+          item.chg = item.chg;
+        });
+      })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+  },
+  mounted() {
+    setInterval(() => {
+      this.created()
+    }, 60000)
   }
 }
 </script>
 
 <style lang="less" scoped>
+.red {
+  color: red;
+}
+.green {
+  color: green;
+}
+.w8 {
+  width: 99px !important;
+}
+table {
+  font-size: 12px;
+  width: 235px;
+  text-align: center;
+  cursor: pointer;
+  margin-left: 50px;
+  border: 1px soild #797979;
+  border-collapse: collapse;
+  word-wrap: break-word;
+  word-break: break-all;
+  th {
+    width: 60px;
+    height: 30px;
+    line-height: 30px;
+    border: 1px solid #797979;
+    background-color: #f0f5f9;
+  }
+  tr {
+    overflow: hidden;
+    border: 1px solid #797979;
+  }
+  td {
+    height: 30px;
+    text-align: center;
+    vertical-align: middle;
+    border: 1px solid #797979;
+  }
+}
 .blackSwanBox {
   width: 1500px;
 }
 .sidebarBox {
   float: left;
   width: 235px;
-  margin-top: 45px;
+  // margin-top: 45px;
   margin-left: 50px;
   border: 1px solid #797979;
   li {
@@ -76,7 +159,7 @@ export default {
 .content {
   float: left;
   width: 1180px;
-  margin-top: 10px;
+  margin-top: -310px;
   margin-left: 25px;
 }
 </style>

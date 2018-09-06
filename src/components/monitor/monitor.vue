@@ -8,7 +8,7 @@
             <span>预警</span>系统</h1>
         </router-link>
       </div>
-      <div class="floatRight userSystemBox" v-show="$route.path != '/monitor/homePage/fundDetail'" >
+      <div class="floatRight userSystemBox" v-show="$route.path != '/monitor/homePage/fundDetail'">
         <span>我的账户
           <i class="iconfont icon-icon_on_the_down"></i>
         </span>
