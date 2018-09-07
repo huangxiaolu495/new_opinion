@@ -35,6 +35,7 @@
                 <td class="tableTd">{{item.NOTICEDATE}}</td>
                 <td class="tableTd">{{item.NOTICETITLE}}</td>
                 <td class="tableTd data-content">{{item.INFOBODYCONTENT}}
+                  <!-- 在td出添加span标签，点击详情按钮span展示内容 -->
                   <span @click="details(item, index)">{{item.details}}</span>
                 </td>
                 <td class="tableTd">
@@ -131,11 +132,14 @@ export default {
         this.isShowQueryResult = true;
         this.hasResultData = true;
         this.dataList = JSON.parse(JSON.stringify(response.data.result.Announce_List));
+        console.log(this.dataList);
         this.resultData = response.data.result.Announce_List;
+        console.log(this.resultData)
         this.paginationData.page_Count = response.data.result.Page_Count;
         this.paginationData.total_Count = response.data.result.Total_Count;
         this.dataList.forEach(item => {
           // item.NOTICEDATE = item.NOTICEDATE ? new Date(item.NOTICEDATE).toLocaleDateString() : '';
+          //遍历dataList每一项，给每一项添加details
           if (item.INFOBODYCONTENT && item.INFOBODYCONTENT.length > 175) {
             item.INFOBODYCONTENT = item.INFOBODYCONTENT.slice(0, 175) + '...';
             item.details = '...详情';
@@ -146,6 +150,7 @@ export default {
           console.log(err);
         });
     },
+    //点击分页发送请求，显示下一页内容
     paginationSelect(pageNumber) {
       const sendData = JSON.parse(JSON.stringify(this.sendData));
       sendData.page = pageNumber;
@@ -169,6 +174,7 @@ export default {
           console.log(err);
         });
     },
+    //下面时间4条事件都是用来进行获取参数
     inputEvent() {
       this.queryCondition.keyword = commonMethods.checkName(this.queryCondition.keyword);
     },
@@ -186,6 +192,7 @@ export default {
         item.details = '...详情';
         item.INFOBODYCONTENT = item.INFOBODYCONTENT.slice(0, 175) + '...';
       } else {
+        //点击详情按钮，显示相应的所有内容
         item.details = '收起';
         item.INFOBODYCONTENT = this.resultData[index].INFOBODYCONTENT;
       }

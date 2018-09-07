@@ -137,6 +137,11 @@ import negativenews from '@/components/monitor/companyWarning/negativenews'
 import sub_queryInformation from '@/components/monitor/subMonitoring/queryInformation'
 import sub_concerncompany from '@/components/monitor/subMonitoring/concerncompany'
 
+//登录页面
+import test from '@/components/test';
+import login from '@/components/login';
+import register from '@/components/register'
+
 Vue.use(Router)
 
 export default new Router({
@@ -146,6 +151,33 @@ export default new Router({
       path: '/',
       name: 'opinion',
       component: opinion
+    },
+    //用户登录页面
+    {
+      path:'/test',
+      name:'test',
+      redirect: '/login',
+      component:test,
+      children:[
+        {
+          path: '/login',
+          name: 'login',
+          component: login
+        }
+      ]
+    },
+    {
+      path: '/test',
+      name: 'test',
+      redirect: '/register',
+      component: test,
+      children: [
+        {
+          path: '/register',
+          name: 'register',
+          component: register
+        }
+      ]
     },
     {
       path: '/userSystem',
