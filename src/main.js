@@ -11,7 +11,7 @@ import '@/style/common.css';
 import '@/style/queryCondition.css';
 import '@/style/reset.css';
 import 'element-ui/lib/theme-chalk/index.css';
-import 'element-ui/lib/index.js';
+// import 'element-ui/lib/index.js';
 import ElementUI from 'element-ui';
 
 Vue.config.productionTip = false
@@ -19,7 +19,19 @@ Vue.prototype.$_axios = axios;
 Vue.use(EasyScroll);
 Vue.use(ElementUI);
 
-/* eslint-disable no-new */
+// router.beforeEach((to, from, next) => {
+//   if(to.path === '/login'){next()}
+//   else{
+//     //指定的需要登录的页面，没有登录信息的页面
+//     if(to.meta.requiresAuth && !sessionStorage.getItem('token')){
+//       next({path:"/login"})
+//     }else{
+//       next()
+//     }
+//   }
+  
+// })
+// /* eslint-disable no-new */
 new Vue({
   el: '#app',
   router,
