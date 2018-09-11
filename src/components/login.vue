@@ -1,16 +1,18 @@
 <template>
-
-    <div class="login_all">
-        <span class="login_title">登录</span>
-        <form action="">
-            <input type="text" placeholder="手机/邮箱" class="login_phone"><br>
-            <input type="text" placeholder="请输入密码" class="login_secret"><br>
-            <label for="remember" class="login_rember"><input type="checkbox" id="remember" >记住密码</label><span class="rememberim">忘记密码？</span><br>
-            <input type="button" value="登录" class="login_up">
-        </form>    
-        <a href="#/register">没有账号？立即注册→</a>
-    </div>      
-
+    <el-form :model="loginForm" :rules="loginFormRules" ref="loginForm">
+      <span class="login_title">登录</span>
+      <el-form-item  prop="username">
+        <el-input  placeholder="请输入手机/邮箱" v-model="loginForm.username"></el-input>
+      </el-form-item>
+      <el-form-item prop="password">
+        <el-input placeholder="请输入密码" v-model="loginForm.password"></el-input>
+      </el-form-item>
+      <el-checkbox label="记住密码"></el-checkbox><span class="rememberim">忘记密码？</span>
+      <el-form-item>
+        <el-button @click="submitHandle" type="primary">登录</el-button>
+        <el-button class="button_register"><router-link :to="{path:'/register'}" class="register_a">注册</router-link></el-button>
+      </el-form-item>
+    </el-form>    
 </template>
 <script>
 //这个页面需要一个请求
@@ -23,45 +25,65 @@ export default {
       },
       loginFormRules: {
          //trigger模糊匹配
-        username: [{ required: true, trigger: 'blur', message: '请输入用户名' }],
+        username: [{ required: true, trigger: 'blur', message: '请输入手机/邮箱' }],
         password: [{ required: true, trigger: 'blur', message: '请输入密码' }]
       }
     }
   },
   methods: {
     submitHandle() {
-      //表单验证
+      console.log(this.$refs)
+      //清空操作
+
+      // this.$refs.loginForm.resetFields()
+      //表单验证，输入值符合匹配规则valid返回true
       this.$refs.loginForm.validate(valid => {
-        //
-        if (valid) {
+        console.log(valid)
+        if (valid) {//验证通过发送请求
           this.loginHandle()
         }
       })
     },
-    resetLoginForm(formName) {
-      this.$refs[formName].resetFields()
-    },
+    //表单重置功能
+    // resetLoginForm(formName) {
+    //   this.$refs[formName].resetFields()
     loginHandle() {
-      //
-      login(this.loginForm).then(res => {
-        if (res.data.code === 200) {
-          this.$message({
-            message: '登录成功',
-            type: 'success',
-            duration: 2 * 1000
-          })
-          sessionStorage.setItem('token', res.data.data.token)
-          setTimeout(() => {
-            this.$router.push('/home')
-          }, 1000);
-        }
-      })
-    }
+      alert("用户名或者密码不正确");
+      this.$refs.loginForm.resetFields()
+      //发送请求的方法
+      // login(this.loginForm).then(res => {
+      //   if (res.data.code === 200) {
+      //     this.$message({
+      //       message: '登录成功',
+      //       type: 'success',
+      //       duration: 2 * 1000
+      //     })
+      //     sessionStorage.setItem('token', res.data.data.token)
+      //     setTimeout(() => {
+      //       this.$router.push('/home')
+      //     }, 1000);
+      //   }
+      // })
+
+    // }
   }
+    },
+
 }
 </script>
 <style lang="less" scoped>
-    .login_all{
+    .login_title{
+        font-size: 24px;
+        margin-top: 48px;
+        color:#606266;
+        display: inline-block;
+    }
+
+    .rememberim{
+        color:firebrick;
+        cursor: pointer;
+    }
+    .el-form{
         position: absolute;
         bottom: 78px;
         right: 132px;
@@ -69,43 +91,30 @@ export default {
         height:402px;
         text-align: center;
         background-color:white;
+        padding-left:40px;
+        padding-right:40px;
     }
-    .login_title{
-        font-size: 24px;
-        margin-top: 48px;
-        display: inline-block;
+    .el-checkbox{
+      margin-right:106px;
     }
-    .login_phone{
-        height: 44px;
-        width: 300px;
-        border-radius: 5px;
-        margin-top: 10px;
-        margin-bottom: 10px;
-        padding-left:16px;
+    .el-button--primary{
+      margin-right:50px;
     }
-    .login_secret{
-        height: 44px;
-        width: 300px;
-        border-radius: 5px;
-        margin-top: 10px;
-        margin-bottom: 10px;
-        padding-left:16px;
+    .el-form-item{
+      margin-bottom: 22px;
+      margin-top: 30px;
     }
-    .login_rember{
-        margin-right:150px;
+    .el-input--small.el-input__inner {
+        height: 40px;
+        line-height: 40px;
     }
-    .login_up{
-        height: 44px;
-        width: 300px;
-        border-radius: 5px;
-        margin-top: 10px;
-        margin-bottom: 10px;
-        background-color: #E2E2E2;
+    .button_register{
+      padding:0px;
     }
-    .rememberim{
-        color:firebrick
-    }
-    a{
-        color:black;
+    .register_a{
+      width:70px;
+      height:40px;
+      display:inline-block;
+      line-height: 40px;
     }
 </style>

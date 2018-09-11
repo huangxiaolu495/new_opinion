@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="homePageMain clearFloat">
-      <div v-if="isShow">
-        <table class="table">
+    <div class="homePageMain clearFloat" >
+      <div v-if="isShow" >
+        <table class="table" v-show="$route.path != '/monitor/homePage/fundDetail'">
           <tbody>
             <tr>
               <th class="w8"></th>

@@ -150,9 +150,13 @@ export default new Router({
   routes: [{
       path: '/',
       name: 'opinion',
-      component: opinion
+      component: opinion,
+      meta: {
+        requiresAuth:true
+      }
     },
     //用户登录页面
+    //meta
     {
       path:'/test',
       name:'test',
@@ -175,19 +179,22 @@ export default new Router({
         {
           path: '/register',
           name: 'register',
-          component: register
+          component: register,
         }
       ]
     },
     {
       path: '/userSystem',
       name: 'userSystem',
-      component: userSystem
+      component: userSystem,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/attentionPoolSet',
       name: 'attentionPoolSet',
-      component: attentionPoolSet
+      component: attentionPoolSet,
     },
     {
       path: '/newthreeboard',
@@ -202,23 +209,27 @@ export default new Router({
         children: [{
             path: '/newthreeboard/homePage/homeContent',
             name: 'homeContent_ntb',
-            component: homeContent_ntb
+            component: homeContent_ntb,
+
           },
           // >> 新三板
           {
             path: '/newthreeboard/homePage/NEEQ_NewsMonitoring',
             name: 'NEEQ_NewsMonitoring',
-            component: NEEQ_NewsMonitoring
+            component: NEEQ_NewsMonitoring,
+
           },
           {
             path: '/newthreeboard/homePage/NEEQ_favorite',
             name: 'NEEQ_favorite',
-            component: NEEQ_favorite
+            component: NEEQ_favorite,
+
           },
           {
             path: '/newthreeboard/homePage/NEEQ_announcement',
             name: 'NEEQ_announcement',
-            component: NEEQ_announcement
+            component: NEEQ_announcement,
+
           },
           {
             path: '/newthreeboard/homePage/NEEQ_dynamic',
@@ -262,13 +273,13 @@ export default new Router({
           children: [{
               path: '/monitor/homePage/homeContent',
               name: 'homeContent',
-              component: homeContent
+              component: homeContent,
             },
             // >> 基金
             {
               path: '/monitor/homePage/fund_shigekuraNews',
               name: 'fund_shigekuraNews',
-              component: fund_shigekuraNews
+              component: fund_shigekuraNews,
             },
             {
               path: '/monitor/homePage/fund_managerNews',
@@ -426,7 +437,7 @@ export default new Router({
         {
           path: '/monitor/companyWarning',
           name: 'companyWarning',
-          component: companyWarning
+          component: companyWarning,
         },
         // {
         //   path: '/monitor/concerncompany',
@@ -452,17 +463,20 @@ export default new Router({
           children: [{
               path: '/monitor/blackSwan/delistingWarning',
               name: 'delistingWarning',
-              component: delistingWarning
+              component: delistingWarning,
+
             },
             {
               path: '/monitor/blackSwan/executives',
               name: 'executives',
-              component: executives
+              component: executives,
+
             },
             {
               path: '/monitor/blackSwan/importantEvent',
               name: 'importantEvent',
-              component: importantEvent
+              component: importantEvent,
+
             },
           ]
         },
@@ -475,22 +489,24 @@ export default new Router({
           children: [{
               path: '/monitor/companyWarning/queryInformation',
               name: 'queryInformation',
-              component: queryInformation
+              component: queryInformation,
+
             },
             {
               path: '/monitor/companyWarning/concerncompany',
               name: 'concerncompany',
-              component: concerncompany
+              component: concerncompany,
+
             },
             {
               path: '/monitor/companyWarning/companylist',
               name: 'companylist',
-              component: companylist
+              component: companylist,
             },
             {
               path: '/monitor/companyWarning/negativenews',
               name: 'negativenews',
-              component: negativenews
+              component: negativenews,
             },
 
           ]
@@ -504,12 +520,12 @@ export default new Router({
           children: [{
               path: '/monitor/subMonitoring/queryInformation',
               name: 'queryInformation',
-              component: sub_queryInformation
+              component: sub_queryInformation,
             },
             {
               path: '/monitor/subMonitoring/concerncompany',
               name: 'concerncompany',
-              component: sub_concerncompany
+              component: sub_concerncompany,
             },
           ]
         }

@@ -10,7 +10,7 @@
 <style>
     .beijing{
     height: 700px;
-    background-image: url(/static/img/beijinglog.1cfc0ab.jpg);
+    background-image: url('../img/beijinglog.jpg');
     background-repeat: no-repeat;
     background-size: 1600px 700px;
     }
