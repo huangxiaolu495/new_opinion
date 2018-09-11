@@ -1372,6 +1372,7 @@ export default {
       let m = Object.assign({}, s);
       m.news_id = m.INFOCODE;
       m.imp_score = m.starNumber;
+      m.showtime = m.SHOWTIME;
       delete m.CONTENT;
       delete m.details;
       delete m.SHOWTIME;
