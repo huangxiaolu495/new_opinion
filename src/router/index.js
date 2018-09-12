@@ -28,6 +28,8 @@ import boardofdirectorsWarning from '@/components/boardofdirectors/boardofdirect
 // >>>经济业务模块
 import economicbusinessWarning from '@/components/economicbusiness/economicbusinessWarning'
 
+//title子页面(自定义板块)
+import userSystem_diyManagement from '@/components/monitor/homePage/userSystem/diyManagement'
 
 // >> 债券
 // 新闻预警 > 债券发行人负面新闻
@@ -40,6 +42,8 @@ import bond_ratingwarning from '@/components/monitor/homePage/bond/ratingwarning
 import bond_issuerNotice from '@/components/monitor/homePage/bond/issuerNotice'
 // 公告预警 >  受托管理人、主承销商发布的公告
 import bond_manageNotice from '@/components/monitor/homePage/bond/manageNotice'
+// 公告预警
+import bond_template from '@/components/monitor/homePage/bond/template'
 // 评级预警 >  评级信息
 import bond_ratingInformation from '@/components/monitor/homePage/bond/ratingInformation'
 // 评级预警 >  评级变动
@@ -288,6 +292,13 @@ export default new Router({
               name: 'homeContent',
               component: homeContent,
             },
+            // >>title子页面
+            {
+              path: '/monitor/homePage/userSystem_diyManagement',
+              name: 'userSystem_diyManagement',
+              component: userSystem_diyManagement,
+            },
+            // >>title子页面
             // >> 基金
             {
               path: '/monitor/homePage/fund_shigekuraNews',
@@ -369,6 +380,12 @@ export default new Router({
               name: 'bond_ratingChange',
               component: bond_ratingChange
             },
+            {
+              path: '/monitor/homePage/bond_template',
+              name: 'bond_template',
+              component: bond_template
+            },
+
             //  >> 债券
 
             // >> 期货

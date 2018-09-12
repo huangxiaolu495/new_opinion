@@ -42,6 +42,7 @@
               </tr>
               <tr v-for="(item, index) of dataList" :key="index">
                 <td>{{item.SECURITYNAME}}</td>
+                <td>{{item.SECURITYCODE}}</td>
                 <td>
                   <a :href="item.PURL" target="_bank">{{item.TITLE}}</a>
                 </td>
@@ -108,7 +109,7 @@ export default {
         total_Count: 0,
         current: 1
       },
-      titleData: ['证券代码', '新闻标题', '新闻时间', '新闻源'],
+      titleData: ['证券名称', '证券代码', '新闻标题', '新闻时间', '新闻源'],
       dataList: [],
       file: '',
       sendFile: '',
@@ -319,13 +320,13 @@ export default {
       width: 100x;
     }
     .tableTh:nth-child(2) {
-      width: 240px;
+      width: 100px;
     }
     .tableTh:nth-child(3) {
-      width: 150px;
+      width: 450px;
     }
     .tableTh:nth-child(4) {
-      width: 350px;
+      width: 250px;
     }
     .tableTh:nth-child(5) {
       width: 200px;

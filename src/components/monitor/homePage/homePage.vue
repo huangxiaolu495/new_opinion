@@ -1,7 +1,7 @@
 <template>
   <div>
     <div class="homePageMain clearFloat">
-      <div v-if="isShow">
+      <div v-if="isShow" v-show="$route.path !='/monitor/homePage/fundDetail'">
         <table class="table">
           <tbody>
             <tr>
@@ -56,7 +56,10 @@ export default {
             //     {title: '债券发行人公告', path: '/monitor/homePage/bond_issuerNotice'},
             //     {title: '受托管理人、主承销商发布的公告', wordWrapping: true, path: '/monitor/homePage/bond_manageNotice'}
             // ]},
-            { title: '公告预警', path: '/monitor/homePage/bond_ratingwarning', list: [] },
+            {              title: '公告预警', isShowList: false, list: [
+                { title: '基本公告', path: '/monitor/homePage/bond_ratingwarning' },
+                { title: '自定义板块范围公告', path: '/monitor/homePage/bond_template' },
+              ]            },
             {              title: '评级预警', isShowList: false, path: '/monitor/homePage/homeContent', list: [
                 { title: '评级信息', path: '/monitor/homePage/bond_ratingInformation' },
                 { title: '评级变动', path: '/monitor/homePage/bond_ratingChange' }

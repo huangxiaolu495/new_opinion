@@ -3,7 +3,7 @@
     <!-- 股票 > 股价异动预警 -->
     <div>
       <div class="queryCondition-top">
-        <div class="queryCondition-title"></div>
+        <div class="queryCondition-title">基本公告</div>
         <div class="middle clearFloat">
           <!-- 查询条件框 -->
           <div>

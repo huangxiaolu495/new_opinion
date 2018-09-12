@@ -387,7 +387,7 @@ export default {
         userid: 'risk',
         sectorname: tempArr.join(',')
       }
-      if(!tempArr.length){
+      if (!tempArr.length) {
         alert('没有选择要删除的模块');
         return;
       }
@@ -883,6 +883,7 @@ export default {
         border-radius: 5px;
       }
     }
+
     .content {
       width: 990px;
       height: 520px;
