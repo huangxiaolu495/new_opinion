@@ -15,11 +15,11 @@
             </div>
           </div>   -->
           <!-- 公告类型 -->
-          <div>
+          <!-- <div>
             <div class="floatLeft">
               <pull-down-listt :prop="legislationList" @legislationEvent2='legislationEvent2'></pull-down-listt>
             </div>
-          </div>
+          </div> -->
           <div>
             <!-- 开始时间 -->
             <div class="floatLeft">
