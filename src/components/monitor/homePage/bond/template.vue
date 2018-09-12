@@ -99,7 +99,6 @@ export default {
         action: 'query',
         userid: 'risk',
         sector: '',
-        notice_type: '002',
         start_date: '',
         end_date: '',
         page: 1,
