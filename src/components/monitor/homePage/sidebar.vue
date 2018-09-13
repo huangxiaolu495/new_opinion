@@ -1,5 +1,5 @@
 <template>
-  <div class="homePageSidebar clearFloat" v-show="$route.path != '/monitor/homePage/fundDetail'">
+  <div class="homePageSidebar clearFloat" v-if="$route.path != '/monitor/homePage/fundDetailtwo'" v-show="$route.path != '/monitor/homePage/fundDetail'">
     <!-- 第一级循环 -->
     <div v-for="(item,index) of prop" :key="index">
       <div v-if="item.list.length === 0" @click="showList(item, 'first')" class="firstTitle" :class="{showChildList: item.isShowList || item.lastChild}">

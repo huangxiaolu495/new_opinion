@@ -2,7 +2,7 @@
   <div>
     <div class="homePageMain clearFloat" >
       <div v-if="isShow" >
-        <table class="table" v-show="$route.path != '/monitor/homePage/fundDetail'">
+        <table class="table" v-if="$route.path != '/monitor/homePage/fundDetailtwo'" v-show="$route.path != '/monitor/homePage/fundDetail'">
           <tbody>
             <tr>
               <th class="w8"></th>
@@ -39,7 +39,11 @@ export default {
         {          title: '股票', isShowList: false, list: [
             // 新闻预警
             { title: '新闻收藏夹', path: '/monitor/homePage/stock_newsWarning', list: [] },
-            { title: '公告预警', path: '/monitor/homePage/stock_afficheWarning', list: [] },
+            { title: '公告预警', isShowList: false , path: '/monitor/homePage/stock_afficheWarning', list: [
+              {title: '基本公告', path: '/monitor/homePage/stock_Basicannounce'},
+              {title: '自定义板块范围公告' ,path: '/monitor/homePage/stock_Template'},
+              {title: '负面公告', path: '/monitor/homePage/stock_Negative'}
+            ] },
             { title: '财务信息预警', path: '/monitor/homePage/stock_financeWarning', list: [] },
             {              title: '股价异动预警', isShowList: false, path: '/monitor/homePage/homeContent', list: [
                 { title: '股价异动数据', path: '/monitor/homePage/stock_sharePriceWarning' },

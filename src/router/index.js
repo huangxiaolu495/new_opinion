@@ -64,6 +64,8 @@ import fund_info from '@/components/monitor/homePage/fund/fund_info'
 // >> 基金
 //基金公告详情
 import fundDetail from '@/components/monitor/homePage/fund/fundDetail'
+import fundDetailtwo from '@/components/monitor/homePage/fund/fundDetailtwo'
+
 
 
 // >> 期货
@@ -102,6 +104,14 @@ import shareOption_page2 from '@/components/monitor/homePage/shareOption/shareOp
 import stock_newsWarning from '@/components/monitor/homePage/stock/newsFavorite'
 // 公告预警
 import stock_afficheWarning from '@/components/monitor/homePage/stock/afficheWarning'
+//股票 > 公告预警 > 基本公告
+import stock_Basicannounce from '@/components/monitor/homePage/stock/stock_Basicannounce'
+//股票 > 公告预警 > 自定义板块范围公告
+import stock_Template from '@/components/monitor/homePage/stock/stock_Template'
+//股票 > 公告预警 > 负面新闻
+import stock_Negative from '@/components/monitor/homePage/stock/stock_Negative'
+
+
 // 财务信息预警
 import stock_financeWarning from '@/components/monitor/homePage/stock/financeWarning'
 // 股价异动预警
@@ -312,6 +322,12 @@ export default new Router({
               name: 'fundDetail',
               component: fundDetail
             },
+            {
+              path: '/monitor/homePage/fundDetailtwo',
+              name: 'fundDetailtwo',
+              component: fundDetailtwo
+
+            },
             // 基金情况
             {
               path: '/monitor/homePage/fund_info',
@@ -397,6 +413,22 @@ export default new Router({
               path: '/monitor/homePage/stock_afficheWarning',
               name: 'stock_afficheWarning',
               component: stock_afficheWarning
+            },
+            //股票 > 基本公告
+            {
+              path: '/monitor/homePage/stock_Basicannounce',
+              name: 'stock_Basicannounce',
+              component: stock_Basicannounce
+            },
+            {
+              path: '/monitor/homePage/stock_Template',
+              name: 'stock_Template',
+              component: stock_Template
+            },
+            {
+              path: '/monitor/homePage/stock_Negative',
+              name: 'stock_Negative',
+              component: stock_Negative
             },
             {
               path: '/monitor/homePage/stock_financeWarning',
