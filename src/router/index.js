@@ -28,7 +28,7 @@ import boardofdirectorsWarning from '@/components/boardofdirectors/boardofdirect
 // >>>经济业务模块
 import economicbusinessWarning from '@/components/economicbusiness/economicbusinessWarning'
 
-//title子页面(自定义板块)
+//title子页面(自定义模块管理)
 import userSystem_diyManagement from '@/components/monitor/homePage/userSystem/diyManagement'
 
 // >> 债券
