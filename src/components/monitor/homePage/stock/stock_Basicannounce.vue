@@ -3,7 +3,7 @@
     <!-- 股票 > 股价异动预警 -->
     <div>
       <div class="queryCondition-top">
-        <div class="queryCondition-title"></div>
+        <div class="queryCondition-title">基本公告</div>
         <div class="middle clearFloat">
           <!-- 查询条件框 -->
           <div>
@@ -302,7 +302,6 @@ export default {
             '三季度报告（英文）',
             '临时公告',
             '融资公告',
-            '融资公告',
             '首发',
             '增发',
             '配股',
@@ -508,7 +507,7 @@ export default {
 }
 </script>
 
-<style lang="less" scope>
+<style lang="less" scoped>
 .pullDownListBoxTwo{
   height: 500px;
   overflow: scroll;
@@ -565,7 +564,7 @@ export default {
   padding-left: 60px;
 }
 .pullDownListContentTwo .pullDownListBoxTwo li:nth-child(19){
-  padding-left: 60px;
+  padding-left: 40px;
 }
 .pullDownListContentTwo .pullDownListBoxTwo li:nth-child(20){
   padding-left: 40px;
@@ -595,10 +594,10 @@ export default {
   padding-left: 40px;
 }
 .pullDownListContentTwo .pullDownListBoxTwo li:nth-child(29){
-  padding-left: 40px;
+  padding-left: 20px;
 }
 .pullDownListContentTwo .pullDownListBoxTwo li:nth-child(30){
-  padding-left: 20px;
+  padding-left: 40px;
 }
 .pullDownListContentTwo .pullDownListBoxTwo li:nth-child(31){
   padding-left: 40px;
@@ -607,10 +606,10 @@ export default {
   padding-left: 40px;
 }
 .pullDownListContentTwo .pullDownListBoxTwo li:nth-child(33){
-  padding-left: 40px;
+  padding-left: 20px;
 }
 .pullDownListContentTwo .pullDownListBoxTwo li:nth-child(34){
-  padding-left: 20px;
+  padding-left: 40px;
 }
 .pullDownListContentTwo .pullDownListBoxTwo li:nth-child(35){
   padding-left: 40px;
@@ -622,9 +621,8 @@ export default {
   padding-left: 40px;
 }
 .pullDownListContentTwo .pullDownListBoxTwo li:nth-child(38){
-  padding-left: 40px;
+  padding-left: 20px;
 }
-
 
 .queryResult {
   table {

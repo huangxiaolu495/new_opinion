@@ -13,7 +13,7 @@
         </span>
          <i :style="{top: (prop.nowSelectHeight - 25)/2  + 'px'}" class="iconfont icon-triangle-bottom"></i>
       </div>
-      <div v-show="isShowList" class="pullDownListBoxTwo">
+      <div v-show="isShowList" class="pullDownListBoxTwo1">
         <ul  class="clearFloat">
           <li v-for="(item,index) of prop.list" 
               :key="index"
@@ -88,7 +88,7 @@ export default {
     white-space:nowrap;
     overflow:hidden;
   }
-  .pullDownListBoxTwo{
+  .pullDownListBoxTwo1{
     position: absolute;
     border: 1px solid #797979;
     background-color: #fff;

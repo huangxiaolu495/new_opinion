@@ -2,7 +2,7 @@
   <div>
     <div class="homePageMain clearFloat" >
       <div v-if="isShow" >
-        <table class="table" v-if="$route.path != '/monitor/homePage/fundDetailtwo'" v-show="$route.path != '/monitor/homePage/fundDetail'">
+        <table class="table">
           <tbody>
             <tr>
               <th class="w8"></th>

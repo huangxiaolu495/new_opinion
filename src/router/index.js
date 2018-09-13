@@ -189,6 +189,16 @@ export default new Router({
     //用户登录页面
     //meta
     {
+      path: '/monitor/homePage/fundDetail',
+      name: 'fundDetail',
+      component: fundDetail
+    },
+    {
+      path: '/monitor/homePage/fundDetailtwo',
+      name: 'fundDetailtwo',
+      component: fundDetailtwo
+    },
+    {
       path: '/test',
       name: 'test',
       redirect: '/login',
@@ -341,17 +351,8 @@ export default new Router({
               name: 'fund_Template',
               component: fund_Template
             },
-            {
-              path: '/monitor/homePage/fundDetail',
-              name: 'fundDetail',
-              component: fundDetail
-            },
-            {
-              path: '/monitor/homePage/fundDetailtwo',
-              name: 'fundDetailtwo',
-              component: fundDetailtwo
 
-            },
+
             // 基金情况
             {
               path: '/monitor/homePage/fund_info',
