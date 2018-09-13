@@ -3,25 +3,25 @@
     <!-- 股票 > 股价异动预警 -->
     <div>
       <div class="queryCondition-top">
-        <div class="queryCondition-title">自定义板块范围公告</div>
+        <div class="queryCondition-title"></div>
         <div class="middle clearFloat">
           <!-- 自定义模块 -->
-          <div class="floatLeft">
-            <pull-down-list :prop="modulesNameList" @modulesNameEvent='modulesNameEvent'></pull-down-list>
-          </div>
+            <div class="floatLeft">
+              <pull-down-list :prop="modulesNameList" @modulesNameEvent='modulesNameEvent'></pull-down-list>
+            </div>
           <!-- <div>
             <div class="floatLeft marginLeft10">
                 <pull-down-list :prop="legislation" @legislationEvent='legislationEvent'></pull-down-list>
             </div>
           </div>   -->
-          <!-- 公告类型 -->
-          <div>
+        <!-- 公告类型 -->
+        <div>
             <div class="floatLeft">
               <pull-down-listt :prop="legislationList" @legislationEvent2='legislationEvent2'></pull-down-listt>
             </div>
           </div>
           <div>
-            <!-- 开始时间 -->
+              <!-- 开始时间 -->
             <div class="floatLeft">
               <date-picker :prop="startDatePicker" @startDateEvent="startDateEvent"></date-picker>
             </div>
@@ -41,20 +41,14 @@
         <div v-if="hasResultData">
           <table>
             <tbody>
-
+       
               <tr>
                 <th v-for="(item, index) of titleData" :key="index" class="tableTh" width:100px>{{item}}</th>
               </tr>
               <tr v-for="(item, index) of dataList" :key="index">
-                <td>
-                  <a target="_blank" :href="item.sourceurl">{{item.noticetitle}}</a>
-                </td>
+                <td><a target="_blank" :href="item.sourceurl">{{item.noticetitle}}</a></td>
                 <td>{{item.noticedate}}</td>
-                <td>
-                  <button>
-                    <router-link target='_blank' :to="'/monitor/homePage/fundDetail?id='+ item.infocode">详情>></router-link>
-                  </button>
-                </td>
+                <td><button><router-link  target='_blank' :to="'/monitor/homePage/fundDetail?id='+ item.infocode">详情>></router-link></button></td>
               </tr>
             </tbody>
           </table>
@@ -96,7 +90,7 @@ export default {
       resultData: null,
       queryType: '板块一',
       queryCondition: {
-        userid: 'risk',
+        userid: 'risk',  
         sector: '',
         notice_type: '002',
         start_date: '',
@@ -131,185 +125,185 @@ export default {
         nowSelectFontSize: 13,
         list: []
       },
-      listtemp: [
-        {
-          code: "002",
-          content: "全部",
-        },
-        {
-          code: "002001",
-          content: "基金招募及设立",
-        },
-        {
-          code: "002001001",
-          content: "招募所明书"
-        },
-        {
-          code: "002001002",
-          content: "招募说明书更新"
-        },
-        {
-          code: "002001003",
-          content: "发行公告"
-        },
-        {
-          code: "002001004",
-          content: "基金募集期变动公告"
-        },
-        {
-          code: "002001005",
-          content: "发行结果公告"
-        },
-        {
-          code: "002001006",
-          content: "基金成立或基金合同生效报告"
-        },
-        {
-          code: "002001007",
-          content: "基金份额上市交易公告书"
-        },
-        {
-          code: "002001008",
-          content: "基金合同"
-        },
-        {
-          code: "002001009",
-          content: "其他发行事项公告"
-        },
-        {
-          code: "002002",
-          content: "基金定期报告",
-        },
-        {
-          code: "002002001",
-          content: "年度报告",
-        },
-        {
-          code: "002002002",
-          content: "半年度报告",
-        },
-        {
-          code: "002002003",
-          content: "季度报告"
-        },
-        {
-          code: "002002004",
-          content: "基金资产净值公告",
-        },
-        {
-          code: "002002006",
-          content: "其他报告",
-        },
-        {
-          code: "002003",
-          content: "基金当事人公告",
-        },
-        {
-          code: "002003001",
-          content: "基金管理人、基金托管人的重大人事变动",
-        },
-        {
-          code: "002003002",
-          content: "基金管理人股东及其出资比例发生变更",
-        },
-        {
-          code: "002003003",
-          content: "基金管理人、基金托管人或其高管人员受调查或处罚",
-        },
-        {
-          code: "002003004",
-          content: "重大诉讼、仲裁事项",
-        },
-        {
-          code: "002003005",
-          content: "基金管理人或基金托管人变更",
-        },
-        {
-          code: "002003006",
-          content: "基金管理人、基金托管人的法定名称、住所发生变更",
-        },
-        {
-          code: "002003007",
-          content: "基金改聘会计师事务所",
-        },
-        {
-          code: "002003008",
-          content: "代销机构变更",
-        },
-        {
-          code: "002003009",
-          content: "基金更换注册登记机构",
-        },
-        {
-          code: "002003010",
-          content: "重大关联交易事项",
-        },
-        {
-          code: "002004",
-          content: "基金运作公告",
-        },
-        {
-          code: "002004001",
-          content: "基金提前终止",
-        },
-        {
-          code: "002004002",
-          content: "延长基金合同期限",
-        },
-        {
-          code: "002004004",
-          content: "转换基金运作方式",
-        },
-        {
-          code: "002004005",
-          content: "基金高管变更",
-        },
-        {
-          code: "002004006",
-          content: "召开基金持有人大会的通知",
-        },
-        {
-          code: "002004007",
-          content: "基金份额持有人大会表决结果的公告",
-        },
-        {
-          code: "002004008",
-          content: "基金份额净值计价错误公告",
-        },
-        {
-          code: "002004009",
-          content: "基金费率",
-        },
-        {
-          code: "002004012",
-          content: "基金收益分配事项",
-        },
-        {
-          code: "002004013",
-          content: "申购及赎回事项",
-        },
-        {
-          code: "002004014",
-          content: "不定期折算",
-        },
-        {
-          code: "002004015",
-          content: "风险提示公告",
-        },
-        {
-          code: "002005",
-          content: "其他公告",
-        },
-        {
-          code: "002005001",
-          content: "澄清公告",
-        },
-        {
-          code: "002005002",
-          content: "基金其他公告",
-        },
+      listtemp:[
+          {
+            code:"002",
+            content:"全部",
+          },
+          {
+            code:"002001",
+            content:"基金招募及设立",
+          },
+          {                                                          
+            code:"002001001",
+            content:"招募所明书"
+          },             
+          {
+            code:"002001002",
+            content:"招募说明书更新"
+          },  
+          {
+            code:"002001003",
+            content:"发行公告"
+          },
+          {
+            code:"002001004",
+            content:"基金募集期变动公告"
+          },
+          {
+            code:"002001005",
+            content:"发行结果公告"
+          },
+          {
+            code:"002001006",
+            content:"基金成立或基金合同生效报告"
+          },
+          {
+            code:"002001007",
+            content:"基金份额上市交易公告书"
+          },
+          {
+            code:"002001008",
+            content:"基金合同"
+          },
+          {
+            code:"002001009",
+            content:"其他发行事项公告"
+          },
+          {
+            code:"002002",
+            content:"基金定期报告",
+          },
+          {
+            code:"002002001",
+            content:"年度报告",
+          },
+          {
+            code:"002002002",
+            content:"半年度报告",
+          },
+          {
+            code:"002002003",
+            content:"季度报告"
+          },
+          {
+            code:"002002004",
+            content:"基金资产净值公告",
+          },
+          {
+            code:"002002006",
+            content:"其他报告",
+          },
+          {
+            code:"002003",
+            content:"基金当事人公告",
+          },
+          {
+            code:"002003001",
+            content:"基金管理人、基金托管人的重大人事变动",
+          },
+          {
+            code:"002003002",
+            content:"基金管理人股东及其出资比例发生变更",
+          },
+          {
+            code:"002003003",
+            content:"基金管理人、基金托管人或其高管人员受调查或处罚",
+          },
+          {
+            code:"002003004",
+            content:"重大诉讼、仲裁事项",
+          },
+          {
+            code:"002003005",
+            content:"基金管理人或基金托管人变更",
+          },
+          {
+            code:"002003006",
+            content:"基金管理人、基金托管人的法定名称、住所发生变更",
+          },
+          {
+            code:"002003007",
+            content:"基金改聘会计师事务所",
+          },
+          {
+            code:"002003008",
+            content:"代销机构变更",
+          },
+          {
+            code:"002003009",
+            content:"基金更换注册登记机构",
+          },
+          {
+            code:"002003010",
+            content:"重大关联交易事项",
+          },
+          {
+            code:"002004",
+            content:"基金运作公告",
+          },
+          {
+            code:"002004001",
+            content:"基金提前终止",
+          },
+          {
+            code:"002004002",
+            content:"延长基金合同期限",
+          },
+          {
+            code:"002004004",
+            content:"转换基金运作方式",
+          },
+          {
+            code:"002004005",
+            content:"基金高管变更",
+          },
+          {
+            code:"002004006",
+            content:"召开基金持有人大会的通知",
+          },
+          {
+            code:"002004007",
+            content:"基金份额持有人大会表决结果的公告",
+          },
+          {
+            code:"002004008",
+            content:"基金份额净值计价错误公告",
+          },
+          {
+            code:"002004009",
+            content:"基金费率",
+          },
+          {
+            code:"002004012",
+            content:"基金收益分配事项",
+          },
+          {
+            code:"002004013",
+            content:"申购及赎回事项",
+          },
+          {
+            code:"002004014",
+            content:"不定期折算",
+          },
+          {
+            code:"002004015",
+            content:"风险提示公告",
+          },
+          {
+            code:"002005",
+            content:"其他公告",
+          },
+          {
+            code:"002005001",
+            content:"澄清公告",
+          },
+          {
+            code:"002005002",
+            content:"基金其他公告",
+          },
       ],
-      titleData: ['公告标题', '公告日期', '详情'],
+      titleData: ['公告标题','公告日期','详情'],
       dataList: [],
       legislationList: {
         title: '公告类型：',
@@ -370,7 +364,7 @@ export default {
           '基金其他公告'
         ]
       },
-      legislation: {
+     legislation: {
         title: '自定义模块：',
         parentEvent: 'legislationEvent',
         default: '板块一',
@@ -379,8 +373,8 @@ export default {
         nowSelectHeight: 25,
         nowSelectFontSize: 13,
         list: [
-          '板块一',
-          '版块二'
+            '板块一',
+            '版块二'
         ]
       }
     }
@@ -391,37 +385,37 @@ export default {
     datePicker,
     pullDownListt
   },
-  //获取板块名称 进入页面发送请求
-  created() {
+    //获取板块名称 进入页面发送请求
+  created(){
     console.log(this.queryCondition.notice_type)
-    const url = 'http://10.25.24.51:10189/api/risk/sector_set/query'
-    const sendData = {
-      userid: 'risk'
-    };
-    console.log(sendData)
-    this.$_axios.get(url, {
-      params: sendData
-    }).then((response) => {
-      if (!response.data) {
-        this.modulesNameList.list = [];
-        this.modulesNameList.default = '没有可选择板块';
-        this.sector = '';
-      } else {
-        if (response.data.code == '0') {
-          console.log(response.data.sectorlist)
-          this.modulesNameList.list = JSON.parse(JSON.stringify(response.data.sectorlist));
-          this.modulesNameList.default = response.data.sectorlist[0];
-          this.sector = response.data.sectorlist[0];
-        } else {
+      const url = 'http://10.25.24.51:10189/api/risk/sector_set/query'
+      const sendData = {
+        userid: 'risk'
+      };
+      console.log(sendData)
+      this.$_axios.get(url, {
+        params: sendData
+      }).then((response) => {
+        if (!response.data) {
           this.modulesNameList.list = [];
           this.modulesNameList.default = '没有可选择板块';
           this.sector = '';
+        } else {
+          if (response.data.code == '0') {
+            console.log(response.data.sectorlist)
+            this.modulesNameList.list = JSON.parse(JSON.stringify(response.data.sectorlist));
+            this.modulesNameList.default = response.data.sectorlist[0];
+            this.sector = response.data.sectorlist[0];
+          } else {
+            this.modulesNameList.list = [];
+            this.modulesNameList.default = '没有可选择板块';
+            this.sector = '';
+          }
         }
-      }
-    }).catch((err) => {
+      }).catch((err) => {
 
-    });
-
+      });
+  
 
   },
   methods: {
@@ -446,16 +440,16 @@ export default {
       this.queryCondition.sector = data[0]
     },
     legislationEvent(data) {
-      this.queryCondition.sector = data
+        this.queryCondition.sector = data
     },
     legislationEvent2(data) {
       let code = this.listtemp.find(v => {
         return v.content === data;
       })
       console.log(code)
-      this.queryCondition.notice_type = code.code;
-
-
+      this.queryCondition.notice_type = code.code;  
+     
+      
     },
     paginationSelect(pageNumber) {
       const sendData = JSON.parse(JSON.stringify(this.sendData));
@@ -482,12 +476,12 @@ export default {
         return;
       }
       console.log(this.queryCondition.sector)
-      if (!this.queryCondition.sector) {
+      if(!this.queryCondition.sector){
         alert('请选择模块名');
         return;
       }
 
-
+      
       this.isShowQueryResult = true;
       this.hasResultData = false;
       // this.sendData = this.selectList.parentEvent;
@@ -509,27 +503,27 @@ export default {
         // 显示查询结果
         console.log(response)
         // this.hasResultData = true;
-        if (response.data.code == '410') {
+        if(response.data.code=='410'){
           alert(response.data.msg)
           return;
-        } else {
-          // 显示查询结果
-          this.hasResultData = true;
-          this.dataList = JSON.parse(JSON.stringify(response.data.result.result))
-          this.resultData = response.data.result;
-          console.log(this.dataList);
-          if (this.resultData.total_count) {
-            this.paginationData.page_Count = Math.ceil(this.resultData.total_count / 10);
-          } else {
-            this.paginationData.page_Count = 0;
-          }
-          this.paginationData.total_Count = this.resultData.total_count;
+        }else{
+                   // 显示查询结果
+              this.hasResultData = true;
+              this.dataList = JSON.parse(JSON.stringify(response.data.result.result))
+              this.resultData = response.data.result;
+              console.log(this.dataList);
+              if (this.resultData.total_count) {
+                this.paginationData.page_Count = Math.ceil(this.resultData.total_count / 10);
+              } else {
+                this.paginationData.page_Count = 0;
+              }
+              this.paginationData.total_Count = this.resultData.total_count;
         }
         // console.log('基金', response.data.result);
-
+       
         // console.log(this.dataList);
         // console.log(this.dataList)
-
+      
         // if (this.resultData.total_count) {
         //   this.paginationData.page_Count = Math.ceil(this.resultData.total_count / 10);
         // } else {
@@ -537,9 +531,9 @@ export default {
         // }
         // this.paginationData.total_Count = this.resultData.total_count;
       })
-      // .catch(err => {
-      //   // console.log(err);
-      // });
+        // .catch(err => {
+        //   // console.log(err);
+        // });
     },
     threshold() {
       let threshold = parseFloat(this.queryCondition.threshold);
@@ -566,132 +560,132 @@ export default {
 }
 </script>
 
-<style lang="less" >
-.pullDownListBoxTwo {
+<style lang="less" scope>
+.pullDownListBoxTwo{
   height: 500px;
   overflow-y: scroll;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(3) {
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(3){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(4) {
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(4){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(5) {
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(5){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(6) {
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(6){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(7) {
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(7){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(8) {
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(8){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(9) {
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(9){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(10) {
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(10){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(11) {
-  padding-left: 40px;
-}
-
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(13) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(14) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(15) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(16) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(17) {
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(11){
   padding-left: 40px;
 }
 
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(19) {
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(13){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(20) {
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(14){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(21) {
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(15){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(22) {
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(16){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(23) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(24) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(25) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(26) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(27) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(28) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(30) {
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(17){
   padding-left: 40px;
 }
 
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(31) {
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(19){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(32) {
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(20){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(33) {
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(21){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(34) {
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(22){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(35) {
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(23){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(36) {
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(24){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(37) {
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(25){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(38) {
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(26){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(39) {
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(27){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(40) {
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(28){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(41) {
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(30){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(42) {
+
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(31){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(43) {
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(32){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(45) {
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(33){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(46) {
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(34){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(35){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(36){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(37){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(38){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(39){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(40){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(41){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(42){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(43){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(45){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(46){
   padding-left: 40px;
 }
 .queryResult {
@@ -743,16 +737,16 @@ export default {
     }
   }
 }
-.fallstop-left {
+.fallstop-left{
   margin-left: 20px;
   position: relative;
 }
-.dieting {
+.dieting{
   position: absolute;
   top: 0px;
   right: -32px;
 }
-.queryDown {
-  margin-left: 150px;
+.queryDown{
+    margin-left:150px;
 }
 </style>

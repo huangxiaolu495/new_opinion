@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="homePageMain clearFloat">
-      <div v-if="isShow" v-show="$route.path !='/monitor/homePage/fundDetail'">
-        <table class="table">
+    <div class="homePageMain clearFloat" >
+      <div v-if="isShow" >
+        <table class="table" v-if="$route.path != '/monitor/homePage/fundDetailtwo'" v-show="$route.path != '/monitor/homePage/fundDetail'">
           <tbody>
             <tr>
               <th class="w8"></th>
@@ -39,7 +39,11 @@ export default {
         {          title: '股票', isShowList: false, list: [
             // 新闻预警
             { title: '新闻收藏夹', path: '/monitor/homePage/stock_newsWarning', list: [] },
-            { title: '公告预警', path: '/monitor/homePage/stock_afficheWarning', list: [] },
+            { title: '公告预警', isShowList: false , path: '/monitor/homePage/stock_afficheWarning', list: [
+              {title: '基本公告', path: '/monitor/homePage/stock_Basicannounce'},
+              {title: '自定义板块范围公告' ,path: '/monitor/homePage/stock_Template'},
+              {title: '负面公告', path: '/monitor/homePage/stock_Negative'}
+            ] },
             { title: '财务信息预警', path: '/monitor/homePage/stock_financeWarning', list: [] },
             {              title: '股价异动预警', isShowList: false, path: '/monitor/homePage/homeContent', list: [
                 { title: '股价异动数据', path: '/monitor/homePage/stock_sharePriceWarning' },
@@ -56,10 +60,10 @@ export default {
             //     {title: '债券发行人公告', path: '/monitor/homePage/bond_issuerNotice'},
             //     {title: '受托管理人、主承销商发布的公告', wordWrapping: true, path: '/monitor/homePage/bond_manageNotice'}
             // ]},
-            {              title: '公告预警', isShowList: false, list: [
-                { title: '基本公告', path: '/monitor/homePage/bond_ratingwarning' },
-                { title: '自定义板块范围公告', path: '/monitor/homePage/bond_template' },
-              ]            },
+           { title: '公告预警', isShowList: false, list: [
+           { title: '基本公告', path: '/monitor/homePage/bond_ratingwarning' },
+           { title: '自定义板块范围公告', path: '/monitor/homePage/bond_template' },
+           ] },
             {              title: '评级预警', isShowList: false, path: '/monitor/homePage/homeContent', list: [
                 { title: '评级信息', path: '/monitor/homePage/bond_ratingInformation' },
                 { title: '评级变动', path: '/monitor/homePage/bond_ratingChange' }
@@ -88,21 +92,21 @@ export default {
             { title: '其他舆情监控', path: '/monitor/homePage/shareOption_page2', list: [] }
           ]        },
 
-        {          title: '新三板', isShowList: false, list: [
-            {              title: '新闻预警', isShowList: false, path: '/monitor/homePage/NEEQ_NewsMonitoring', list: [
-                { title: '新三板持仓股票舆情监控', path: '/monitor/homePage/NEEQ_NewsMonitoring' },
-                // {title: '新闻收藏夹', path: '/monitor/homePage/NEEQ_favorite'}
-              ]            },
-            {              title: '最新动态', isShowList: false, path: '/monitor/homePage/NEEQ_announcement', list: [
-                { title: '通知公告', path: '/monitor/homePage/NEEQ_announcement' },
-                { title: '股转动态', path: '/monitor/homePage/NEEQ_dynamic' }
-              ]            },
-            {              title: '监管公开信息', isShowList: false, path: '/monitor/homePage/NEEQ_selfMeasures', list: [
-                { title: '自律监管措施', path: '/monitor/homePage/NEEQ_selfMeasures' },
-                { title: '纪律处分', path: '/monitor/homePage/NEEQ_punishment' },
-                { title: '问询函', path: '/monitor/homePage/NEEQ_inquiryLetter' },
-              ]            }
-          ]        },
+        // {          title: '新三板', isShowList: false, list: [
+        //     {              title: '新闻预警', isShowList: false, path: '/monitor/homePage/NEEQ_NewsMonitoring', list: [
+        //         { title: '新三板持仓股票舆情监控', path: '/monitor/homePage/NEEQ_NewsMonitoring' },
+        //         // {title: '新闻收藏夹', path: '/monitor/homePage/NEEQ_favorite'}
+        //       ]            },
+        //     {              title: '最新动态', isShowList: false, path: '/monitor/homePage/NEEQ_announcement', list: [
+        //         { title: '通知公告', path: '/monitor/homePage/NEEQ_announcement' },
+        //         { title: '股转动态', path: '/monitor/homePage/NEEQ_dynamic' }
+        //       ]            },
+        //     {              title: '监管公开信息', isShowList: false, path: '/monitor/homePage/NEEQ_selfMeasures', list: [
+        //         { title: '自律监管措施', path: '/monitor/homePage/NEEQ_selfMeasures' },
+        //         { title: '纪律处分', path: '/monitor/homePage/NEEQ_punishment' },
+        //         { title: '问询函', path: '/monitor/homePage/NEEQ_inquiryLetter' },
+        //       ]            }
+        //   ]        },
 
         {          title: '监管要求', isShowList: false, list: [
             { title: '监管对挂牌公司处罚情况', path: '/monitor/homePage/supervise_page1', list: [] },
