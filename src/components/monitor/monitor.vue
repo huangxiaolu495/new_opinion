@@ -2,13 +2,13 @@
   <div class="app">
     <!-- 舆情监控 opinion monitor -->
     <div class="monitor_top clearFloat">
-      <div class="floatLeft" v-if="$route.path !='/monitor/homePage/fundDetailtwo'" v-show="$route.path !='/monitor/homePage/fundDetail'">
+      <div class="floatLeft" >
         <router-link to="/">
           <h1>中泰风险
             <span>预警</span>系统</h1>
         </router-link>
       </div>
-      <div class="floatRight userSystemBox" v-if="$route.path != '/monitor/homePage/fundDetailtwo'" v-show="$route.path != '/monitor/homePage/fundDetail'">
+      <div class="floatRight userSystemBox">
         <span>我的账户
           <i class="iconfont icon-icon_on_the_down"></i>
         </span>
@@ -22,7 +22,7 @@
         </span>
       </div>
     </div>
-    <div class="homePageNav clearFloat" v-if="$route.path != '/monitor/homePage/fundDetailtwo'" v-show="$route.path != '/monitor/homePage/fundDetail'">
+    <div class="homePageNav clearFloat">
       <div class="link-homePage">
         <router-link to="/monitor/homePage/homeContent">首页</router-link>
       </div>

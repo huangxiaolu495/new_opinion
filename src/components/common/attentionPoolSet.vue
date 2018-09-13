@@ -53,10 +53,25 @@
                   <span @click="query" class="btnquery">查询</span>
                 </div>
             </div>
-            <ul class="newUl">
+            <!-- <ul class="newUl">
               <li><span class="content_time_top">发布时间</span><span class="content_between_top">标题</span><span class="content_news_top">新闻来源</span></li>
-              <li v-for="(item , index) of dataList" :key="index"><span class="content_time">{{item.showtime}}</span><span class="content_between"><a :href="item.purl">{{item.title}}</a></span><span class="content_news">{{item.source}}</span></li>
-            </ul>  
+              <li v-for="(item , index) of dataList" :key="index">
+                <span class="content_time">{{item.showtime}}</span>
+                <span class="content_between"><a :href="item.purl">{{item.title}}</a></span>
+                <span class="content_news">{{item.source}}</span></li>
+            </ul>   -->
+            <table>
+              <tbody>
+                <tr>
+                  <th v-for="(item, index) of titleData" :key="index" class="tableTh" width:100px>{{item}}</th>
+                </tr>
+                <tr v-for="(item, index) of dataList" :key="index">
+                  <td><a target="_blank" :href="item.sourceurl">{{item.showtime}}</a></td>
+                  <td><a :href="item.purl">{{item.title}}</a></td>
+                  <td>{{item.source}}</td>
+                </tr>
+              </tbody>
+            </table>
               <pagination :prop="paginationData1" @paginationSelect="paginationSelect"></pagination>
                        
         </div>
@@ -190,6 +205,7 @@ export default {
         parentEvent: 'endDateEvent',
         defaultDate: new Date()
       },
+      titleData:['发布时间','标题','新闻来源'],
       ismorechoose:false,
       nowTab: true,
       isAddList: false,
@@ -291,7 +307,7 @@ export default {
         // 显示查询结果
             this.hasResultData = true;
             this.dataList = JSON.parse(JSON.stringify(response.data.result.result)); 
-            this.paginationData1.page_Count = Math.ceil(response.data.result.total_count / 10);
+            this.paginationData1.page_Count = Math.ceil(response.data.result.total_count / 30);
             // this.$set(this.paginationData1, "total_Count", response.data.result.total_count)
             console.log(response.data.result.total_count)
             // this.$set(this.paginationData1, "page_Count", Math.ceil(response.data.result.total_count / 10))
@@ -805,6 +821,53 @@ export default {
 </script>
 
 <style lang="less" scoped>
+  table {
+    width: 1400px;
+    margin-top: 20px;
+    border: 1px solid #797979;
+    border-collapse: collapse;
+    word-wrap: break-word;
+    word-break: break-all;
+    th {
+      height: 40px;
+      line-height: 40px;
+      border: 1px solid #797979;
+      background-color: #f0f5f9;
+    }
+    tr {
+      overflow: hidden;
+      border: 1px solid #797979;
+    }
+    td {
+      height: 84px;
+      text-align: center;
+      vertical-align: middle;
+      border: 1px solid #797979;
+    }
+    .data-content {
+      position: relative;
+      text-align: left;
+      span {
+        position: absolute;
+        bottom: 0;
+        right: 0;
+        cursor: pointer;
+        color: blue;
+      }
+    }
+    .tableTh:nth-child(1) {
+      width: 145px;
+    }
+    .tableTh:nth-child(2) {
+      width: 80px;
+    }
+    .tableTh:nth-child(3) {
+      width: 90px;
+    }
+    .tableTh:nth-child(4) {
+      width: 90px;
+    }
+  }
 .attentionPoolBox{
   position: fixed;
   top: 0;
@@ -813,16 +876,18 @@ export default {
   height: 100%;
   background-color: #fff;
   z-index: 3;
+  overflow: scroll;
   >div{
     width: 100%;
     height: 100%;
     padding-top: 10px;
     padding-left: 100px;
-    background: linear-gradient(#ffffff, #d7d7d7);;
+    // background: linear-gradient(#ffffff, #d7d7d7);;
   }
   .poolList{
-    margin-top:100px;
-    width: 700px;
+    margin-top:15px;
+    // width: 700px;
+    margin-left:26px;
     .checkBox{
       position: relative;
       cursor: pointer;
@@ -938,10 +1003,10 @@ export default {
     text-align: center;
     cursor: pointer;
     color: #fff;
-    background: linear-gradient(#fc0000, #030000);
+    background-color: #D7D7D7;
   }
   h4.active{
-    background-color: rgba(0, 114, 255, 0.5);
+    background-color: #b50229;
   }
   .close{
     font-size: 40px;
@@ -982,9 +1047,9 @@ table {
     // width: 524px;
     height: 650px;
     position: absolute;
-    top: 84px;
+    top: 180px;
     right: 60px;
-    overflow-y: scroll;
+    // overflow-y: scroll;
 }
 .my_content ul span{
   display:inline-block;
@@ -1069,6 +1134,7 @@ table {
 }
 .poolBtnBox{
   margin-top: 10px;
+  margin-left:1000px;
 }
 body{
   overflow: scroll;

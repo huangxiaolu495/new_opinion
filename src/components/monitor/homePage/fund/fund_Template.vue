@@ -3,7 +3,7 @@
     <!-- 股票 > 股价异动预警 -->
     <div>
       <div class="queryCondition-top">
-        <div class="queryCondition-title"></div>
+        <div class="queryCondition-title">自定义板块范围公告</div>
         <div class="middle clearFloat">
           <!-- 自定义模块 -->
             <div class="floatLeft">
@@ -560,132 +560,132 @@ export default {
 }
 </script>
 
-<style lang="less" scope>
-.pullDownListBoxTwo{
+<style lang="less">
+.pullDownListBoxTwo1{
   height: 500px;
   overflow-y: scroll;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(3){
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(3){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(4){
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(4){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(5){
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(5){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(6){
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(6){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(7){
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(7){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(8){
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(8){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(9){
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(9){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(10){
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(10){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(11){
-  padding-left: 40px;
-}
-
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(13){
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(14){
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(15){
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(16){
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(17){
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(11){
   padding-left: 40px;
 }
 
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(19){
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(13){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(20){
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(14){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(21){
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(15){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(22){
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(16){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(23){
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(24){
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(25){
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(26){
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(27){
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(28){
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(30){
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(17){
   padding-left: 40px;
 }
 
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(31){
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(19){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(32){
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(20){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(33){
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(21){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(34){
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(22){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(35){
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(23){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(36){
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(24){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(37){
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(25){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(38){
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(26){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(39){
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(27){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(40){
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(28){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(41){
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(30){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(42){
+
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(31){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(43){
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(32){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(45){
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(33){
   padding-left: 40px;
 }
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(46){
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(34){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(35){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(36){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(37){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(38){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(39){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(40){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(41){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(42){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(43){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(45){
+  padding-left: 40px;
+}
+.pullDownListContentTwo .pullDownListBoxTwo1 li:nth-child(46){
   padding-left: 40px;
 }
 .queryResult {
