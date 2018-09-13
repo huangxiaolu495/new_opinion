@@ -507,7 +507,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less" >
 .pullDownListBoxTwo{
   height: 500px;
   overflow: scroll;

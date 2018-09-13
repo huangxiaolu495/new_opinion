@@ -307,7 +307,7 @@ export default {
         // 显示查询结果
             this.hasResultData = true;
             this.dataList = JSON.parse(JSON.stringify(response.data.result.result)); 
-            this.paginationData1.page_Count = Math.ceil(response.data.result.total_count / 30);
+            this.paginationData1.page_Count = Math.ceil(response.data.result.total_count / 10);
             // this.$set(this.paginationData1, "total_Count", response.data.result.total_count)
             console.log(response.data.result.total_count)
             // this.$set(this.paginationData1, "page_Count", Math.ceil(response.data.result.total_count / 10))
@@ -1020,6 +1020,7 @@ table {
   border-collapse: collapse;
   word-wrap: break-word;
   word-break: break-all;
+  position: relative;
   th {
     height: 40px;
     line-height: 40px;
@@ -1093,7 +1094,17 @@ table {
   margin-top:16px;
   padding-left: 26px;
   padding-top: 10px;
+  position: relative;
 
+}
+table:after{
+    position: absolute;
+    top: -10px;
+    left: 0;
+    content: "";
+    width: 1400px;
+    height: 2px;
+    background-color: #797979;
 }
 .content_more_second{
     margin-left: 60px;
