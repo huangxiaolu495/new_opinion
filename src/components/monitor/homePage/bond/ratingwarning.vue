@@ -3,7 +3,7 @@
     <!-- 公司信息查询 -->
     <div>
       <div class="queryCondition-top">
-        <div class="queryCondition-title">公告预警</div>
+        <div class="queryCondition-title">基本公告</div>
         <div class="middle clearFloat">
           <!-- 查询条件框 -->
           <div>

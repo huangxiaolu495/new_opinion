@@ -28,6 +28,8 @@ import boardofdirectorsWarning from '@/components/boardofdirectors/boardofdirect
 // >>>经济业务模块
 import economicbusinessWarning from '@/components/economicbusiness/economicbusinessWarning'
 
+//title子页面(自定义板块)
+import userSystem_diyManagement from '@/components/monitor/homePage/userSystem/diyManagement'
 
 // >> 债券
 // 新闻预警 > 债券发行人负面新闻
@@ -40,6 +42,8 @@ import bond_ratingwarning from '@/components/monitor/homePage/bond/ratingwarning
 import bond_issuerNotice from '@/components/monitor/homePage/bond/issuerNotice'
 // 公告预警 >  受托管理人、主承销商发布的公告
 import bond_manageNotice from '@/components/monitor/homePage/bond/manageNotice'
+// 公告预警
+import bond_template from '@/components/monitor/homePage/bond/template'
 // 评级预警 >  评级信息
 import bond_ratingInformation from '@/components/monitor/homePage/bond/ratingInformation'
 // 评级预警 >  评级变动
@@ -90,6 +94,23 @@ import NEEQ_punishment from '@/components/newthreeboard/homePage/NEEQ/punishment
 import NEEQ_inquiryLetter from '@/components/newthreeboard/homePage/NEEQ/inquiryLetter'
 // 我的关注池
 import NEEQ_attentionPoolSet from '@/components/newthreeboard/homePage/NEEQ/attentionPoolSet'
+// >> 新三板
+
+// >> 新三板
+// 新闻预警 > 新三板持仓股票舆情监控
+import NEEQ_NewsMonitoring_monitor from '@/components/monitor/homePage/NEEQ/newsMonitoring'
+// 新闻预警 > 收藏夹
+import NEEQ_favorite_monitor from '@/components/monitor/homePage/NEEQ/favorite'
+// 最新动态 > 通知公告
+import NEEQ_announcement_monitor from '@/components/monitor/homePage/NEEQ/announcement'
+// 最新动态 > 股转动态
+import NEEQ_dynamic_monitor from '@/components/monitor/homePage/NEEQ/dynamic'
+// 监管公开信息 > 自律监管措施
+import NEEQ_selfMeasures_monitor from '@/components/monitor/homePage/NEEQ/selfMeasures'
+// 监管公开信息 > 纪律处分
+import NEEQ_punishment_monitor from '@/components/monitor/homePage/NEEQ/punishment'
+// 监管公开信息 > 问询函
+import NEEQ_inquiryLetter_monitor from '@/components/monitor/homePage/NEEQ/inquiryLetter'
 // >> 新三板
 
 // >> 期权
@@ -162,36 +183,32 @@ export default new Router({
       name: 'opinion',
       component: opinion,
       meta: {
-        requiresAuth:true
+        requiresAuth: true
       }
     },
     //用户登录页面
     //meta
     {
-      path:'/test',
-      name:'test',
+      path: '/test',
+      name: 'test',
       redirect: '/login',
-      component:test,
-      children:[
-        {
-          path: '/login',
-          name: 'login',
-          component: login
-        }
-      ]
+      component: test,
+      children: [{
+        path: '/login',
+        name: 'login',
+        component: login
+      }]
     },
     {
       path: '/test',
       name: 'test',
       redirect: '/register',
       component: test,
-      children: [
-        {
-          path: '/register',
-          name: 'register',
-          component: register,
-        }
-      ]
+      children: [{
+        path: '/register',
+        name: 'register',
+        component: register,
+      }]
     },
     {
       path: '/userSystem',
@@ -285,6 +302,13 @@ export default new Router({
               name: 'homeContent',
               component: homeContent,
             },
+            // >>title子页面
+            {
+              path: '/monitor/homePage/userSystem_diyManagement',
+              name: 'userSystem_diyManagement',
+              component: userSystem_diyManagement,
+            },
+            // >>title子页面
             // >> 基金
             {
               path: '/monitor/homePage/fund_shigekuraNews',
@@ -372,6 +396,12 @@ export default new Router({
               name: 'bond_ratingChange',
               component: bond_ratingChange
             },
+            {
+              path: '/monitor/homePage/bond_template',
+              name: 'bond_template',
+              component: bond_template
+            },
+
             //  >> 债券
 
             // >> 期货
@@ -402,7 +432,46 @@ export default new Router({
               component: shareOption_page2
             },
             // >> 期权
+            // >> 新三板
+            {
+              path: '/monitor/homePage/NEEQ_NewsMonitoring',
+              name: 'NEEQ_NewsMonitoring_monitor',
+              component: NEEQ_NewsMonitoring_monitor,
 
+            },
+            {
+              path: '/monitor/homePage/NEEQ_favorite',
+              name: 'NEEQ_favorite_monitor',
+              component: NEEQ_favorite_monitor,
+
+            },
+            {
+              path: '/monitor/homePage/NEEQ_announcement',
+              name: 'NEEQ_announcement_monitor',
+              component: NEEQ_announcement_monitor,
+
+            },
+            {
+              path: '/monitor/homePage/NEEQ_dynamic',
+              name: 'NEEQ_dynamic_monitor',
+              component: NEEQ_dynamic_monitor
+            },
+            {
+              path: '/monitor/homePage/NEEQ_punishment',
+              name: 'NEEQ_punishment_monitor',
+              component: NEEQ_punishment_monitor
+            },
+            {
+              path: '/monitor/homePage/NEEQ_selfMeasures',
+              name: 'NEEQ_selfMeasures_monitor',
+              component: NEEQ_selfMeasures_monitor
+            },
+            {
+              path: '/monitor/homePage/NEEQ_inquiryLetter',
+              name: 'NEEQ_inquiryLetter_monitor',
+              component: NEEQ_inquiryLetter_monitor
+            },
+            // >> 新三板
             // >> 股票
             {
               path: '/monitor/homePage/stock_newsWarning',

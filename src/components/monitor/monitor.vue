@@ -13,7 +13,7 @@
           <i class="iconfont icon-icon_on_the_down"></i>
         </span>
         <span class="pullDown">
-          <router-link to="/userSystem">自定义板块管理</router-link>
+          <router-link to="/monitor/homePage/userSystem_diyManagement">自定义板块管理</router-link>
           <!-- <p @click="enterUserSystem">系统管理</p> -->
           <!-- <p>我的收藏夹</p> -->
           <router-link to="/attentionPoolSet">我的关注池</router-link>

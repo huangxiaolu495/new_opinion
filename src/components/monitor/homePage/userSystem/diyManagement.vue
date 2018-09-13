@@ -1,150 +1,205 @@
 <template>
-  <div class="userSystemPage clearFloat">
-    <div class="sidebarTab">
-      <p v-for="(item, index) of sidebarTabData" @click="switchModule(item.module)" :class="{active: isShowModule == item.module}" :key="index">{{item.title}}</p>
-    </div>
-    <div class="contentBox">
-      <div v-if="isShowModule === 'user-defined'" class="clearFloat">
-        <div class="topBtn floatLeft">
-          <span @click="showAddBox(!isShowAddBox)">添加</span>
-          <span @click="deleteModules">删除</span>
-          <span @click="allCheck">全选</span>
-          <span @click="reverseCheck">反选</span>
-        </div>
-        <div v-if="isShowAddBox" class="addBox floatLeft">
-          <div>
-            <div>
-              板块名称： <input @input="inputEvent" v-model="nowAddModuleName" type="text">
-            </div>
-            <div>
-              <span @click="addModuleSubmit">提交</span>
-              <span @click="showAddBox(false)">取消</span>
-            </div>
+  <div>
+    <div>
+      <div class="categroy clearFloat">
+        <span v-for="(item, index) of sidebarTabData" @click="switchModule(item.module)" :class="{active: isShowModule == item.module}" :key="index">{{item.title}}</span>
+      </div>
+      <div class="poolBtnBox">
+        <div v-if="isShowModule === 'user-defined'" class="clearFloat">
+          <div class="topBtn floatLeft">
+            <span @click="showAddBox(!isShowAddBox)" class="span">添加</span>
+            <span @click="deleteModules" class="span">删除</span>
+            <span @click="allCheck" class="span">全选</span>
+            <span @click="reverseCheck" class="span">反选</span>
           </div>
-        </div>
-        <div class="content floatLeft clearFloat">
-          <div class="left floatLeft">
-            <EasyScrollbar>
-              <div style="height:518px">
-                <div>
-                  <div>
-                    <ul class="clearFloat">
-                      <!-- searchResultList -->
-                      <li v-for="(item, index) of modulesDataList" :key="index" class="floatLeft marginLeft10 marginTop5">
-                        <span @click="moduleCheck(item)" class="checkIconBox">
-                          <i v-if="item.check" class="iconfont icon-queren"></i>
-                        </span>
-                        <!-- item.title -->
-                        <span @click="moduleCheck(item)" class="moduleName" :title="item.title">{{item.title}}</span>
-                        <span @click="seeModule(item.title)" class="seeModule">查看</span>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
+          <div v-if="isShowAddBox" class="addBox floatLeft">
+            <div class="floatLeft">
+              <div>
+                板块名称： <input @input="inputEvent" v-model="nowAddModuleName" type="text">
               </div>
-            </EasyScrollbar>
+              <div>
+                <span @click="addModuleSubmit" class="span">提交</span>
+                <span @click="showAddBox(false)" class="span">取消</span>
+              </div>
+            </div>
           </div>
-          <div v-if="isShowSeeModule" class="right floatLeft">
-            <div class="top">
-              <span>板块名称：</span>
-              <input v-model="nowUpdateModuleName" @input="inputEvent" type="text" :placeholder="nowSeeModule">
-              <span @click="updateModuleName" class="updateModuleName">更新板块名</span>
-              <span @click="isShowSeeModule = false" class="close">×</span>
-            </div>
-            <div class="bottom">
-              <span @click="emptyModulesInfo">清空</span>
-              <span @click="deleteModulesInfo">删除</span>
-            </div>
-            <div>
+          <div class="content floatLeft clearFloat">
+            <div class="left floatLeft">
               <EasyScrollbar>
-                <div style="height:430px;width:320px">
+                <div style="height:518px">
                   <div>
                     <div>
-                      <table>
-                        <tr>
-                          <th v-for="(item, index) of seeModuleData.th" :key="index">{{item}}</th>
-                        </tr>
-                        <tr v-for="(item, index) of seeModuleData.tr" :key="index">
-                          <td>
-                            <div @click="moduleCheck(item)">
-                              <span class="checkIconBox">
-                                <i v-if="item.check" class="iconfont icon-queren"></i>
-                              </span>
-                              {{item['证券代码']}}
-                            </div>
-                          </td>
-                          <td>{{item['证券名称']}}</td>
-                          <td>{{item['交易市场']}}</td>
-                        </tr>
-                      </table>
+                      <ul class="clearFloat">
+                        <!-- searchResultList -->
+                        <li v-for="(item, index) of modulesDataList" :key="index" class="floatLeft marginLeft10 marginTop5">
+                          <span @click="moduleCheck(item)" class="checkIconBox span">
+                            <i v-if="item.check" class="iconfont icon-queren"></i>
+                          </span>
+                          <!-- item.title -->
+                          <span @click="moduleCheck(item)" class="moduleName span" :title="item.title">{{item.title}}</span>
+                          <span @click="seeModule(item.title)" class="seeModule span">查看</span>
+                        </li>
+                      </ul>
                     </div>
                   </div>
                 </div>
               </EasyScrollbar>
-
             </div>
-          </div>
-        </div>
-      </div>
-      <div v-else-if="isShowModule === 'securitiesImport'" class="securitiesImportBox">
-        <div class="clearFloat">
-          <div class="floatLeft">
-            <pull-down-list :prop="selectImpotModule" @impotModuleEvent='impotModuleEvent'></pull-down-list>
-          </div>
-          <div class="floatLeft marginLeft20">
-            <pull-down-list :prop="importWay" @importWayEvent='importWayEvent'></pull-down-list>
-          </div>
-        </div>
-        <div class="securitiesImport">
-          <div v-if="nowImportWay == '手工输入'" class="clearFloat">
-            <div class="securitiesImportCondition floatLeft">
-              <div class="marginLeft20 marginTop15">
-                <pull-down-list :prop="importWayType" @importWayTypeEvent='importWayTypeEvent'></pull-down-list>
+            <div v-if="isShowSeeModule" class="right floatLeft">
+              <div class="top">
+                <span>板块名称：</span>
+                <input v-model="nowUpdateModuleName" @input="inputEvent" type="text" :placeholder="nowSeeModule">
+                <span @click="updateModuleName" class="updateModuleName span">更新板块名</span>
+                <span @click="isShowSeeModule = false" class="close span">×</span>
               </div>
-              <div class="floatLeft marginLeft20 marginTop15">
-                请在以下框内输入证券列表：
+              <div class="bottom">
+                <span @click="emptyModulesInfo" class="span">清空</span>
+                <span @click="deleteModulesInfo" class="span">删除</span>
               </div>
-              <div class="floatLeft marginLeft20 marginTop15">
-                <textarea :placeholder="placeholderList" v-model="textareaVlaue"></textarea>
-              </div>
-              <div class="floatLeft marginLeft20 marginTop15">
-                <span @click="ManualQueries" class="queryBtn">查询</span>
-              </div>
-            </div>
-            <div class="securitiesImportResult floatLeft">
-              <div class="marginLeft20 marginTop15 marginBottom15">
-                <span @click="addMatch" class="addCode">添加匹配代码</span>
-              </div>
-              <div class="marginTop15" style="height:530px">
+              <div>
                 <EasyScrollbar>
-                  <div style="height:530px">
+                  <div style="height:430px;width:320px">
                     <div>
                       <div>
                         <table>
                           <tr>
-                            <th v-for="(item, index) of securitiesImportResult.th" :key="index">{{item}}</th>
+                            <th v-for="(item, index) of seeModuleData.th" :key="index">{{item}}</th>
                           </tr>
-                          <tr v-for="(item, index) of securitiesImportResult.tr" :key="index">
+                          <tr v-for="(item, index) of seeModuleData.tr" :key="index">
                             <td>
-                              <span v-if="index === 0">匹配列表</span>
-                              <span v-else></span>
+                              <div @click="moduleCheck(item)">
+                                <span class="checkIconBox">
+                                  <i v-if="item.check" class="iconfont icon-queren"></i>
+                                </span>
+                                {{item['证券代码']}}
+                              </div>
                             </td>
-                            <td>{{item.code}}</td>
-                            <td>{{item.name}}</td>
-                          </tr>
-                          <tr v-for="(item, index) of securitiesImportResult.tr2" :key="index">
-                            <td>
-                              <span v-if="index === 0">未匹配列表</span>
-                              <span v-else></span>
-                            </td>
-                            <td>{{item.code}}</td>
-                            <td>{{item.name}}</td>
+                            <td>{{item['证券名称']}}</td>
+                            <td>{{item['交易市场']}}</td>
                           </tr>
                         </table>
-                        <div class="matchcountBottom">
-                          匹配代码列表
-                          <span>{{securitiesImportResult.matchcountNumber}}</span> 条， 未匹配代码列表
-                          <span>{{securitiesImportResult.unmatchlistNumber}}</span> 条
+                      </div>
+                    </div>
+                  </div>
+                </EasyScrollbar>
+
+              </div>
+            </div>
+          </div>
+        </div>
+        <div v-else-if="isShowModule === 'securitiesImport'" class="securitiesImportBox">
+          <div class="clearFloat">
+            <div class="floatLeft">
+              <pull-down-list :prop="selectImpotModule" @impotModuleEvent='impotModuleEvent'></pull-down-list>
+            </div>
+            <div class="floatLeft marginLeft20">
+              <pull-down-list :prop="importWay" @importWayEvent='importWayEvent'></pull-down-list>
+            </div>
+          </div>
+          <div class="securitiesImport">
+            <div v-if="nowImportWay == '手工输入'" class="clearFloat">
+              <div class="securitiesImportCondition floatLeft">
+                <div class="marginLeft20 marginTop15">
+                  <pull-down-list :prop="importWayType" @importWayTypeEvent='importWayTypeEvent'></pull-down-list>
+                </div>
+                <div class="floatLeft marginLeft20 marginTop15">
+                  请在以下框内输入证券列表：
+                </div>
+                <div class="floatLeft marginLeft20 marginTop15">
+                  <textarea :placeholder="placeholderList" v-model="textareaVlaue"></textarea>
+                </div>
+                <div class="floatLeft marginLeft20 marginTop15">
+                  <span @click="ManualQueries" class="queryBtn">查询</span>
+                </div>
+              </div>
+              <div class="securitiesImportResult floatLeft">
+                <div class="marginLeft20 marginTop15 marginBottom15">
+                  <span @click="addMatch" class="addCode">添加匹配代码</span>
+                </div>
+                <div class="marginTop15" style="height:530px">
+                  <EasyScrollbar>
+                    <div style="height:530px">
+                      <div>
+                        <div>
+                          <table>
+                            <tr>
+                              <th v-for="(item, index) of securitiesImportResult.th" :key="index">{{item}}</th>
+                            </tr>
+                            <tr v-for="(item, index) of securitiesImportResult.tr" :key="index">
+                              <td>
+                                <span v-if="index === 0">匹配列表</span>
+                                <span v-else></span>
+                              </td>
+                              <td>{{item.code}}</td>
+                              <td>{{item.name}}</td>
+                            </tr>
+                            <tr v-for="(item, index) of securitiesImportResult.tr2" :key="index">
+                              <td>
+                                <span v-if="index === 0">未匹配列表</span>
+                                <span v-else></span>
+                              </td>
+                              <td>{{item.code}}</td>
+                              <td>{{item.name}}</td>
+                            </tr>
+                          </table>
+                          <div class="matchcountBottom">
+                            匹配代码列表
+                            <span>{{securitiesImportResult.matchcountNumber}}</span> 条， 未匹配代码列表
+                            <span>{{securitiesImportResult.unmatchlistNumber}}</span> 条
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </EasyScrollbar>
+                </div>
+              </div>
+            </div>
+            <div v-else class="multiSelection">
+              <div class="clearFloat">
+                <div class="floatLeft marginLeft20 marginTop15">
+                  <pull-down-list :prop="importWayType" @importWayTypeEvent='importWayTypeEvent'></pull-down-list>
+                </div>
+                <div class="floatLeft marginLeft20 marginTop15">
+                  关键字：<input @input="inputEvent" v-model="keyword" type="text">
+                </div>
+                <div class="searchBtn floatLeft marginLeft20">
+                  <span @click="search">搜索</span>
+                </div>
+                <div class="searchBtn floatLeft marginLeft20">
+                  <span @click="addToModule">添加至板块</span>
+                </div>
+                <div class="searchBtn floatLeft marginLeft20">
+                  <span @click="cancelToModule">取消</span>
+                </div>
+              </div>
+              <div class="searchResulBox">
+                <EasyScrollbar>
+                  <div style="height: 560px">
+                    <div>
+                      <div v-show="isShowsearchResultList">
+                        <div v-if="hasSearchResultList">
+                          <ul class="clearFloat">
+                            <li v-for="(item, index) of searchResultList" :key="index" @click="moduleCheck(item)" :class="{oneLine: oneLine}" class="floatLeft searchResultList">
+                              <span class="checkIconBox">
+                                <i v-if="item.check" class="iconfont icon-queren"></i>
+                              </span>
+                              <span class="marginTop5 marginLeft3">{{item.code}}</span>
+                              <span class="marginTop2 marginLeft3">{{item.name}}</span>
+                            </li>
+                          </ul>
+                          <pagination :prop="paginationData" @paginationSelect="paginationSelect"></pagination>
+                        </div>
+                        <div v-else>
+                          <div class="loadEffect">
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                            <span></span>
+                          </div>
                         </div>
                       </div>
                     </div>
@@ -153,64 +208,9 @@
               </div>
             </div>
           </div>
-          <div v-else class="multiSelection">
-            <div class="clearFloat">
-              <div class="floatLeft marginLeft20 marginTop15">
-                <pull-down-list :prop="importWayType" @importWayTypeEvent='importWayTypeEvent'></pull-down-list>
-              </div>
-              <div class="floatLeft marginLeft20 marginTop15">
-                关键字：<input @input="inputEvent" v-model="keyword" type="text">
-              </div>
-              <div class="searchBtn floatLeft marginLeft20">
-                <span @click="search">搜索</span>
-              </div>
-              <div class="searchBtn floatLeft marginLeft20">
-                <span @click="addToModule">添加至板块</span>
-              </div>
-              <div class="searchBtn floatLeft marginLeft20">
-                <span @click="cancelToModule">取消</span>
-              </div>
-            </div>
-            <div class="searchResulBox">
-              <EasyScrollbar>
-                <div style="height: 560px">
-                  <div>
-                    <div v-show="isShowsearchResultList">
-                      <div v-if="hasSearchResultList">
-                        <ul class="clearFloat">
-                          <li v-for="(item, index) of searchResultList" :key="index" @click="moduleCheck(item)" :class="{oneLine: oneLine}" class="floatLeft searchResultList">
-                            <span class="checkIconBox">
-                              <i v-if="item.check" class="iconfont icon-queren"></i>
-                            </span>
-                            <span class="marginTop5 marginLeft3">{{item.code}}</span>
-                            <span class="marginTop2 marginLeft3">{{item.name}}</span>
-                          </li>
-                        </ul>
-                        <pagination :prop="paginationData" @paginationSelect="paginationSelect"></pagination>
-                      </div>
-                      <div v-else>
-                        <div class="loadEffect">
-                          <span></span>
-                          <span></span>
-                          <span></span>
-                          <span></span>
-                          <span></span>
-                          <span></span>
-                          <span></span>
-                          <span></span>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </EasyScrollbar>
-            </div>
-          </div>
         </div>
       </div>
     </div>
-    <!-- <span @click="closePage" class="closeBtn">×</span> -->
-    <span onclick="window.history.go(-1)" class="closeBtn">×</span>
   </div>
 </template>
 
@@ -799,334 +799,315 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.userSystemPage {
+.addBox {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
-  min-width: 1240px;
-  min-height: 100%;
-  background: linear-gradient(#ffffff, #d7d7d7);
-  z-index: 3;
-  .closeBtn {
-    font-size: 40px;
-    cursor: pointer;
-    font-weight: 500;
-  }
-  .sidebarTab {
-    float: left;
-    width: 200px;
-    margin-top: 100px;
-    text-align: center;
-    line-height: 35px;
-    font-weight: 600;
-    font-size: 16px;
-    color: #fff;
-    p {
-      // background-color: #b50229;
-      background: linear-gradient(#fc0000, #030000);
-      cursor: pointer;
-    }
-    p.active {
-      font-size: 18px;
-    }
-  }
-  .contentBox {
-    float: left;
-    width: 1000px;
-    height: 200px;
+  height: 100%;
+  border: 1px solid #797979;
+  line-height: 25px;
+  z-index: 4;
+  > div {
+    position: fixed;
+    top: 60%;
+    left: 29%;
+    width: 400px;
+    height: 100px;
+    z-index: 5;
     > div {
-      padding-top: 50px;
+      width: 215px;
+      height: 50%;
+      margin: 7px auto;
     }
-    .topBtn {
-      span {
-        margin-left: 35px;
-        border: 1px solid #797979;
-        border-radius: 5px;
-        cursor: pointer;
-        padding: 8px;
-      }
-    }
-    .addBox {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100%;
-      height: 100%;
-      border: 1px solid #797979;
-      line-height: 25px;
-      background-color: rgba(0, 0, 0, 0.1);
-      z-index: 4;
-      > div {
-        position: fixed;
-        top: 25%;
-        left: 25%;
-        width: 400px;
-        height: 100px;
-        z-index: 5;
-        > div {
-          width: 215px;
-          height: 50%;
-          margin: 7px auto;
-        }
-      }
-      input {
-        width: 140px;
-        height: 25px;
-        border: 1px solid #797979;
-      }
-      span {
-        padding: 5px 20px;
-        margin-left: 28px;
-        cursor: pointer;
-        border: 1px solid #797979;
-        border-radius: 5px;
-      }
-    }
+  }
+  input {
+    width: 140px;
+    height: 25px;
+    border: 1px solid #797979;
+  }
+  span {
+    padding: 5px 20px;
+    margin-left: 28px;
+    cursor: pointer;
+    border: 1px solid #797979;
+    border-radius: 5px;
+  }
+}
 
-    .content {
-      width: 990px;
-      height: 520px;
-      margin-top: 20px;
+.securitiesImport {
+  width: 980px;
+  height: 620px;
+  margin-top: 20px;
+  border: 1px solid #797979;
+  .securitiesImportCondition {
+    width: 300px;
+    textarea {
+      width: 248px;
+      height: 460px;
+      resize: none;
+      outline: none;
       border: 1px solid #797979;
-      .left {
-        width: 666px;
-        height: 100%;
-        border-right: 1px solid #797979;
-        li {
-          span {
-            float: left;
-            cursor: pointer;
-          }
-          .checkIconBox {
-            position: relative;
-            width: 10px;
-            height: 10px;
-            margin-top: 8px;
-            border: 1px solid #797979;
-            overflow: hidden;
-            .icon-queren {
-              position: absolute;
-              top: -2px;
-              left: -8px;
-            }
-          }
-          .moduleName {
-            width: 155px;
-            padding: 5px 0;
-            margin-left: 5px;
-            text-align: center;
-            border: 1px solid #797979;
-            overflow: hidden;
-            white-space: nowrap;
-            text-overflow: ellipsis;
-          }
-          .seeModule {
-            margin-left: 2px;
-            padding: 3px;
-            border: 1px solid #797979;
-            border-radius: 5px;
-          }
-        }
+    }
+    .queryBtn {
+      margin-left: 90px;
+      padding: 5px 20px;
+      cursor: pointer;
+      border: 1px solid #797979;
+      border-radius: 5px;
+      background-color: #eaeaea;
+    }
+  }
+  .securitiesImportResult {
+    .addCode {
+      margin-left: 90px;
+      margin-bottom: 15px;
+      padding: 5px 20px;
+      cursor: pointer;
+      border: 1px solid #797979;
+      border-radius: 5px;
+      background-color: #eaeaea;
+    }
+    .matchcountBottom {
+      text-align: center;
+      border: 1px solid #797979;
+      border-top: none;
+    }
+    table {
+      margin-left: 1px;
+      margin-top: 10px;
+      border: 1px solid #797979;
+      border-collapse: collapse;
+      word-wrap: break-word;
+      word-break: break-all;
+      th {
+        height: 40px;
+        width: 106px;
+        line-height: 40px;
+        border: 1px solid #797979;
+        background-color: #f0f5f9;
       }
-      .right {
-        .top {
-          padding-top: 5px;
-          input {
-            width: 120px;
-            height: 25px;
-            border: 1px solid #797979;
-          }
-          span {
-            margin-left: 5px;
-          }
-          .close,
-          .updateModuleName {
-            padding: 5px;
-            cursor: pointer;
-            background-color: #eaeaea;
-            border: 1px solid #797979;
-          }
-        }
-        table {
-          margin-left: 1px;
-          margin-top: 10px;
-          width: 318px;
-          table-layout: fixed;
-          border: 1px solid #797979;
-          border-collapse: collapse;
-          word-wrap: break-word;
-          word-break: break-all;
-          th {
-            height: 40px;
-            width: 106px;
-            line-height: 40px;
-            border: 1px solid #797979;
-            background-color: #f0f5f9;
-          }
-          tr {
-            overflow: hidden;
-            border: 1px solid #797979;
-          }
-          td {
-            width: 106px;
-            text-align: center;
-            vertical-align: middle;
-            border: 1px solid #797979;
-            div {
-              cursor: pointer;
-            }
-            .checkIconBox {
-              position: relative;
-              display: inline-block;
-              width: 10px;
-              height: 10px;
-              margin-top: 8px;
-              border: 1px solid #797979;
-              overflow: hidden;
-              .icon-queren {
-                position: absolute;
-                top: -2px;
-                left: -8px;
-              }
-            }
-          }
-        }
-        .bottom {
-          margin-left: 60px;
-          margin-top: 20px;
-          span {
-            margin-left: 20px;
-            padding: 5px 20px;
-            border: 1px solid #797979;
-            border-radius: 5px;
-            cursor: pointer;
-            background-color: #eaeaea;
-          }
-        }
+      tr {
+        overflow: hidden;
+        border: 1px solid #797979;
+      }
+      td {
+        text-align: center;
+        vertical-align: middle;
+        border: 1px solid #797979;
       }
     }
-    .securitiesImport {
-      width: 980px;
-      height: 620px;
-      margin-top: 20px;
+  }
+  .multiSelection {
+    input {
+      width: 150px;
+      height: 25px;
+      line-height: 25px;
       border: 1px solid #797979;
-      .securitiesImportCondition {
-        width: 300px;
-        textarea {
-          width: 248px;
-          height: 460px;
-          resize: none;
-          outline: none;
-          border: 1px solid #797979;
-        }
-        .queryBtn {
-          margin-left: 90px;
-          padding: 5px 20px;
-          cursor: pointer;
-          border: 1px solid #797979;
-          border-radius: 5px;
-          background-color: #eaeaea;
+    }
+    .searchBtn {
+      margin-top: 17px;
+      span {
+        padding: 3px 25px;
+        cursor: pointer;
+        background-color: #eaeaea;
+        border: 1px solid #797979;
+      }
+    }
+    .searchResulBox {
+      margin-top: 15px;
+      height: 560px;
+      width: 978px;
+      overflow: hidden;
+      .searchResultList.oneLine {
+        width: 960px;
+        > span:nth-child(3) {
+          width: 800px;
         }
       }
-      .securitiesImportResult {
-        .addCode {
-          margin-left: 90px;
-          margin-bottom: 15px;
-          padding: 5px 20px;
-          cursor: pointer;
-          border: 1px solid #797979;
-          border-radius: 5px;
-          background-color: #eaeaea;
+      .searchResultList {
+        width: 242px;
+        height: 36px;
+        cursor: pointer;
+        span {
+          float: left;
         }
-        .matchcountBottom {
-          text-align: center;
-          border: 1px solid #797979;
-          border-top: none;
-        }
-        table {
-          margin-left: 1px;
-          margin-top: 10px;
-          border: 1px solid #797979;
-          border-collapse: collapse;
-          word-wrap: break-word;
-          word-break: break-all;
-          th {
-            height: 40px;
-            width: 106px;
-            line-height: 40px;
-            border: 1px solid #797979;
-            background-color: #f0f5f9;
-          }
-          tr {
-            overflow: hidden;
-            border: 1px solid #797979;
-          }
-          td {
-            text-align: center;
-            vertical-align: middle;
-            border: 1px solid #797979;
-          }
-        }
-      }
-      .multiSelection {
-        input {
-          width: 150px;
-          height: 25px;
-          line-height: 25px;
-          border: 1px solid #797979;
-        }
-        .searchBtn {
-          margin-top: 17px;
-          span {
-            padding: 3px 25px;
-            cursor: pointer;
-            background-color: #eaeaea;
-            border: 1px solid #797979;
-          }
-        }
-        .searchResulBox {
-          margin-top: 15px;
-          height: 560px;
-          width: 978px;
+        > span:nth-child(3) {
+          width: 140px;
           overflow: hidden;
-          .searchResultList.oneLine {
-            width: 960px;
-            > span:nth-child(3) {
-              width: 800px;
-            }
-          }
-          .searchResultList {
-            width: 242px;
-            height: 36px;
-            cursor: pointer;
-            span {
-              float: left;
-            }
-            > span:nth-child(3) {
-              width: 140px;
-              overflow: hidden;
-              text-overflow: ellipsis;
-              white-space: nowrap;
-            }
-            .checkIconBox {
-              position: relative;
-              display: inline-block;
-              width: 10px;
-              height: 10px;
-              margin-top: 8px;
-              border: 1px solid #797979;
-              overflow: hidden;
-              .icon-queren {
-                position: absolute;
-                top: -2px;
-                left: -8px;
-              }
-            }
+          text-overflow: ellipsis;
+          white-space: nowrap;
+        }
+        .checkIconBox {
+          position: relative;
+          display: inline-block;
+          width: 10px;
+          height: 10px;
+          margin-top: 8px;
+          border: 1px solid #797979;
+          overflow: hidden;
+          .icon-queren {
+            position: absolute;
+            top: -2px;
+            left: -8px;
           }
         }
       }
     }
   }
 }
+
+.categroy {
+  span {
+    float: left;
+    width: 140px;
+    height: 40px;
+    cursor: pointer;
+    text-align: center;
+    line-height: 40px;
+    color: #fff;
+    background-color: #d7d7d7;
+  }
+  span.active {
+    // background-color: rgba(0, 114, 255, 0.5);
+    background-color: #b50229;
+    font-size: 17px;
+  }
+}
+.span {
+  cursor: pointer;
+  padding: 6px;
+  margin-left: 20px;
+  border: 1px solid #797979;
+  border-radius: 5px;
+}
+.poolBtnBox {
+  margin-top: 40px;
+}
+
+.content {
+  width: 990px;
+  height: 520px;
+  margin-top: 20px;
+  border: 1px solid #797979;
+  .left {
+    width: 666px;
+    height: 100%;
+    border-right: 1px solid #797979;
+    li {
+      span {
+        float: left;
+        cursor: pointer;
+      }
+      .checkIconBox {
+        position: relative;
+        width: 10px;
+        height: 10px;
+        margin-top: 8px;
+        border: 1px solid #797979;
+        overflow: hidden;
+        .icon-queren {
+          position: absolute;
+          top: -1px;
+          left: -6px;
+        }
+      }
+      .moduleName {
+        width: 155px;
+        padding: 5px 0;
+        margin-left: 5px;
+        text-align: center;
+        border: 1px solid #797979;
+        overflow: hidden;
+        white-space: nowrap;
+        text-overflow: ellipsis;
+      }
+      .seeModule {
+        margin-left: 2px;
+        padding: 3px;
+        border: 1px solid #797979;
+        border-radius: 5px;
+      }
+    }
+  }
+  .right {
+    .top {
+      padding-top: 5px;
+      input {
+        width: 120px;
+        height: 25px;
+        border: 1px solid #797979;
+      }
+      span {
+        margin-left: 5px;
+      }
+      .close,
+      .updateModuleName {
+        padding: 5px;
+        cursor: pointer;
+        background-color: #eaeaea;
+        border: 1px solid #797979;
+      }
+    }
+    table {
+      margin-left: 1px;
+      margin-top: 10px;
+      width: 318px;
+      table-layout: fixed;
+      border: 1px solid #797979;
+      border-collapse: collapse;
+      word-wrap: break-word;
+      word-break: break-all;
+      th {
+        height: 40px;
+        width: 106px;
+        line-height: 40px;
+        border: 1px solid #797979;
+        background-color: #f0f5f9;
+      }
+      tr {
+        overflow: hidden;
+        border: 1px solid #797979;
+      }
+      td {
+        width: 106px;
+        text-align: center;
+        vertical-align: middle;
+        border: 1px solid #797979;
+        div {
+          cursor: pointer;
+        }
+        .checkIconBox {
+          position: relative;
+          display: inline-block;
+          width: 10px;
+          height: 10px;
+          margin-top: 8px;
+          border: 1px solid #797979;
+          overflow: hidden;
+          .icon-queren {
+            position: absolute;
+            top: -2px;
+            left: -8px;
+          }
+        }
+      }
+    }
+    .bottom {
+      margin-left: 60px;
+      margin-top: 20px;
+      span {
+        margin-left: 20px;
+        padding: 5px 20px;
+        border: 1px solid #797979;
+        border-radius: 5px;
+        cursor: pointer;
+        background-color: #eaeaea;
+      }
+    }
+  }
+}
 </style>
+
+
+
