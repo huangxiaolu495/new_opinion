@@ -1,6 +1,6 @@
 <template>
   <div class="blackSwanBox clearFloat">
-    <div v-if="isShow">
+    <!-- <div v-if="isShow">
       <table class="table">
         <tbody>
           <tr>
@@ -17,6 +17,18 @@
           </tr>
         </tbody>
       </table>
+    </div> -->
+    <div class="clearFloat top" v-if="isShow">
+      <div v-for="(item, index) of dataList" :key="index">
+        <div class="left">
+          <div class="blue">{{item.name}}</div>
+          <div>{{item.last_trade}}</div>
+          <div>
+            <span class="red">{{item.change}}</span>
+            <span class="green">{{item.chg}}</span>
+          </div>
+        </div>
+      </div>
     </div>
     <!-- 黑天鹅 -->
     <div class="sidebarBox">
@@ -75,7 +87,7 @@ export default {
           item.name = item.name;
           item.last_trade = item.last_trade;
           item.change = item.change;
-          item.chg = item.chg;
+          item.chg = "(" + item.chg + ")";
         });
       })
         .catch(err => {
@@ -92,6 +104,19 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.left {
+  float: left;
+  width: 145.2px;
+  display: block;
+  padding: 15px 0px 15px 0px;
+}
+.top {
+  width: 1452px;
+  margin-left: 50px;
+}
+.blue {
+  color: blue;
+}
 .red {
   color: red;
 }
@@ -161,7 +186,7 @@ table {
 .content {
   float: left;
   width: 1180px;
-  margin-top: -310px;
+  // margin-top: -310px;
   margin-left: 25px;
 }
 </style>

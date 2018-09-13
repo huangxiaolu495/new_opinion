@@ -1,8 +1,8 @@
 <template>
   <div>
-    <div class="homePageMain clearFloat" >
-      <div v-if="isShow" >
-        <table class="table">
+    <div class="homePageMain clearFloat">
+      <!-- <div v-if="isShow" >
+        <table class="table" v-if="$route.path != '/monitor/homePage/fundDetailtwo'" v-show="$route.path != '/monitor/homePage/fundDetail'">
           <tbody>
             <tr>
               <th class="w8"></th>
@@ -18,6 +18,18 @@
             </tr>
           </tbody>
         </table>
+      </div> -->
+      <div class="clearFloat top" v-if="isShow">
+        <div v-for="(item, index) of dataList" :key="index">
+          <div class="left">
+            <div class="blue">{{item.name}}</div>
+            <div>{{item.last_trade}}</div>
+            <div>
+              <span class="red">{{item.change}}</span>
+              <span class="green">{{item.chg}}</span>
+            </div>
+          </div>
+        </div>
       </div>
       <sidebar :prop="sidebarData"></sidebar>
       <div v-if="routerGoNow" class="homePageChildPage clearFloat">
@@ -39,11 +51,11 @@ export default {
         {          title: '股票', isShowList: false, list: [
             // 新闻预警
             { title: '新闻收藏夹', path: '/monitor/homePage/stock_newsWarning', list: [] },
-            { title: '公告预警', isShowList: false , path: '/monitor/homePage/stock_afficheWarning', list: [
-              {title: '基本公告', path: '/monitor/homePage/stock_Basicannounce'},
-              {title: '自定义板块范围公告' ,path: '/monitor/homePage/stock_Template'},
-              {title: '负面公告', path: '/monitor/homePage/stock_Negative'}
-            ] },
+            {              title: '公告预警', isShowList: false, path: '/monitor/homePage/stock_afficheWarning', list: [
+                { title: '基本公告', path: '/monitor/homePage/stock_Basicannounce' },
+                { title: '自定义板块范围公告', path: '/monitor/homePage/stock_Template' },
+                { title: '负面公告', path: '/monitor/homePage/stock_Negative' }
+              ]            },
             { title: '财务信息预警', path: '/monitor/homePage/stock_financeWarning', list: [] },
             {              title: '股价异动预警', isShowList: false, path: '/monitor/homePage/homeContent', list: [
                 { title: '股价异动数据', path: '/monitor/homePage/stock_sharePriceWarning' },
@@ -60,10 +72,10 @@ export default {
             //     {title: '债券发行人公告', path: '/monitor/homePage/bond_issuerNotice'},
             //     {title: '受托管理人、主承销商发布的公告', wordWrapping: true, path: '/monitor/homePage/bond_manageNotice'}
             // ]},
-           { title: '公告预警', isShowList: false, list: [
-           { title: '基本公告', path: '/monitor/homePage/bond_ratingwarning' },
-           { title: '自定义板块范围公告', path: '/monitor/homePage/bond_template' },
-           ] },
+            {              title: '公告预警', isShowList: false, list: [
+                { title: '基本公告', path: '/monitor/homePage/bond_ratingwarning' },
+                { title: '自定义板块范围公告', path: '/monitor/homePage/bond_template' },
+              ]            },
             {              title: '评级预警', isShowList: false, path: '/monitor/homePage/homeContent', list: [
                 { title: '评级信息', path: '/monitor/homePage/bond_ratingInformation' },
                 { title: '评级变动', path: '/monitor/homePage/bond_ratingChange' }
@@ -142,10 +154,11 @@ export default {
         this.isShow = true;
         this.dataList = JSON.parse(JSON.stringify(response.data.result));
         this.dataList.forEach(item => {
+          // html += '<div class="left"><div class="blue">' + item.name + '</div><div>' + item.last_trade + '</div><div><span class="red">' + item.change + '</span><span class="green">' + item.chg + '</span></div></div>';
           item.name = item.name;
           item.last_trade = item.last_trade;
           item.change = item.change;
-          item.chg = item.chg;
+          item.chg = "(" + item.chg + ")";
         });
       })
         .catch(err => {
@@ -161,6 +174,19 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.left {
+  float: left;
+  width: 145.2px;
+  display: block;
+  padding: 15px 0px 15px 0px;
+}
+.top {
+  width: 1452px;
+  margin-left: 50px;
+}
+.blue {
+  color: blue;
+}
 .red {
   color: red;
 }
@@ -205,7 +231,7 @@ table {
   float: left;
   width: 1180px;
   margin-left: 65px;
-  margin-top: -310px;
+  // margin-top: -310px;
 }
 </style>
 

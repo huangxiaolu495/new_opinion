@@ -150,9 +150,9 @@ export default {
     color: #ffffff;
     text-decoration: none;
   }
-  a.router-link-active {
-    // background-color: #6acdfd;
-  }
+  // a.router-link-active {
+  //   // background-color: #6acdfd;
+  // }
   > div {
     float: left;
     width: 250px;
@@ -165,9 +165,9 @@ export default {
     background-color: #979797;
   }
 
-  .link-homePage {
-    // width: 140px;
-  }
+  // .link-homePage {
+  //   // width: 140px;
+  // }
   .link-blackSwan {
     border-right: 1px solid #797979;
   }
