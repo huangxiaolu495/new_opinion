@@ -92,21 +92,21 @@ export default {
             { title: '其他舆情监控', path: '/monitor/homePage/shareOption_page2', list: [] }
           ]        },
 
-        // {          title: '新三板', isShowList: false, list: [
-        //     {              title: '新闻预警', isShowList: false, path: '/monitor/homePage/NEEQ_NewsMonitoring', list: [
-        //         { title: '新三板持仓股票舆情监控', path: '/monitor/homePage/NEEQ_NewsMonitoring' },
-        //         // {title: '新闻收藏夹', path: '/monitor/homePage/NEEQ_favorite'}
-        //       ]            },
-        //     {              title: '最新动态', isShowList: false, path: '/monitor/homePage/NEEQ_announcement', list: [
-        //         { title: '通知公告', path: '/monitor/homePage/NEEQ_announcement' },
-        //         { title: '股转动态', path: '/monitor/homePage/NEEQ_dynamic' }
-        //       ]            },
-        //     {              title: '监管公开信息', isShowList: false, path: '/monitor/homePage/NEEQ_selfMeasures', list: [
-        //         { title: '自律监管措施', path: '/monitor/homePage/NEEQ_selfMeasures' },
-        //         { title: '纪律处分', path: '/monitor/homePage/NEEQ_punishment' },
-        //         { title: '问询函', path: '/monitor/homePage/NEEQ_inquiryLetter' },
-        //       ]            }
-        //   ]        },
+        {          title: '新三板', isShowList: false, list: [
+            {              title: '新闻预警', isShowList: false, path: '/monitor/homePage/NEEQ_NewsMonitoring', list: [
+                { title: '新三板持仓股票舆情监控', path: '/monitor/homePage/NEEQ_NewsMonitoring' },
+                // {title: '新闻收藏夹', path: '/monitor/homePage/NEEQ_favorite'}
+              ]            },
+            {              title: '最新动态', isShowList: false, path: '/monitor/homePage/NEEQ_announcement', list: [
+                { title: '通知公告', path: '/monitor/homePage/NEEQ_announcement' },
+                { title: '股转动态', path: '/monitor/homePage/NEEQ_dynamic' }
+              ]            },
+            {              title: '监管公开信息', isShowList: false, path: '/monitor/homePage/NEEQ_selfMeasures', list: [
+                { title: '自律监管措施', path: '/monitor/homePage/NEEQ_selfMeasures' },
+                { title: '纪律处分', path: '/monitor/homePage/NEEQ_punishment' },
+                { title: '问询函', path: '/monitor/homePage/NEEQ_inquiryLetter' },
+              ]            }
+          ]        },
 
         {          title: '监管要求', isShowList: false, list: [
             { title: '监管对挂牌公司处罚情况', path: '/monitor/homePage/supervise_page1', list: [] },
