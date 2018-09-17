@@ -155,7 +155,7 @@ export default {
       queryIssuerData: '',
       nowAddListQueryData: [],
       queryAddList: {
-        companytype: 'S',
+        companytype: 'N',
         keyword: '',
       },
       paginationData_list: {
@@ -186,7 +186,7 @@ export default {
     created() {
       const url = 'http://10.25.24.51:10193/api/risk/attention_pool_set';
       const sendData = {
-        userid: 'risk',
+        userid: 'neeq',
         action: 'query'
       }
       this.$_axios.get(url, {
@@ -223,7 +223,7 @@ export default {
     },
     clearList() {
       const sendData = {
-        userid: 'risk',
+        userid: 'neeq',
         action: 'drop'
       }
       this.$_axios.get('http://10.25.24.51:10193/api/risk/attention_pool_set', {
@@ -246,7 +246,7 @@ export default {
       const tempArr = [];
       const indexArr = [];
       const sendData = {
-        userid: 'risk',
+        userid: 'neeq',
         companylist: '',
         action: 'delete'
       }
@@ -331,7 +331,7 @@ export default {
       const tempArr = [];
       const url = 'http://10.25.24.51:10193/api/risk/attention_pool_set'
       const sendData = {
-        userid: 'risk',
+        userid: 'neeq',
         action: 'insert',
         companytype: this.addListSendData.companytype,
         companylist: '',
