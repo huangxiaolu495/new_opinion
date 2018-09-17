@@ -41,6 +41,7 @@ export default {
       this.$refs.loginForm.validate(valid => {
         console.log(valid)
         if (valid) {//验证通过发送请求
+        sessionStorage.setItem('token','11111')
           this.loginHandle()
         }
       })
@@ -50,7 +51,7 @@ export default {
     //   this.$refs[formName].resetFields()
     loginHandle() {
       // alert("用户名或者密码不正确");
-      this.$router.replace({path:'/login'})
+      this.$router.push({path:'/'})
       //重置表单功能
       // this.$refs.loginForm.resetFields()
       //发送请求的方法

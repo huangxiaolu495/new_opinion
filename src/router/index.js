@@ -182,9 +182,9 @@ export default new Router({
       path: '/',
       name: 'opinion',
       component: opinion,
-      meta: {
-        requiresAuth: true
-      }
+      // meta: {
+      //   requiresAuth: true
+      // }
     },
     //用户登录页面
     //meta
