@@ -539,7 +539,7 @@ export default {
 }
 </script>
 
-<style lang="less" scoped>
+<style lang="less" >
 .pullDownListBoxTwo1{
   height: 500px;
   overflow-y: scroll;

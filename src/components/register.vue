@@ -11,7 +11,7 @@
             <el-input type="password" placeholder='请输入再次输入密码' v-model.number="ruleForm2.checkpass2"></el-input>
         </el-form-item>
         <el-form-item>
-            <el-button  size="large" type="primary" @click="submitForm('ruleForm2')">提交</el-button>
+            <el-button  size="large" type="primary" @click="submitForm('ruleForm2')">注册</el-button>
         </el-form-item>
             <span><router-link :to="{path:'/login'}">已有账号？直接登录→</router-link></span>
     </el-form> 

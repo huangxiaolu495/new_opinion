@@ -26,7 +26,7 @@
         <!-- 右侧表单添加内容 -->
         <div class="my_content" v-show="isContent">
             <span class="news_content">相关新闻</span>
-            <button @click="morenews">更多筛选>></button>
+            <span class="more_choose" @click="morenews">更多筛选>></span>
               <div v-show="ismorechoose" class="content_more">
                 <div class="content_more_first">
                   <span>发行人:</span>
@@ -822,7 +822,7 @@ export default {
 
 <style lang="less" scoped>
   table {
-    width: 1400px;
+    width: 1425px;
     margin-top: 20px;
     border: 1px solid #797979;
     border-collapse: collapse;
@@ -885,9 +885,9 @@ export default {
     // background: linear-gradient(#ffffff, #d7d7d7);;
   }
   .poolList{
-    margin-top:15px;
-    // width: 700px;
-    margin-left:26px;
+    margin-top: 15px;
+    margin-left: 240px;
+    width: 1023px;
     .checkBox{
       position: relative;
       cursor: pointer;
@@ -912,6 +912,7 @@ export default {
     }
   }
   .poolBtnBox{
+    margin-left: 1186px;
     span{
       cursor: pointer;
       padding: 6px;
@@ -995,7 +996,7 @@ export default {
 }
 .tab{
   line-height: 50px;
-  margin-left: 352px;
+  margin-left: 470px;
   h4{
     float: left;
     width: 200px;
@@ -1030,7 +1031,7 @@ table {
   tr {
     overflow: hidden;
     border: 1px solid #797979;
-  }
+  } 
   td {
     text-align: center;
     vertical-align: middle;
@@ -1044,13 +1045,14 @@ table {
   }
 }
 .my_content{
-    // background-color:gray;
-    // width: 524px;
-    height: 650px;
     position: absolute;
     top: 180px;
-    right: 60px;
-    // overflow-y: scroll;
+    left:114px;
+
+}
+.more_choose{
+  font-size:15px;
+  cursor: pointer;
 }
 .my_content ul span{
   display:inline-block;

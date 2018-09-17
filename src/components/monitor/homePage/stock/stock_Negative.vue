@@ -3,7 +3,7 @@
     <!-- 股票 公告预警 -->
     <div>
       <div class="queryCondition-top">
-        <div class="queryCondition-title">公告预警</div>
+        <div class="queryCondition-title">负面公告</div>
         <div class="middle clearFloat">
           <!-- 查询条件框 -->
           <div>

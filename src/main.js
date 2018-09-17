@@ -19,18 +19,18 @@ Vue.prototype.$_axios = axios;
 Vue.use(EasyScroll);
 Vue.use(ElementUI);
 
-// router.beforeEach((to, from, next) => {
-//   if(to.path === '/login'){next()}
-//   else{
-//     //指定的需要登录的页面，没有登录信息的页面
-//     if(to.meta.requiresAuth && !sessionStorage.getItem('token')){
-//       next({path:"/login"})
-//     }else{
-//       next()
-//     }
-//   }
+router.beforeEach((to, from, next) => {
+  if(to.path === '/login'){next()}
+  else{
+    //指定的需要登录的页面，没有登录信息的页面
+    if(to.meta.requiresAuth && !sessionStorage.getItem('token')){
+      next({path:"/login"})
+    }else{
+      next()
+    }
+  }
   
-// })
+})
 // /* eslint-disable no-new */
 new Vue({
   el: '#app',
