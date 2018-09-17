@@ -53,7 +53,7 @@
           <pull-down-list :prop="selectList" @selectListEvent='selectListEvent'></pull-down-list>
         </div>
         <div class="width265 left mt88" v-on:mouseleave="isShowDropDownList = false">
-          <input type="text" v-model="selectdetail" v-on:input="inputCode" v-on:click="inputCode" placeholder="请输入" class="input">
+          <input type="text" v-model="selectdetail" v-on:input="inputCode" v-on:click="inputCode" placeholder="请输入" class="input2">
           <span v-if="isShowDropDownList" class="drop-down-box">
             <span v-for="(item, index) of dropDownList" :key="index" @click="dropDownEvent(item)">{{item}}</span>
           </span>
@@ -961,6 +961,11 @@ h2 {
   height: 25px;
   border: 1px solid #797979;
 }
+.input2 {
+  width: 180px;
+  height: 25px;
+  border: 1px solid #797979;
+}
 .ml60 {
   margin-left: 40px;
 }
@@ -998,9 +1003,13 @@ h2 {
   position: absolute;
   top: 24px;
   left: 178px;
-  width: 129px;
+  width: 179px;
   border: 1px solid #797979;
   z-index: 2;
+  height: 300px;
+  overflow-x: hidden;
+  overflow-y: auto;
+  line-height: 24px;
   span {
     display: inline-block;
     width: 100%;
