@@ -53,7 +53,7 @@
           <pull-down-list :prop="selectList" @selectListEvent='selectListEvent'></pull-down-list>
         </div>
         <div class="width265 left mt88" v-on:mouseleave="isShowDropDownList = false">
-          <input type="text" v-model="selectdetail" @input="inputCode" placeholder="请输入" class="input">
+          <input type="text" v-model="selectdetail" v-on:input="inputCode" v-on:click="inputCode" placeholder="请输入" class="input">
           <span v-if="isShowDropDownList" class="drop-down-box">
             <span v-for="(item, index) of dropDownList" :key="index" @click="dropDownEvent(item)">{{item}}</span>
           </span>
@@ -449,7 +449,6 @@ export default {
       const tempArr = [];
       if (this.selecttype == "涉及公司") {
         this.select.forEach(element => {
-          // console.log(element.indexOf(this.queryCondition.selectdetail))
           if (element.indexOf(this.selectdetail) !== -1) {
             tempArr.push(element);
           }
@@ -471,7 +470,7 @@ export default {
           }
         });
       }
-      this.dropDownList = tempArr.slice(0, 5);
+      this.dropDownList = tempArr;
       this.isShowDropDownList = true;
       console.log(this.selectdetail)
     },

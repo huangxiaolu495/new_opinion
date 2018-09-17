@@ -70,7 +70,7 @@ export default {
       isShowQueryResult: false,
       hasResultData: false,
       queryCondition: {
-        userid: 'risk',
+        userid: 'neeq',
         page: 0,
         page_size: 10
       },

@@ -63,6 +63,9 @@
               <span v-if="selectFileName !== '选择文件'" @click="clearFile" class="clearFile">清除文件</span>
               <input type="file" id="fileExport" @change="handleFileChange($event)" ref="inputer">
             </div>
+            <div class="floatLeft marginLeft20">
+              <pull-down-list :prop="selectList" @selectListEvent='selectListEvent'></pull-down-list>
+            </div>
             <div class="enshrineBox">
               <!-- <span><i class="iconfont icon-star"></i> 加入收藏夹</span> -->
               <span class="marginLeft85">
@@ -266,6 +269,9 @@
               <span v-if="selectFileName1 !== '选择文件'" @click="clearFile" class="clearFile">清除文件</span>
               <input type="file" id="fileExport" @change="handleFileChange($event)" ref="inputer2">
             </div>
+            <div class="floatLeft marginLeft20">
+              <pull-down-list :prop="selectList" @selectListEvent='selectListEvent'></pull-down-list>
+            </div>
             <div class="enshrineBox">
               <!-- <span><i class="iconfont icon-star"></i> 加入收藏夹</span> -->
               <span class="marginLeft85">
@@ -463,6 +469,9 @@
               </label>
               <span v-if="selectFileName2 !== '选择文件'" @click="clearFile" class="clearFile">清除文件</span>
               <input type="file" id="fileExport" @change="handleFileChange($event)" ref="inputer3">
+            </div>
+            <div class="floatLeft marginLeft20">
+              <pull-down-list :prop="selectList" @selectListEvent='selectListEvent'></pull-down-list>
             </div>
             <div class="enshrineBox">
               <!-- <span><i class="iconfont icon-star"></i> 加入收藏夹</span> -->
@@ -831,6 +840,7 @@ export default {
   data() {
     const oneDayAfter = new Date().getTime() - 86400000;
     return {
+      querytype: "",
       url: "http://10.25.24.51:10192/api/rest/nlp/risk/query_news",
       updateUrl:
         "http://10.25.24.51:10192/api/rest/nlp/risk/update_news_factor",
@@ -993,6 +1003,20 @@ export default {
         page_Count: 0,
         total_Count: 0,
         current: 1
+      },
+      selectList: {
+        title: '查询方式:',
+        parentEvent: 'selectListEvent',
+        default: '请选择',
+        listWidth: 140,
+        nowSelectWidth: 140,
+        nowSelectHeight: 25,
+        nowSelectFontSize: 13,
+        list: [
+          "请选择",
+          "按关键字查询",
+          "按证券代码查询"
+        ]
       },
       titleData: [
         "新闻时间",
@@ -1368,6 +1392,9 @@ export default {
     datePicker
   },
   methods: {
+    selectListEvent(...data) {
+      this.querytype = data[0];
+    },
     saveItem(s) {
       let m = Object.assign({}, s);
       m.news_id = m.INFOCODE;
@@ -1479,6 +1506,12 @@ export default {
           "Content-Type": "multipart/form-data"
         }
       };
+      if (this.querytype == "按证券代码查询") {
+        this.url = "http://10.25.24.51:10192/api/rest/nlp/risk/query_news_search";
+      }
+      else {
+        this.url = "http://10.25.24.51:10192/api/rest/nlp/risk/query_news";
+      }
       this["sendFile" + this.nowCategroy.toString()] &&
         formData.append("file", this["sendFile" + this.nowCategroy.toString()]);
       this.$_axios
