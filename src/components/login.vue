@@ -31,6 +31,7 @@ export default {
     }
   },
   methods: {
+    //登录
     submitHandle() {
       console.log(this.$refs)
       //清空操作
@@ -48,8 +49,10 @@ export default {
     // resetLoginForm(formName) {
     //   this.$refs[formName].resetFields()
     loginHandle() {
-      alert("用户名或者密码不正确");
-      this.$refs.loginForm.resetFields()
+      // alert("用户名或者密码不正确");
+      this.$router.replace({path:'/login'})
+      //重置表单功能
+      // this.$refs.loginForm.resetFields()
       //发送请求的方法
       // login(this.loginForm).then(res => {
       //   if (res.data.code === 200) {
@@ -58,7 +61,7 @@ export default {
       //       type: 'success',
       //       duration: 2 * 1000
       //     })
-      //     sessionStorage.setItem('token', res.data.data.token)
+      //     sessionStorage.setItem('token', res.data.data.token) 
       //     setTimeout(() => {
       //       this.$router.push('/home')
       //     }, 1000);

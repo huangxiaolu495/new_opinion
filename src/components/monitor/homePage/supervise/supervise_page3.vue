@@ -281,6 +281,12 @@ table {
     width: 50px;
   }
 }
+.queryCondition-top {
+    position: relative;
+    /* width: 100%; */
+    width: 900px;
+    border-bottom: 2px solid #797979;
+}
 .detailsPopUp {
   position: fixed;
   top: 0px;
