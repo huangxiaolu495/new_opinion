@@ -66,6 +66,10 @@
             <div class="floatLeft marginLeft20">
               <pull-down-list :prop="selectList" @selectListEvent='selectListEvent'></pull-down-list>
             </div>
+            <!-- 自定义模块 -->
+            <div class="floatLeft" v-show="isshowmodulesname">
+              <pull-down-list :prop="modulesNameList" @modulesNameEvent='modulesNameEvent'></pull-down-list>
+            </div>
             <div class="enshrineBox">
               <!-- <span><i class="iconfont icon-star"></i> 加入收藏夹</span> -->
               <span class="marginLeft85">
@@ -77,7 +81,7 @@
               </span>
             </div>
           </div>
-          <div @click="query" class="queryBtn">查询</div>
+          <div @click="queryType" class="queryBtn">查询</div>
         </div>
         <!-- 风险类型选择 -->
         <div v-if="isShowTypeList && isShowTypeBox" class="typeBox clearFloat">
@@ -128,6 +132,7 @@
                   <th v-for="(item, index) of titleData" :key="index" width:100px>{{item}}</th>
                 </tr>
                 <tr v-for="(item, index) of dataList" :key="index">
+                  <td>{{item.RELATECODE || ""}}</td>
                   <td>{{item.SHOWTIME}}</td>
                   <td class="tableTd">
                     <a :href="item.URL" target="_bank">{{item.TITLE}}</a>
@@ -272,6 +277,10 @@
             <div class="floatLeft marginLeft20">
               <pull-down-list :prop="selectList" @selectListEvent='selectListEvent'></pull-down-list>
             </div>
+            <!-- 自定义模块 -->
+            <div class="floatLeft" v-show="isshowmodulesname">
+              <pull-down-list :prop="modulesNameList" @modulesNameEvent='modulesNameEvent'></pull-down-list>
+            </div>
             <div class="enshrineBox">
               <!-- <span><i class="iconfont icon-star"></i> 加入收藏夹</span> -->
               <span class="marginLeft85">
@@ -283,7 +292,7 @@
               </span>
             </div>
           </div>
-          <div @click="query" class="queryBtn">查询</div>
+          <div @click="queryType" class="queryBtn">查询</div>
         </div>
         <!-- 风险类型选择 -->
         <div v-if="isShowTypeList1 && isShowTypeBox1" class="typeBox clearFloat">
@@ -334,6 +343,7 @@
                   <th v-for="(item, index) of titleData" :key="index" width:100px>{{item}}</th>
                 </tr>
                 <tr v-for="(item, index) of dataList1" :key="index">
+                  <td>{{item.RELATECODE || ""}}</td>
                   <td>{{item.SHOWTIME}}</td>
                   <td class="tableTd">
                     <a :href="item.URL" target="_bank">{{item.TITLE}}</a>
@@ -473,6 +483,10 @@
             <div class="floatLeft marginLeft20">
               <pull-down-list :prop="selectList" @selectListEvent='selectListEvent'></pull-down-list>
             </div>
+            <!-- 自定义模块 -->
+            <div class="floatLeft" v-show="isshowmodulesname">
+              <pull-down-list :prop="modulesNameList" @modulesNameEvent='modulesNameEvent'></pull-down-list>
+            </div>
             <div class="enshrineBox">
               <!-- <span><i class="iconfont icon-star"></i> 加入收藏夹</span> -->
               <span class="marginLeft85">
@@ -484,7 +498,7 @@
               </span>
             </div>
           </div>
-          <div @click="query" class="queryBtn">查询</div>
+          <div @click="queryType" class="queryBtn">查询</div>
         </div>
         <!-- 风险类型选择 -->
         <div v-if="isShowTypeList2 && isShowTypeBox2" class="typeBox clearFloat">
@@ -535,6 +549,7 @@
                   <th v-for="(item, index) of titleData" :key="index" width:100px>{{item}}</th>
                 </tr>
                 <tr v-for="(item, index) of dataList2" :key="index">
+                  <td>{{item.RELATECODE || ""}}</td>
                   <td>{{item.SHOWTIME}}</td>
                   <td class="tableTd">
                     <a :href="item.URL" target="_bank">{{item.TITLE}}</a>
@@ -748,8 +763,6 @@
                   <th v-for="(item, index) of titleData2" :key="index" class="tableTh" width:100px>{{item}}</th>
                 </tr>
                 <tr v-for="(item, index) of dataList3" :key="index">
-                  <td>{{item.RELATENAME}}</td>
-                  <td>{{item.RELATECODE}}</td>
                   <td>{{item.SHOWTIME}}</td>
                   <td class="tableTd">
                     <a :href="item.URL" target="_bank">{{item.TITLE}}</a>
@@ -840,6 +853,9 @@ export default {
   data() {
     const oneDayAfter = new Date().getTime() - 86400000;
     return {
+      relatecode: "",
+      sector: "",
+      isshowmodulesname: false,
       querytype: "",
       url: "http://10.25.24.51:10192/api/rest/nlp/risk/query_news",
       updateUrl:
@@ -882,12 +898,17 @@ export default {
       conditionStarNumber1: [],
       conditionStarNumber2: [],
       conditionStarNumber3: [],
-      categroyList: ["基金", "债券", "股票", "搜索"],
+      categroyList: ["基金", "债券", "股票"],
       // =F&=&&=&=&=1&=10&=2018-05-17&=2018-05-25&=&=
       sendData: {},
       sendData1: {},
       sendData2: {},
       sendData3: {},
+      queryModules: {
+        userid: 'risk',
+        action: 'query',
+        sector: "",
+      },
       queryCondition: {
         stock_type: "F",
         imp_score: "",
@@ -1015,10 +1036,22 @@ export default {
         list: [
           "请选择",
           "按关键字查询",
-          "按证券代码查询"
+          "按证券代码查询",
+          "按自定义板块查询"
         ]
       },
+      modulesNameList: {
+        title: '板块名：',
+        parentEvent: 'modulesNameEvent',
+        default: '请选择',
+        listWidth: 143,
+        nowSelectWidth: 145,
+        nowSelectHeight: 25,
+        nowSelectFontSize: 13,
+        list: []
+      },
       titleData: [
+        "证券代码",
         "新闻时间",
         "新闻标题",
         "新闻内容",
@@ -1392,8 +1425,47 @@ export default {
     datePicker
   },
   methods: {
+    modulesNameEvent(...data) {
+      this.sector = data[0];
+    },
     selectListEvent(...data) {
       this.querytype = data[0];
+      if (data[0] == "按自定义板块查询") {
+        this.isshowmodulesname = true;
+        this.queryModulesName();
+      }
+      else {
+        this.isshowmodulesname = false;
+        this["queryCondition" + this.nowCategroy.toString()].stock_code = "";
+        this.sector = "";
+      }
+    },
+    queryModulesName() {
+      const url = 'http://10.25.24.51:10189/api/risk/sector_set/query'
+      const sendData = {
+        userid: 'risk'
+      };
+      this.$_axios.get(url, {
+        params: sendData
+      }).then((response) => {
+        if (!response.data) {
+          this.modulesNameList.list = [];
+          this.modulesNameList.default = '没有可选择板块';
+          this.sector = '';
+        } else {
+          if (response.data.code == '0') {
+            console.log(response.data.sectorlist)
+            this.modulesNameList.list = JSON.parse(JSON.stringify(response.data.sectorlist));
+            this.modulesNameList.default = response.data.sectorlist[0];
+            this.sector = response.data.sectorlist[0];
+          } else {
+            this.modulesNameList.list = [];
+            this.modulesNameList.default = '没有可选择板块';
+            this.sector = '';
+          }
+        }
+      }).catch((err) => {
+      });
     },
     saveItem(s) {
       let m = Object.assign({}, s);
@@ -1461,6 +1533,10 @@ export default {
     },
     // 顶部tab切换
     categroyCheck(item, index) {
+      this.isshowmodulesname = false;
+      this.selectList.default = "请选择";
+      this.sector = "";
+      this.querytype = "";
       this.categroyIndex = index;
       this.nowCategroy = index;
       if (!this.categroyIndex) {
@@ -1474,6 +1550,34 @@ export default {
           return;
         }
       });
+    },
+    queryType() {
+      if (this.querytype == "按证券代码查询") {
+        this.url = "http://10.25.24.51:10192/api/rest/nlp/risk/query_news_search";
+        this.query();
+      }
+      else if (this.querytype == "按自定义板块查询") {
+        const url = "http://10.25.24.51:10189/api/risk/sector_set/detail";
+        this.queryModules.sector = this.sector;
+        this.sendData = JSON.parse(JSON.stringify(this.queryModules));
+        this.$_axios.get(url, { params: this.sendData }).then(response => {
+
+          this.url = "http://10.25.24.51:10192/api/rest/nlp/risk/query_news_search";
+          this.dataList = JSON.parse(JSON.stringify(response.data.result.result))
+          let stock_list = "";
+          this.dataList.forEach(item => {
+            stock_list += item.证券代码 + ",";
+            item.RELATECODE = item.RELATECODE;
+          });
+          stock_list = stock_list.slice(0, -1);
+          this["queryCondition" + this.nowCategroy.toString()].stock_code = stock_list;
+          this.query();
+        });
+      }
+      else {
+        this.url = "http://10.25.24.51:10192/api/rest/nlp/risk/query_news";
+        this.query();
+      }
     },
     query() {
       this["isShowQueryResult" + this.nowCategroy.toString()] = true;
@@ -1506,36 +1610,38 @@ export default {
           "Content-Type": "multipart/form-data"
         }
       };
-      if (this.querytype == "按证券代码查询") {
-        this.url = "http://10.25.24.51:10192/api/rest/nlp/risk/query_news_search";
-      }
-      else {
-        this.url = "http://10.25.24.51:10192/api/rest/nlp/risk/query_news";
-      }
       this["sendFile" + this.nowCategroy.toString()] &&
         formData.append("file", this["sendFile" + this.nowCategroy.toString()]);
       this.$_axios
         .post(this.url.toUrl(), formData, config)
         .then(response => {
-          // 显示查询结果
-          this["hasResultData" + this.nowCategroy.toString()] = true;
-          console.log("主页数据", response.data.result);
-          this["resultData" + this.nowCategroy.toString()] =
-            response.data.result.Announce_List;
-          this["resultData" + this.nowCategroy.toString()].forEach(item => {
-            item.CONTENT = item.CONTENT.toString().replace(
-              /\\r\\n\\r\\n/g,
-              "<br>"
+          if (response.data.code == 2) {
+            alert("请导入证券代码");
+            this["isShowQueryResult" + this.nowCategroy.toString()] = false;
+            this["hasResultData" + this.nowCategroy.toString()] = true;
+            return;
+          }
+          else {
+            // 显示查询结果
+            this["hasResultData" + this.nowCategroy.toString()] = true;
+            console.log("主页数据", response.data.result);
+            this["resultData" + this.nowCategroy.toString()] =
+              response.data.result.Announce_List;
+            this["resultData" + this.nowCategroy.toString()].forEach(item => {
+              item.CONTENT = item.CONTENT.toString().replace(
+                /\\r\\n\\r\\n/g,
+                "<br>"
+              );
+              item.CONTENT = item.CONTENT.toString().replace(/\\r\\n/g, "<br>");
+            });
+            this["dataList" + this.nowCategroy.toString()] = JSON.parse(
+              JSON.stringify(this["resultData" + this.nowCategroy.toString()])
             );
-            item.CONTENT = item.CONTENT.toString().replace(/\\r\\n/g, "<br>");
-          });
-          this["dataList" + this.nowCategroy.toString()] = JSON.parse(
-            JSON.stringify(this["resultData" + this.nowCategroy.toString()])
-          );
-          this["paginationData" + this.nowCategroy.toString()].page_Count =
-            response.data.result.Page_Count;
-          this["paginationData" + this.nowCategroy.toString()].total_Count =
-            response.data.result.Total_Count;
+            this["paginationData" + this.nowCategroy.toString()].page_Count =
+              response.data.result.Page_Count;
+            this["paginationData" + this.nowCategroy.toString()].total_Count =
+              response.data.result.Total_Count;
+          }
           this["dataList" + this.nowCategroy.toString()].forEach(item => {
             // item.SHOWTIME = item.SHOWTIME ? commonMethods.formatDateTime(new Date(item.SHOWTIME)) : '-';
             if (item.imp_score) {
@@ -2415,25 +2521,28 @@ export default {
       width: 75px;
     }
     th:nth-child(2) {
-      width: 165px;
+      width: 100px;
     }
     th:nth-child(3) {
-      width: 260px;
+      width: 130px;
     }
     th:nth-child(4) {
-      width: 75px;
+      width: 250px;
     }
     th:nth-child(5) {
-      width: 180px;
+      width: 130px;
     }
     th:nth-child(6) {
-      width: 95px;
+      width: 120px;
     }
     th:nth-child(7) {
       width: 100px;
     }
     th:nth-child(8) {
-      width: 140px;
+      width: 100px;
+    }
+    th:nth-child(9) {
+      width: 100px;
     }
     .tableTh:nth-child(1) {
       width: 75px;
