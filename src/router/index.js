@@ -172,6 +172,7 @@ import sub_concerncompany from '@/components/monitor/subMonitoring/concerncompan
 import test from '@/components/test';
 import login from '@/components/login';
 import register from '@/components/register'
+import platemanage from '@/components/platemanage'
 
 Vue.use(Router)
 
@@ -208,6 +209,12 @@ export default new Router({
         name: 'login',
         component: login
       }]
+    },
+    //自定义测试模块
+    {
+      path: '/platemanage',
+      name:'platemanage',
+      component: platemanage
     },
     {
       path: '/test',

@@ -134,7 +134,7 @@ export default {
           },
           {                                                          
             code:"002001001",
-            content:"招募所明书"
+            content:"招募说明书"
           },             
           {
             code:"002001002",
@@ -314,7 +314,7 @@ export default {
           // ['基金','基金招募及设立' ],
           '全部',
           '基金招募及设立',
-          '招募所明书',
+          '招募说明书',
           '招募说明书更新',
           '发行公告',
           '基金募集期变动公告',
@@ -326,7 +326,7 @@ export default {
           '基金定期报告',
           '年度报告',
           '半年度报告',
-          '季度公告',
+          '季度报告',
           '基金资产净值公告',
           '其他报告',
           '基金当事人公告',
@@ -388,7 +388,7 @@ export default {
       var code = this.listtemp.find(v => {
         return v.content === data;
       })
-      // console.log(code)
+      console.log(code)
       code = code.code; // 公告类型对应的编码
       console.log(code)
       this.queryCondition.notice_type = code;

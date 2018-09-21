@@ -50,7 +50,7 @@ export default {
         return{
             detailContent:true,
             messageLink:false,
-            url:'http://10.25.24.51:10193/api/risk/fund_announce_detail',
+            url:'http://10.25.24.51:10193/api/risk/stock_announce_detail',
             queryCondition:{
                  id:'',
             },

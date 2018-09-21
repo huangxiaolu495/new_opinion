@@ -20,6 +20,7 @@ export default new Vuex.Store({
     startnumber: "",
     //关联公司代码
     company_code_list: "",
+    list:[],
   },
 
 })

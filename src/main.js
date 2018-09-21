@@ -19,19 +19,57 @@ Vue.prototype.$_axios = axios;
 Vue.use(EasyScroll);
 Vue.use(ElementUI);
 
-// router.beforeEach((to, from, next) => {
-//   if(to.path === '/login'){next()}
-//   else{
-//     //指定的需要登录的页面，没有登录信息的页面
-//     if(to.path !=='/login' && !sessionStorage.getItem('token')){
-//       console.log('跳转到登录页')
-//       next({path:"/login"})
-//     }else{
-//       next()
+
+// // 解决401问题
+// axios.interceptors.request.use(
+//   config => { // 这里写死一个token，你需要在这里取到你设置好的token的值
+//     let token = localStorage.getItem('token')
+//     // let hash = localStorage.getItem('hash')
+//     if (token) {
+//       config.headers['Username'] = token
+//       // config.headers['Api-Token-Hash'] = hash
 //     }
+//     return config
+//   },
+//   error => {
+//     return Promise.reject(error)
 //   }
+// )
+// // 拦截401 跳到登陆页
+// axios.interceptors.response.use(
+//   response => {
+//     return response;
+//   },
+//   error => {
+//     if (error.response) {
+//       switch (error.response.status) {
+//         case 401: // 返回 401 清除token信息并跳转到登录页面
+//           // store.commit(types.LOGOUT);
+//           // router.replace({
+//           //   path: '/login',
+//           //   query: {
+//           //     redirect: router.currentRoute.fullPath
+//           //   }
+//           // })
+//       }
+//     }
+//     // return Promise.reject(error.response.data) // 返回接口返回的错误信息
+//   })
+
+
+router.beforeEach((to, from, next) => {
+  if(to.path === '/login'){next()}
+  else{
+    //指定的需要登录的页面，没有登录信息的页面
+    if(to.path !=='/login' && !sessionStorage.getItem('token')){
+      console.log('跳转到登录页')
+      next()
+    }else{
+      next()
+    }
+  }
   
-// })
+})
 // /* eslint-disable no-new */
 new Vue({
   el: '#app',
