@@ -42,12 +42,14 @@
               </tr>
               <tr v-for="(item, index) of dataList" :key="index">
                 <td>{{item.SECURITYCODE}}</td>
-                <td>{{item.NOTICETITLE}}</td>
+                <td>
+                  <a :href="item.SOURCEURL" target="_bank">{{item.NOTICETITLE}}</a>
+                </td>
                 <td>{{item.NOTICEDATE}}</td>
-                <td class="data-content">
+                <!-- <td class="data-content">
                   {{item.INFOBODYCONTENT}}
                   <span @click="details(item, index)"> {{item.details}}</span>
-                </td>
+                </td> -->
                 <td>{{item.SOURCENAME }}</td>
               </tr>
             </tbody>
@@ -110,7 +112,7 @@ export default {
         total_Count: 0,
         current: 1
       },
-      titleData: ['证券代码', '公告标题', '公告日期', '公告内容', '来源'],
+      titleData: ['证券代码', '公告标题', '公告日期', '来源'],
       dataList: [],
       file: '',
       sendFile: '',
@@ -339,19 +341,16 @@ export default {
       }
     }
     .tableTh:nth-child(1) {
-      width: 100x;
+      width: 80x;
     }
     .tableTh:nth-child(2) {
-      width: 240px;
+      width: 450px;
     }
     .tableTh:nth-child(3) {
       width: 150px;
     }
     .tableTh:nth-child(4) {
       width: 350px;
-    }
-    .tableTh:nth-child(5) {
-      width: 200px;
     }
   }
 }
