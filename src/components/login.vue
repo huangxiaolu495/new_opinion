@@ -83,6 +83,11 @@ export default {
           // localStorage.setItem('hash',1)
           this.$router.push({path:'/platemanage'})
         }
+        if(response.data.re_code == 4103){
+          alert(response.data.msg)
+          //提示用户名和密码错误之后，再进行重置
+          this.$refs.Body.resetFields()
+        }
       })
       // this.$router.push({path:'/platemanage'})
       //重置表单功能
