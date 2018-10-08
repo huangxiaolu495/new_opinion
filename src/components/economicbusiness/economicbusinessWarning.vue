@@ -111,6 +111,9 @@ export default {
     datePicker,
     pagination
   },
+  created() {
+    this.query();
+  },
   methods: {
     details(item, index) {
       if (item.details == '收起') {
@@ -193,6 +196,10 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.parentBox {
+  margin-left: 157px;
+}
+
 .app {
   // height: 800px;
   overflow-x: hidden;
@@ -266,17 +273,18 @@ h1 {
   line-height: 30px;
   text-align: center;
   cursor: pointer;
-  border: 1px solid #797979;
-  background-color: #fff;
+  border: 1px solid #b50229;
+  background-color: #b50229;
   border-radius: 5px;
   margin-top: -3px;
+  color: white;
 }
 .mt10 {
   margin-top: 10px !important;
 }
 .queryResult {
   table {
-    width: 1180px;
+    width: 1280px;
     margin-top: 30px;
     margin-left: 160px;
     border: 1px solid #797979;
@@ -314,10 +322,10 @@ h1 {
       width: 200px;
     }
     .tableTh:nth-child(2) {
-      width: 250px;
+      width: 450px;
     }
     .tableTh:nth-child(3) {
-      width: 400px;
+      width: 500px;
     }
     .tableTh:nth-child(4) {
       width: 200px;

@@ -337,6 +337,9 @@ export default {
     datePicker,
     pagination
   },
+  created() {
+    this.query();
+  },
   methods: {
     handleFileChange(event) {
       this.file = event.target.files[0];
@@ -857,6 +860,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.parentBox {
+  margin-left: 157px;
+}
 body {
   font-size: 14px;
   font-family: "Arial";
@@ -865,11 +871,14 @@ body {
 
 .execl {
   width: 100px;
-  height: 26px;
+  height: 30px;
+  margin-top: -3px;
   margin-left: 695px;
-  border: 1px solid #797979;
-  background-color: #fff;
-  line-height: 26px;
+  border: 1px solid #b50229;
+  background-color: #b50229;
+  border-radius: 5px;
+  color: white;
+  line-height: 30px;
   cursor: pointer;
   .execlText {
     margin-left: -50px;
@@ -975,10 +984,11 @@ h2 {
   line-height: 30px;
   text-align: center;
   cursor: pointer;
-  border: 1px solid #797979;
-  background-color: #fff;
+  border: 1px solid #b50229;
+  background-color: #b50229;
   border-radius: 5px;
   margin-top: -3px;
+  color: white;
 }
 .width265 {
   width: 265px !important;
@@ -1027,7 +1037,7 @@ h2 {
 
 .queryResult {
   table {
-    width: 1180px;
+    width: 1320px;
     margin-top: 30px;
     margin-left: 160px;
     border: 1px solid #797979;
@@ -1062,22 +1072,22 @@ h2 {
       }
     }
     .tableTh:nth-child(1) {
-      width: 180px;
-    }
-    .tableTh:nth-child(2) {
       width: 200px;
     }
+    .tableTh:nth-child(2) {
+      width: 350px;
+    }
     .tableTh:nth-child(3) {
-      width: 400px;
+      width: 550px;
     }
     .tableTh:nth-child(4) {
       width: 150px;
     }
     .tableTh:nth-child(5) {
-      width: 150px;
+      width: 200px;
     }
     .tableTh:nth-child(6) {
-      width: 150px;
+      width: 200px;
     }
   }
   .select-panel {
