@@ -473,6 +473,9 @@ export default {
             this.nowUpdateModuleName = '';
             this.moduleInit();
           }
+          else if (response.data.code == '1') {
+            alert('更新板块名失败')
+          }
         }).catch((err) => {
 
         });
@@ -497,6 +500,9 @@ export default {
           this.moduleInit();
           this.seeModule(this.nowSeeModule);
           this.isShowSeeModule = false;
+        }
+        else if (response.data.code == '1') {
+          alert('清空失败')
         }
       }).catch((err) => {
 
@@ -528,6 +534,9 @@ export default {
         if (response.data.code == '0') {
           alert('删除成功')
           this.seeModule(this.nowSeeModule);
+        }
+        else if (response.data.code == '1') {
+          alert('删除失败')
         }
       }).catch((err) => {
 

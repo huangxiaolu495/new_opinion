@@ -1037,7 +1037,11 @@ h2 {
 
 .queryResult {
   table {
+<<<<<<< HEAD
    width: 1320px;
+=======
+    width: 1320px;
+>>>>>>> static/event/res/js/page/fx.credit.js
     margin-top: 30px;
     margin-left: 160px;
     border: 1px solid #797979;

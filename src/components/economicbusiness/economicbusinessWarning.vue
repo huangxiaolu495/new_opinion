@@ -199,6 +199,10 @@ export default {
 .parentBox {
   margin-left: 157px;
 }
+<<<<<<< HEAD
+=======
+
+>>>>>>> static/event/res/js/page/fx.credit.js
 .app {
   // height: 800px;
   overflow-x: hidden;

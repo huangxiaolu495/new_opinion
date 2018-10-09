@@ -2,6 +2,7 @@
   .mp-chart-panel>.mp-chart-left {
     width: 100%;
   }
+
   .mp-chart-panel>.mp-chart-right {
     width: 100%;
   }
@@ -257,9 +258,11 @@
   .m-2 {
     width: 49%;
   }
+
   .m-3 {
     width: 49%;
   }
+
   .m-4 {
     width: 49%;
   }
@@ -269,9 +272,11 @@
   .m-2 {
     width: 99%;
   }
+
   .m-3 {
     width: 99%;
   }
+
   .m-4 {
     width: 99%;
   }

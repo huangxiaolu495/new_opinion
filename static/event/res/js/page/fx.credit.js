@@ -13,31 +13,118 @@ window.onload = (function (M) {
     node: {},
     page: null,
     pageNum: 1,
+    risk_type: [
+      {
+        content:"可能暂停上市"
+      },
+      {
+        content:"可能退市风险警示"
+      },
+      {
+        content:"可能其他风险警示"
+      },
+      {
+        content:"股份被冻结"
+      },
+      {
+        index: 4,
+        content:"公司被立案调查"
+      },
+      {
+        content:"要约收购"
+      },
+      {
+        content:"终止重大资产重组"
+      },
+      {
+        content:"被暂停上市"
+      },
+      {
+        content:"被实施退市风险警示"
+      },
+      {
+        content:"终止上市"
+      },
+      {
+        content:"终止重大事项"
+      },
+      {
+        content:"被实施其他风险警示"
+      },
+      {
+        content:"异常波动"
+      },
+      {
+        content:"上市首日风险"
+      },
+      {
+        content:"摘牌"
+      },
+      {
+        content:"退市整理期"
+      },
+      {
+        content:"吸收合并"
+      },
+      {
+        content:"可能不定期份额折算"
+      },
+      {
+        content:"可转债提前赎回"
+      },
+      {
+        content:"公司银行账户被冻结"
+      },
+      {
+        content:"债券提前兑付"
+      },
+      {
+        content:"业绩预亏"
+      },
+      {
+        content:"被处罚"
+      },
+      {
+        content:"公司关联方被立案调查"
+      },
+      {
+        content:"实施不定期份额折算"
+      },
+      {
+        content:"诉讼仲裁"
+      },
+      {
+        content:"减持"
+      },
+    ],
     risk_type_data: [
       "可能暂停上市",
-      "被暂停上市",
-      "被实施退市风险警示",
-      "被实施其他风险警示",
-      "可能退市风险警示",
-      "可能其他风险警示",
-      "股份被冻结",
-      "公司银行账户被冻结",
-      "公司被立案调查",
-      "公司关联方被立案调查",
-      "要约收购",
-      "终止上市",
-      "终止重大事项",
-      "异常波动",
-      "上市首日风险",
-      "摘牌",
-      "退市整理期",
-      "可能不定期份额折算",
-      "实施不定期份额折算",
-      "可转债提前赎回",
-      "债券提前兑付",
-      "业绩预亏",
-      "诉讼仲裁",
-      "被处罚",
+        "可能退市风险警示",
+        "可能其他风险警示",
+        "股份被冻结",
+        "公司被立案调查",
+        "要约收购",
+        "终止重大资产重组",
+        "被暂停上市",
+        "被实施退市风险警示",
+        "终止上市",
+        "终止重大事项",
+        "被实施其他风险警示",
+        "异常波动",
+        "上市首日风险",
+        "摘牌",
+        "退市整理期",
+        "吸收合并",
+        "可能不定期份额折算",
+        "可转债提前赎回",
+        "公司银行账户被冻结",
+        "债券提前兑付",
+        "业绩预亏",
+        "被处罚"
+        ,"公司关联方被立案调查",
+        "实施不定期份额折算",
+        "诉讼仲裁",
+        "减持"
     ],
     dataPublic: [{
         index: 0,
@@ -743,7 +830,7 @@ window.onload = (function (M) {
           $(this).toggleClass('addC');
         }
       });
-      
+
       //确定按钮
       $risk.on('click', 'li.yes', function () {
         let parent = $(this).parent().parent().parent();
@@ -829,18 +916,7 @@ window.onload = (function (M) {
         that.custid = '';
         //资产名称
         that.pageNum = 1;
-        // var $Stock_Info = M('#Stock_Info').val() || "";
         var $Stock_Info_text = M('#Stock_Info').val() || "";
-        // var temp="";
-        // if($Stock_Info=="" || $Stock_Info.length<6){
-        //   temp=$Stock_Info_text;
-        // }else{
-        //   temp=$Stock_Info;
-        // }
-        // if(temp!="" && temp.length>6)
-        // {
-        //   temp=temp.split(' ')[0];
-        // }
         var opt = {
           export: 0,
           // stock_info : $Stock_Info.val().lastIndexOf(' ') == -1 ? $Stock_Info.val().slice(0): $Stock_Info.val().slice($Stock_Info.val().lastIndexOf(' ')+1),
@@ -872,8 +948,8 @@ window.onload = (function (M) {
       var $market_Code = M('#market_Code');
       //公告类型
       var $public_Code = M('#public_Code');
-            //风险类型
-            var $Risk_Type = M('#Risk_Type');
+      //风险类型
+      var $risk_Type = M('#Risk_Type');
       // 页面中资产类型输入框获得信息
       var $risk_type_data = M('.assets_code_data');
       $assets_Code.focus(function (e) {
@@ -913,21 +989,10 @@ window.onload = (function (M) {
             codelist.push(newel);
           }
         });
-        //   $(".stock_code").bSelectPage({
-        //     showField : 'content',
-        //     keyField : 'index',
-        //     data : codelist,
-        //     formatItem : function(data){
-        //     return  data.content;
-        //   }
-        // });
       });
-
-
       $assets_Code.blur(function () {
         $risk_type_data.fadeOut()
       });
-
       //公告来源输入框获得信息
       var $announcement_code_data = M('.announcement_code_data');
       $announcement_Code.focus(function (e) {
@@ -954,7 +1019,6 @@ window.onload = (function (M) {
       $announcement_Code.blur(function () {
         $announcement_code_data.fadeOut()
       });
-
       //市场类型输入框获得信息
       var $market_code_data = M('.market_code_data');
       $market_Code.focus(function (e) {
@@ -982,25 +1046,6 @@ window.onload = (function (M) {
         $market_code_data.fadeOut()
       });
 
-      //公告类型输入框获得信息
-      // var $public = M('.report_public');
-      // $public.mousemove(function(e){
-      //     var par = {
-      //         notice_type : 1,
-      //         stock_type : $assets_Code.val() || '',
-      //         market_type : $market_Code.val() || '',
-      //         notice_source : $announcement_Code.val() || ''
-      //     };
-      //     var count =0;
-      //     if(count == 0){
-      // 	that.resolve(M.path + 'api/rest/nlp/Credit_Announce/query_notice_factor' , par , function(data){
-      // 		var result = data.result.factor_list;
-      // 		for(var i= 0 ; i <result.length ; i++){
-      // 			var newel = {index:i,content:result[i]};
-      // 			that.dataPublic.push(newel);
-      // 		}
-      // 		count = 1;
-      // 		console.log(that.dataPublic);
       $public_Code.bSelectPage({
         showField: 'content',
         keyField: 'index',
@@ -1009,9 +1054,13 @@ window.onload = (function (M) {
           return data.content;
         }
       });
-
-      // 	}, undefined, 'get');
-      //     }
+      // $risk_Type.bSelectPage({
+      //   showField: 'content',
+      //   keyField: 'content',
+      //   data: that.risk_type,
+      //   formatItem: function (data) {
+      //     return data.content;
+      //   }
       // });
 
     },
@@ -1040,27 +1089,26 @@ window.onload = (function (M) {
         var d = data.result.Announce_List;
         list = data.result.Announce_List;
         var str = '';
-        var url='';
+        var url = '';
         for (var i = 0, len = d.length; i < len; i++) {
           d[i].notice_date = M.format(new Date(d[i].notice_date), 'yyyy-MM-dd hh:ss:mm');
-          if(d[i].file_url){
-            url=d[i].file_url;
-          }
-          else{
-            url="javascript:void(0)";
+          if (d[i].file_url) {
+            url = d[i].file_url;
+          } else {
+            url = "javascript:void(0)";
           }
           str += M.template.resolve('<tr>\
 									<td>{{notice_date}}</td>\
 									<td>{{Stock_Code}} {{Stock_Name}}</td>\
-                  <td class="y-td titleclick"><a href='+url+' target="_blank">{{notice_title}}</a>\
+                  <td class="y-td titleclick"><a href=' + url + ' target="_blank">{{notice_title}}</a>\
                   <div class="detail" style="display:none">{{notice_detail}}</div>\
 									</td>\
 									<td>{{notice_type}}</td>\
 									<td class="risk_parent">\
 									    <p class="risk_p">{{Risk_Type}}</p>\
 										<div class="modify">\
-											<span style="display: none" class="id">{{notice_id}}</span>\
-											<p class="modify_p">修改</p>\
+                      <span style="display: none" class="id">{{notice_id}}</span>\
+                      <p class="modify_p">修改</p>\
 											<span class="createSpan">修改</span>\
 											<ul class="modify_ul"></ul>\
 										</div>\
@@ -1080,24 +1128,11 @@ window.onload = (function (M) {
                   <span class="createSpan">统计结果</span>\
                 </div>\
               </td>\
-								</tr>', d[i]);
+                </tr>', d[i]);
+               
         }
         M('#detailData')[0].innerHTML = str;
         M.ellipsisToggle();
-        // $(".titleclick").click(function () {
-        //   var html=$(this).find(".detail").text() + '';
-        //   html=html.replace("","");
-        //   // if(html == "" || html=="") return;
-        //   if(html.length<10) return;
-
-        //   $(".alerttext").html(html);
-        //     $(".alert").show();
-        //     $(".cover").show();
-        // });
-        // $(".cover").click(function () {
-        //   $(".cover").hide();
-        //   $(".alert").hide();
-        // })
         M('[data-href]').click(function () {
           var el = this;
           var beginTime = M('#month_start').val();
@@ -1111,7 +1146,7 @@ window.onload = (function (M) {
           var notice_source = $(this).find(".notice_source").html();
           window.location.href = "/static/event/creditinfo.html?Stock_Code=" + code + "&Risk_Type=" + risktype + "&Stock_Type=" + stocktype + "&Stock_Name=" + stockname + "&notice_source=" + notice_source;
         });
-
+       
         //页面中修改的操作
         var $modify = M('.modify');
         for (var i = 0, len = $modify.length; i < len; i++) {
@@ -1282,7 +1317,7 @@ window.onload = (function (M) {
             error: '请求失败',
             timeout: '请求超时',
             parsererror: '数据格式错误'
-          }[status], this);
+          } [status], this);
         }
       });
     },
@@ -1304,7 +1339,7 @@ window.onload = (function (M) {
             error: '请求失败',
             timeout: '请求超时',
             parsererror: '数据格式错误'
-          }[status], this);
+          } [status], this);
         }
       });
     },
