@@ -8,7 +8,7 @@
       </router-link>
     </div>
     <div class="div">
-      <div class="clearfix mt40">
+      <div class="clearfix">
         <div class="left">
           <date-picker :prop="startDatePicker" @startDateEvent="startDateEvent"></date-picker>
         </div>
@@ -18,7 +18,7 @@
         <div class="left ml60">
           关键字：<input type="text" placeholder="请输入" class="input" v-model="inputtext">
         </div>
-        <div class="left">
+        <div class="left wi80">
           <div @click="query" class="queryBtn">查询</div>
         </div>
       </div>
@@ -196,8 +196,12 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.wi80 {
+  width: 80px !important;
+}
 .parentBox {
-  margin-left: 157px;
+  width: 510px;
+  margin: 0 auto;
 }
 .app {
   // height: 800px;
@@ -237,13 +241,12 @@ h1 {
   color: red;
 }
 .clearfix {
-  width: 100%;
-  display: inline-block;
-  margin-left: 200px;
+  width: 628px;
+  margin: 20px auto 20px;
 }
-.mt40 {
-  margin-top: 40px;
-}
+// .mt40 {
+//   margin-top: 40px;
+// }
 .clearfix:after {
   content: ".";
   display: block;
@@ -284,8 +287,9 @@ h1 {
 .queryResult {
   table {
     width: 1280px;
-    margin-top: 30px;
-    margin-left: 160px;
+    // margin-top: 30px;
+    // margin-left: 160px;
+    margin: 30px auto 0;
     border: 1px solid #797979;
     border-collapse: collapse;
     word-wrap: break-word;

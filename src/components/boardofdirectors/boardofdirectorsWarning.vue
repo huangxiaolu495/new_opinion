@@ -22,12 +22,15 @@
         <div class="left ml60">
           分类：<input type="text" placeholder="请输入" class="input" v-model="flKeyword" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')">
         </div>
-        <div class="left">
+        <div class="left wi80">
           <div @click="query" class="queryBtn">查询</div>
         </div>
         <div class="execl">
-          <span @click="exportExecl()" class="execlText">导出csv</span>
-          <span></span>
+          <div @click="exportExecl()" class="execlText">导出csv</div>
+          <!-- <span></span> -->
+        </div>
+        <div class="left mt130">
+          <div @click="hightselect" class="queryBtn">高级搜索</div>
         </div>
       </div>
       <div class="clearfix mt10">
@@ -44,9 +47,9 @@
           <span v-if="selectFileName !== '选择文件'" @click="clearFile" class="clearFile">清除文件</span>
           <input type="file" id="fileExport" @change="handleFileChange($event)" ref="inputer">
         </div>
-        <div class="left mt130">
+        <!-- <div class="left mt130">
           <div @click="hightselect" class="queryBtn">高级搜索</div>
-        </div>
+        </div> -->
       </div>
       <div class="clearfix select" style="display:none" v-show="show">
         <div class="width265 left">
@@ -81,7 +84,7 @@
               <td id="risk_type">{{item.risk_type}}</td>
               <td class="data-content">
                 <input type="text" placeholder="请输入" class="input mtt2" v-model="item.signtag" onkeyup="this.value=this.value.replace(/^ +| +$/g,'')">
-                <div @click="tagbtn(item,index)" class="queryBtn mtt">确定</div>
+                <div @click="tagbtn(item,index)" class="queryBtn2 mtt">确定</div>
               </td>
               <td class="data-center">
                 <span @click="collection(item,index)">{{item.is_favorite}}</span>
@@ -860,8 +863,12 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.wi80 {
+  width: 80px !important;
+}
 .parentBox {
-  margin-left: 157px;
+  width: 510px;
+  margin: 0 auto;
 }
 body {
   font-size: 14px;
@@ -870,18 +877,21 @@ body {
 }
 
 .execl {
-  width: 100px;
-  height: 30px;
-  margin-top: -3px;
-  margin-left: 695px;
-  border: 1px solid #b50229;
-  background-color: #b50229;
-  border-radius: 5px;
-  color: white;
-  line-height: 30px;
-  cursor: pointer;
+  width: 500px;
+  position: absolute;
+  top: 0;
   .execlText {
-    margin-left: -50px;
+    text-align: center;
+    width: 80px;
+    height: 30px;
+    margin-top: -3px;
+    margin-left: 650px;
+    border: 1px solid #b50229;
+    background-color: #b50229;
+    border-radius: 5px;
+    color: white;
+    line-height: 30px;
+    cursor: pointer;
   }
 }
 
@@ -944,13 +954,12 @@ h2 {
   color: red;
 }
 .clearfix {
-  width: 100%;
-  display: inline-block;
-  margin-left: 160px;
+  width: 850px;
+  margin: 20px auto 20px;
 }
-.mt40 {
-  margin-top: 40px;
-}
+// .mt40 {
+//   margin-top: 40px;
+// }
 .clearfix:after {
   content: ".";
   display: block;
@@ -990,8 +999,20 @@ h2 {
   margin-top: -3px;
   color: white;
 }
+
+.queryBtn2 {
+  width: 75px;
+  height: 30px;
+  line-height: 30px;
+  text-align: center;
+  cursor: pointer;
+  border: 1px solid #797979;
+  background-color: #fff;
+  border-radius: 5px;
+  margin-top: -3px;
+}
 .width265 {
-  width: 265px !important;
+  width: 180px !important;
   float: left;
   display: block;
 }
@@ -1000,13 +1021,14 @@ h2 {
 }
 
 .select {
+  width: 363px !important;
   position: absolute;
-  top: 95px;
-  left: 520px;
+  top: 26px;
+  left: 720px;
 }
-.mt88 {
-  margin-left: -88px;
-}
+// .mt88 {
+//   margin-left: -88px;
+// }
 
 .drop-down-box {
   background-color: #fff;
@@ -1038,8 +1060,9 @@ h2 {
 .queryResult {
   table {
     width: 1320px;
-    margin-top: 30px;
-    margin-left: 160px;
+    // margin-top: 30px;
+    // margin-left: 160px;
+    margin: 30px auto 0;
     border: 1px solid #797979;
     border-collapse: collapse;
     word-wrap: break-word;
@@ -1203,7 +1226,8 @@ h2 {
 }
 
 .mt130 {
-  margin-left: 90px;
+  margin-left: 125px;
+  width: 80px;
 }
 </style>
 

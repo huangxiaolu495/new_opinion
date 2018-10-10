@@ -352,6 +352,7 @@ export default {
 .queryResult {
   table {
     width: 100%;
+    margin-top: 20px;
     border-collapse: collapse;
     border-top: 2px solid #a9a9a9;
     background: #ffffff;
@@ -387,11 +388,17 @@ export default {
     .title:nth-child(1) {
       width: 130px;
     }
+    .title:nth-child(2) {
+      width: 450px;
+    }
     .title:nth-child(3) {
-      width: 240px;
+      width: 220px;
     }
     .title:nth-child(4) {
       width: 240px;
+    }
+    .title:nth-child(5) {
+      width: 140px;
     }
   }
 }

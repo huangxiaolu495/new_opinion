@@ -350,6 +350,9 @@ export default {
   }
 }
 .queryResult {
+  margin-top: 20px;
+}
+.queryResult {
   table {
     width: 100%;
     border-collapse: collapse;

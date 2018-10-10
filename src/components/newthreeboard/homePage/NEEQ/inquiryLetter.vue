@@ -286,6 +286,7 @@ export default {
 <style scoped>
 .queryResult table {
   width: 100%;
+  margin-top: 20px;
   border-collapse: collapse;
   border-top: 2px solid #a9a9a9;
   background: #ffffff;
