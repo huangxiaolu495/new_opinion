@@ -122,7 +122,7 @@ export default {
     // font-style: oblique;
     margin-top: 20px;
     margin-left: 50px;
-    padding-left: 10px;
+    // padding-left: 10px;
     color: #000000;
     span {
       color: #ff6633;

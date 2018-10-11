@@ -2,10 +2,19 @@
   <div>
     <div class="hag">
       <router-link to="/">
-        <h1>中泰风险
-          <span class="war_c">预警</span>系统
-        </h1>
+        <!-- <h1>中泰
+          <span class="mmt8">风险
+            <span class="war_c">预警</span>系统
+          </span>
+        </h1> -->
+        <div class="di-header">
+          <a href="/" class="tj-logo-wrapper">
+            <img src="/../static/event/img/logo.png">
+          </a>
+        </div>
       </router-link>
+      <div class="name">中泰证券舆情分析系统:董事会信息分析</div>
+
       <h2 @click="usercollection('item, index')">
         个人收藏夹
         <span class="iconfont icon-star"></span>
@@ -879,12 +888,12 @@ body {
 .execl {
   width: 500px;
   position: absolute;
-  top: 0;
+  top: -3px;
   .execlText {
     text-align: center;
     width: 80px;
     height: 30px;
-    margin-top: -3px;
+    // margin-top: 64px;
     margin-left: 650px;
     border: 1px solid #b50229;
     background-color: #b50229;
@@ -896,19 +905,21 @@ body {
 }
 
 h1 {
-  display: block;
   width: 243px;
   height: 49px;
-  font-size: 28px;
+  font-size: 0;
+  // font-size: 28px;
   line-height: 49px;
   // font-style: oblique;
   margin-top: 20px;
-  margin-left: 150px;
-  padding-left: 10px;
+  margin-left: 20px;
+  // padding-left: 10px;
   color: #000000;
   // background-color: #99FFFF;
   span {
     color: #ff6633;
+    font-size: 28px;
+    display: block;
   }
 }
 
@@ -955,7 +966,7 @@ h2 {
 }
 .clearfix {
   width: 850px;
-  margin: 20px auto 20px;
+  margin: 30px auto 20px;
 }
 // .mt40 {
 //   margin-top: 40px;
@@ -1023,7 +1034,7 @@ h2 {
 .select {
   width: 363px !important;
   position: absolute;
-  top: 26px;
+  top: 78px;
   left: 720px;
 }
 // .mt88 {
@@ -1058,8 +1069,9 @@ h2 {
 }
 
 .queryResult {
+  margin: 0 20px 0 20px;
   table {
-    width: 1320px;
+    width: 1380px;
     // margin-top: 30px;
     // margin-left: 160px;
     margin: 30px auto 0;
@@ -1228,6 +1240,47 @@ h2 {
 .mt130 {
   margin-left: 125px;
   width: 80px;
+}
+
+//导航栏效果
+.di-header {
+  min-width: 1000px;
+  height: 60px;
+  background: rgba(255, 255, 255, 1);
+  text-align: center;
+}
+
+.di-header:after {
+  content: "";
+  display: table;
+  width: 100%;
+  height: 4px;
+  z-index: 1;
+  background: url(//../static/event/img/line_1.png) repeat-x;
+  position: absolute;
+  top: 58px;
+}
+
+.tj-logo-wrapper {
+  position: absolute;
+  left: 20px;
+  top: 5px;
+}
+.tj-logo-wrapper img {
+  display: block;
+  outline: 0;
+}
+.name {
+  font-family: 微软雅黑;
+  font-size: 24px;
+  font-weight: 400;
+  text-align: center;
+  height: 36px;
+  line-height: 36px;
+  width: 500px;
+  margin: 0 auto;
+  position: relative;
+  top: -50px;
 }
 </style>
 
