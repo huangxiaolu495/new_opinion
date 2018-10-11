@@ -1,21 +1,23 @@
 <template>
-  <div class="app">
-    <!-- 舆情监控 opinion monitor -->
-    <div class="monitor_top clearFloat">
-      <div class="floatLeft" v-show="$route.path !='/monitor/homePage/fundDetail'">
-        <router-link to="/">
-          <h1>中泰风险
-            <span>预警</span>系统</h1>
-        </router-link>
+  <div class="ppp">
+    <div class="app">
+      <!-- 舆情监控 opinion monitor -->
+      <div class="monitor_top clearFloat">
+        <div class="floatLeft" v-show="$route.path !='/monitor/homePage/fundDetail'">
+          <router-link to="/">
+            <h1>中泰风险
+              <span>预警</span>系统</h1>
+          </router-link>
+        </div>
+        <span class="pullDown floatRight userSystemBox">
+          <router-link to="/newthreeboard/homePage/NEEQ_attentionPoolSet">我的关注池</router-link>
+        </span>
       </div>
-      <span class="pullDown floatRight userSystemBox">
-        <router-link to="/newthreeboard/homePage/NEEQ_attentionPoolSet">我的关注池</router-link>
-      </span>
-    </div>
-    <div class="homePageNav clearFloat">
+      <div class="homePageNav clearFloat">
 
+      </div>
+      <router-view></router-view>
     </div>
-    <router-view></router-view>
   </div>
 </template>
 
@@ -80,9 +82,13 @@ export default {
 
 <style lang="less" scoped>
 .app {
-  margin-left: 18px;
-  // overflow-x: hidden;
-  // overflow-y: auto;
+  margin-left: -30px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.ppp {
+  width: 1560px;
+  margin: 0 auto;
 }
 .monitor_top {
   width: 1455px;

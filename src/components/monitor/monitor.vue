@@ -1,42 +1,44 @@
 <template>
-  <div class="app">
-    <!-- 舆情监控 opinion monitor -->
-    <div class="monitor_top clearFloat">
-      <div class="floatLeft">
-        <router-link to="/">
-          <h1>中泰风险
-            <span>预警</span>系统</h1>
-        </router-link>
+  <div class="ppp">
+    <div class="app">
+      <!-- 舆情监控 opinion monitor -->
+      <div class="monitor_top clearFloat">
+        <div class="floatLeft">
+          <router-link to="/">
+            <h1>中泰风险
+              <span>预警</span>系统</h1>
+          </router-link>
+        </div>
+        <div class="floatRight userSystemBox">
+          <span>我的账户
+            <i class="iconfont icon-icon_on_the_down"></i>
+          </span>
+          <span class="pullDown">
+            <router-link to="/userSystem">自定义板块管理</router-link>
+            <!-- <p @click="enterUserSystem">系统管理</p> -->
+            <!-- <p>我的收藏夹</p> -->
+            <router-link to="/attentionPoolSet">我的关注池</router-link>
+            <!-- <p @click="openAttentionPool">我的关注池</p> -->
+            <p>注销</p>
+          </span>
+        </div>
       </div>
-      <div class="floatRight userSystemBox">
-        <span>我的账户
-          <i class="iconfont icon-icon_on_the_down"></i>
-        </span>
-        <span class="pullDown">
-          <router-link to="/userSystem">自定义板块管理</router-link>
-          <!-- <p @click="enterUserSystem">系统管理</p> -->
-          <!-- <p>我的收藏夹</p> -->
-          <router-link to="/attentionPoolSet">我的关注池</router-link>
-          <!-- <p @click="openAttentionPool">我的关注池</p> -->
-          <p>注销</p>
-        </span>
+      <div class="homePageNav clearFloat">
+        <div class="link-homePage">
+          <router-link to="/monitor/homePage/homeContent">首页</router-link>
+        </div>
+        <div class="link-companyWarning">
+          <router-link to="/monitor/companyWarning/queryInformation">关联公司舆情</router-link>
+        </div>
+        <div class="link-subsidiryMonitoring">
+          <router-link to="/monitor/subMonitoring/queryInformation">子公司舆情监控</router-link>
+        </div>
+        <div class="link-blackSwan">
+          <router-link to="/monitor/blackSwan/delistingWarning">黑天鹅事件</router-link>
+        </div>
       </div>
+      <router-view></router-view>
     </div>
-    <div class="homePageNav clearFloat">
-      <div class="link-homePage">
-        <router-link to="/monitor/homePage/homeContent">首页</router-link>
-      </div>
-      <div class="link-companyWarning">
-        <router-link to="/monitor/companyWarning/queryInformation">关联公司舆情</router-link>
-      </div>
-      <div class="link-subsidiryMonitoring">
-        <router-link to="/monitor/subMonitoring/queryInformation">子公司舆情监控</router-link>
-      </div>
-      <div class="link-blackSwan">
-        <router-link to="/monitor/blackSwan/delistingWarning">黑天鹅事件</router-link>
-      </div>
-    </div>
-    <router-view></router-view>
   </div>
 </template>
 
@@ -101,9 +103,13 @@ export default {
 
 <style lang="less" scoped>
 .app {
-  margin-left: 18px;
-  // overflow-x: hidden;
-  // overflow-y: auto;
+  margin-left: -30px;
+  overflow-x: hidden;
+  overflow-y: auto;
+}
+.ppp {
+  width: 1560px;
+  margin: 0 auto;
 }
 .monitor_top {
   width: 1455px;
