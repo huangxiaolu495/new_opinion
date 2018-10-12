@@ -12,7 +12,8 @@
                 <img src="/../static/event/img/logo.png">
               </a>
             </div> -->
-            <div class="name">中泰证券舆情分析系统</div>
+            <!-- <div class="name">中泰证券舆情分析系统</div> -->
+            <h1>中泰证券舆情分析系统</h1>
           </router-link>
           <div class="floatRight userSystemBox">
             <span>我的账户
@@ -128,7 +129,7 @@ export default {
   width: 1455px;
   h1 {
     display: block;
-    width: 243px;
+    width: 343px;
     height: 49px;
     font-size: 28px;
     line-height: 49px;
