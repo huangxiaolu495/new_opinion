@@ -511,6 +511,7 @@ export default {
 }
 .poolBtnBox {
   margin-top: 40px;
+  height: 60px;
   span {
     cursor: pointer;
     padding: 6px;

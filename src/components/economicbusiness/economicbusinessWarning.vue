@@ -10,11 +10,13 @@
             <img src="/../static/event/img/logo.png">
           </a>
         </div>
+        <div class="name">中泰证券舆情分析系统</div>
       </router-link>
-      <div class="name">中泰证券舆情分析系统:经纪业务信息分析</div>
-
     </div>
     <div class="div">
+      <div class="subname">
+        经纪业务配资分析
+      </div>
       <div class="clearfix">
         <div class="left">
           <date-picker :prop="startDatePicker" @startDateEvent="startDateEvent"></date-picker>
@@ -407,6 +409,15 @@ h1 {
   margin: 0 auto;
   position: relative;
   top: -50px;
+  color: black;
+}
+
+.subname {
+  font-size: 18px;
+  width: 200px;
+  position: relative;
+  top: 52px;
+  left: 105px;
 }
 </style>
 

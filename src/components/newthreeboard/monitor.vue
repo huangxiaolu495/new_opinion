@@ -5,16 +5,24 @@
       <div class="monitor_top clearFloat">
         <div class="floatLeft" v-show="$route.path !='/monitor/homePage/fundDetail'">
           <router-link to="/">
-            <h1>中泰风险
-              <span>预警</span>系统</h1>
+            <!-- <h1>中泰风险
+              <span>预警</span>系统</h1> -->
+            <!-- <div class="di-header">
+              <a href="/" class="tj-logo-wrapper">
+                <img src="/../static/event/img/logo.png">
+              </a>
+            </div> -->
+            <div class="name">中泰证券舆情分析系统</div>
+
           </router-link>
         </div>
         <span class="pullDown floatRight userSystemBox">
           <router-link to="/newthreeboard/homePage/NEEQ_attentionPoolSet">我的关注池</router-link>
         </span>
       </div>
-      <div class="homePageNav clearFloat">
 
+      <div class="homePageNav clearFloat">
+        新三板舆情监控
       </div>
       <router-view></router-view>
     </div>
@@ -111,7 +119,7 @@ export default {
     position: relative;
     height: 25px;
     margin-top: 20px;
-    margin-right: -57px;
+    margin-right: -46px;
     // background-color: #fff;
     span {
       display: inline-block;
@@ -142,12 +150,11 @@ export default {
   height: 70px;
   font: 20px/70px Arial;
   color: #ffffff;
-  margin-top: 10px;
   margin-left: 50px;
-  padding-left: 233px;
   background-color: #b50229;
   border: 1px solid #797979;
   overflow: hidden;
+  text-align: center;
   a {
     display: inline-block;
     width: 100%;
@@ -160,16 +167,14 @@ export default {
   //   // background-color: #6acdfd;
   // }
   > div {
-    float: left;
-    width: 250px;
-    height: 100%;
     text-align: center;
     cursor: pointer;
-    border-left: 1px solid #797979;
+    font: 20px/70px Arial;
+    color: #ffffff;
   }
-  > div:hover {
-    background-color: #979797;
-  }
+  // > div:hover {
+  //   background-color: #979797;
+  // }
 
   // .link-homePage {
   //   // width: 140px;
@@ -177,5 +182,43 @@ export default {
   .link-blackSwan {
     border-right: 1px solid #797979;
   }
+}
+
+//导航栏效果
+.di-header {
+  min-width: 1000px;
+  height: 60px;
+  background: rgba(255, 255, 255, 1);
+  text-align: center;
+}
+
+.di-header:after {
+  content: "";
+  display: table;
+  width: 100%;
+  height: 4px;
+  z-index: 1;
+  background: url(//../static/event/img/line_1.png) repeat-x;
+  position: absolute;
+  top: 58px;
+}
+
+.tj-logo-wrapper {
+  position: absolute;
+  left: 40px;
+  top: 5px;
+}
+.tj-logo-wrapper img {
+  display: block;
+  outline: 0;
+}
+.name {
+  font-family: 微软雅黑;
+  font-size: 24px;
+  font-weight: 400;
+  height: 36px;
+  line-height: 36px;
+  color: black;
+  margin: 10px 50px 10px 50px;
 }
 </style>

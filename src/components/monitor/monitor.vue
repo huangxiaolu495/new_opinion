@@ -3,37 +3,50 @@
     <div class="app">
       <!-- 舆情监控 opinion monitor -->
       <div class="monitor_top clearFloat">
-        <div class="floatLeft">
+        <div class="">
           <router-link to="/">
-            <h1>中泰风险
-              <span>预警</span>系统</h1>
+            <!-- <h1>中泰风险
+              <span>预警</span>系统</h1> -->
+            <!-- <div class="di-header">
+              <a href="/" class="tj-logo-wrapper">
+                <img src="/../static/event/img/logo.png">
+              </a>
+            </div> -->
+            <div class="name">中泰证券舆情分析系统</div>
           </router-link>
+          <div class="floatRight userSystemBox">
+            <span>我的账户
+              <i class="iconfont icon-icon_on_the_down"></i>
+            </span>
+            <span class="pullDown">
+              <router-link to="/userSystem">自定义板块管理</router-link>
+              <!-- <p @click="enterUserSystem">系统管理</p> -->
+              <!-- <p>我的收藏夹</p> -->
+              <router-link to="/attentionPoolSet">我的关注池</router-link>
+              <!-- <p @click="openAttentionPool">我的关注池</p> -->
+              <p>注销</p>
+            </span>
+          </div>
         </div>
-        <div class="floatRight userSystemBox">
-          <span>我的账户
-            <i class="iconfont icon-icon_on_the_down"></i>
-          </span>
-          <span class="pullDown">
-            <router-link to="/userSystem">自定义板块管理</router-link>
-            <!-- <p @click="enterUserSystem">系统管理</p> -->
-            <!-- <p>我的收藏夹</p> -->
-            <router-link to="/attentionPoolSet">我的关注池</router-link>
-            <!-- <p @click="openAttentionPool">我的关注池</p> -->
-            <p>注销</p>
-          </span>
-        </div>
+
       </div>
+      <!-- <div>
+        <div class="subname">风险预警</div>
+      </div> -->
       <div class="homePageNav clearFloat">
-        <div class="link-homePage">
+        <div class="">
+          <div>风险预警</div>
+        </div>
+        <div class="link-homePage hover">
           <router-link to="/monitor/homePage/homeContent">首页</router-link>
         </div>
-        <div class="link-companyWarning">
+        <div class="link-companyWarning hover">
           <router-link to="/monitor/companyWarning/queryInformation">关联公司舆情</router-link>
         </div>
-        <div class="link-subsidiryMonitoring">
+        <div class="link-subsidiryMonitoring hover">
           <router-link to="/monitor/subMonitoring/queryInformation">子公司舆情监控</router-link>
         </div>
-        <div class="link-blackSwan">
+        <div class="link-blackSwan hover">
           <router-link to="/monitor/blackSwan/delistingWarning">黑天鹅事件</router-link>
         </div>
       </div>
@@ -131,7 +144,7 @@ export default {
   .userSystemBox {
     position: relative;
     height: 25px;
-    margin-top: 20px;
+    margin-top: -40px;
     margin-right: -57px;
     // background-color: #fff;
     span {
@@ -163,9 +176,9 @@ export default {
   height: 70px;
   font: 20px/70px Arial;
   color: #ffffff;
-  margin-top: 10px;
+  // margin-top: 10px;
   margin-left: 50px;
-  padding-left: 233px;
+  // padding-left: 233px;
   background-color: #b50229;
   border: 1px solid #797979;
   overflow: hidden;
@@ -188,15 +201,55 @@ export default {
     cursor: pointer;
     border-left: 1px solid #797979;
   }
-  > div:hover {
+  // > div:hover {
+  //   background-color: #979797;
+  // }
+  .hover:hover {
     background-color: #979797;
   }
-
   // .link-homePage {
   //   // width: 140px;
   // }
   .link-blackSwan {
     border-right: 1px solid #797979;
   }
+}
+
+//导航栏效果
+.di-header {
+  min-width: 1000px;
+  height: 60px;
+  background: rgba(255, 255, 255, 1);
+  text-align: center;
+}
+
+.di-header:after {
+  content: "";
+  display: table;
+  width: 100%;
+  height: 4px;
+  z-index: 1;
+  background: url(//../static/event/img/line_1.png) repeat-x;
+  position: absolute;
+  top: 58px;
+}
+
+.tj-logo-wrapper {
+  position: absolute;
+  left: 40px;
+  top: 5px;
+}
+.tj-logo-wrapper img {
+  display: block;
+  outline: 0;
+}
+.name {
+  font-family: 微软雅黑;
+  font-size: 24px;
+  font-weight: 400;
+  height: 36px;
+  line-height: 36px;
+  color: black;
+  margin: 10px 50px 10px 50px;
 }
 </style>

@@ -12,15 +12,19 @@
             <img src="/../static/event/img/logo.png">
           </a>
         </div>
+        <div class="name">中泰证券舆情分析系统</div>
       </router-link>
-      <div class="name">中泰证券舆情分析系统:董事会信息分析</div>
 
       <h2 @click="usercollection('item, index')">
         个人收藏夹
         <span class="iconfont icon-star"></span>
       </h2>
     </div>
+
     <div class="div">
+      <div class="subname">
+        董事会信息分析
+      </div>
       <div class="clearfix mt40">
         <div class="left">
           <date-picker :prop="startDatePicker" @startDateEvent="startDateEvent"></date-picker>
@@ -888,7 +892,7 @@ body {
 .execl {
   width: 500px;
   position: absolute;
-  top: -3px;
+  top: 51px;
   .execlText {
     text-align: center;
     width: 80px;
@@ -1281,6 +1285,14 @@ h2 {
   margin: 0 auto;
   position: relative;
   top: -50px;
+  color: black;
+}
+.subname {
+  font-size: 18px;
+  width: 200px;
+  position: relative;
+  top: 52px;
+  left: 105px;
 }
 </style>
 
