@@ -3,10 +3,162 @@
     width: 100%;
   }
 
+  /* ziji 新添加内容 */
+  .di_home{
+    font-size:12px;
+  }
+
   .mp-chart-panel>.mp-chart-right {
     width: 100%;
   }
 }
+  .stock_pool {
+    cursor: pointer;
+  }
+  .stock_p{
+    height: 1500px;
+  }
+
+  .notice_dan {
+    cursor: pointer;
+    color: #B50229
+  }
+  .box{
+    margin-top:22px;
+  }
+  .name{
+        font-size: 22px;
+        margin-top: 24px;
+        margin-left: 20px;
+        margin-right:20px;
+        border-bottom: 1px solid #000;
+        padding-bottom: 24px;
+        /* width:1276px; */
+  }
+  .credit_home{
+    position: absolute;
+    top:6px;
+    left:0px;
+  }
+  .di-header{
+    position: relative;
+    /* height:100px; */
+  }
+  .zhongtai{
+        font-family: 微软雅黑;
+        font-size: 24px;
+        font-weight: 400;
+        text-align: center;
+        width: 100%;
+        height: 36px;
+        line-height: 36px;
+        margin-top: 16px;
+        margin-bottom: -10px;
+
+  }
+  .group_type{
+    width:200px;
+    display: inline-block;
+    margin-top: 10px;
+    margin-left: 19px;
+
+  }
+
+  .group_type .marginbond{
+    font-size:17px;
+    /* border:1px solid #000; */
+    cursor: pointer;
+    height: 60px;
+    color:#fff;
+    background-color:#d7d7d7;
+    line-height: 60px;
+    text-align: center;
+
+  }
+  .group_type .marginbond.triger{
+    background-color:#B50229
+  }
+
+  .yuqingfenxi{
+        position: absolute;
+        top: 17px;
+        left: 230px;
+        font-size: 22px;
+  }
+  .table_one{
+    display: none;
+  }
+  .tablebiao{
+    display:none;
+  }
+  .group_type .bond{
+    font-size:17px;
+    /* border:1px solid #000; */
+    cursor: pointer;
+    height: 60px;
+    color:#fff;
+    background-color: #d7d7d7;
+    line-height: 60px;
+    text-align: center;
+    margin-top:2px;
+  }
+
+  .group_type .bond.triger{
+    background-color:#B50229
+  }
+  .stock_table{
+    display: inline-block;
+    width:1180px;
+    position: absolute;
+    top:146px;
+    left:298px;
+    /* border: 1px solid red */
+  }
+  .stock_table_title{
+    font-size:22px;
+  }
+  .security_title{
+    font-size:22px;
+  }
+    .security {
+      /* border: 1px solid red */
+    }
+
+  #select_down_title{
+    width:100px;
+    height: 35px;
+    border: solid 1px #ddd;
+    box-shadow: 1px 1px 2px #eee inset;
+    border-radius: 3px;
+  }
+  #select_down_title_two{
+        width:100px;
+        height: 35px;
+        border: solid 1px #ddd;
+        box-shadow: 1px 1px 2px #eee inset;
+        border-radius: 3px;
+
+  }
+
+  #exchange_down{
+    width:120px;
+    height: 35px;
+    border: solid 1px #ddd;
+    box-shadow: 1px 1px 2px #eee inset;
+    border-radius: 3px;
+
+  }
+   #exchange_down_two{
+         width:120px;
+         height: 35px;
+         border: solid 1px #ddd;
+         box-shadow: 1px 1px 2px #eee inset;
+         border-radius: 3px;
+
+   }
+
+
+
 
 .center {
   text-align: center;
@@ -34,8 +186,8 @@
   line-height: 25px;
   width: 85px;
   position: absolute;
-  right: -30px;
-  top: -54px;
+  right: 0px;
+  top: 16px;
   font-size: 16px;
   background-color: #d7d7d7;
   color: black;
@@ -163,6 +315,7 @@
   /*margin: 20px;*/
 }
 
+
 .mp-chart-table>tbody>tr>td {
   /*background-color: #EDEDF1;*/
   text-align: center;
@@ -207,7 +360,8 @@
   position: relative;
   -webkit-transition: all ease-out .3s;
   transition: all ease-out .3s;
-  margin: 20px auto 0;
+  margin: -16px auto 0;
+  margin-top:-1px;
 }
 
 .mp-header {
@@ -226,7 +380,6 @@
 .mp-contents .mp-chart-panel {
   display: inline-block;
 }
-
 .mp-contents .mp-chart-panel>div {
   font-size: 18px;
   font-weight: normal;
@@ -533,7 +686,8 @@ h1 {
 
 .mp-header>div:first-child {
   font-size: 18px;
-  padding-bottom: 10px;
+  padding-bottom: 32px;
+  border-bottom:1px solid #000;
 }
 
 #myCheck+label {
