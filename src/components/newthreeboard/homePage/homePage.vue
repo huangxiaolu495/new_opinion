@@ -2,8 +2,15 @@
   <div>
     <div class="homePageMain clearFloat">
       <sidebar :prop="sidebarData"></sidebar>
+
       <div v-if="routerGoNow" class="homePageChildPage clearFloat">
         <router-view></router-view>
+      </div>
+      <div class="sidebarBox">
+        <ul class="boxcss">
+          <li>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
@@ -52,6 +59,31 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.sidebarBox {
+  width: 235px;
+  margin-left: 50px;
+  li {
+    width: 100%;
+    height: 46px;
+    line-height: 46px;
+    text-align: center;
+    border-bottom: 1px solid #797979;
+    a {
+      display: inline-block;
+      width: 100%;
+      height: 100%;
+      color: #fff;
+      text-decoration: none;
+      background-color: #b50229;
+    }
+  }
+  li:nth-last-child(1) {
+    border-bottom: none;
+  }
+}
+.boxcss {
+  height: 300px;
+}
 .homePageMain {
   width: 1719px;
 }

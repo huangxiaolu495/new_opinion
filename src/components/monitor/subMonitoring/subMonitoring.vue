@@ -37,6 +37,10 @@
           <router-link @click.native="routerGoNow" :to="item.path">{{item.title}}</router-link>
         </li>
       </ul>
+      <ul class="boxcss">
+        <li>
+        </li>
+      </ul>
     </div>
     <div v-if="isRouterGoNow" class="content">
       <router-view></router-view>
@@ -103,6 +107,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
+.boxcss {
+  height: 300px;
+}
 .left {
   float: left;
   width: 145.2px;
@@ -161,7 +168,7 @@ table {
   width: 235px;
   // margin-top: 45px;
   margin-left: 50px;
-  border: 1px solid #797979;
+  // border: 1px solid #797979;
   li {
     width: 100%;
     height: 46px;
