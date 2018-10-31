@@ -890,7 +890,7 @@ body {
 }
 
 .execl {
-  width: 500px;
+  width: 30px;
   position: absolute;
   top: 51px;
   .execlText {
