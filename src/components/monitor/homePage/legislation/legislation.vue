@@ -16,6 +16,13 @@
             <div class="floatLeft">
               <date-picker :prop="endDatePicker" @endDateEvent="endDateEvent"></date-picker>
             </div>
+            <div class="floatLeft">
+              <pull-down-list-two :prop="legislationListTwo" @legislationEventTwo='legislationEventTwo'></pull-down-list-two>
+            </div>
+            <!-- 关键字部分 -->
+            <div class="floatLeft">
+              <keyword @keywordEvent="keywordEvent"></keyword>
+            </div>
           </div>
           <!-- 查询按钮 -->
           <div class="queryBtn">
@@ -33,11 +40,11 @@
               </tr>
               <tr v-for="(item, index) of dataList" :key="index">
                 <td class="tableTd">
-                  <a :href="item.SOURCEURL" target="_bank">{{item.TITLE}}</a>
+                  <a :href="item.sourceurl" target="_bank">{{item.title}}</a>
                 </td>
-                <td>{{item.PUBLISHDATE}}</td>
-                <td>{{item.RULETYPENAME}}</td>
-                <td>{{item.COMPANYNAME}}</td>
+                <td>{{item.publishdate}}</td>
+                <td>{{item.ruletypename}}</td>
+                <td>{{item.companyname}}</td>
                 <!-- <td class="data-content">{{item.INFOBODYCONTENT}}
                   <span @click="details(item, index)">{{item.details}}</span>
                 </td> -->
@@ -65,24 +72,28 @@
 
 <script>
 import pullDownList from '@/components/common/pullDownList'
+import pullDownListTwo from '@/components/common/pullDownListTwo'
 import pagination from '@/components/common/pagination'
 import commonMethods from '@/common/common.js'
 import datePicker from '@/components/common/datePicker'
+import keyword from '@/components/common/keyword'
 
 export default {
   data() {
     const week = new Date().getTime() - 86400000 * 7;
     return {
-      url: 'http://10.25.24.51:10192/api/rest/nlp/risk/laws_regulations?',
+      url: 'http://10.25.24.51:10189/api/risk/law_regulation_customize?',
       isShowQueryResult: false,
       hasResultData: false,
       resultData: null,
       queryCondition: {
-        COMPANYNAME: '',
-        page: 1,
+        companyname: '',
+        page: 0,
         page_size: 10,
-        from_date: '',
-        to_date: ''
+        start_date: '',
+        end_date: '',
+        keyword:'',
+        ruletypename:''
       },
       startDatePicker: {
         title: '日期：',
@@ -128,39 +139,78 @@ export default {
           '中国银行业监督管理委员会',
           '中国保险监督管理委员会',
         ]
+      },
+      legislationListTwo: {
+        title: '法律法规类型',
+        parentEvent: 'legislationEventTwo',
+        default: '请选择',
+        listWidth: 98,
+        nowSelectWidth: 100,
+        nowSelectHeight: 25,
+        nowSelectFontSize: 13,
+        list: [
+          '全部',
+          '要闻',
+          '国家法律',
+          '地方性法规',
+          '地方政府规章',
+          '地方规范文件',
+          '地方司法文件',
+          '行政法规',
+          '部门规章',
+          '规范性文件',
+          '发文通知',
+          '司法解释',
+          '立法解释',
+          '通知公告',
+          '热点动态',
+          '其他'
+        ]
       }
     }
   },
   components: {
     pullDownList,
     pagination,
-    datePicker
+    datePicker,
+    keyword,
+    pullDownListTwo
   },
   computed: {
 
   },
   methods: {
+// 添加关键字查询
+    keywordEvent(...data) {
+      this.queryCondition.keyword = data[0];
+    },
     legislationEvent(...data) {
-      this.queryCondition.COMPANYNAME = data[0];
+      this.queryCondition.companyname = data[0];
       if (data[0] === '全部') {
-        this.queryCondition.COMPANYNAME = '';
+        this.queryCondition.companyname = '';
+      }
+    },
+    legislationEventTwo(...data) {
+      this.queryCondition.ruletypename = data[0];
+      if (data[0] === '全部') {
+        this.queryCondition.ruletypename = '';
       }
     },
     paginationSelect(pageNumber) {
       const sendData = JSON.parse(JSON.stringify(this.sendData));
-      sendData.page = pageNumber;
+      sendData.page = pageNumber - 1;
       console.log('sendData', sendData)
       this.$_axios.get(this.url, {
         params: sendData
       }).then(response => {
         console.log('法律法规查询结果', response.data.result);
-        this.dataList = JSON.parse(JSON.stringify(response.data.result.Announce_List));
-        this.resultData = response.data.result.Announce_List;
+        this.dataList = JSON.parse(JSON.stringify(response.data.result.result));
+        this.resultData = response.data.result.result;
         this.dataList.forEach(item => {
           // item.PUBLISHDATE = item.PUBLISHDATE ? commonMethods.formatDateTime(new Date(item.PUBLISHDATE)) : '-';
           // item.EXECUTEDATE = item.EXECUTEDATE ? commonMethods.formatDateTime(new Date(item.EXECUTEDATE)) : '-';
-          if (item.INFOBODYCONTENT && item.INFOBODYCONTENT.length > 220) {
-            item.INFOBODYCONTENT = item.INFOBODYCONTENT.slice(0, 220) + '...';
+          if (item.content && item.content.length > 220) {
+            item.content = item.content.slice(0, 220) + '...';
             item.details = '...详情';
           }
         });
@@ -185,15 +235,15 @@ export default {
         // 显示查询结果
         this.hasResultData = true;
         console.log('法律法规查询结果', response.data.result);
-        this.dataList = JSON.parse(JSON.stringify(response.data.result.Announce_List));
-        this.resultData = response.data.result.Announce_List;
-        this.paginationData.page_Count = response.data.result.Page_Count;
-        this.paginationData.total_Count = response.data.result.Total_Count;
+        this.dataList = JSON.parse(JSON.stringify(response.data.result.result));
+        this.resultData = response.data.result.result;
+        this.paginationData.page_Count = Math.ceil(response.data.result.total_count/10);
+        this.paginationData.total_Count = response.data.result.total_count;
         this.dataList.forEach(item => {
           // item.PUBLISHDATE = item.PUBLISHDATE ? commonMethods.formatDateTime(new Date(item.PUBLISHDATE)) : '';
           // item.EXECUTEDATE = item.EXECUTEDATE ? commonMethods.formatDateTime(new Date(item.EXECUTEDATE)) : '';
-          if (item.INFOBODYCONTENT && item.INFOBODYCONTENT.length > 220) {
-            item.INFOBODYCONTENT = item.INFOBODYCONTENT.slice(0, 220) + '...';
+          if (item.content && item.content.length > 220) {
+            item.content = item.content.slice(0, 220) + '...';
             item.details = '...详情';
           }
         });
@@ -205,23 +255,23 @@ export default {
     details(item, index) {
       if (item.details == '收起') {
         item.details = '...详情';
-        item.INFOBODYCONTENT = item.INFOBODYCONTENT.slice(0, 220) + '...';
+        item.content = item.content.slice(0, 220) + '...';
       } else {
         item.details = '收起';
-        item.INFOBODYCONTENT = this.resultData[index].INFOBODYCONTENT;
+        item.content = this.resultData[index].content;
       }
     },
     startDateEvent(...data) {
-      this.queryCondition.from_date = data[0];
+      this.queryCondition.start_date = data[0];
       console.log(this.queryCondition)
     },
     endDateEvent(...data) {
-      this.queryCondition.to_date = data[0];
+      this.queryCondition.end_date = data[0];
     },
   },
   mounted() {
-    this.queryCondition.from_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
-    this.queryCondition.to_date = commonMethods.formatDateTime2(this.endDatePicker.defaultDate);
+    this.queryCondition.start_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
+    this.queryCondition.end_date = commonMethods.formatDateTime2(this.endDatePicker.defaultDate);
   }
 }
 </script>

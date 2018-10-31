@@ -7,6 +7,9 @@ window.onload = (function (M) {
     _id: function (name) {
       return document.getElementById(name);
     },
+
+    //页面新添加的内容
+   
     _class: function (name) {
       return document.getElementsByClassName(name);
     },
@@ -790,6 +793,8 @@ window.onload = (function (M) {
       M('#eventId').val(this.custid);
       M('#secCode').val(this.secCode);
       this._id('warper').style.display = 'block';
+
+      
       this.add([{
         name: 'month_start',
         id: 'month_start'
@@ -797,6 +802,21 @@ window.onload = (function (M) {
         name: 'month_stop',
         id: 'month_stop'
       }]);
+      this.add([{
+        name: 'month_start_two',
+        id: 'month_start_two'
+      }, {
+        name: 'month_stop_two',
+        id: 'month_stop_two'
+      }]);
+      this.add([{
+      name: 'month_start_three',
+      id: 'month_start_three'
+      }, {
+      name: 'month_stop_three',
+      id: 'month_stop_three'
+      }]);
+
 
       //日期选择
       var today = new Date();
@@ -885,6 +905,51 @@ window.onload = (function (M) {
 
         choose: function (tha) {}
       });
+      that.month_start_two = M.ui.calendar.init({
+
+        target: this.node.month_start_two,
+        date: {
+          min: '2016-01-01',
+          select: that.beginTime,
+          max: 'now',
+          //					format: 'yyyy-MM-dd'
+        },
+        time: {
+          enabled: false
+        },
+        auto: true,
+        number: 2,
+        toggle: 2,
+        tool: {
+          clear: false,
+          today: false
+        },
+
+        choose: function (tha) { }
+      });
+            that.month_start_three = M.ui.calendar.init({
+
+              target: this.node.month_start_three,
+              date: {
+                min: '2016-01-01',
+                select: that.beginTime,
+                max: 'now',
+                //					format: 'yyyy-MM-dd'
+              },
+              time: {
+                enabled: false
+              },
+              auto: true,
+              number: 2,
+              toggle: 2,
+              tool: {
+                clear: false,
+                today: false
+              },
+
+              choose: function (tha) {}
+            });
+
       that.month_stop = M.ui.calendar.init({
         target: this.node.month_stop,
         date: {
@@ -905,6 +970,47 @@ window.onload = (function (M) {
 
         choose: function (tha) {}
       });
+      that.month_stop_two = M.ui.calendar.init({
+        target: this.node.month_stop_two,
+        date: {
+          min: '2016-01-01',
+          select: that.beginTime,
+          max: '2020-01-01'
+        },
+        time: {
+          enabled: false
+        },
+        auto: true,
+        number: 2,
+        toggle: 2,
+        tool: {
+          clear: false,
+          today: false
+        },
+
+        choose: function (tha) { }
+      });
+      that.month_stop_three = M.ui.calendar.init({
+        target: this.node.month_stop_three,
+        date: {
+          min: '2016-01-01',
+          select: that.beginTime,
+          max: '2020-01-01'
+        },
+        time: {
+          enabled: false
+        },
+        auto: true,
+        number: 2,
+        toggle: 2,
+        tool: {
+          clear: false,
+          today: false
+        },
+
+        choose: function (tha) {}
+      });
+
       var opt = {
         export: 0,
         stock_info: '',
@@ -1064,7 +1170,7 @@ window.onload = (function (M) {
       // });
 
     },
-
+    
     sel: function (opt) {
       var that = this;
       var $public = M('#public_Code_text');
@@ -1076,7 +1182,13 @@ window.onload = (function (M) {
         page: opt.num || that.pageNum,
         pageSize: 50,
         from_Date: M('#month_start').val() || '',
+        from_Date: M('#month_start_two').val() || '',
+        from_Date: M('#month_start_three').val() || '',
+
         to_Date: M('#month_stop').val() || '',
+        to_Date: M('#month_stop_two').val() || '',
+        to_Date: M('#month_stop_three').val() || '',
+
         keyword: M('#keyword').val() || '',
         market_type: M('#market_Code').val() || '',
         notice_source: M('#announcement_Code').val() || '',
@@ -1097,6 +1209,7 @@ window.onload = (function (M) {
           } else {
             url = "javascript:void(0)";
           }
+
           str += M.template.resolve('<tr>\
 									<td>{{notice_date}}</td>\
 									<td>{{Stock_Code}} {{Stock_Name}}</td>\
@@ -1136,6 +1249,9 @@ window.onload = (function (M) {
         M('[data-href]').click(function () {
           var el = this;
           var beginTime = M('#month_start').val();
+          var beginTime = M('#month_start_two').val();
+          var beginTime = M('#month_start_three').val();
+
           window.open(el.dataset.href + '&beginTime=' + beginTime + '&endTime=' + endTime);
         });
         M('.btn').click(function () {
@@ -1146,6 +1262,461 @@ window.onload = (function (M) {
           var notice_source = $(this).find(".notice_source").html();
           window.location.href = "/static/event/creditinfo.html?Stock_Code=" + code + "&Risk_Type=" + risktype + "&Stock_Type=" + stocktype + "&Stock_Name=" + stockname + "&notice_source=" + notice_source;
         });
+
+        //惠新添加的内容
+        var $notice_dan = M('.notice_dan')
+        var $warper = M('.warper')
+        var $stock_p = M('.stock_p')
+        $notice_dan.on('click',function () {
+          $(this).css('color','#B50229').siblings().css('color','#000')
+          $warper.show()
+          $stock_p.hide()
+        })
+        // 点击标的证券池，切换到标的证券池页面
+        var $stock_pool = M('.stock_pool')
+        $stock_pool.on('click',function () {
+          $(this).css('color', '#B50229').siblings().css('color', '#000')
+          $warper.hide()
+          $stock_p.show()
+          $.ajax({
+            type: 'get',
+            url: 'http://10.25.24.51:10189/api/credit/rzrq_bd',
+            data: {
+              start_date: $('#month_start_two').val(),
+              end_date: '',
+              markettype: $('#exchange_down').val() == '全部' ? '' : $('#exchange_down').val(),
+              companyname: $('#select_down_title').val() == '全部' ? '' : $('#select_down_title').val(),
+              securitycode: $('#Security_name').val(),
+              page: 0,
+              pagesize: 10
+            },
+            success: function (data) {
+              // console.log(data.result.resultlist)
+              var data = data.result
+              console.log(data)
+              // console.log(list)
+              var html = template('test', data)
+              document.getElementById('detailData_two').innerHTML = html;
+              isExportExcel = true;
+
+              console.log(data.total_count)
+
+              // var zongshu = 3000000
+              // $.ajax({
+              //   type: 'get',
+              //   url: 'http://10.25.24.51:10189/api/credit/rzrq_bd',
+              //   data: {
+              //     start_date: $('#month_start_two').val(),
+              //     end_date: $('#month_stop_two').val(),
+              //     markettype: $('#exchange_down').val() == '全部' ? '' : $('#exchange_down').val(),
+              //     companyname: $('#select_down_title').val() == '全部' ? '' : $('#select_down_title').val(),
+              //     securitycode: $('#Security_name').val(),
+              //     page: 0,
+              //     pagesize: zongshu
+              //   },
+              //   success: function (data) {
+              //     console.log(data)
+              //     var data = data.result
+              //     var html = template('test', data)
+              //     document.getElementById('detailData_two_one').innerHTML = html;
+              //   }
+              // })
+
+              $('#box').paging({
+                initPageNo: 1, // 初始页码
+                totalPages: Math.ceil(data.total_count / 10), //总页数
+                totalCount: '合计' + data.total_count + '条数据', // 条目总数
+                slideSpeed: 600, // 缓动速度。单位毫秒
+                jump: true, //是否支持跳转
+                callback: function (page) { // 回调函数
+                  console.log(page);
+                  currentpage = page - 1
+                  fanice(currentpage)
+                }
+              })
+
+            }
+          })
+          $.ajax({
+            type: 'get',
+            url: 'http://10.25.24.51:10189/api/credit/rzrq_guarantee',
+            data: {
+              start_date: $('#month_start_three').val(),
+              end_date: '',
+              markettype: $('#exchange_down_two').val() == '全部' ? '' : $('#exchange_down_two').val(),
+              companyname: $('#select_down_title_two').val() == '全部' ? '' : $('#select_down_title_two').val(),
+              securitycode: $('#Security_name_two').val(),
+              import: '',
+              page: 0,
+              pagesize: 10
+            },
+            success: function (data) {
+              console.log(data)
+              var data = data.result
+              var html = template('test_one', data)
+              document.getElementById('detailData_three').innerHTML = html;
+              isExportExcel = true
+
+              // var xinbanzongshu = 200000
+              // $.ajax({
+              //   type: 'get',
+              //   url: 'http://10.25.24.51:10189/api/credit/rzrq_guarantee',
+              //   data: {
+              //     start_date: $('#month_start_three').val(),
+              //     end_date: $('#month_stop_three').val(),
+              //     markettype: $('#exchange_down_two').val() == '全部' ? '' : $('#exchange_down_two').val(),
+              //     companyname: $('#select_down_title_two').val() == '全部' ? '' : $('#select_down_title_two').val(),
+              //     securitycode: $('#Security_name_two').val(),
+              //     import: '',
+              //     page: 0,
+              //     pagesize: xinbanzongshu
+              //   },
+              //   success: function (data) {
+              //     var data = data.result
+              //     var html = template('test_one', data)
+              //     document.getElementById('detailData_three_two').innerHTML = html;
+              //   }
+              // })
+              $('#box_one').paging({
+                initPageNo: 1, // 初始页码
+                totalPages: Math.ceil(data.total_count / 10), //总页数
+                totalCount: '合计' + data.total_count + '条数据', // 条目总数
+                slideSpeed: 600, // 缓动速度。单位毫秒
+                jump: true, //是否支持跳转
+                callback: function (page) { // 回调函数
+                  console.log(page);
+                  Flushing = page - 1
+                  guaran(Flushing)
+                }
+              })
+
+            }
+
+          })
+
+
+        })
+
+        $('.marginbond').on('click',function(){
+          $(this).addClass('triger')
+          $('.bond').removeClass('triger')
+          $('.stock_table').show()
+          $('.stock_table_one').show()
+          $('.security').hide()
+        })
+        $('.bond').on('click',function(){
+          $(this).addClass('triger')
+          $('.marginbond').removeClass('triger')
+          $('.stock_table_one').hide()
+          $('.security').show()
+          $('.searchShow').hide()
+
+        })
+        //点击查询按钮，进行ajax请求，首先获取参数
+        $('#finance_btnSelect').on('click',function(){
+          console.log($('#select_down_title').val())
+          console.log($('#exchange_down').val())
+          console.log($('#Security_name').val())
+          console.log($('#month_start_two').val())
+          console.log($('#month_stop_two').val())
+          $.ajax({
+            type:'get',
+            url:'http://10.25.24.51:10189/api/credit/rzrq_bd',
+            data:{
+              start_date: $('#month_start_two').val(),
+              end_date: '',
+              markettype: $('#exchange_down').val() == '全部' ? '' : $('#exchange_down').val(),
+              companyname: $('#select_down_title').val() == '全部' ? '' : $('#select_down_title').val(),
+              securitycode: $('#Security_name').val(),
+              page:0,
+              pagesize:10
+            },
+            success:function (data) {
+              // console.log(data.result.resultlist)
+              var data = data.result
+              console.log(data)
+              // console.log(list)
+              var html = template('test',data)
+              document.getElementById('detailData_two').innerHTML = html;
+              isExportExcel = true;
+
+              console.log(data.total_count)
+
+        //  var zongshu = 3000000
+        //       $.ajax({
+        //         type: 'get',
+        //         url: 'http://10.25.24.51:10189/api/credit/rzrq_bd',
+        //         data: {
+        //           start_date: $('#month_start_two').val(),
+        //           end_date: $('#month_stop_two').val(),
+        //           markettype: $('#exchange_down').val() == '全部' ? '' : $('#exchange_down').val(),
+        //           companyname: $('#select_down_title').val() == '全部' ? '' : $('#select_down_title').val(),
+        //           securitycode: $('#Security_name').val(),
+        //           page: 0,
+        //           pagesize: zongshu 
+        //         },
+        //         success:function(data){
+        //           console.log(data)
+        //           var data = data.result
+        //           var html = template('test', data)
+        //           document.getElementById('detailData_two_one').innerHTML = html;
+        //         }
+        //       })
+           
+              $('#box').paging({
+                initPageNo: 1, // 初始页码
+                totalPages: Math.ceil(data.total_count / 10), //总页数
+                totalCount: '合计' + data.total_count + '条数据', // 条目总数
+                slideSpeed: 600, // 缓动速度。单位毫秒
+                jump: true, //是否支持跳转
+                callback: function (page) { // 回调函数
+                  console.log(page);
+                  currentpage = page - 1
+                  fanice(currentpage)
+                }
+              })
+
+            }
+          })
+        })
+var currentpage = '';
+
+        function fanice(currentpage) {
+          $.ajax({
+            type: 'get',
+            url: 'http://10.25.24.51:10189/api/credit/rzrq_bd',
+            data: {
+              start_date: $('#month_start_two').val(),
+              end_date: '',
+              markettype: $('#exchange_down').val() == '全部' ? '' : $('#exchange_down').val(),
+              companyname: $('#select_down_title').val() == '全部' ? '' : $('#select_down_title').val(),
+              securitycode: $('#Security_name').val(),
+              page: currentpage || 0,
+              pagesize: 10
+            },
+            success: function (data) {
+              // console.log(data.result.resultlist)
+              var data = data.result
+              console.log(data)
+              // console.log(list)
+              var html = template('test', data)
+              document.getElementById('detailData_two').innerHTML = html;
+              isExportExcel = true
+            }
+          })
+        }
+
+        function guaran(Flushing) {
+          $.ajax({
+            type: 'get',
+            url: 'http://10.25.24.51:10189/api/credit/rzrq_guarantee',
+            data: {
+              start_date: $('#month_start_three').val(),
+              end_date: '',
+              markettype: $('#exchange_down_two').val() == '全部' ? '' : $('#exchange_down_two').val(),
+              companyname: $('#select_down_title_two').val() == '全部' ? '' : $('#select_down_title_two').val(),
+              securitycode: $('#Security_name_two').val(),
+              import: '',
+              page: Flushing || 0,
+              pagesize: 10
+            },
+            success: function (data) {
+              console.log(data)
+              var data = data.result
+              var html = template('test_one', data)
+              document.getElementById('detailData_three').innerHTML = html;
+              isExportExcel = true
+            }
+
+          })
+          
+        }
+        var Flushing = ''
+        $('#finance_btnSelect_two').on('click',function(){
+          $.ajax({
+            type:'get',
+            url: 'http://10.25.24.51:10189/api/credit/rzrq_guarantee',
+            data:{
+              start_date: $('#month_start_three').val(),
+              end_date: '',
+              markettype: $('#exchange_down_two').val() == '全部' ? '' : $('#exchange_down_two').val(),
+              companyname: $('#select_down_title_two').val() == '全部' ? '' : $('#select_down_title_two').val(),
+              securitycode: $('#Security_name_two').val(),
+              import:'',
+              page:0,
+              pagesize:10
+            },
+            success:function (data) {
+              console.log(data)
+              var data = data.result
+              var html = template('test_one',data)
+              document.getElementById('detailData_three').innerHTML = html;
+              isExportExcel = true
+
+              // var xinbanzongshu = 200000
+              // $.ajax({
+              //   type: 'get',
+              //   url: 'http://10.25.24.51:10189/api/credit/rzrq_guarantee',
+              //   data: {
+              //     start_date: $('#month_start_three').val(),
+              //     end_date: $('#month_stop_three').val(),
+              //     markettype: $('#exchange_down_two').val() == '全部' ? '' : $('#exchange_down_two').val(),
+              //     companyname: $('#select_down_title_two').val() == '全部' ? '' : $('#select_down_title_two').val(),
+              //     securitycode: $('#Security_name_two').val(),
+              //     import: '',
+              //     page: 0,
+              //     pagesize: xinbanzongshu
+              //   },
+              //   success:function(data){
+              //     var data = data.result
+              //     var html = template('test_one', data)
+              //     document.getElementById('detailData_three_two').innerHTML = html;
+              //   }
+              // })
+              $('#box_one').paging({
+                initPageNo: 1, // 初始页码
+                totalPages: Math.ceil(data.total_count / 10), //总页数
+                totalCount: '合计' + data.total_count + '条数据', // 条目总数
+                slideSpeed: 600, // 缓动速度。单位毫秒
+                jump: true, //是否支持跳转
+                callback: function (page) { // 回调函数
+                  console.log(page);
+                  Flushing = page - 1
+                  guaran(Flushing)
+                }
+              })
+
+            }
+
+          })
+        })
+
+      // var isExportExcel = true
+      $('#export').on('click',function(){
+        var begin = $('#month_start_two').val()
+        // var stop = $('#month_stop_two').val()
+        var markettype = $('#exchange_down').val() == '全部' ? '' : $('#exchange_down').val()
+        var companyname = $('#select_down_title').val() == '全部' ? '' : $('#select_down_title').val()
+        var securitycode = $('#Security_name').val()
+        window.location.href = 'http://10.25.24.51:10189/api/credit/rzrq_bd?start_date='+begin+'&end_date=&markettype='+markettype+'&companyname='+companyname+'&securitycode='+securitycode+'&page=0&export=1'
+      })
+
+
+        $('#export_two').on('click', function () {
+          var start = $('#month_start_three').val()
+          // var stop = $('#month_stop_three').val()
+          var markettype = $('#exchange_down_two').val() == '全部' ? '' : $('#exchange_down_two').val()
+          var companyname = $('#select_down_title_two').val() == '全部' ? '' : $('#select_down_title_two').val()
+          var securitycode = $('#Security_name_two').val()
+          window.location.href = 'http://10.25.24.51:10189/api/credit/rzrq_guarantee?start_date=' + start + '&end_date=&markettype=' + markettype + '&companyname=' + companyname + '&securitycode=' + securitycode + '&page=0&export=1'
+          // console.log(isExportExcel)
+
+          // console.log('导出的项')
+          // if (!isExportExcel) return;
+          // function getExplorer() {
+          //   let explorer = window.navigator.userAgent;
+          //   //ie
+          //   if (explorer.indexOf("MSIE") >= 0) {
+          //     return 'ie';
+          //   }
+          //   //firefox
+          //   else if (explorer.indexOf("Firefox") >= 0) {
+          //     return 'Firefox';
+          //   }
+          //   //Chrome
+          //   else if (explorer.indexOf("Chrome") >= 0) {
+          //     return 'Chrome';
+          //   }
+          //   //Opera
+          //   else if (explorer.indexOf("Opera") >= 0) {
+          //     return 'Opera';
+          //   }
+          //   //Safari
+          //   else if (explorer.indexOf("Safari") >= 0) {
+          //     return 'Safari';
+          //   }
+          // }
+          // function method1(tableid) { //整个表格拷贝到EXCEL中
+          //   if (getExplorer() == 'ie') {
+          //     var curTbl = document.getElementById(tableid);
+          //     var oXL = new ActiveXObject("Excel.Application");
+          //     console.log(222)
+          //     //创建AX对象excel
+          //     var oWB = oXL.Workbooks.Add();
+          //     //获取workbook对象
+          //     var xlsheet = oWB.Worksheets(1);
+          //     //激活当前sheet
+          //     var sel = document.body.createTextRange();
+          //     sel.moveToElementText(curTbl);
+          //     //把表格中的内容移到TextRange中
+          //     sel.select;
+          //     //全选TextRange中内容
+          //     sel.execCommand("Copy");
+          //     //复制TextRange中内容
+          //     xlsheet.Paste();
+          //     //粘贴到活动的EXCEL中
+          //     oXL.Visible = true;
+          //     //设置excel可见属性
+
+          //     try {
+          //       var fname = oXL.Application.GetSaveAsFilename("Excel.xls", "Excel Spreadsheets (*.xls), *.xls");
+          //     } catch (e) {
+          //       print("Nested catch caught " + e);
+          //     } finally {
+          //       oWB.SaveAs(fname);
+
+          //       oWB.Close(savechanges = false);
+          //       //xls.visible = false;
+          //       oXL.Quit();
+          //       oXL = null;
+          //       //结束excel进程，退出完成
+          //       //window.setInterval("Cleanup();",1);
+          //       idTmr = window.setInterval("Cleanup();", 1);
+          //     }
+          //   } else {
+          //     tableToExcel('ta')
+          //   }
+          // }
+          // function Cleanup() {
+          //   window.clearInterval(idTmr);
+          //   CollectGarbage();
+          // }
+          // var tableToExcel = (function () {
+          //   var uri = 'data:application/vnd.ms-excel;base64,',
+          //     template =
+          //       '<html xmlns:o="urn:schemas-microsoft-com:office:office" xmlns:x="urn:schemas-microsoft-com:office:excel" xmlns="http://www.w3.org/TR/REC-html40"><head><!--[if gte mso 9]><xml><x:ExcelWorkbook><x:ExcelWorksheets><x:ExcelWorksheet><x:Name>{worksheet}</x:Name><x:WorksheetOptions><x:DisplayGridlines/></x:WorksheetOptions></x:ExcelWorksheet></x:ExcelWorksheets></x:ExcelWorkbook></xml><![endif]--></head><body><table>{table}</table></body></html>',
+          //     base64 = function (s) {
+          //       return window.btoa(unescape(encodeURIComponent(s)))
+          //     },
+          //     // 下面这段函数作用是：将template中的变量替换为页面内容ctx获取到的值
+          //     format = function (s, c) {
+          //       return s.replace(/{(\w+)}/g,
+          //         function (m, p) {
+          //           return c[p];
+          //         }
+          //       )
+          //     };
+          //   return function (table, name) {
+          //     if (!table.nodeType) {
+
+          //       table = document.getElementById('table_three')
+
+          //       console.log(table)
+          //     }
+          //     // 获取表单的名字和表单查询的内容
+          //     var ctx = {
+          //       worksheet: name || 'Worksheet',
+          //       table: table.innerHTML
+          //     };
+          //     // format()函数：通过格式操作使任意类型的数据转换成一个字符串
+          //     // base64()：进行编码
+          //     window.location.href = uri + base64(format(template, ctx))
+          //   }
+          // })()
+          // method1('ta');
+
+        })
+
        
         //页面中修改的操作
         var $modify = M('.modify');
@@ -1297,6 +1868,9 @@ window.onload = (function (M) {
         return null;
       }
     },
+
+
+    
 
     resolve: function (url, param, success, fail, type) {
       type = type || 'post';

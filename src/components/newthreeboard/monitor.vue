@@ -148,6 +148,7 @@ export default {
 .homePageNav {
   width: 1452px;
   height: 70px;
+  margin-top:10px;
   font: 20px/70px Arial;
   color: #ffffff;
   margin-left: 50px;

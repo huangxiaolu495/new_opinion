@@ -176,6 +176,7 @@ export default {
   width: 1452px;
   height: 70px;
   font: 20px/70px Arial;
+  margin-top:10px;
   color: #ffffff;
   // margin-top: 10px;
   margin-left: 50px;
