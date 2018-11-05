@@ -10,7 +10,7 @@
   font-weight: 700;
 }
 .queryCondition-top .middle {
-  width: 100%;
+  width: 120%;
   margin-bottom: 13px;
 }
 .queryCondition-top .middle > div {
@@ -18,13 +18,13 @@
   margin-top: 20px;
 }
 .queryCondition-top .middle input {
-  width: 130px;
+  width: 96px;
   height: 25px;
   font: 400 13px/25px Arial;
 }
 .queryCondition-top .middle .queryBtn {
   position: relative;
-  margin-left: 80px;
+  margin-left: 85px;
 }
 .queryCondition-top .middle .queryBtn span {
   display: inline-block;

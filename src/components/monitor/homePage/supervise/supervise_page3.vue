@@ -188,7 +188,9 @@ export default {
           this.isShowDetails = true;
           const resultData = response.data.result;
           this.detailsData = JSON.parse(JSON.stringify(resultData.news_detail));
+          console.log(this.detailsData)
           this.detailsData.url = this.detailsData.url.slice(1, -2);
+          console.log(this.detailsData.url)
           console.log('详情', this.detailsData);
         })
         .catch(err => {
@@ -305,7 +307,7 @@ table {
     margin-right: auto;
     > div {
       height: 900px;
-      overflow: hidden;
+      // overflow: hidden;
       > div {
         height: 823px;
         overflow-y: scroll;

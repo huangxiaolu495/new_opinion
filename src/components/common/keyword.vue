@@ -88,7 +88,7 @@ export default {
     position: absolute;
     top: 25px;
     left: 60px;
-    width: 130px;
+    width: 98px;
     border: 1px solid #797979;
     background-color: #fff;
     border-top: none;

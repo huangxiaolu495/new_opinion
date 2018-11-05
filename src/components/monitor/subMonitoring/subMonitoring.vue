@@ -162,6 +162,7 @@ table {
 }
 .blackSwanBox {
   width: 1500px;
+  height: 1000px;
 }
 .sidebarBox {
   float: left;

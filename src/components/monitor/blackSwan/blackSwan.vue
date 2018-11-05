@@ -54,6 +54,7 @@ export default {
         { title: '退市警示', path: '/monitor/blackSwan/delistingWarning' },
         { title: '高管离职', path: '/monitor/blackSwan/executives' },
         { title: '国际国内重大事件', path: '/monitor/blackSwan/importantEvent' },
+        { title: '自定义板块黑天鹅', path: '/monitor/blackSwan/customBlackSwan'}
       ]
     }
   },
@@ -157,7 +158,7 @@ table {
 }
 .blackSwanBox {
   width: 1500px;
-  height: 800px;
+  height: 1000px;
 }
 .sidebarBox {
   float: left;

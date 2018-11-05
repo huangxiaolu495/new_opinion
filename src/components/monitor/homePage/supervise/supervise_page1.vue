@@ -8,6 +8,9 @@
           <!-- 查询条件框 -->
           <div class="clearFloat">
             <div class="floatLeft">
+              <pull-down-list :prop="dispatch" @dispatchEvent="dispatchEvent"></pull-down-list>
+            </div>
+            <div class="floatLeft">
               <date-picker :prop="startDatePicker" @startDateEvent="startDateEvent"></date-picker>
             </div>
             <div class="floatLeft">
@@ -40,6 +43,8 @@
                 </td>
                 <td class="tableTd">{{item.category}}</td>
                 <td class="tableTd">{{item.publish_date}}</td>
+                <td class="tableTd">{{item.source}}</td>
+                <td class="tableTd"><router-link target="_blank" :to="'/monitor/homePage/supervise_detail?id='+ item.id">详情</router-link></td>
                 <!-- <td class="tableTd">
                   <a :href="item.url" target="_bank">查看</a>
                 </td> -->
@@ -89,7 +94,7 @@ export default {
     // const week = now.getTime() - 31536000000;
     const oneDayAfter = new Date().getTime() - 86400000;
     return {
-      url: 'http://10.25.24.51:10189/aip/risk/regulatory?',
+      url: ' http://10.25.24.51:10189/api/risk/regulatory?',
       isShowQueryResult: false,
       isShowDetails: false,
       hasResultData: false,
@@ -98,6 +103,7 @@ export default {
         end_date: '',
         category: '',
         keyword: '',
+        source:'',
         page: 0,
         page_size: 10
       },
@@ -119,8 +125,9 @@ export default {
         defaultDate: new Date()
       },
       detailsData: {},
-      categoryData: { title: '分类：', parentEvent: 'categoryEvent', default: '请选择', listWidth: 108, nowSelectWidth: 110, list: ['全部', '行政处罚', '市场禁入', '行政复议'] },
-      titleData: ['标题', '分类', '发文日期'],
+      categoryData: { title: '分类：', parentEvent: 'categoryEvent', default: '请选择', listWidth: 108, nowSelectWidth: 110, list: ['全部', '行政处罚', '市场禁入', '行政复议','信息公示','行业自律','中介机构监管','自律处分'] },
+      dispatch: { title: '发文机关名称：', parentEvent: 'dispatchEvent', default: '请选择', listWidth: 145, nowSelectWidth: 147, list: ['全部', '证监会', '深圳证券交易所', '上海证券交易所','中国证券投资基金业协会','中国证券业协会','中国银行间交易商协会'] },
+      titleData: ['标题', '分类', '发文日期','发文机关名称','详情'],
       dataList: [
         // {NOTICEDATE: '2018-01-01', NOTICETITLE: '2018-02-02',INFOBODYCONTENT: '正文内容正文内容正文内容', SOURCENAME: 'wwww'},
         // {NOTICEDATE: '2018-01-01', NOTICETITLE: '2018-02-02',INFOBODYCONTENT: '正文内容正文内容正文内容', SOURCENAME: 'wwww'},
@@ -138,11 +145,11 @@ export default {
       this.isShowQueryResult = true;
       this.hasResultData = false;
       this.sendData = JSON.parse(JSON.stringify(this.queryCondition));
-      for (let key in this.sendData) {
-        if (this.sendData[key] === '') {
-          delete this.sendData[key];
-        }
-      }
+      // for (let key in this.sendData) {
+      //   if (this.sendData[key] === '') {
+      //     delete this.sendData[key];
+      //   }
+      // }
       console.log('sendData', this.sendData)
       this.$_axios.get(this.url, {
         params: this.sendData
@@ -187,6 +194,13 @@ export default {
         this.queryCondition.category = '';
       } else {
         this.queryCondition.category = data[0];
+      }
+    },
+        dispatchEvent(...data) {
+      if (data[0] === '全部') {
+        this.queryCondition.source = '';
+      } else {
+        this.queryCondition.source = data[0];
       }
     },
     closeDetails() {

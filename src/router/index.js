@@ -148,6 +148,8 @@ import supervise_page1 from '@/components/monitor/homePage/supervise/supervise_p
 import supervise_page2 from '@/components/monitor/homePage/supervise/supervise_page2'
 // 监管要求 > 最新监管规则解读
 import supervise_page3 from '@/components/monitor/homePage/supervise/supervise_page3'
+//监管详情
+import supervise_detail from '@/components/monitor/homePage/supervise/supervise_detail'
 // >> 监管要求
 // 法律法规
 import legislation from '@/components/monitor/homePage/legislation/legislation'
@@ -157,6 +159,7 @@ import legislation from '@/components/monitor/homePage/legislation/legislation'
 import delistingWarning from '@/components/monitor/blackSwan/delistingWarning'
 import executives from '@/components/monitor/blackSwan/executives'
 import importantEvent from '@/components/monitor/blackSwan/importantEvent'
+import customBlackSwan from '@/components/monitor/blackSwan/customBlackSwan'
 
 // >>>关联公司预警子页面
 import queryInformation from '@/components/monitor/companyWarning/queryInformation'
@@ -199,6 +202,12 @@ export default new Router({
       name: 'fundDetailtwo',
       component: fundDetailtwo
     },
+    {
+      path: '/monitor/homePage/supervise_detail',
+      name: 'supervise_detail',
+      component:supervise_detail
+    },
+
     {
       path: '/test',
       name: 'test',
@@ -587,6 +596,11 @@ export default new Router({
               component: importantEvent,
 
             },
+            {
+              path:'/monitor/blackSwan/customBlackSwan',
+              name: 'customBlackSwan',
+              component: customBlackSwan,
+            }
           ]
         },
         // 关联公司预警

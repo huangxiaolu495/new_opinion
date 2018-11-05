@@ -85,6 +85,12 @@
         left: 230px;
         font-size: 22px;
   }
+  .yuqingfen{
+    color:#000;
+  }
+  .yuqingfen:hover{
+    text-decoration: none;
+  }
   .table_one{
     display: none;
   }

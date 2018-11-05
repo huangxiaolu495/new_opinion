@@ -25,6 +25,7 @@
                 </span>
               </div>
             </div>
+
             <div v-else class="floatLeft">
               <pull-down-list :prop="modulesNameList" @modulesNameEvent='modulesNameEvent'></pull-down-list>
             </div>

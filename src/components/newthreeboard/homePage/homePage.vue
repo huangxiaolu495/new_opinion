@@ -86,6 +86,7 @@ export default {
 }
 .homePageMain {
   width: 1719px;
+  height: 1000px;
 }
 .homePageChildPage {
   float: left;

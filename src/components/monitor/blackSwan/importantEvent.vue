@@ -40,6 +40,7 @@
                   <span @click="details(item, index)">{{item.details}}</span>
                 </td>
                 <td>{{item.SOURCE}}</td>
+
               </tr>
             </tbody>
           </table>
