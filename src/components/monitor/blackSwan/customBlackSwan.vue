@@ -217,13 +217,13 @@ export default {
     // },
     paginationSelect(pageNumber) {
       const sendData = JSON.parse(JSON.stringify(this.sendData));
-      sendData.page = pageNumber;
+      sendData.page = pageNumber - 1;
       console.log('sendData', sendData)
       this.$_axios.get(this.url, {
         params: sendData
       }).then(response => {
         console.log('法律法规查询结果', response.data.result);
-        this.resultData = response.data.result.Announce_List;
+        this.resultData = response.data.result.result;
         this.resultData.forEach(item => {
           item.content = item.content.toString().replace(/\\r\\n\\r\\n/g, "<br>");
           item.content = item.content.toString().replace(/\\r\\n/g, "<br>");
@@ -231,8 +231,8 @@ export default {
         this.dataList = JSON.parse(JSON.stringify(this.resultData));
         this.dataList.forEach(item => {
           // item.SHOWTIME = item.SHOWTIME ? commonMethods.formatDateTime(new Date(item.SHOWTIME)) : '-';
-          if (item.content && item.content.length > 210) {
-            item.content = item.content.slice(0, 210) + '...';
+          if (item.content && item.content.length > 150) {
+            item.content = item.content.slice(0, 150) + '...';
             item.details = '...详情';
           }
         });
@@ -255,6 +255,7 @@ export default {
           alert('请选择栏目')
           return;
       }
+
       if(this.queryCondition.sector == ''){
         alert('请选择板块名')
         return
@@ -273,12 +274,12 @@ export default {
         });
         this.dataList = JSON.parse(JSON.stringify(this.resultData));
         console.log(this.dataList)
-        this.paginationData.page_Count = response.data.result.total_count / 10;
+        this.paginationData.page_Count = Math.ceil(response.data.result.total_count / 10);
         this.paginationData.total_Count = response.data.result.total_count;
         this.dataList.forEach(item => {
           // item.SHOWTIME = item.SHOWTIME ? commonMethods.formatDateTime(new Date(item.SHOWTIME)) : '-';
-          if (item.content && item.content.length > 210) {
-            item.content = item.content.slice(0, 210) + '...';
+          if (item.content && item.content.length > 150) {
+            item.content = item.content.slice(0, 150) + '...';
             item.details = '...详情';
           }
         });
@@ -356,10 +357,10 @@ export default {
       width: 41px;
     }
     .tableTh:nth-child(2) {
-      width: 44px;
+      width: 63px;
     }
     .tableTh:nth-child(3) {
-      width: 90px;
+      width: 40px;
     }
     .tableTh:nth-child(4) {
       width: 40px;
