@@ -59,7 +59,7 @@
               </div>
               <div>
                 <EasyScrollbar>
-                  <div style="height:430px;width:320px">
+                  <div style="height:430px;width:430px">
                     <div>
                       <div>
                         <table>
@@ -77,6 +77,7 @@
                             </td>
                             <td>{{item['证券名称']}}</td>
                             <td>{{item['交易市场']}}</td>
+                            <td>{{item['发行主体']}}</td>
                           </tr>
                         </table>
                       </div>
@@ -245,7 +246,7 @@ export default {
       },
       modulesDataList: [],
       seeModuleData: {
-        th: ['证券代码', '证券名称', '交易市场'],
+        th: ['证券代码', '证券名称', '交易市场','发行主体'],
         tr: [
           // {证券代码: '835364', 证券名称: '德善药业', 交易市场: '交易市场a'}
         ]
@@ -297,7 +298,7 @@ export default {
       },
       codetype: 'S',
       securitiesImportResult: {
-        th: ['类型', '证券代码', '证券名称'],
+        th: ['类型', '证券代码', '发行主体'],
         tr: [
           // {title: '匹配列表', code: '835364', name: '德善药业'},
         ],
@@ -579,6 +580,8 @@ export default {
               code: item
             }
           });
+          console.log(this.securitiesImportResult.tr2)
+          console.log(this.securitiesImportResult.tr)
           this.securitiesImportResult.matchcountNumber = response.data.result.matchcount.matchcount;
           this.securitiesImportResult.unmatchlistNumber = response.data.result.matchcount.unmatchcount;
         }
@@ -1007,7 +1010,7 @@ export default {
 }
 
 .content {
-  width: 990px;
+  width: 1100px;
   height: 520px;
   margin-top: 20px;
   border: 1px solid #797979;

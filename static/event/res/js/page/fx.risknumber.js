@@ -29,7 +29,7 @@ window.onload = (function (M) {
       var today = new Date();
       var date_1 = new Date();
       date_1.setMonth(date_1.getMonth());
-      date_1.setFullYear(date_1.getFullYear() );
+      date_1.setFullYear(date_1.getFullYear() -1);
       var sDate = M.format(date_1, 'yyyy-MM-dd');
       this.beginTime = this.query('beginTime') || sDate;
       var date = today.setDate(today.getDate() + 1);

@@ -356,7 +356,7 @@ export default {
       var code = this.listtemp.find(v => {
         return v.content === data;
       })
-      // console.log(code)
+      console.log(code)
       code = code.code; // 公告类型对应的编码
       console.log(code)
       this.queryCondition.notice_type = code;

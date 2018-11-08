@@ -821,22 +821,37 @@ window.onload = (function (M) {
       //日期选择
       var today = new Date();
       var date_1 = new Date();
-      var data_2 = new Date();
-      date_1.setMonth(date_1.getMonth() - 1);
-      data_2.setMonth(data_2.getMonth() - 1)
+      date_1.setMonth(date_1.getMonth());
+
       //M('#month_start').val(M.format(date_3, 'yyyy-MM-dd'));
       var sDate = M.format(date_1, 'yyyy-MM-dd');
-      // var mDate = M.formatTwo(date_2, 'yyyy-MM-dd');
+
       this.beginTime = this.query('beginTime') || sDate;
-      // this.bTime = this.query('beginTime') || mDate
-      var date = today.setDate(today.getDate());
-      // var enddate = today.setDate(today.getDate() - 1);
+      var date = today.setDate(today.getDate() + 1);
 
       console.log(date);
       this.endTime = this.query('endTime') || M.format(today, 'yyyy-MM-dd');
       //			this.endTime = this.query('endTime') || M.format(today, 'yyyy-MM-dd');
 
       var that = this;
+
+
+
+      
+      // //日期选择
+      // var today_1 = new Date();
+      // var data_2 = new Date();
+      // data_2.setMonth(data_2.getMonth()-2);
+
+      // //M('#month_start').val(M.format(date_3, 'yyyy-MM-dd'));
+      // var sDate_1 = M.format(data_2, 'yyyy-MM-dd');
+
+      // this.beginTime_1 = this.query('beginTime') || sDate_1;
+      // var date = today_1.setDate(today_1.getDate());
+
+      // console.log(date);
+      // this.endTime_1 = this.query('endTime') || M.format(today_1, 'yyyy-MM-dd');
+
 
       var temp = "";
       for (var i = 0, len = that.risk_type_data.length; i < len; i++) {
@@ -977,7 +992,7 @@ window.onload = (function (M) {
         target: this.node.month_stop_two,
         date: {
           min: '2016-01-01',
-          select: that.endTime,
+          select: that.beginTime,
           max: '2020-01-01'
         },
         time: {
@@ -997,7 +1012,7 @@ window.onload = (function (M) {
         target: this.node.month_stop_three,
         date: {
           min: '2016-01-01',
-          select: that.endTime,
+          select: that.beginTime,
           max: '2020-01-01'
         },
         time: {
@@ -1207,7 +1222,6 @@ window.onload = (function (M) {
         var url = '';
         for (var i = 0, len = d.length; i < len; i++) {
           d[i].notice_date = M.format(new Date(d[i].notice_date), 'yyyy-MM-dd hh:ss:mm');
-          // d[i].notice_date = M.formatTwo(new Date(d[i].notice_date), 'yyyy-MM-dd hh:ss:mm');
           if (d[i].file_url) {
             url = d[i].file_url;
           } else {
@@ -1253,13 +1267,12 @@ window.onload = (function (M) {
         M('[data-href]').click(function () {
           var el = this;
           var beginTime = M('#month_start').val();
-          var beginTime = M('#month_start_two').val();
-          var beginTime = M('#month_start_three').val();
-          var bTime = M('#month_start_two').val();
-          var bTime = M('#month_start_three').val();
+          var beginTime_Two = M('#month_start_two').val();
+          var beginTime_three = M('#month_start_three').val();
 
-          window.open(el.dataset.href + '&bTime=' + bTime + '&endTime=' + endTime);
           window.open(el.dataset.href + '&beginTime=' + beginTime + '&endTime=' + endTime);
+          window.open(el.dataset.href + '&beginTime=' + beginTime_Two + '&endTime=' + endTime);
+          window.open(el.dataset.href + '&beginTime=' + beginTime_three + '&endTime=' + endTime);
         });
         M('.btn').click(function () {
           var code = $(this).find(".Stock_Code").html();

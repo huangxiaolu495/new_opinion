@@ -36,7 +36,7 @@
           <table>
             <tbody>
               <tr>
-                <th v-for="(item, index) of titleData" :key="index" class="tableTh" width:100px>{{item}}</th>
+                <th v-for="(item, index) of titleData" :key="index" class="tableThOne" width:100px>{{item}}</th>
               </tr>
               <tr v-for="(item, index) of dataList" :key="index">
                 <td class="colorBule">
@@ -318,6 +318,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
 .queryResult {
   table {
     width: 1180px;
@@ -326,6 +327,24 @@ export default {
     border-collapse: collapse;
     word-wrap: break-word;
     word-break: break-all;
+    .tableThOne:nth-child(1) {
+      width: 144px ;
+    }
+    .tableThOne:nth-child(2) {
+      width: 63px;
+    }
+    .tableThOne:nth-child(3) {
+      width: 144px;
+    }
+    .tableThOne:nth-child(4) {
+      width: 50px;
+    }
+    .tableThOne:nth-child(5) {
+      width: 50px;
+    }
+    .tableThOne:nth-child(6) {
+      width: 50px;
+    }
     th {
       height: 40px;
       line-height: 40px;
@@ -352,25 +371,8 @@ export default {
         cursor: pointer;
         color: blue;
       }
-    }
-    // .tableTh:nth-child(1) {
-    //   width: 144px;
-    // }
-    // .tableTh:nth-child(2) {
-    //   width: 63px;
-    // }
-    // .tableTh:nth-child(3) {
-    //   width: 40px;
-    // }
-    // .tableTh:nth-child(4) {
-    //   width: 40px;
-    // }
-    // .tableTh:nth-child(5) {
-    //   width: 50px;
-    // }
-    // .tableTh:nth-child(6) {
-    //   width: 50px;
-    // }
+    } 
+
   }
 }
 </style>
