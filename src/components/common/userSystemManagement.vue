@@ -134,6 +134,7 @@
                               </td>
                               <td>{{item.code}}</td>
                               <td>{{item.name}}</td>
+                              <td>{{item.company}}</td>
                             </tr>
                             <tr v-for="(item, index) of securitiesImportResult.tr2" :key="index">
                               <td>
@@ -142,6 +143,7 @@
                               </td>
                               <td>{{item.code}}</td>
                               <td>{{item.name}}</td>
+                              <td>{{item.company}}</td>
                             </tr>
                           </table>
                           <div class="matchcountBottom">
@@ -298,7 +300,7 @@ export default {
       },
       codetype: 'S',
       securitiesImportResult: {
-        th: ['类型', '证券代码', '发行主体'],
+        th: ['类型', '证券代码', '证券名称','发行主体'],
         tr: [
           // {title: '匹配列表', code: '835364', name: '德善药业'},
         ],
@@ -573,6 +575,7 @@ export default {
             return {
               code: item.securitycode,
               name: item.securityname,
+              company: item.companyname
             }
           });
           this.securitiesImportResult.tr2 = response.data.result.unmatchlist.map(item => {
@@ -580,8 +583,6 @@ export default {
               code: item
             }
           });
-          console.log(this.securitiesImportResult.tr2)
-          console.log(this.securitiesImportResult.tr)
           this.securitiesImportResult.matchcountNumber = response.data.result.matchcount.matchcount;
           this.securitiesImportResult.unmatchlistNumber = response.data.result.matchcount.unmatchcount;
         }

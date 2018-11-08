@@ -821,12 +821,15 @@ window.onload = (function (M) {
       //日期选择
       var today = new Date();
       var date_1 = new Date();
+      var date_2 = new Date();
       date_1.setMonth(date_1.getMonth());
+      date_2.setMonth(date_2.getMonth() - 1);
 
       //M('#month_start').val(M.format(date_3, 'yyyy-MM-dd'));
       var sDate = M.format(date_1, 'yyyy-MM-dd');
-
+      var sDate_2 = M.format(date_2, 'yyyy-MM-dd');
       this.beginTime = this.query('beginTime') || sDate;
+      this.beginTime_Two = this.query('beginTime') || sDate_2;
       var date = today.setDate(today.getDate() + 1);
 
       console.log(date);
@@ -928,7 +931,7 @@ window.onload = (function (M) {
         target: this.node.month_start_two,
         date: {
           min: '2016-01-01',
-          select: that.beginTime,
+          select: that.beginTime_Two,
           max: 'now',
           //					format: 'yyyy-MM-dd'
         },
@@ -950,7 +953,7 @@ window.onload = (function (M) {
               target: this.node.month_start_three,
               date: {
                 min: '2016-01-01',
-                select: that.beginTime,
+                select: that.beginTime_Two,
                 max: 'now',
                 //					format: 'yyyy-MM-dd'
               },
@@ -1267,11 +1270,11 @@ window.onload = (function (M) {
         M('[data-href]').click(function () {
           var el = this;
           var beginTime = M('#month_start').val();
-          var beginTime_Two = M('#month_start_two').val();
+          // var beginTime_Two = M('#month_start_two').val();
           var beginTime_three = M('#month_start_three').val();
 
           window.open(el.dataset.href + '&beginTime=' + beginTime + '&endTime=' + endTime);
-          window.open(el.dataset.href + '&beginTime=' + beginTime_Two + '&endTime=' + endTime);
+          // window.open(el.dataset.href + '&beginTime=' + beginTime_Two + '&endTime=' + endTime);
           window.open(el.dataset.href + '&beginTime=' + beginTime_three + '&endTime=' + endTime);
         });
         M('.btn').click(function () {
