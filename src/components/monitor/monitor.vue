@@ -50,6 +50,9 @@
         <div class="link-blackSwan hover">
           <router-link to="/monitor/blackSwan/delistingWarning">黑天鹅事件</router-link>
         </div>
+        <div class="link-comRelease hover">
+          <router-link to="/monitor/companyRelease/release">公司发布</router-link>
+        </div>
       </div>
       <router-view></router-view>
     </div>
@@ -173,7 +176,7 @@ export default {
 }
 
 .homePageNav {
-  width: 1452px;
+  width: 1500px;
   height: 70px;
   font: 20px/70px Arial;
   margin-top:10px;
@@ -198,6 +201,14 @@ export default {
   > div {
     float: left;
     width: 250px;
+    height: 100%;
+    text-align: center;
+    cursor: pointer;
+    border-left: 1px solid #797979;
+  }
+  > div:nth-child(6) {
+    float: left;
+    width: 248px;
     height: 100%;
     text-align: center;
     cursor: pointer;

@@ -57,6 +57,7 @@ export default {
   // max-width: 75px;
   float: left;
   font: 400 14px/25px Arial;
+  margin-left:10px;
 }
 .pullDownListContent{
   float: left;

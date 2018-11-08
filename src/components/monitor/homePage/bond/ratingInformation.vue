@@ -40,7 +40,7 @@
           <tr v-for="(item, index) of tableData.tr" :key="index">
             <td>{{item.notice_date}}</td>
             <td>{{item.ratingdate}}</td>
-            <td>{{item.companycode}}</td>
+            <!-- <td>{{item.companycode}}</td> -->
             <td>{{item.companyname}}</td>
             <td>{{item.creditname}}</td>
             <td>{{item.title}}</td>
@@ -80,7 +80,7 @@ export default {
       },
       sendData: {},
       tableData: {
-        th: ['公告日期', '评级日期', '公司代码', '机构名称', '评级机构名称', '来源标题', '信用评级', '评级展望', '信用评级类型'],
+        th: ['公告日期', '评级日期','机构名称', '评级机构名称', '来源标题', '信用评级', '评级展望', '信用评级类型'],
         tr: [
           { notice_date: '', companycode: '', companyname: '', creditcode: '', creditname: '', title: '', rating: '', ratefwd: '', rate_type: '' }
           // companycode companyname creditcode creditname itype/ notice_date rate_type ratefwd rating ratingdate title
@@ -232,22 +232,19 @@ export default {
       width: 80px;
     }
     .title:nth-child(3) {
-      width: 65px;
+      width: 100px;
     }
     .title:nth-child(4) {
-      width: 105px;
+      width: 232px;
     }
     .title:nth-child(5) {
-      width: 135px;
+      width: 424px;
     }
     .title:nth-child(7) {
       width: 80px;
     }
     .title:nth-child(8) {
-      width: 80px;
-    }
-    .title:nth-child(9) {
-      width: 95px;
+      width: 99px;
     }
   }
 }

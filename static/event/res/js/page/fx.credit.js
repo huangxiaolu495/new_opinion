@@ -821,13 +821,16 @@ window.onload = (function (M) {
       //日期选择
       var today = new Date();
       var date_1 = new Date();
-      date_1.setMonth(date_1.getMonth());
-
+      var data_2 = new Date();
+      date_1.setMonth(date_1.getMonth() - 1);
+      data_2.setMonth(data_2.getMonth() - 1)
       //M('#month_start').val(M.format(date_3, 'yyyy-MM-dd'));
       var sDate = M.format(date_1, 'yyyy-MM-dd');
-
+      // var mDate = M.formatTwo(date_2, 'yyyy-MM-dd');
       this.beginTime = this.query('beginTime') || sDate;
-      var date = today.setDate(today.getDate() + 1);
+      // this.bTime = this.query('beginTime') || mDate
+      var date = today.setDate(today.getDate());
+      // var enddate = today.setDate(today.getDate() - 1);
 
       console.log(date);
       this.endTime = this.query('endTime') || M.format(today, 'yyyy-MM-dd');
@@ -974,7 +977,7 @@ window.onload = (function (M) {
         target: this.node.month_stop_two,
         date: {
           min: '2016-01-01',
-          select: that.beginTime,
+          select: that.endTime,
           max: '2020-01-01'
         },
         time: {
@@ -994,7 +997,7 @@ window.onload = (function (M) {
         target: this.node.month_stop_three,
         date: {
           min: '2016-01-01',
-          select: that.beginTime,
+          select: that.endTime,
           max: '2020-01-01'
         },
         time: {
@@ -1204,6 +1207,7 @@ window.onload = (function (M) {
         var url = '';
         for (var i = 0, len = d.length; i < len; i++) {
           d[i].notice_date = M.format(new Date(d[i].notice_date), 'yyyy-MM-dd hh:ss:mm');
+          // d[i].notice_date = M.formatTwo(new Date(d[i].notice_date), 'yyyy-MM-dd hh:ss:mm');
           if (d[i].file_url) {
             url = d[i].file_url;
           } else {
@@ -1251,7 +1255,10 @@ window.onload = (function (M) {
           var beginTime = M('#month_start').val();
           var beginTime = M('#month_start_two').val();
           var beginTime = M('#month_start_three').val();
+          var bTime = M('#month_start_two').val();
+          var bTime = M('#month_start_three').val();
 
+          window.open(el.dataset.href + '&bTime=' + bTime + '&endTime=' + endTime);
           window.open(el.dataset.href + '&beginTime=' + beginTime + '&endTime=' + endTime);
         });
         M('.btn').click(function () {
@@ -1280,11 +1287,11 @@ window.onload = (function (M) {
           $stock_p.show()
           $.ajax({
             type: 'get',
-            url: 'http://10.25.24.51:10189/api/credit/rzrq_bd',
+            url: 'http://10.25.24.51:10197/api/credit/rzrq_bd',
             data: {
               start_date: $('#month_start_two').val(),
               end_date: '',
-              markettype: $('#exchange_down').val() == '全部' ? '' : $('#exchange_down').val(),
+              // markettype: $('#exchange_down').val() == '全部' ? '' : $('#exchange_down').val(),
               companyname: $('#select_down_title').val() == '全部' ? '' : $('#select_down_title').val(),
               securitycode: $('#Security_name').val(),
               page: 0,
@@ -1339,11 +1346,11 @@ window.onload = (function (M) {
           })
           $.ajax({
             type: 'get',
-            url: 'http://10.25.24.51:10189/api/credit/rzrq_guarantee',
+            url: 'http://10.25.24.51:10197/api/credit/rzrq_guarantee',
             data: {
               start_date: $('#month_start_three').val(),
               end_date: '',
-              markettype: $('#exchange_down_two').val() == '全部' ? '' : $('#exchange_down_two').val(),
+              // markettype: $('#exchange_down_two').val() == '全部' ? '' : $('#exchange_down_two').val(),
               companyname: $('#select_down_title_two').val() == '全部' ? '' : $('#select_down_title_two').val(),
               securitycode: $('#Security_name_two').val(),
               import: '',
@@ -1415,17 +1422,17 @@ window.onload = (function (M) {
         //点击查询按钮，进行ajax请求，首先获取参数
         $('#finance_btnSelect').on('click',function(){
           console.log($('#select_down_title').val())
-          console.log($('#exchange_down').val())
+          // console.log($('#exchange_down').val())
           console.log($('#Security_name').val())
           console.log($('#month_start_two').val())
           console.log($('#month_stop_two').val())
           $.ajax({
             type:'get',
-            url:'http://10.25.24.51:10189/api/credit/rzrq_bd',
+            url:'http://10.25.24.51:10197/api/credit/rzrq_bd',
             data:{
               start_date: $('#month_start_two').val(),
-              end_date: '',
-              markettype: $('#exchange_down').val() == '全部' ? '' : $('#exchange_down').val(),
+              end_date: $('#month_stop_two').val(),
+              // markettype: $('#exchange_down').val() == '全部' ? '' : $('#exchange_down').val(),
               companyname: $('#select_down_title').val() == '全部' ? '' : $('#select_down_title').val(),
               securitycode: $('#Security_name').val(),
               page:0,
@@ -1479,16 +1486,16 @@ window.onload = (function (M) {
             }
           })
         })
-var currentpage = '';
+  var currentpage = '';
 
         function fanice(currentpage) {
           $.ajax({
             type: 'get',
-            url: 'http://10.25.24.51:10189/api/credit/rzrq_bd',
+            url: 'http://10.25.24.51:10197/api/credit/rzrq_bd',
             data: {
               start_date: $('#month_start_two').val(),
-              end_date: '',
-              markettype: $('#exchange_down').val() == '全部' ? '' : $('#exchange_down').val(),
+              end_date:  $('#month_stop_two').val(),
+              // markettype: $('#exchange_down').val() == '全部' ? '' : $('#exchange_down').val(),
               companyname: $('#select_down_title').val() == '全部' ? '' : $('#select_down_title').val(),
               securitycode: $('#Security_name').val(),
               page: currentpage || 0,
@@ -1509,11 +1516,11 @@ var currentpage = '';
         function guaran(Flushing) {
           $.ajax({
             type: 'get',
-            url: 'http://10.25.24.51:10189/api/credit/rzrq_guarantee',
+            url: 'http://10.25.24.51:10197/api/credit/rzrq_guarantee',
             data: {
               start_date: $('#month_start_three').val(),
-              end_date: '',
-              markettype: $('#exchange_down_two').val() == '全部' ? '' : $('#exchange_down_two').val(),
+              end_date: $('#month_stop_two').val(),
+              // markettype: $('#exchange_down_two').val() == '全部' ? '' : $('#exchange_down_two').val(),
               companyname: $('#select_down_title_two').val() == '全部' ? '' : $('#select_down_title_two').val(),
               securitycode: $('#Security_name_two').val(),
               import: '',
@@ -1535,11 +1542,11 @@ var currentpage = '';
         $('#finance_btnSelect_two').on('click',function(){
           $.ajax({
             type:'get',
-            url: 'http://10.25.24.51:10189/api/credit/rzrq_guarantee',
+            url: 'http://10.25.24.51:10197/api/credit/rzrq_guarantee',
             data:{
               start_date: $('#month_start_three').val(),
-              end_date: '',
-              markettype: $('#exchange_down_two').val() == '全部' ? '' : $('#exchange_down_two').val(),
+              end_date: $('#month_stop_three').val(),
+              // markettype: $('#exchange_down_two').val() == '全部' ? '' : $('#exchange_down_two').val(),
               companyname: $('#select_down_title_two').val() == '全部' ? '' : $('#select_down_title_two').val(),
               securitycode: $('#Security_name_two').val(),
               import:'',
@@ -1594,23 +1601,22 @@ var currentpage = '';
       // var isExportExcel = true
       $('#export').on('click',function(){
         var begin = $('#month_start_two').val()
-        // var stop = $('#month_stop_two').val()
-        var markettype = $('#exchange_down').val() == '全部' ? '' : $('#exchange_down').val()
+        var stop = $('#month_stop_two').val()
+        // var markettype = $('#exchange_down').val() == '全部' ? '' : $('#exchange_down').val()
         var companyname = $('#select_down_title').val() == '全部' ? '' : $('#select_down_title').val()
         var securitycode = $('#Security_name').val()
-        window.location.href = 'http://10.25.24.51:10189/api/credit/rzrq_bd?start_date='+begin+'&end_date=&markettype='+markettype+'&companyname='+companyname+'&securitycode='+securitycode+'&page=0&export=1'
-      })
+        window.location.href = 'http://10.25.24.51:10197/api/credit/rzrq_bd?start_date='+begin+'&end_date='+stop+'&companyname='+companyname+'&securitycode='+securitycode+'&page=0&export=1'})
 
 
         $('#export_two').on('click', function () {
           var start = $('#month_start_three').val()
-          // var stop = $('#month_stop_three').val()
-          var markettype = $('#exchange_down_two').val() == '全部' ? '' : $('#exchange_down_two').val()
+          var stop = $('#month_stop_three').val()
+          // var markettype = $('#exchange_down_two').val() == '全部' ? '' : $('#exchange_down_two').val()
           var companyname = $('#select_down_title_two').val() == '全部' ? '' : $('#select_down_title_two').val()
           var securitycode = $('#Security_name_two').val()
-          window.location.href = 'http://10.25.24.51:10189/api/credit/rzrq_guarantee?start_date=' + start + '&end_date=&markettype=' + markettype + '&companyname=' + companyname + '&securitycode=' + securitycode + '&page=0&export=1'
+          window.location.href = 'http://10.25.24.51:10197/api/credit/rzrq_guarantee?start_date='+start+'&end_date='+stop+'&companyname='+companyname+'&securitycode='+securitycode+'&page=0&export=1'
           // console.log(isExportExcel)
-
+          
           // console.log('导出的项')
           // if (!isExportExcel) return;
           // function getExplorer() {

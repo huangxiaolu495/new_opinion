@@ -83,13 +83,14 @@ export default {
   .icon-gouxuan{
     color: #797979;
     cursor: pointer;
+    margin-right:19px;
   }
   .keyword-pullDown{
     position: absolute;
     top: 25px;
     left: 60px;
     width: 98px;
-    border: 1px solid #797979;
+    // border: 1px solid #797979;
     background-color: #fff;
     border-top: none;
     z-index: 1;

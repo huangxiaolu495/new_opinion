@@ -12,6 +12,8 @@ import companyWarning from '@/components/monitor/companyWarning/companyWarning'
 import subMonitoring from '@/components/monitor/subMonitoring/subMonitoring'
 // 黑天鹅事件
 import blackSwan from '@/components/monitor/blackSwan/blackSwan'
+//公司发布
+import companyRelease from '@/components/monitor/companyRelease/companyRelease'
 // 用户管理
 import userSystem from '@/components/common/userSystemManagement'
 // 重点关注池
@@ -160,6 +162,9 @@ import delistingWarning from '@/components/monitor/blackSwan/delistingWarning'
 import executives from '@/components/monitor/blackSwan/executives'
 import importantEvent from '@/components/monitor/blackSwan/importantEvent'
 import customBlackSwan from '@/components/monitor/blackSwan/customBlackSwan'
+
+//公司公告子页面
+import release from '@/components/monitor/companyRelease/release'
 
 // >>>关联公司预警子页面
 import queryInformation from '@/components/monitor/companyWarning/queryInformation'
@@ -571,6 +576,18 @@ export default new Router({
           path: '/monitor/subMonitoring',
           name: 'subMonitoring',
           component: subMonitoring
+        },
+        //公告
+        {
+          path:'/monitor/companyRelease',
+          name: 'companyRelease',
+          component: companyRelease,
+          redirect: companyRelease,
+          children: [{
+            path:'/monitor/companyRelease/release',
+            name:'release',
+            component:release
+          }]
         },
         // 黑天鹅
         {

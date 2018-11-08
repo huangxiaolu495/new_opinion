@@ -29,7 +29,7 @@ window.onload = (function (M) {
       var today = new Date();
       var date_1 = new Date();
       date_1.setMonth(date_1.getMonth());
-      date_1.setFullYear(date_1.getFullYear() - 1);
+      date_1.setFullYear(date_1.getFullYear() );
       var sDate = M.format(date_1, 'yyyy-MM-dd');
       this.beginTime = this.query('beginTime') || sDate;
       var date = today.setDate(today.getDate() + 1);
@@ -56,6 +56,7 @@ window.onload = (function (M) {
           today: false
         },
       });
+
       M('#btnSelect').click(function () {
         that.pageNum = 1;
         var opt = {
@@ -111,6 +112,16 @@ window.onload = (function (M) {
         });
         M('#detailData')[0].innerHTML = str;
         M.ellipsisToggle();
+
+        //惠新添加的内容
+        $('#btnExport').on('click',function(){
+          console.log($('#month_start').val())
+          console.log($('#month_stop').val())
+          var timebegin = $('#month_start').val()
+          var endbegin = $('#month_stop').val()
+          window.location.href= 'http://10.25.24.51:10197/api/credit/count_risk_export?start_date='+timebegin+'&end_date='+endbegin+''
+
+        })
 
         that.page = M.ui.page.init({
           container: this.node.page,
@@ -218,6 +229,8 @@ window.onload = (function (M) {
         'class': 'load'
       }).outerHTML;
     },
+
+
 
     renderNull: function (msg, state) {
       return M.element.creat('span', {

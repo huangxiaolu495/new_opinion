@@ -353,24 +353,24 @@ export default {
         color: blue;
       }
     }
-    .tableTh:nth-child(1) {
-      width: 41px;
-    }
-    .tableTh:nth-child(2) {
-      width: 63px;
-    }
-    .tableTh:nth-child(3) {
-      width: 40px;
-    }
-    .tableTh:nth-child(4) {
-      width: 40px;
-    }
-    .tableTh:nth-child(5) {
-      width: 50px;
-    }
-    .tableTh:nth-child(6) {
-      width: 50px;
-    }
+    // .tableTh:nth-child(1) {
+    //   width: 144px;
+    // }
+    // .tableTh:nth-child(2) {
+    //   width: 63px;
+    // }
+    // .tableTh:nth-child(3) {
+    //   width: 40px;
+    // }
+    // .tableTh:nth-child(4) {
+    //   width: 40px;
+    // }
+    // .tableTh:nth-child(5) {
+    //   width: 50px;
+    // }
+    // .tableTh:nth-child(6) {
+    //   width: 50px;
+    // }
   }
 }
 </style>
