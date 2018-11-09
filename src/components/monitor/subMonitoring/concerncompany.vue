@@ -90,7 +90,7 @@ export default {
     const oneDayAfter = new Date().getTime() - 86400000;
     const oneweek = new Date().getTime() - 604800000;
     return {
-      url: 'http://10.25.24.51:10194/api/rest/nlp/bod/query_project_news?',
+      url: 'http://10.29.137.74:10194/api/rest/nlp/bod/query_project_news?',
       isShowQueryResult: false,
       hasResultData: false,
       isShowDropDownList: false,

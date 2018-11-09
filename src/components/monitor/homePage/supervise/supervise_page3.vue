@@ -79,7 +79,7 @@ export default {
     // const week = now.getTime() - 604800000;
     const oneDayAfter = new Date().getTime() - 86400000;
     return {
-      url: 'http://10.25.24.51:10189/api/risk/supervise_rule?',
+      url: 'http://10.29.137.74:10189/api/risk/supervise_rule?',
       isShowQueryResult: false,
       isShowDetails: false,
       originDataList: { title: '来源：', parentEvent: 'rulesOrigin', default: '全部', listWidth: 108, nowSelectWidth: 110, list: ['全部', '券商中国', '金融监管研究院'] },
@@ -182,7 +182,7 @@ export default {
     showDetails(item) {
       this.isShowDetails = false;
       console.log(item)
-      this.$_axios.get('http://10.25.24.51:10189/api/risk/supervise_rule_detail?id=' + item.id)
+      this.$_axios.get('http://10.29.137.74:10189/api/risk/supervise_rule_detail?id=' + item.id)
         .then(response => {
           console.log(item)
           this.isShowDetails = true;

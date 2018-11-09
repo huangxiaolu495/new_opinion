@@ -74,7 +74,7 @@ export default {
     const _year = new Date().getTime() - 31536000000;
     // const oneDayAfter = new Date().getTime() - 86400000;
     return {
-      url: 'http://10.25.24.51:10189/api/risk/neeq_pub_info3',
+      url: 'http://10.29.137.74:10189/api/risk/neeq_pub_info3',
       isQueryResult: false,
       queryType: '按证券代码查询',
       inquiryLetterType: {
@@ -164,7 +164,7 @@ export default {
       this.isQueryResult = false;
       if (queryType == '按证券代码查询') {
         this.sendData = JSON.parse(JSON.stringify(this.queryCondition));
-        this.url = 'http://10.25.24.51:10189/api/risk/neeq_pub_info3';
+        this.url = 'http://10.29.137.74:10189/api/risk/neeq_pub_info3';
         this.sector = '';
       } else {
         this.sendData = {
@@ -180,7 +180,7 @@ export default {
           alert('请选择板块');
           return;
         }
-        this.url = 'http://10.25.24.51:10189/api/risk/neeq_pub_sector3';
+        this.url = 'http://10.29.137.74:10189/api/risk/neeq_pub_sector3';
       }
 
       for (let key in this.sendData) {
@@ -247,7 +247,7 @@ export default {
       this.sector = data[0];
     },
     moduleInit() {
-      const url = 'http://10.25.24.51:10189/api/risk/sector_set/query'
+      const url = 'http://10.29.137.74:10189/api/risk/sector_set/query'
       const sendData = {
         userid: 'risk'
       };

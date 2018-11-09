@@ -184,10 +184,10 @@ export default {
         this.querSuccess = true;
         this.isShowCodeList = false;
 
-        let url = 'http://10.25.24.51:10192/api/rest/nlp/risk/fund_info?';
-        let pur_red_type_url = 'http://10.25.24.51:10192/api/rest/nlp/risk/pur_red_type?';
-        let fund_manager_url = 'http://10.25.24.51:10192/api/rest/nlp/risk/fund_manager?';
-        let pur_red_info_url = 'http://10.25.24.51:10192/api/rest/nlp/risk/pur_red_info?';
+        let url = 'http://10.29.137.74:10192/api/rest/nlp/risk/fund_info?';
+        let pur_red_type_url = 'http://10.29.137.74:10192/api/rest/nlp/risk/pur_red_type?';
+        let fund_manager_url = 'http://10.29.137.74:10192/api/rest/nlp/risk/fund_manager?';
+        let pur_red_info_url = 'http://10.29.137.74:10192/api/rest/nlp/risk/pur_red_info?';
         url = url + 'SECURITYCODE=' + this.queryCondition.securityCode;
         // 查询基金信息
         this.$_axios.get(url)

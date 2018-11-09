@@ -95,7 +95,7 @@ export default {
   data() {
     const oneDayAfter = new Date().getTime() - 86400000;
     return {
-      url: 'http://10.25.24.51:10193/api/risk/fund_announce?',
+      url: 'http://10.29.137.74:10193/api/risk/fund_announce?',
       isShowQueryResult: false,
       hasResultData: false,
       isShowDetails: false,
@@ -278,7 +278,7 @@ export default {
     },
     newsDetails(item) {
       this.isShowDetails = false;
-      this.$_axios.get('http://10.25.24.51:10193/api/risk/fund_announce_detail?id=' + item.infocode)
+      this.$_axios.get('http://10.29.137.74:10193/api/risk/fund_announce_detail?id=' + item.infocode)
         .then(response => {
           this.isShowDetails = true;
           const resultData = response.data.result.news_detail;
@@ -301,7 +301,7 @@ export default {
     this.queryCondition.from_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
     this.queryCondition.to_date = commonMethods.formatDateTime2(this.endDatePicker.defaultDate);
     this.codeDataList = this.$store.state.codeDataList_F;
-    // const url = 'http://10.25.24.51:10193/api/risk/code_name_info';
+    // const url = 'http://10.29.137.74:10193/api/risk/code_name_info';
     // const sendData = {
     //   security_type: 'F'
     // }

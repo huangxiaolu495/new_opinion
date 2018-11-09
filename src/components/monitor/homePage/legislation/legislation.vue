@@ -82,7 +82,7 @@ export default {
   data() {
     const week = new Date().getTime() - 86400000 * 7;
     return {
-      url: 'http://10.25.24.51:10189/api/risk/law_regulation_customize?',
+      url: 'http://10.29.137.74:10189/api/risk/law_regulation_customize?',
       isShowQueryResult: false,
       hasResultData: false,
       resultData: null,

@@ -81,8 +81,8 @@ export default {
     const now = new Date();
     const week = now.getTime() - 604800000;
     return {
-      // url: 'http://10.25.24.51:10193/api/risk/fund_announce',
-      url: 'http://10.25.24.51:10193/api/risk/stock_announce',
+      // url: 'http://10.29.137.74:10193/api/risk/fund_announce',
+      url: 'http://10.29.137.74:10193/api/risk/stock_announce',
       isShowQueryResult: false,
       hasResultData: false,
       resultData: null,

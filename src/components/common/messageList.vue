@@ -56,7 +56,7 @@ export default {
   methods:{
     newsDetails(item){
       this.isShowDetails = false;
-      this.$_axios.get('http://10.25.24.51:10189/api/risk/neeq_news_detail?neeq_id=' + item.id)
+      this.$_axios.get('http://10.29.137.74:10189/api/risk/neeq_news_detail?neeq_id=' + item.id)
       .then(response => {
         this.isShowDetails = true;
         const resultData = response.data.result;

@@ -86,7 +86,7 @@ export default {
   data() {
     const oneDayAfter = new Date().getTime() - 86400000;
     return {
-      url: 'http://10.25.24.51:10193/api/risk/bond_rate_change?',
+      url: 'http://10.29.137.74:10193/api/risk/bond_rate_change?',
       isQueryResult: false,
       isShowDetails: false,
       ratingChangeData: [],
@@ -233,7 +233,7 @@ export default {
     },
     portfoliocodeDetails(item) {
       this.isShowDetails = false;
-      let url = 'http://10.25.24.51:10193/api/risk/bond_base_detail?'
+      let url = 'http://10.29.137.74:10193/api/risk/bond_base_detail?'
         + 'portfoliocode=' + item.portfoliocode;
       this.$_axios.get(url)
         .then(response => {

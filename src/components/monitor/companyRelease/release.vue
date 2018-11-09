@@ -47,7 +47,7 @@
                 <th v-for="(item, index) of titleData" :key="index" class="tableThOne" width:100px>{{item}}</th>
               </tr>
               <tr v-for="(item, index) of dataList" :key="index">
-                  <td> <a :href="item.sourceurl">{{item.noticetitle}}</a></td>
+                  <td> <a target="_blank" :href="item.sourceurl">{{item.noticetitle}}</a></td>
                   <td>{{item.noticedate}}</td>
                   <td><button><router-link target="_blank" :to="'/monitor/homePage/fundDetail?id='+ item.infocode">详情>></router-link></button></td>
               </tr>
@@ -83,7 +83,7 @@ export default {
   data() {
     const oneDayAfter = new Date().getTime() - 86400000;
     return {
-      url: 'http://10.25.24.51:10193/api/risk/zts_announce?',
+      url: 'http://10.29.137.74:10193/api/risk/zts_announce?',
       isShowQueryResult: false,
       hasResultData: false,
       isShowTypeList:false,
@@ -145,7 +145,7 @@ export default {
   // },
     //获取板块名称 进入页面发送请求
   created(){
-      const url = 'http://10.25.24.51:10189/api/risk/sector_set/query'
+      const url = 'http://10.29.137.74:10189/api/risk/sector_set/query'
       const sendData = {
         userid: 'risk'
       };
@@ -170,7 +170,7 @@ export default {
           }
         }
       }).catch((err) => {
-
+        console.log(err)
       });
   
   },
@@ -248,6 +248,12 @@ export default {
       this.$_axios.get(this.url, {
         params: this.sendData
       }).then(response => {
+
+        console.log(response.data)
+        if(response.data.code == 410){
+          alert(response.data.message)
+          return;
+        }
         // 显示查询结果
         this.hasResultData = true;
         console.log('法律法规查询结果', response.data.result);
@@ -268,7 +274,7 @@ export default {
         // });
       })
         .catch(err => {
-          console.log(err);
+          // console.log(err.response.status);
         });
     },
     //板块名部分

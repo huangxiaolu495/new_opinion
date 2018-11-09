@@ -14,8 +14,8 @@
 				888: '' //本地
 			}[888] /*[/\(updebug\s(\d+)\)/g.exec(navigator.userAgent.toLowerCase())[1]];//(updebug 888)*/
 		}(),
-		//		path: 'http://10.25.24.51:8019/',
-//		path: 'http://10.25.24.51:8083/',
+		//		path: 'http://10.29.137.74:8019/',
+//		path: 'http://10.29.137.74:8083/',
 		path: 'http://xw.95538.cn/',
 		
 		//		path: '',

@@ -75,7 +75,7 @@ export default {
   data() {
     const oneDayAfter = new Date().getTime() - 86400000;
     return {
-      url: 'http://10.25.24.51:10191/api/rest/nlp/risk/query_announce_risk?',
+      url: 'http://10.29.137.74:10191/api/rest/nlp/risk/query_announce_risk?',
       isShowQueryResult: false,
       hasResultData: false,
       resultData: {},

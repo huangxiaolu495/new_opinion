@@ -148,7 +148,7 @@ export default {
     },
     created() {
       this.isShow = true;
-      const url = "http://10.25.24.51:10191/api/rest/nlp/risk/macro_index";
+      const url = "http://10.29.137.74:10191/api/rest/nlp/risk/macro_index";
       this.$_axios.get(url, {}).then(response => {
         // 显示查询结果
         this.isShow = true;

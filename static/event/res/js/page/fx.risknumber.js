@@ -15,7 +15,7 @@ window.onload = (function (M) {
     pageNum: 1,
 
     init: function (ops) {
-      M.path = 'http://10.25.24.51:10188/';
+      M.path = 'http://10.29.137.74:10188/';
       var list = [];
       this.add([{
         name: 'month_start',
@@ -100,7 +100,7 @@ window.onload = (function (M) {
         from_Date: M('#month_start').val() || '',
         to_Date: M('#month_stop').val() || '',
       };
-      var url = "http://10.25.24.51:10188/api/rest/nlp/Credit_Announce/count_risk?";
+      var url = "http://10.29.137.74:10188/api/rest/nlp/Credit_Announce/count_risk?";
       that.resolve(url, par, function (data) {
         var d = data.result.Announce_List;
         $.each(d, function (index, item) {
@@ -119,7 +119,7 @@ window.onload = (function (M) {
           console.log($('#month_stop').val())
           var timebegin = $('#month_start').val()
           var endbegin = $('#month_stop').val()
-          window.location.href= 'http://10.25.24.51:10197/api/credit/count_risk_export?start_date='+timebegin+'&end_date='+endbegin+''
+          window.location.href= 'http://10.29.137.74:10197/api/credit/count_risk_export?start_date='+timebegin+'&end_date='+endbegin+''
 
         })
 

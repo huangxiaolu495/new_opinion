@@ -105,7 +105,7 @@ export default {
     const now = new Date();
     const week = now.getTime() - 604800000;
     return {
-      url: 'http://10.25.24.51:10193/api/risk/abnormal_price',
+      url: 'http://10.29.137.74:10193/api/risk/abnormal_price',
       isShowQueryResult: false,
       queryType: '按证券代码',
       isShowDropDownList: false,
@@ -217,7 +217,7 @@ export default {
     datePicker
   },
   created(){
-      const url = 'http://10.25.24.51:10189/api/risk/sector_set/query'
+      const url = 'http://10.29.137.74:10189/api/risk/sector_set/query'
       const sendData = {
         userid: 'risk'
       };
@@ -382,7 +382,7 @@ export default {
       if (queryType == '按证券代码') {
         this.queryCondition.userid = ''
         this.sendData = JSON.parse(JSON.stringify(this.queryCondition));
-        this.url = 'http://10.25.24.51:10193/api/risk/abnormal_price';
+        this.url = 'http://10.29.137.74:10193/api/risk/abnormal_price';
         this.sector = '';
       } else {
         this.queryCondition.userid = 'risk'
@@ -400,7 +400,7 @@ export default {
           alert('请选择板块');
           return;
         }
-        this.url = 'http://10.25.24.51:10193/api/risk/abnormal_price_sector';
+        this.url = 'http://10.29.137.74:10193/api/risk/abnormal_price_sector';
       }
       for (let key in this.sendData) {
         if (this.sendData[key] === '') {

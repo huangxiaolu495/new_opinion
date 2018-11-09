@@ -28,7 +28,7 @@
         Stock_Type = that.query("Stock_Type") || '',
         Stock_Name = that.query("Stock_Name") || '',
         notice_source = that.query("notice_source") || '';
-      var url = "http://10.25.24.51:10188/api/rest/nlp/Credit_Announce/Stat?Stock_Code=" + Stock_Code + "&Risk_Type=" + Risk_Type + "&Stock_Type=" + Stock_Type + "&Stock_Name=" + Stock_Name + "&notice_source=" + notice_source;
+      var url = "http://10.29.137.74:10188/api/rest/nlp/Credit_Announce/Stat?Stock_Code=" + Stock_Code + "&Risk_Type=" + Risk_Type + "&Stock_Type=" + Stock_Type + "&Stock_Name=" + Stock_Name + "&notice_source=" + notice_source;
       that.resolve(url,null ,function (data) {
         var d = data.result;
         var str = '';

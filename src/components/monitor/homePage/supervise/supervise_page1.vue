@@ -94,7 +94,7 @@ export default {
     // const week = now.getTime() - 31536000000;
     const oneDayAfter = new Date().getTime() - 86400000;
     return {
-      url: ' http://10.25.24.51:10189/api/risk/regulatory?',
+      url: ' http://10.29.137.74:10189/api/risk/regulatory?',
       isShowQueryResult: false,
       isShowDetails: false,
       hasResultData: false,
@@ -210,7 +210,7 @@ export default {
     showDetails(item) {
       this.isShowDetails = false;
       console.log(item)
-      this.$_axios.get('http://10.25.24.51:10189/api/risk/regulatory_detail?id=' + item.id)
+      this.$_axios.get('http://10.29.137.74:10189/api/risk/regulatory_detail?id=' + item.id)
         .then(response => {
           console.log(item.title)
           this.isShowDetails = true;

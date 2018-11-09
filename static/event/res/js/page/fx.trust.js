@@ -26,8 +26,8 @@
           $("#keyword").val("");
         }
       });
-      M.path = 'http://10.25.24.51:10190/';
-      //			M.path = 'http://10.25.24.51:8189/';
+      M.path = 'http://10.29.137.74:10190/';
+      //			M.path = 'http://10.29.137.74:8189/';
 
       this.custid = this.query('eventId') || '';
       this.secCode = this.query('secCode') || '';

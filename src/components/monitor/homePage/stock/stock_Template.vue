@@ -84,7 +84,7 @@ export default {
     const week = now.getTime() - 604800000;
     return {
       //url地址
-      url: 'http://10.25.24.51:10193/api/risk/stock_announce_sector',
+      url: 'http://10.29.137.74:10193/api/risk/stock_announce_sector',
       isShowQueryResult: false,
       hasResultData: false,
       resultData: null,
@@ -356,7 +356,7 @@ export default {
     //获取板块名称 进入页面发送请求
   created(){
     console.log(this.queryCondition.notice_type)
-      const url = 'http://10.25.24.51:10189/api/risk/sector_set/query'
+      const url = 'http://10.29.137.74:10189/api/risk/sector_set/query'
       const sendData = {
         userid: 'risk'
       };

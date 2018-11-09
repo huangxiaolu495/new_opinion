@@ -72,7 +72,7 @@ export default {
   data() {
     const oneDayAfter = new Date().getTime() - 86400000;
     return {
-      url: 'http://10.25.24.51:10192/api/rest/nlp/risk/delist_caution?news_type=0&',
+      url: 'http://10.29.137.74:10192/api/rest/nlp/risk/delist_caution?news_type=0&',
       isShowQueryResult: false,
       hasResultData: false,
       resultData: null,

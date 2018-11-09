@@ -359,7 +359,7 @@ export default {
       console.log('提交')
       // this.nowAddModuleName
       if (!this.nowAddModuleName) return;
-      const url = 'http://10.25.24.51:10189/api/risk/sector_set/insert'
+      const url = 'http://10.29.137.74:10189/api/risk/sector_set/insert'
       const sendData = {
         userid: 'risk',
         sectorname: this.nowAddModuleName
@@ -380,7 +380,7 @@ export default {
     },
     // 删除模块
     deleteModules() {
-      const url = 'http://10.25.24.51:10189/api/risk/sector_set/delete'
+      const url = 'http://10.29.137.74:10189/api/risk/sector_set/delete'
       const tempArr = [];
       this.modulesDataList.map(item => {
         if (item.check) {
@@ -426,7 +426,7 @@ export default {
     },
     // 查看板块
     seeModule(modulename) {
-      const url = 'http://10.25.24.51:10189/api/risk/sector_set/detail'
+      const url = 'http://10.29.137.74:10189/api/risk/sector_set/detail'
       const sendData = {
         userid: 'risk',
         action: 'query',
@@ -459,7 +459,7 @@ export default {
         alert("请输入板块名");
       }
       else {
-        const url = 'http://10.25.24.51:10189/api/risk/sector_set/detail'
+        const url = 'http://10.29.137.74:10189/api/risk/sector_set/detail'
         const sendData = {
           userid: 'risk',
           action: 'update',
@@ -487,7 +487,7 @@ export default {
     // 清空板块信息
     emptyModulesInfo() {
       if (!this.nowSeeModule) return;
-      const url = 'http://10.25.24.51:10189/api/risk/sector_set/detail'
+      const url = 'http://10.29.137.74:10189/api/risk/sector_set/detail'
       const sendData = {
         userid: 'risk',
         action: 'drop',
@@ -514,7 +514,7 @@ export default {
     // 删除板块信息
     deleteModulesInfo() {
       if (!this.nowSeeModule) return;
-      const url = 'http://10.25.24.51:10189/api/risk/sector_set/detail'
+      const url = 'http://10.29.137.74:10189/api/risk/sector_set/detail'
       const tempArr = [];
       this.seeModuleData.tr.forEach(item => {
         if (item.check) {
@@ -558,7 +558,7 @@ export default {
         alert('请输入证券列表');
         return;
       }
-      const url = 'http://10.25.24.51:10189/api/risk/code_import/hand'
+      const url = 'http://10.29.137.74:10189/api/risk/code_import/hand'
       const sendData = {
         codetype: this.codetype,
         action: 'query',
@@ -592,7 +592,7 @@ export default {
     },
     // 多项选择-搜索
     search() {
-      const url = 'http://10.25.24.51:10189/api/risk/code_import/choose'
+      const url = 'http://10.29.137.74:10189/api/risk/code_import/choose'
       const sendData = {
         action: 'query',
         codetype: this.codetype,
@@ -636,7 +636,7 @@ export default {
     },
     // 多项选择-搜索-分页
     paginationSelect(pageNumber) {
-      const url = 'http://10.25.24.51:10189/api/risk/code_import/choose'
+      const url = 'http://10.29.137.74:10189/api/risk/code_import/choose'
       this.searchSendData.page = pageNumber - 1;
       this.isShowsearchResultList = true;
       this.hasSearchResultList = false;
@@ -683,7 +683,7 @@ export default {
         alert('未选择代码');
         return;
       }
-      const url = 'http://10.25.24.51:10189/api/risk/code_import/choose'
+      const url = 'http://10.29.137.74:10189/api/risk/code_import/choose'
       const sendData = {
         userid: 'risk',
         action: 'insert',
@@ -709,7 +709,7 @@ export default {
         alert('请选择要导入的板块');
         return;
       }
-      const url = 'http://10.25.24.51:10189/api/risk/code_import/hand'
+      const url = 'http://10.29.137.74:10189/api/risk/code_import/hand'
       const codelist = this.securitiesImportResult.tr.map(item => {
         return item.code;
       });
@@ -768,7 +768,7 @@ export default {
       }
     },
     moduleInit() {
-      const url = 'http://10.25.24.51:10189/api/risk/sector_set/query'
+      const url = 'http://10.29.137.74:10189/api/risk/sector_set/query'
       const sendData = {
         userid: 'risk'
       };
@@ -858,7 +858,7 @@ export default {
 }
 
 .securitiesImport {
-  width: 980px;
+  width: 1114px;
   height: 620px;
   margin-top: 20px;
   border: 1px solid #797979;
@@ -904,7 +904,7 @@ export default {
       word-break: break-all;
       th {
         height: 40px;
-        width: 106px;
+        width: 200px;
         line-height: 40px;
         border: 1px solid #797979;
         background-color: #f0f5f9;

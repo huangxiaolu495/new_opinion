@@ -185,7 +185,7 @@ import datePicker from "@/components/common/datePicker";
 export default {
   data() {
     return {
-      url: "http://10.25.24.51:10194/api/rest/nlp/bod/query_news?",
+      url: "http://10.29.137.74:10194/api/rest/nlp/bod/query_news?",
       isShowQueryResult: false,
       hasResultData: false,
       isShowQueryResult2: false,
@@ -430,7 +430,7 @@ export default {
     },
     usercollection(str) {
       this.isShowQueryResult2 = true;
-      const url = "http://10.25.24.51:10194/api/rest/nlp/bod/query_news?";
+      const url = "http://10.29.137.74:10194/api/rest/nlp/bod/query_news?";
       const sendData = {
         user: 'wangjkl',
         is_favorite: '1',
@@ -499,7 +499,7 @@ export default {
       // this.selectdetail = item.slice(0, item.indexOf(' '));
     },
     query() {
-      this.url = "http://10.25.24.51:10194/api/rest/nlp/bod/query_news?";
+      this.url = "http://10.29.137.74:10194/api/rest/nlp/bod/query_news?";
       this.isShowQueryResult = true;
       this.hasResultData = false;
       this.isExportExecl = false;
@@ -579,7 +579,7 @@ export default {
       })
     },
     tagbtn(item, index) {
-      this.url = "http://10.25.24.51:10194/api/rest/nlp/bod/update_type?";
+      this.url = "http://10.29.137.74:10194/api/rest/nlp/bod/update_type?";
       let sendData = {
         news_id: item.id,
         risk_type: item.signtag,
@@ -604,7 +604,7 @@ export default {
     //   this.items = search_item(this.msg);
     // },
     paginationSelect(pageNumber) {
-      this.url = "http://10.25.24.51:10194/api/rest/nlp/bod/query_news?";
+      this.url = "http://10.29.137.74:10194/api/rest/nlp/bod/query_news?";
       const sendData = JSON.parse(JSON.stringify(this.sendData));
       sendData.page = pageNumber;
       sendData.pageSize = 10;
@@ -648,7 +648,7 @@ export default {
         });
     },
     paginationSelect2(pageNumber) {
-      this.url = "http://10.25.24.51:10194/api/rest/nlp/bod/query_news?";
+      this.url = "http://10.29.137.74:10194/api/rest/nlp/bod/query_news?";
       const sendData = JSON.parse(JSON.stringify(this.sendData));
       sendData.page = pageNumber;
       sendData.pageSize = 10;
@@ -706,7 +706,7 @@ export default {
           is_delete: '',
         };
       }
-      this.url = "http://10.25.24.51:10194/api/rest/nlp/bod/update_favorite?";
+      this.url = "http://10.29.137.74:10194/api/rest/nlp/bod/update_favorite?";
       this.$_axios.get(this.url, {
         params: this.sendData
       }).then(response => {
@@ -852,19 +852,19 @@ export default {
       formData.append('export', 1);
       console.log('sendData', this.sendData)
       if (this.queryCondition.from_date && this.queryCondition.to_date) {
-        window.location.href = "http://10.25.24.51:10194/api/rest/nlp/bod/query_news?is_favorite=" + this.queryCondition.is_favorite + "&risk_type=" + this.queryCondition.risk_type + "&page=" + this.queryCondition.page + "&page_size=" + this.queryCondition.pageSize + "&file=" + this.sendFile + "&user=&key_info=" + this.queryCondition.key_info + "&from_date=" + this.queryCondition.from_date + "&to_date=" + this.queryCondition.to_date + "&export=1";
+        window.location.href = "http://10.29.137.74:10194/api/rest/nlp/bod/query_news?is_favorite=" + this.queryCondition.is_favorite + "&risk_type=" + this.queryCondition.risk_type + "&page=" + this.queryCondition.page + "&page_size=" + this.queryCondition.pageSize + "&file=" + this.sendFile + "&user=&key_info=" + this.queryCondition.key_info + "&from_date=" + this.queryCondition.from_date + "&to_date=" + this.queryCondition.to_date + "&export=1";
       } else if (this.queryCondition.from_date && !this.queryCondition.to_date) {
-        window.location.href = "http://10.25.24.51:10194/api/rest/nlp/bod/query_news?is_favorite=" + this.queryCondition.is_favorite + "&risk_type=" + this.queryCondition.risk_type + "&page=" + this.queryCondition.page + "&page_size=" + this.queryCondition.pageSize + "&file=" + this.sendFile + "&user=&key_info=" + this.queryCondition.key_info + "&from_date=" + this.queryCondition.from_date + "&export=1";
+        window.location.href = "http://10.29.137.74:10194/api/rest/nlp/bod/query_news?is_favorite=" + this.queryCondition.is_favorite + "&risk_type=" + this.queryCondition.risk_type + "&page=" + this.queryCondition.page + "&page_size=" + this.queryCondition.pageSize + "&file=" + this.sendFile + "&user=&key_info=" + this.queryCondition.key_info + "&from_date=" + this.queryCondition.from_date + "&export=1";
       }
       else if (this.queryCondition.to_date && !this.queryCondition.from_date) {
-        window.location.href = "http://10.25.24.51:10194/api/rest/nlp/bod/query_news?is_favorite=" + this.queryCondition.is_favorite + "&risk_type=" + this.queryCondition.risk_type + "&page=" + this.queryCondition.page + "&page_size=" + this.queryCondition.pageSize + "&file=" + this.sendFile + "&user=&key_info=" + this.queryCondition.key_info + "&to_date=" + this.queryCondition.to_date + "&export=1";
+        window.location.href = "http://10.29.137.74:10194/api/rest/nlp/bod/query_news?is_favorite=" + this.queryCondition.is_favorite + "&risk_type=" + this.queryCondition.risk_type + "&page=" + this.queryCondition.page + "&page_size=" + this.queryCondition.pageSize + "&file=" + this.sendFile + "&user=&key_info=" + this.queryCondition.key_info + "&to_date=" + this.queryCondition.to_date + "&export=1";
       }
       else {
-        window.location.href = "http://10.25.24.51:10194/api/rest/nlp/bod/query_news?is_favorite=" + this.queryCondition.is_favorite + "&risk_type=" + this.queryCondition.risk_type + "&page=" + this.queryCondition.page + "&page_size=" + this.queryCondition.pageSize + "&file=" + this.sendFile + "&user=&key_info=" + this.queryCondition.key_info + "&export=1";
+        window.location.href = "http://10.29.137.74:10194/api/rest/nlp/bod/query_news?is_favorite=" + this.queryCondition.is_favorite + "&risk_type=" + this.queryCondition.risk_type + "&page=" + this.queryCondition.page + "&page_size=" + this.queryCondition.pageSize + "&file=" + this.sendFile + "&user=&key_info=" + this.queryCondition.key_info + "&export=1";
       }
       // this.$_axios.post('http://10.25.26.232:10194/api/rest/nlp/bod/query_news?', formData, config).then(response => {
       // });
-      // this.$_axios.post("http://10.25.24.51:10194/api/rest/nlp/bod/query_news?is_favorite=&risk_type=&page=1&page_size=10&keyword=&checked=&user=&key_info=&export=1").then(response => {
+      // this.$_axios.post("http://10.29.137.74:10194/api/rest/nlp/bod/query_news?is_favorite=&risk_type=&page=1&page_size=10&keyword=&checked=&user=&key_info=&export=1").then(response => {
       // })
       //   .catch(err => {
       //     alert("导出失败，请稍后再试！");

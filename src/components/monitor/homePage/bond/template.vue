@@ -90,7 +90,7 @@ export default {
     const week = now.getTime() - 604800000;
     return {
       //url地址
-      url: 'http://10.25.24.51:10189/api/risk/sector_set/detail',
+      url: 'http://10.29.137.74:10189/api/risk/sector_set/detail',
       isShowQueryResult: false,
       hasResultData: false,
       resultData: null,
@@ -399,7 +399,7 @@ export default {
   //获取板块名称 进入页面发送请求
   created() {
     console.log(this.queryCondition.notice_type)
-    const url = 'http://10.25.24.51:10189/api/risk/sector_set/query'
+    const url = 'http://10.29.137.74:10189/api/risk/sector_set/query'
     const sendData = {
       userid: 'risk'
     };
@@ -463,7 +463,7 @@ export default {
     paginationSelect(pageNumber) {
       const sendData = JSON.parse(JSON.stringify(this.data));
       sendData.page = pageNumber;
-      const url = "http://10.25.24.51:10192/api/rest/nlp/risk/bond_announce";
+      const url = "http://10.29.137.74:10192/api/rest/nlp/risk/bond_announce";
       this.$_axios.get(url, {
         params: sendData
       }).then(response => {
@@ -512,7 +512,7 @@ export default {
             delete this.data.to_date
           }
           this.sendData = JSON.parse(JSON.stringify(this.data));
-          const url = "http://10.25.24.51:10192/api/rest/nlp/risk/bond_announce";
+          const url = "http://10.29.137.74:10192/api/rest/nlp/risk/bond_announce";
           this.$_axios.get(url, { params: this.sendData }).then(response => {
             this.hasResultData = true;
             this.dataList = JSON.parse(JSON.stringify(response.data.result.Announce_List))
