@@ -92,7 +92,8 @@ export default {
   data() {
     const now = new Date();
     // const week = now.getTime() - 31536000000;
-    const oneDayAfter = new Date().getTime() - 86400000;
+    const week = new Date().getTime() - 86400000 * 7;
+    // const oneDayAfter = new Date().getTime() - 86400000;
     return {
       url: ' http://10.29.137.74:10189/api/risk/regulatory?',
       isShowQueryResult: false,
@@ -114,10 +115,11 @@ export default {
         total_Count: 0,
         current: 1
       },
+
       startDatePicker: {
         title: '日期：',
         parentEvent: 'startDateEvent',
-        defaultDate: new Date(oneDayAfter)
+        defaultDate: new Date(week)
       },
       endDatePicker: {
         title: '至：',

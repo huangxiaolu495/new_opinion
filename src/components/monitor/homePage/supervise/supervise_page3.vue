@@ -77,7 +77,8 @@ export default {
   data() {
     const now = new Date();
     // const week = now.getTime() - 604800000;
-    const oneDayAfter = new Date().getTime() - 86400000;
+    const week = new Date().getTime() - 86400000 * 7;
+    // const oneDayAfter = new Date().getTime() - 86400000;
     return {
       url: 'http://10.29.137.74:10189/api/risk/supervise_rule?',
       isShowQueryResult: false,
@@ -111,7 +112,7 @@ export default {
       startDatePicker: {
         title: '日期：',
         parentEvent: 'startDateEvent',
-        defaultDate: new Date(oneDayAfter)
+        defaultDate: new Date(week)
       },
       endDatePicker: {
         title: '至：',
