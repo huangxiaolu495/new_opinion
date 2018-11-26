@@ -68,7 +68,7 @@ import keyword from '@/components/common/keyword'
 export default {
   data() {
     return {
-      url: 'http://10.29.137.74:10192/api/rest/nlp/risk/query_finance_risk?',
+      url: 'http://10.25.24.51:10192/api/rest/nlp/risk/query_finance_risk?',
       isShowQueryResult: false,
       hasResultData: false,
       resultData: null,

@@ -82,7 +82,7 @@ export default {
   data() {
     const oneDayAfter = new Date().getTime() - 86400000;
     return {
-      url: 'http://10.29.137.74:10193/api/risk/delist_caution_customize?',
+      url: 'http://10.25.24.51:10193/api/risk/delist_caution_customize?',
       isShowQueryResult: false,
       hasResultData: false,
       resultData: null,
@@ -163,7 +163,7 @@ export default {
   },
     //获取板块名称 进入页面发送请求
   created(){
-      const url = 'http://10.29.137.74:10189/api/risk/sector_set/query'
+      const url = 'http://10.25.24.51:10189/api/risk/sector_set/query'
       const sendData = {
         userid: 'risk'
       };

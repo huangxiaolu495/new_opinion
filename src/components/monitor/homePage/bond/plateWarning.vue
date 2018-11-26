@@ -3,7 +3,7 @@
     <!-- 股票 > 股价异动预警 -->
     <div>
       <div class="queryCondition-top">
-        <div class="queryCondition-title">自定义板块范围公告</div>
+        <div class="queryCondition-title">自定义板块预警</div>
         <div class="middle clearFloat">
           <!-- 自定义模块 -->
           <div class="floatLeft">
@@ -37,7 +37,9 @@
           </div>
         </div>
       </div>
+      <span class="bond_z" @click='zhaiquan' :class="{active:0 ==categoryIndex}">债券</span><span class="zhuti" @click='zhuti' :class="{active:1 ==categoryIndex}">主体</span>
       <div v-if="isShowQueryResult" class="queryResult">
+        
         <div v-if="hasResultData">
           <table>
             <tbody>
@@ -46,10 +48,16 @@
                 <th v-for="(item, index) of titleData" :key="index" class="tableTh" width:100px>{{item}}</th>
               </tr>
               <tr v-for="(item, index) of dataList" :key="index">
-                <td>
-                  <a target="_blank" :href="item.SOURCEURL">{{item.NOTICETITLE}}</a>
-                </td>
-                <td>{{item.NOTICEDATE}}</td>
+                <td>{{item.notice_date}}</td>
+                <td>{{item.creditname}}</td>
+                <td>{{item.securitycode}}</td>
+                <td>{{item.ratefwd}}</td>
+                <td>{{item.rating}}</td>
+                <td>{{item.ratingtype}}</td>
+                <td>{{item.changeway}}</td>
+                <td>{{item.companyname}}</td>
+                <td>{{item.reason}}</td>
+                <td>{{item.recently_rating}}</td>
                 <!-- <td>
                   <button>
                     <router-link target='_blank' :to="'/monitor/homePage/fundDetail?id='+ item.infocode">详情>></router-link>
@@ -60,7 +68,34 @@
           </table>
           <pagination :prop="paginationData" @paginationSelect="paginationSelect"></pagination>
         </div>
-        <div v-else>
+        <div v-if="hasResultDataTwo">
+          <table>
+            <tbody>
+
+              <tr>
+                <th v-for="(item, index) of titleDataTwo" :key="index" class="tableThTwo" width:100px>{{item}}</th>
+              </tr>
+              <tr v-for="(item, index) of dataListTwo" :key="index">
+                <td>{{item.ratingdate}}</td>
+                <td>{{item.notice_date}}</td>
+                <td>{{item.ratefwd}}</td>
+                <td>{{item.creditname}}</td>
+                <td>{{item.rate_type}}</td>
+                <td>{{item.rating}}</td>
+                <td>{{item.companyname}}</td>
+                <td>{{item.title}}</td>
+                <td>{{item.itype}}</td>
+                <!-- <td>
+                  <button>
+                    <router-link target='_blank' :to="'/monitor/homePage/fundDetail?id='+ item.infocode">详情>></router-link>
+                  </button>
+                </td> -->
+              </tr>
+            </tbody>
+          </table>
+          <paginationtwo :prop="paginationDatatwo" @paginationSelecttwo="paginationSelecttwo"></paginationtwo>
+        </div>
+        <!-- <div v-else>
           <div class="loadEffect">
             <span></span>
             <span></span>
@@ -71,7 +106,7 @@
             <span></span>
             <span></span>
           </div>
-        </div>
+        </div> -->
       </div>
     </div>
   </div>
@@ -81,8 +116,10 @@
 import pullDownList from '@/components/common/pullDownList'
 import pullDownListt from '@/components/common/pullDownListt'
 import pagination from '@/components/common/pagination'
+import paginationtwo from '@/components/common/paginationtwo'
 import commonMethods from '@/common/common.js'
 import datePicker from '@/components/common/datePicker'
+import fundDetailVue from '../fund/fundDetail.vue';
 
 export default {
   data() {
@@ -90,19 +127,20 @@ export default {
     const week = now.getTime() - 604800000;
     return {
       //url地址
-      url: 'http://10.25.24.51:10189/api/risk/sector_set/detail',
+      url: 'http://10.25.24.51:10193/api/risk/bond_rate_warn',
       isShowQueryResult: false,
       hasResultData: false,
+      hasResultDataTwo: false,
       resultData: null,
+      
+      categoryIndex:0,
       queryType: '板块一',
       queryCondition: {
-        action: 'query',
         userid: 'risk',
         sector: '',
         start_date: '',
         end_date: '',
-        page: 1,
-        page_size: 10,
+        type:''
       },
       data: {
         from_date: '',
@@ -112,7 +150,7 @@ export default {
         stock_list: ''
       },
       startDatePicker: {
-        title: '公告日期：',
+        title: '日期：',
         parentEvent: 'startDateEvent',
         defaultDate: new Date(week)
       },
@@ -124,6 +162,12 @@ export default {
       sendData: {},
       paginationData: {
         parentEvent: 'paginationSelect',
+        page_Count: 0,
+        total_Count: 0,
+        current: 1
+      },
+      paginationDatatwo: {
+        parentEvent: 'paginationSelecttwo',
         page_Count: 0,
         total_Count: 0,
         current: 1
@@ -316,8 +360,10 @@ export default {
           content: "基金其他公告",
         },
       ],
-      titleData: ['公告标题', '公告日期'],
+      titleData: ['公告日期','评级机构名称','证券代码','评级展望','信用评级','评级类型','评级变动方向','机构名称','变动原因','最近一次评级'],
+      titleDataTwo:['评级日期','公告日期','评级展望','评级机构名称','评级类型','信用评级','机构名称','标题','机构当事人属性'],
       dataList: [],
+      dataListTwo:[],
       legislationList: {
         title: '公告类型：',
         parentEvent: 'legislationEvent2',
@@ -394,7 +440,8 @@ export default {
     pullDownList,
     pagination,
     datePicker,
-    pullDownListt
+    pullDownListt,
+    paginationtwo
   },
   //获取板块名称 进入页面发送请求
   created() {
@@ -430,6 +477,45 @@ export default {
 
   },
   methods: {
+      zhaiquan(){
+          this.queryCondition.type = 'security'
+          this.categoryIndex = 0,
+          this.hasResultData = true
+          this.hasResultDataTwo = false
+      },
+      zhuti(){
+          this.categoryIndex = 1
+          this.hasResultData = false
+          this.hasResultDataTwo = true
+    // if (!this.queryCondition.sector) {
+    //     alert('请选择模块名');
+    //     return;
+    //   }
+    //   this.isShowQueryResult = true;
+
+    //   this.queryCondition.type = 'org'
+    //   this.sendData = JSON.parse(JSON.stringify(this.queryCondition));
+
+    //      this.$_axios.get(this.url, {
+    //     params: this.sendData
+    //   }).then(response => {
+    //       console.log(response)
+    //     // 显示查询结果
+    //     if (response.data.code == '410') {
+    //       alert(response.data.msg)
+    //       return;
+    //     } else {
+    //       // 显示查询结果
+    //       this.hasResultDataTwo = true;
+    //       this.dataListTwo = JSON.parse(JSON.stringify(response.data.bond_rate_info))
+    //       console.log(this.dataListTwo)
+    
+    //         this.paginationDatatwo.page_Count = Math.ceil(response.data.bond_rate_count/10);
+    //         this.paginationDatatwo.total_Count = response.data.bond_rate_count;
+      
+    //     }
+    //   })
+      },
     inputEvent() {
       const numberReg = /^[0-9]*$/;
       this.queryCondition.sec_code = commonMethods.checkName(this.queryCondition.sec_code.trim());
@@ -461,13 +547,29 @@ export default {
 
     },
     paginationSelect(pageNumber) {
-      const sendData = JSON.parse(JSON.stringify(this.data));
+      const sendData = JSON.parse(JSON.stringify(this.queryCondition));
+      sendData.type = 'security'
       sendData.page = pageNumber;
-      const url = "http://10.25.24.51:10192/api/rest/nlp/risk/bond_announce";
+      const url = "http://10.25.24.51:10193/api/risk/bond_rate_warn";
       this.$_axios.get(url, {
         params: sendData
       }).then(response => {
-        this.dataList = JSON.parse(JSON.stringify(response.data.result.Announce_List));
+        this.dataList = JSON.parse(JSON.stringify(response.data.bond_rate_info));
+        this.resultData = this.dataList;
+      })
+        .catch(err => {
+          // console.log(err);
+        });
+    },
+    paginationSelecttwo(pageNumber) {
+      const sendData = JSON.parse(JSON.stringify(this.queryCondition));
+      sendData.type = 'org';
+      sendData.page = pageNumber;
+      const url = "http://10.25.24.51:10193/api/risk/bond_rate_warn";
+      this.$_axios.get(url, {
+        params: sendData
+      }).then(response => {
+        this.dataListTwo = JSON.parse(JSON.stringify(response.data.bond_rate_info));
         this.resultData = this.dataList;
       })
         .catch(err => {
@@ -486,50 +588,67 @@ export default {
       }
       this.isShowQueryResult = true;
       this.hasResultData = false;
+      this.hasResultDataTwo = false;
+      
+      this.queryCondition.type = 'security'
       this.sendData = JSON.parse(JSON.stringify(this.queryCondition));
       this.$_axios.get(this.url, {
         params: this.sendData
       }).then(response => {
+          console.log(response)
         // 显示查询结果
         if (response.data.code == '410') {
-          alert(response.data.msg)
+          alert(response.data.message)
           return;
         } else {
           // 显示查询结果
-          this.dataList = JSON.parse(JSON.stringify(response.data.result.result))
-          let stock_list = "";
-          this.dataList.forEach(item => {
-            stock_list += item.证券代码 + ",";
-          });
-          stock_list = stock_list.slice(0, -1);
-          this.data.stock_list = stock_list;
-          this.data.from_date = this.queryCondition.start_date;
-          this.data.to_date = this.queryCondition.end_date;
-          if (this.data.from_date == "") {
-            delete this.data.from_date
-          }
-          if (this.data.to_date == "") {
-            delete this.data.to_date
-          }
-          this.sendData = JSON.parse(JSON.stringify(this.data));
-          const url = "http://10.25.24.51:10192/api/rest/nlp/risk/bond_announce";
-          this.$_axios.get(url, { params: this.sendData }).then(response => {
-            this.hasResultData = true;
-            this.dataList = JSON.parse(JSON.stringify(response.data.result.Announce_List))
-            this.resultData = this.dataList;
-            this.dataList.forEach(item => {
-              this.NOTICEDATE = this.NOTICEDATE;
-              this.SOURCEURL = this.SOURCEURL;
-              this.NOTICETITLE = this.NOTICETITLE;
-            });
-            this.paginationData.page_Count = response.data.result.Page_Count;
-            this.paginationData.total_Count = response.data.result.Total_Count;
-          });
+          this.hasResultData = true;
+          this.hasResultDataTwo = false;
+          this.categoryIndex = 0;
+          this.dataList = JSON.parse(JSON.stringify(response.data.bond_rate_info))
+          console.log(this.dataList)
+    
+            this.paginationData.page_Count = Math.ceil(response.data.bond_rate_count/10);
+            this.paginationData.total_Count = response.data.bond_rate_count;
+
+
+            this.queryCondition.type = 'org'
+            this.sendData = JSON.parse(JSON.stringify(this.queryCondition));
+
+                this.$_axios.get(this.url, {
+                params: this.sendData
+            }).then(response => {
+                console.log(response)
+                // 显示查询结果
+                if (response.data.code == '410') {
+                alert(response.data.message)
+                return;
+                } else {
+                // 显示查询结果
+                // this.hasResultDataTwo = true;
+                this.dataListTwo = JSON.parse(JSON.stringify(response.data.bond_rate_info))
+                console.log(this.dataListTwo)
+            
+                    this.paginationDatatwo.page_Count = Math.ceil(response.data.bond_rate_count/10);
+                    this.paginationDatatwo.total_Count = response.data.bond_rate_count;
+            
+                }
+            })
+      
         }
       })
       // .catch(err => {
       //   // console.log(err);
       // });
+
+            // if (!this.queryCondition.sector) {
+            //     alert('请选择模块名');
+            //     return;
+            // }
+
+
+
+
     },
     threshold() {
       let threshold = parseFloat(this.queryCondition.threshold);
@@ -556,132 +675,36 @@ export default {
 </script>
 
 <style lang="less" >
+.bond_z{
+    display: inline-block;
+        cursor: pointer;
+        background-color: #D7D7D7;
+        color:white;
+        height: 27px;
+        width: 84px;
+        text-align: center;
+        line-height: 27px;
+        margin-top:10px;
+}
+.bond_z.active{
+    background-color: #b50229;
+}
+.zhuti.active{
+    background-color: #b50229;
+}
+.zhuti{
+    display: inline-block;
+        cursor: pointer;
+        background-color: #D7D7D7;
+        color:white;
+        height: 27px;
+        width: 84px;
+        text-align: center;
+        line-height: 27px;
+}
 .pullDownListBoxTwo {
   height: 500px;
   overflow-y: scroll;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(3) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(4) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(5) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(6) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(7) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(8) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(9) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(10) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(11) {
-  padding-left: 40px;
-}
-
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(13) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(14) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(15) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(16) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(17) {
-  padding-left: 40px;
-}
-
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(19) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(20) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(21) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(22) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(23) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(24) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(25) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(26) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(27) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(28) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(30) {
-  padding-left: 40px;
-}
-
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(31) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(32) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(33) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(34) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(35) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(36) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(37) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(38) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(39) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(40) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(41) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(42) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(43) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(45) {
-  padding-left: 40px;
-}
-.pullDownListContentTwo .pullDownListBoxTwo li:nth-child(46) {
-  padding-left: 40px;
 }
 .queryResult {
   table {
@@ -719,16 +742,58 @@ export default {
       }
     }
     .tableTh:nth-child(1) {
-      width: 145px;
+      width: 120px;
     }
     .tableTh:nth-child(2) {
-      width: 80px;
+      width: 108px;
     }
     .tableTh:nth-child(3) {
-      width: 90px;
+      width: 72px;
     }
     .tableTh:nth-child(4) {
       width: 90px;
+    }
+    .tableTh:nth-child(5) {
+      width: 90px;
+    }
+    .tableTh:nth-child(6) {
+      width: 90px;
+    }
+    .tableTh:nth-child(7) {
+      width: 90px;
+    }
+    .tableTh:nth-child(8) {
+      width: 100px;
+    }
+    .tableTh:nth-child(9) {
+      width: 309px;
+    }
+    .tableThTwo:nth-child(1) {
+      width: 120px;
+    }
+    .tableThTwo:nth-child(2) {
+      width: 108px;
+    }
+    .tableThTwo:nth-child(3) {
+      width: 72px;
+    }
+    .tableThTwo:nth-child(4) {
+      width: 90px;
+    }
+    .tableThTwo:nth-child(5) {
+      width: 90px;
+    }
+    .tableThTwo:nth-child(6) {
+      width: 90px;
+    }
+    .tableThTwo:nth-child(7) {
+      width: 90px;
+    }
+    .tableThTwo:nth-child(8) {
+      width: 100px;
+    }
+    .tableThTwo:nth-child(9) {
+      width: 96px;
     }
   }
 }

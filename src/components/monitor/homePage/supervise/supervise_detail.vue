@@ -13,7 +13,7 @@ export default {
         return{
             detailContent:true,
             messageLink:false,
-            url:'http://10.29.137.74:10189/api/risk/regulatory_detail',
+            url:'http://10.25.24.51:10189/api/risk/regulatory_detail',
             queryCondition:{
                  id:'',
             },

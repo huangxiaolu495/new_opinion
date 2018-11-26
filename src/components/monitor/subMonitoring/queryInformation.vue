@@ -83,7 +83,7 @@ export default {
   data() {
     const oneDayAfter = new Date().getTime() - 86400000;
     return {
-      url: 'http://10.29.137.74:10194/api/rest/nlp/bod/query_subsidiary_news?',
+      url: 'http://10.25.24.51:10194/api/rest/nlp/bod/query_subsidiary_news?',
       isShowQueryResult: false,
       hasResultData: false,
       resultData: null,

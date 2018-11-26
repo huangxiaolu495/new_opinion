@@ -144,6 +144,7 @@ h3 {
 
 .align-right {
 	text-align: right;
+	color:#000;
 }
 
 .mar-center {
@@ -275,6 +276,7 @@ input[type="file"]> input[type="button"]::-moz-focus-inner {
 
 .mar-left-10 {
 	margin-left: 10px !important;
+	color:#000;
 }
 
 .mar-left-5 {

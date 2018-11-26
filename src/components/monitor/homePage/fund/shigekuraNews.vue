@@ -91,7 +91,7 @@ export default {
   data() {
     const week = new Date().getTime() - 86400000 * 7;
     return {
-      url: 'http://10.29.137.74:10192/api/rest/nlp/risk/funds_holding_stocks?',
+      url: 'http://10.25.24.51:10192/api/rest/nlp/risk/funds_holding_stocks?',
       isShowQueryResult: false,
       isShowDropDownList: false,
       hasResultData: false,
@@ -174,9 +174,9 @@ export default {
       this.queryCondition.is_negative = flag ? 1 : '';
     },
     markingNegative(newsData, index, flag) {
-      // http://10.29.137.74:10192/api/rest/nlp/risk/update_fund_manager_news?infocode=&is_negative=1&checked=1&is_delete=
+      // http://10.25.24.51:10192/api/rest/nlp/risk/update_fund_manager_news?infocode=&is_negative=1&checked=1&is_delete=
       let sendData = flag ? '&is_negative=1&checked=0&is_delete=' : '&is_negative=&checked=0&is_delete=1';
-      let url = 'http://10.29.137.74:10192/api/rest/nlp/risk/update_fund_manager_news?'
+      let url = 'http://10.25.24.51:10192/api/rest/nlp/risk/update_fund_manager_news?'
         + 'infocode=' + newsData.INFOCODE + sendData;
       this.$_axios.get(url)
         .then(response => {
@@ -203,7 +203,7 @@ export default {
     },
     paginationSelect(pageNumber) {
       const sendData = JSON.parse(JSON.stringify(this.sendData));
-      const url = "http://10.29.137.74:10192/api/rest/nlp/risk/funds_holding_stocks";
+      const url = "http://10.25.24.51:10192/api/rest/nlp/risk/funds_holding_stocks";
       sendData.page = pageNumber;
       this.$_axios.get(url, {
           params: sendData
@@ -234,7 +234,7 @@ export default {
         this.isShowQueryResult = true;
         this.hasResultData = false;
         this.sendData = JSON.parse(JSON.stringify(this.queryCondition));
-        const urlapi = "http://10.29.137.74:10192/api/rest/nlp/risk/funds_holding_stocks?";
+        const urlapi = "http://10.25.24.51:10192/api/rest/nlp/risk/funds_holding_stocks?";
         this.url = urlapi
           + 'page=' + this.sendData.page + '&'
           + 'page_size=' + this.sendData.page_size + '&'
@@ -297,7 +297,7 @@ export default {
   mounted() {
     this.queryCondition.from_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
     this.queryCondition.to_date = commonMethods.formatDateTime2(this.endDatePicker.defaultDate);
-    this.$_axios.get('http://10.29.137.74:10191/api/rest/nlp/query_stock_list?stock_type=F')
+    this.$_axios.get('http://10.25.24.51:10191/api/rest/nlp/query_stock_list?stock_type=F')
       .then(response => {
         this.fundList = response.data.result.stock_list;
         this.codeList = this.fundList.map(item => {

@@ -84,7 +84,7 @@ export default {
     const week = new Date().getTime() - 86400000 * 7;
     // const oneDayAfter = new Date().getTime() - 86400000;
     return {
-      url: 'http://10.29.137.74:10193/api/risk/zts_announce?',
+      url: 'http://10.25.24.51:10193/api/risk/zts_announce?',
       isShowQueryResult: false,
       hasResultData: false,
       isShowTypeList:false,
@@ -146,7 +146,7 @@ export default {
   // },
     //获取板块名称 进入页面发送请求
   created(){
-      const url = 'http://10.29.137.74:10189/api/risk/sector_set/query'
+      const url = 'http://10.25.24.51:10189/api/risk/sector_set/query'
       const sendData = {
         userid: 'risk'
       };

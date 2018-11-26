@@ -31,7 +31,7 @@
         margin-top: 24px;
         margin-left: 20px;
         margin-right:20px;
-        border-bottom: 1px solid #000;
+        /* border-bottom: 1px solid #000; */
         padding-bottom: 24px;
         /* width:1276px; */
   }
@@ -84,6 +84,12 @@
         top: 17px;
         left: 230px;
         font-size: 22px;
+  }
+  .fenxi{
+    position: absolute;
+    top: -42px;
+    left: 210px;
+    font-size: 22px;
   }
   .yuqingfen{
     color:#000;
@@ -212,6 +218,11 @@
 }
 
 .yes {
+  color: #fff;
+  background-color: #337ab7 !important;
+  border-color: #2e6da4 !important;
+}
+.no {
   color: #fff;
   background-color: #337ab7 !important;
   border-color: #2e6da4 !important;
@@ -378,7 +389,7 @@
 }
 
 .mp-header {
-  border-bottom: solid 1px #888;
+  /* border-bottom: solid 1px #888; */
   position: relative;
   margin: 0 20px;
   padding: 10px 0;
@@ -812,8 +823,18 @@ p.modify_p:hover {
   background-color: #337ab7 !important;
   border-color: #2e6da4 !important;
 }
+.modify_ul .no {
+  color: #fff;
+  background-color: #337ab7 !important;
+  border-color: #2e6da4 !important;
+}
 
 .modify_ul .yes:hover {
+  color: #fff;
+  background-color: #286090 !important;
+  border-color: #204d74 !important;
+}
+.modify_ul .no:hover {
   color: #fff;
   background-color: #286090 !important;
   border-color: #204d74 !important;

@@ -95,7 +95,7 @@ export default {
     const _year = new Date().getTime() - 31536000000;
     // const oneDayAfter = new Date().getTime() - 86400000;
     return {
-      url: 'http://10.29.137.74:10189/api/risk/neeq_pub_info2?',
+      url: 'http://10.25.24.51:10189/api/risk/neeq_pub_info2?',
       isQueryResult: false,
       isExportExcel: false,
       queryCondition: {

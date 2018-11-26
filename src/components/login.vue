@@ -63,7 +63,7 @@ export default {
     //   this.$refs[formName].resetFields()
     loginHandle() {
       // alert("用户名或者密码不正确");
-      const url = 'http://10.29.137.74:10195/api/v1.0/login'
+      const url = 'http://10.25.24.51:10195/api/v1.0/login'
       const sendDate = JSON.parse(JSON.stringify(this.Body))
       // let config = {
       //   headers: {

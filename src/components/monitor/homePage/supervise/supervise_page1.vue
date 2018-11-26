@@ -24,7 +24,7 @@
             </div>
           </div>
           <!-- 查询按钮 -->
-          <div class="queryBtn">
+          <div class="queryBtn" id='btnquery'>
             <span @click="query">查询</span>
           </div>
         </div>
@@ -95,7 +95,7 @@ export default {
     const week = new Date().getTime() - 86400000 * 7;
     // const oneDayAfter = new Date().getTime() - 86400000;
     return {
-      url: ' http://10.29.137.74:10189/api/risk/regulatory?',
+      url: ' http://10.25.24.51:10189/api/risk/regulatory?',
       isShowQueryResult: false,
       isShowDetails: false,
       hasResultData: false,
@@ -212,7 +212,7 @@ export default {
     showDetails(item) {
       this.isShowDetails = false;
       console.log(item)
-      this.$_axios.get('http://10.29.137.74:10189/api/risk/regulatory_detail?id=' + item.id)
+      this.$_axios.get('http://10.25.24.51:10189/api/risk/regulatory_detail?id=' + item.id)
         .then(response => {
           console.log(item.title)
           this.isShowDetails = true;
@@ -244,6 +244,8 @@ export default {
 </script>
 
 <style lang="less" scoped>
+
+
 .queryConditionBox {
   width: 100%;
   height: 70px;
@@ -269,6 +271,9 @@ export default {
     border: 1px solid #797979;
     background-color: #fff;
     border-radius: 5px;
+  }
+  #btnquery{
+    margin-left:10px;
   }
 }
 .queryResult {
@@ -312,7 +317,7 @@ export default {
 .queryCondition-top{
       position: relative;
     /* width: 100%; */
-    width: 900px;
+    width: 1024px;
     border-bottom: 2px solid #797979;
 }
 .detailsPopUp {

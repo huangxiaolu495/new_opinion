@@ -857,9 +857,9 @@ export default {
       sector: "",
       isshowmodulesname: false,
       querytype: "",
-      url: "http://10.29.137.74:10192/api/rest/nlp/risk/query_news",
+      url: "http://10.25.24.51:10192/api/rest/nlp/risk/query_news",
       updateUrl:
-        "http://10.29.137.74:10192/api/rest/nlp/risk/update_news_factor",
+        "http://10.25.24.51:10192/api/rest/nlp/risk/update_news_factor",
       keyword: "",
       stock_code: "",
       stock_codetext: "",
@@ -1441,7 +1441,7 @@ export default {
       }
     },
     queryModulesName() {
-      const url = 'http://10.29.137.74:10189/api/risk/sector_set/query'
+      const url = 'http://10.25.24.51:10189/api/risk/sector_set/query'
       const sendData = {
         userid: 'risk'
       };
@@ -1553,16 +1553,16 @@ export default {
     },
     queryType() {
       if (this.querytype == "按证券代码查询") {
-        this.url = "http://10.29.137.74:10192/api/rest/nlp/risk/query_news_search";
+        this.url = "http://10.25.24.51:10192/api/rest/nlp/risk/query_news_search";
         this.query();
       }
       else if (this.querytype == "按自定义板块查询") {
-        const url = "http://10.29.137.74:10189/api/risk/sector_set/detail";
+        const url = "http://10.25.24.51:10189/api/risk/sector_set/detail";
         this.queryModules.sector = this.sector;
         this.sendData = JSON.parse(JSON.stringify(this.queryModules));
         this.$_axios.get(url, { params: this.sendData }).then(response => {
 
-          this.url = "http://10.29.137.74:10192/api/rest/nlp/risk/query_news_search";
+          this.url = "http://10.25.24.51:10192/api/rest/nlp/risk/query_news_search";
           this.dataList = JSON.parse(JSON.stringify(response.data.result.result))
           let stock_list = "";
           this.dataList.forEach(item => {
@@ -1575,7 +1575,7 @@ export default {
         });
       }
       else {
-        this.url = "http://10.29.137.74:10192/api/rest/nlp/risk/query_news";
+        this.url = "http://10.25.24.51:10192/api/rest/nlp/risk/query_news";
         this.query();
       }
     },
@@ -1701,7 +1701,7 @@ export default {
             this["sendFile" + this.nowCategroy.toString()]
           );
         let url =
-          "http://10.29.137.74:10192/api/rest/nlp/risk/query_news_search";
+          "http://10.25.24.51:10192/api/rest/nlp/risk/query_news_search";
         this.$_axios
           .post(url.toUrl(), formData, config)
           .then(response => {
@@ -1824,7 +1824,7 @@ export default {
       // console.log('sendData', sendData);
       this["sendFile" + this.nowCategroy.toString()] &&
         formData.append("file", this["sendFile" + this.nowCategroy.toString()]);
-      let url = "http://10.29.137.74:10192/api/rest/nlp/risk/query_news_search";
+      let url = "http://10.25.24.51:10192/api/rest/nlp/risk/query_news_search";
       this.$_axios
         .post(url.toUrl(), formData, config)
         .then(response => {

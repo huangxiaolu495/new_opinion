@@ -106,7 +106,7 @@
       submitForm(formName) {
         this.$refs[formName].validate((valid) => {
           if (valid) {
-            const url = 'http://10.29.137.74:10195/api/v1.0/register'
+            const url = 'http://10.25.24.51:10195/api/v1.0/register'
             let Body = {
               username:  this.ruleForm2.username,
               email: this.ruleForm2.pass,
@@ -131,7 +131,7 @@
       },
       //验证码请求
       btnclick(){
-        const url ='http://10.29.137.74:10195/api/v1.0/mailcode'
+        const url ='http://10.25.24.51:10195/api/v1.0/mailcode'
         let Body = {
           username: this.ruleForm2.username,
           email: this.ruleForm2.pass

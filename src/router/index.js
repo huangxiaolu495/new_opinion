@@ -50,6 +50,8 @@ import bond_template from '@/components/monitor/homePage/bond/template'
 import bond_ratingInformation from '@/components/monitor/homePage/bond/ratingInformation'
 // 评级预警 >  评级变动
 import bond_ratingChange from '@/components/monitor/homePage/bond/ratingChange'
+//评级预警 > 自定义板块预警
+import bond_plateWarning from '@/components/monitor/homePage/bond/plateWarning'
 // >> 债券
 
 // >> 基金
@@ -422,6 +424,11 @@ export default new Router({
               path: '/monitor/homePage/bond_template',
               name: 'bond_template',
               component: bond_template
+            },
+            {
+              path:'/monitor/homePage/bond_plateWarning',
+              name: 'bond_plateWarning',
+              component:bond_plateWarning
             },
 
             //  >> 债券

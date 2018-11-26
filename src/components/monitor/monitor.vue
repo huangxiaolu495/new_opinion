@@ -75,7 +75,7 @@ export default {
       this.$store.state.isAttentionPool = true;
     },
     security_type_axios(number) {
-      const url = 'http://10.29.137.74:10193/api/risk/code_name_info';
+      const url = 'http://10.25.24.51:10193/api/risk/code_name_info';
       const sendData_N = {
         security_type: 'N'
       }
@@ -96,7 +96,7 @@ export default {
     }
   },
   mounted() {
-    const url = 'http://10.29.137.74:10193/api/risk/code_name_info';
+    const url = 'http://10.25.24.51:10193/api/risk/code_name_info';
 
     const sendData_F = {
       security_type: 'F'
@@ -104,7 +104,7 @@ export default {
     this.security_type_axios(0);
     this.security_type_axios(1);
     // 基金情况
-    this.$_axios.get('http://10.29.137.74:10191/api/rest/nlp/query_stock_list?stock_type=F')
+    this.$_axios.get('http://10.25.24.51:10191/api/rest/nlp/query_stock_list?stock_type=F')
       .then(response => {
         if (response.data.msg === 'success') {
           this.$store.state.fundList = response.data.result.stock_list;
@@ -149,7 +149,7 @@ export default {
     position: relative;
     height: 25px;
     margin-top: -40px;
-    margin-right: -57px;
+    margin-right: -116px;
     // background-color: #fff;
     span {
       display: inline-block;

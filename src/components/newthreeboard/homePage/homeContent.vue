@@ -66,7 +66,7 @@ export default {
   data() {
     const oneDayAfter = new Date().getTime() - 86400000;
     return {
-      url: 'http://10.29.137.74:10193/api/risk/issue_news?',
+      url: 'http://10.25.24.51:10193/api/risk/issue_news?',
       isShowQueryResult: false,
       hasResultData: false,
       queryCondition: {

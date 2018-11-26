@@ -83,7 +83,7 @@ import datePicker from "@/components/common/datePicker";
 export default {
   data() {
     return {
-      url: "http://10.29.137.74:10191/api/rest/nlp/risk/leverage?",
+      url: "http://10.25.24.51:10191/api/rest/nlp/risk/leverage?",
       isShowQueryResult: false,
       hasResultData: false,
       inputtext: "",

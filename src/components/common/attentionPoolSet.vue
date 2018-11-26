@@ -299,7 +299,7 @@ export default {
   },
   //页面加载完之后展示内容
   created(){
-    const url = 'http://10.29.137.74:10193/api/risk/issue_news';
+    const url = 'http://10.25.24.51:10193/api/risk/issue_news';
 
     this.$_axios.get(url, {
           params: this.peopleDate
@@ -385,7 +385,7 @@ export default {
       this.ismorechoose = !this.ismorechoose
       this.checked = true
       
-        const newUrl = 'http://10.29.137.74:10193/api/risk/attention_pool_set';
+        const newUrl = 'http://10.25.24.51:10193/api/risk/attention_pool_set';
         const newDateList = {
               userid: 'risk',
               action: 'query'
@@ -424,7 +424,7 @@ export default {
       this.isShowQueryResult = false;
       if(flag == '1'){
         window.history.go(0);
-        const url = 'http://10.29.137.74:10193/api/risk/attention_pool_set';
+        const url = 'http://10.25.24.51:10193/api/risk/attention_pool_set';
         const sendData = {
           userid: 'risk',
           action: 'query'
@@ -458,7 +458,7 @@ export default {
       }
       console.log(this.peopleDate)
       // console.log(boolean([]))
-       const searchUrl = 'http://10.29.137.74:10193/api/risk/issue_news'
+       const searchUrl = 'http://10.25.24.51:10193/api/risk/issue_news'
      this.peopleDate.page = 0;
 
       this.$_axios.get(searchUrl, {
@@ -502,7 +502,7 @@ export default {
     //通过添加接口，将数据添加到数据库中
     addToList(){
       const tempArr = [];
-      const url = 'http://10.29.137.74:10193/api/risk/attention_pool_set'
+      const url = 'http://10.25.24.51:10193/api/risk/attention_pool_set'
       const sendData = {
         userid: 'risk',
         action: 'insert',
@@ -541,7 +541,7 @@ export default {
     },
     //点击分页按钮进行接口数据请求
     paginationSelect(pageNumber) {
-      const url = 'http://10.29.137.74:10193/api/risk/issue_news';
+      const url = 'http://10.25.24.51:10193/api/risk/issue_news';
       const sendData = JSON.parse(JSON.stringify(this.sendData));
       this.peopleDate.page = pageNumber - 1;
       console.log('sendData', sendData)
@@ -560,7 +560,7 @@ export default {
       this.isShowAddListQuery = false;
       this.isShowAddListPage = false;
       this.hasResultDataAddList = false;
-      const url = 'http://10.29.137.74:10193/api/risk/attention_base_query';
+      const url = 'http://10.25.24.51:10193/api/risk/attention_base_query';
       //addListSendData 为对象
       this.addListSendData = {
         companytype: this.queryAddList.companytype,
@@ -608,7 +608,7 @@ export default {
         userid: 'risk',
         action: 'drop'
       }
-      this.$_axios.get('http://10.29.137.74:10193/api/risk/attention_pool_set', {
+      this.$_axios.get('http://10.25.24.51:10193/api/risk/attention_pool_set', {
         params: sendData
       }).then(response => {
         // 显示查询结果
@@ -624,7 +624,7 @@ export default {
     },
     //点击删除按钮，通过接口删除数据库中对应的数据
     deleteList(){
-      const url = 'http://10.29.137.74:10193/api/risk/attention_pool_set';
+      const url = 'http://10.25.24.51:10193/api/risk/attention_pool_set';
       const tempArr = [];
       const indexArr = [];
       const sendData = {
@@ -680,7 +680,7 @@ export default {
       this.isShowSecurities = false;
       this.isShowQueryResult = false;
       this.isShowIssuer = false;
-      const url = 'http://10.29.137.74:10193/api/risk/seccode_issue_mapper';
+      const url = 'http://10.25.24.51:10193/api/risk/seccode_issue_mapper';
       const sendData = {
         seccode: this.queryIssuer.seccode,
         secname: this.queryIssuer.secname
@@ -731,7 +731,7 @@ export default {
     // 查询证券信息
     querySecuritiesEvent(){
       this.isShowQueryResult = false;
-      const url = 'http://10.29.137.74:10193/api/risk/issue_seccode_mapper';
+      const url = 'http://10.25.24.51:10193/api/risk/issue_seccode_mapper';
       const sendData = {
         issue: this.querySecurities.issue,
       }
@@ -795,7 +795,7 @@ export default {
   },
   //
   mounted(){
-    const url = 'http://10.29.137.74:10193/api/risk/attention_pool_set';
+    const url = 'http://10.25.24.51:10193/api/risk/attention_pool_set';
     const sendData = {
       userid: 'risk',
       action: 'query'

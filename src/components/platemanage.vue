@@ -15,7 +15,7 @@ export default {
         }
     },
     created(){
-        const url = 'http://10.29.137.74:10195/api/v1.0/risk/sector'
+        const url = 'http://10.25.24.51:10195/api/v1.0/risk/sector'
         let username = this.$store.state.list
         console.log(username)
 

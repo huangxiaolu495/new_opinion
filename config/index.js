@@ -12,7 +12,7 @@ module.exports = {
     assetsPublicPath: '/',
     proxyTable: {
       '/monitor/homePage/homeContent': {
-        target: 'http://10.29.137.74:10192/api/rest/nlp/risk/query_favorite',
+        target: 'http://10.25.24.51:10192/api/rest/nlp/risk/query_favorite',
         changeOrigin: true,
         secure: false,
         pathRewrite: {

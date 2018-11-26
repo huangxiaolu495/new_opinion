@@ -153,7 +153,7 @@ export default {
   data() {
     const oneDayAfter = new Date().getTime() - 86400000;
     return {
-      url: "http://10.29.137.74:10192/api/rest/nlp/risk/relation_company?",
+      url: "http://10.25.24.51:10192/api/rest/nlp/risk/relation_company?",
       Keyword: "",
       isshow: false,
       isShowQueryResult1: false,
@@ -231,7 +231,7 @@ export default {
     else if (code != this.$route.params.companycode && this.$route.params.companycode) {
       window.localStorage.setItem("company_code", this.$route.params.companycode);
     }
-    this.url = "http://10.29.137.74:10192/api/rest/nlp/risk/relation_company?";
+    this.url = "http://10.25.24.51:10192/api/rest/nlp/risk/relation_company?";
     this.query();
   },
   methods: {
@@ -344,15 +344,15 @@ export default {
         this.nowCategroy = "";
       }
       if (this.categroyIndex == 0) {
-        this.url = "http://10.29.137.74:10192/api/rest/nlp/risk/relation_company?";
+        this.url = "http://10.25.24.51:10192/api/rest/nlp/risk/relation_company?";
         this.query();
       }
       if (this.categroyIndex == 1) {
-        this.url = "http://10.29.137.74:10192/api/rest/nlp/risk/relation_company_parent?";
+        this.url = "http://10.25.24.51:10192/api/rest/nlp/risk/relation_company_parent?";
         this.query();
       }
       if (this.categroyIndex == 2) {
-        this.url = "http://10.29.137.74:10192/api/rest/nlp/risk/relation_company_guarantee?";
+        this.url = "http://10.25.24.51:10192/api/rest/nlp/risk/relation_company_guarantee?";
         this.guaranteelist();
       }
     },

@@ -74,7 +74,7 @@ export default {
   data() {
     const week = new Date().getTime() - 86400000 * 7;
     return {
-      url: 'http://10.29.137.74:10192/api/rest/nlp/risk/new_OTC_market',
+      url: 'http://10.25.24.51:10192/api/rest/nlp/risk/new_OTC_market',
       isShowQueryResult: false,
            hasResultData: false,
       queryCondition: {

@@ -91,8 +91,8 @@ export default {
   data() {
     const week = new Date().getTime() - 86400000 * 7;
     return {
-      // url: 'http://10.29.137.74:10192/api/rest/nlp/risk/fund_manager_news?news_type=1&',
-      url: 'http://10.29.137.74:10192/api/rest/nlp/risk/fund_manager_news?',
+      // url: 'http://10.25.24.51:10192/api/rest/nlp/risk/fund_manager_news?news_type=1&',
+      url: 'http://10.25.24.51:10192/api/rest/nlp/risk/fund_manager_news?',
       isShowQueryResult: false,
       hasResultData: false,
       isNegative: false,
@@ -138,9 +138,9 @@ export default {
       this.queryCondition.is_negative = flag ? 1 : '';
     },
     markingNegative(newsData, index, flag) {
-      // http://10.29.137.74:10192/api/rest/nlp/risk/update_fund_manager_news?infocode=&is_negative=1&checked=1&is_delete=
+      // http://10.25.24.51:10192/api/rest/nlp/risk/update_fund_manager_news?infocode=&is_negative=1&checked=1&is_delete=
       let sendData = flag ? '&is_negative=1&checked=1&is_delete=' : '&is_negative=&checked=1&is_delete=1';
-      let url = 'http://10.29.137.74:10192/api/rest/nlp/risk/update_fund_manager_news?'
+      let url = 'http://10.25.24.51:10192/api/rest/nlp/risk/update_fund_manager_news?'
         + 'infocode=' + newsData.INFOCODE + sendData;
       this.$_axios.get(url)
         .then(response => {

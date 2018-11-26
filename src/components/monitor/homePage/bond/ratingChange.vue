@@ -15,7 +15,11 @@
           <div class="floatLeft">
             <date-picker :prop="changeDatePicker" @changeDateEvent="changeDateEvent"></date-picker>
           </div>
+            <div class="floatLeft marginLeft10">
+              债券代码：<input @input="inputEvent" v-model="queryCondition.securitycode" type="text">
+            </div>
         </div>
+
         <div class="clearFloat">
           <div class="floatLeft">
             <pull-down-list :prop="changeDirection" @changeEvent="changeEvent"></pull-down-list>
@@ -26,7 +30,7 @@
         </div>
         <!-- 查询按钮 -->
         <div class="queryBtn">
-          <span @click="query">查询</span>
+          <span @click="query" class="chaxun">查询</span>
         </div>
       </div>
     </div>
@@ -61,14 +65,31 @@
     <div v-if="isShowDetails" class="detailsPopUp">
       <div class="detailsBox">
         <div class="details">
-          <ul>
+      <div class="queryResult">
+        <table>
+          <tbody>
+            <tr>
+              <th v-for="(item, index) of detailsDatat" :key="index" class="title">{{item}}</th>
+            </tr>
+            <tr v-for="(item, index) of detailsData" :key="index">
+              <td>{{item.securitysname}}</td>
+              <td>{{item.securityname}}</td>
+              <td>{{item.securitycode}}</td>
+              <td>{{item.securitytype}}</td>
+              <td>{{item.issuetype}}</td>
+              <td>{{item.portfoliocode}}</td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+          <!-- <ul>
             <li>债券名称：{{detailsData.securitysname}}</li>
             <li>债券全称：{{detailsData.securityname}}</li>
             <li>债券代码：{{detailsData.securitycode}}</li>
             <li>债券类型：{{detailsData.securitytype}}</li>
             <li>募集方式：{{detailsData.issuetype}}</li>
             <li>债券组合代码：{{detailsData.portfoliocode}}</li>
-          </ul>
+          </ul> -->
         </div>
         <span @click="closeDetails" class="closeBtn">×</span>
       </div>
@@ -86,7 +107,7 @@ export default {
   data() {
     const oneDayAfter = new Date().getTime() - 86400000;
     return {
-      url: 'http://10.29.137.74:10193/api/risk/bond_rate_change?',
+      url: 'http://10.25.24.51:10193/api/risk/bond_rate_change?',
       isQueryResult: false,
       isShowDetails: false,
       ratingChangeData: [],
@@ -96,13 +117,15 @@ export default {
         changedate: '',
         changeway: '',
         creditname: '',
+        securitycode:'',
         page: 0,
         pagesize: 10
       },
       sendData: {},
       detailsData: {},
+      detailsDatat:['债券名称','债券全称','债券代码','债券类型','募集方式','债券组合代码'],
       tableData: {
-        th: ['公告日期', '变动日期', '评级机构名称', '债券组合代码', '评级展望', '信用评级', '评级类型', '评级变动方向', '变动原因', '机构名称', '最近评级'],
+        th: ['公告日期', '变动日期', '评级机构名称', '关联债券代码', '评级展望', '信用评级', '评级类型', '评级变动方向', '变动原因', '机构名称', '最近评级'],
         tr: [
           { notice_date: '', changedate: '', creditcode: '', creditname: '', portfoliocode: '', ratefwd: '', rating: '', ratingstyle: '', ratingtype: '', changeway: '', reason: '' }
           //  变动日期changedate changeway creditcode creditname notice_date portfoliocode ratefwd rating ratingstyle ratingtype reason
@@ -140,14 +163,28 @@ export default {
     datePicker
   },
   methods: {
+    inputEvent() {
+      const numberReg = /^[0-9]*$/;
+      this.queryCondition.securitycode = commonMethods.checkName(this.queryCondition.securitycode.trim());
+      let arr = this.queryCondition.securitycode.split('');
+      let arr2 = [];
+      console.log(arr)
+      arr.forEach(item => {
+        if (numberReg.test(item)) {
+          arr2.push(item)
+        }
+      });
+      console.log(arr)
+      this.queryCondition.securitycode = arr2.join('');
+    },
     query() {
       this.isQueryResult = false;
       this.sendData = JSON.parse(JSON.stringify(this.queryCondition));
-      for (let key in this.sendData) {
-        if (this.sendData[key] === '') {
-          delete this.sendData[key];
-        }
-      }
+      // for (let key in this.sendData) {
+      //   if (this.sendData[key] === '') {
+      //     delete this.sendData[key];
+      //   }
+      // }
       console.log('sendData', this.sendData)
       this.sendData.changeway = this.queryCondition.changeway;
       this.$_axios.get(this.url, {
@@ -233,7 +270,7 @@ export default {
     },
     portfoliocodeDetails(item) {
       this.isShowDetails = false;
-      let url = 'http://10.29.137.74:10193/api/risk/bond_base_detail?'
+      let url = 'http://10.25.24.51:10193/api/risk/bond_base_detail?'
         + 'portfoliocode=' + item.portfoliocode;
       this.$_axios.get(url)
         .then(response => {
@@ -332,14 +369,14 @@ export default {
       width: 80px;
     }
     .title:nth-child(3) {
-      width: 180px;
+      width: 85px;
     }
     .title:nth-child(4) {
-      width: 85px;
+      width: 123px;
     }
     .title:nth-child(5),
     .title:nth-child(6) {
-      width: 70px;
+      width: 86px;
     }
     .title:nth-child(7) {
       width: 95px;
@@ -357,6 +394,10 @@ export default {
       width: 70px;
     }
   }
+}
+.chaxun{
+  margin-left:119px;
+  margin-top:-8px;
 }
 .detailsPopUp {
   position: fixed;

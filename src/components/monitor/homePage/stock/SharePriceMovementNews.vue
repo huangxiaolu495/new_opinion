@@ -86,7 +86,7 @@ export default {
     const now = new Date();
     const week = now.getTime() - 604800000;
     return {
-      urlNews: 'http://10.29.137.74:10193/api/risk/abnormal_price_news',
+      urlNews: 'http://10.25.24.51:10193/api/risk/abnormal_price_news',
       isShowQueryResultNews: false,
       hasResultDataNews: false,
       isShowDetails: false,
@@ -182,7 +182,7 @@ export default {
     },
     newsDetails(item) {
       this.isShowDetails = false;
-      this.$_axios.get('http://10.29.137.74:10193/api/risk/abnormal_price_news_detail?infocode=' + item.infocode)
+      this.$_axios.get('http://10.25.24.51:10193/api/risk/abnormal_price_news_detail?infocode=' + item.infocode)
         .then(response => {
           this.isShowDetails = true;
           const resultData = response.data.result.result;

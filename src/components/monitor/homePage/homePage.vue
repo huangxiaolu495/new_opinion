@@ -78,7 +78,8 @@ export default {
               ]            },
             {              title: '评级预警', isShowList: false, path: '/monitor/homePage/homeContent', list: [
                 { title: '评级信息', path: '/monitor/homePage/bond_ratingInformation' },
-                { title: '评级变动', path: '/monitor/homePage/bond_ratingChange' }
+                { title: '评级变动', path: '/monitor/homePage/bond_ratingChange' },
+                { title: '自定义板块预警', path: '/monitor/homePage/bond_plateWarning'}
               ]            }
           ]        },
 
@@ -148,7 +149,7 @@ export default {
     },
     created() {
       this.isShow = true;
-      const url = "http://10.29.137.74:10191/api/rest/nlp/risk/macro_index";
+      const url = "http://10.25.24.51:10191/api/rest/nlp/risk/macro_index";
       this.$_axios.get(url, {}).then(response => {
         // 显示查询结果
         this.isShow = true;
@@ -226,7 +227,7 @@ table {
 }
 .homePageMain {
   width: 1719px;
-  height: 1000px;
+  height: 803px;
 }
 .homePageChildPage {
   float: left;
