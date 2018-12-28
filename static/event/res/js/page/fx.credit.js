@@ -1204,12 +1204,12 @@ window.onload = (function (M) {
         page: opt.num || that.pageNum,
         pageSize: 50,
         from_Date: M('#month_start').val() || '',
-        from_Date: M('#month_start_two').val() || '',
-        from_Date: M('#month_start_three').val() || '',
+        // from_Date: M('#month_start_two').val() || '',
+        // from_Date: M('#month_start_three').val() || '',
 
         to_Date: M('#month_stop').val() || '',
-        to_Date: M('#month_stop_two').val() || '',
-        to_Date: M('#month_stop_three').val() || '',
+        // to_Date: M('#month_stop_two').val() || '',
+        // to_Date: M('#month_stop_three').val() || '',
 
         keyword: M('#keyword').val() || '',
         market_type: M('#market_Code').val() || '',
@@ -1272,11 +1272,11 @@ window.onload = (function (M) {
           var el = this;
           var beginTime = M('#month_start').val();
           // var beginTime_Two = M('#month_start_two').val();
-          var beginTime_three = M('#month_start_three').val();
+          // var beginTime_three = M('#month_start_three').val();
 
           window.open(el.dataset.href + '&beginTime=' + beginTime + '&endTime=' + endTime);
           // window.open(el.dataset.href + '&beginTime=' + beginTime_Two + '&endTime=' + endTime);
-          window.open(el.dataset.href + '&beginTime=' + beginTime_three + '&endTime=' + endTime);
+          // window.open(el.dataset.href + '&beginTime=' + beginTime_three + '&endTime=' + endTime);
         });
         M('.btn').click(function () {
           var code = $(this).find(".Stock_Code").html();

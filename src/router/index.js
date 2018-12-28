@@ -156,7 +156,12 @@ import supervise_page3 from '@/components/monitor/homePage/supervise/supervise_p
 import supervise_detail from '@/components/monitor/homePage/supervise/supervise_detail'
 // >> 监管要求
 // 法律法规
+
 import legislation from '@/components/monitor/homePage/legislation/legislation'
+
+// 全网舆情
+// import publicSendtime from '@components/monitor/homePage/publicSendtime/publicSendtime'
+import publicSendtime from '@/components/monitor/homePage/publicSendtime/publicSendtime'
 // >>>首页子页面
 
 // >>>黑天鹅事件子页面
@@ -446,6 +451,12 @@ export default new Router({
               path: '/monitor/homePage/legislation',
               name: 'legislation',
               component: legislation
+            },
+            // 全网舆情
+            {
+              path:'/monitor/homePage/publicSendtime',
+              name:'publicSendtime',
+              component:publicSendtime
             },
             // >> 法律法规
 

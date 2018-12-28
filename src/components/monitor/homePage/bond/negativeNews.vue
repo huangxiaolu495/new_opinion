@@ -123,7 +123,9 @@ export default {
   },
   methods: {
     handleFileChange(event) {
+      console.log(event)
       this.file = event.target.files[0];
+      console.log(this.file)
       if (this.file) {
         const type = this.file.name.slice(-4).toLowerCase();
         if (type != '.txt' && type != '.csv') {

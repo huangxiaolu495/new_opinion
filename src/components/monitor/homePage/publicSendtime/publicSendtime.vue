@@ -3,7 +3,7 @@
     <div>
       <div>
         <div class="queryCondition-top">
-          <div class="queryCondition-title">新闻收藏夹</div>
+          <div class="queryCondition-title">全网舆情</div>
           <div class="middle clearFloat">
             <!-- 查询条件框 -->
             <div class="width1100">
@@ -13,37 +13,34 @@
               <div class="floatLeft marginLeft10">
                 <date-picker :prop="endDatePicker" @endDateEvent="endDateEvent"></date-picker>
               </div>
-              <div class="floatLeft">
-                <div class="nowConditionStarBox floatLeft marginLeft10">
-                  <div class="floatLeft">
-                    重要性：
-                  </div>
-                  <div class="starBg condition floatLeft">
-                    <span @click="conditionStar(item)" v-for="item of starNumber" :key="item" class="iconfont icon-star"></span>
-                  </div>
-                  <div class="nowConditionStar">
-                    <span v-for="item of conditionStarNumber" :key="item" class="iconfont icon-xingxing"></span>
-                  </div>
-                </div>
-              </div>
+            <div class="floatLeft marginTwo">
+              <pull-down-list-two :prop="legislationListTwo" @legislationEventTwo='legislationEventTwo'></pull-down-list-two>
+            </div>  
+            <!-- 关键字部分 -->
+            <div class="floatLeft">
+              <keyword @keywordEvent="keywordEvent"></keyword>
+            </div> 
+            <div class="floatLeft">
+              <pull-down-list :prop="modulesNameList" @modulesNameEvent='modulesNameEvent'></pull-down-list>
+            </div>           
             </div>
-            <div>
+            <div class="pianyi">
               <div class="floatLeft">
                 <div @click="checkRiskType" class="checkBox floatLeft">
                   <span class="iconBox">
                     <i v-show="isShowTypeList" class="dot"></i>
                   </span>
                   
-                  <span class="marginLeft5">选择风险类别</span>
+                  <span class="marginLeft5">风险类别</span>
                 </div>
               </div>
-              <div class="floatLeft">
-                <div class="checkBox floatLeft marginLeft20">
+              <!-- <div class="floatLeft">
+                <div class="checkBox floatLeft marginLeft20"> -->
                   <!-- @click="checkFinished" -->
                   <!-- <span class="iconBox">
                     <i v-show="isFinished" class="dot"></i>
                   </span> -->
-                  <span class="marginLeft20">是否处理：</span>
+                  <!-- <span class="marginLeft20">是否处理：</span>
                   <span @click="checkFinished(true)">
                     是
                     <span class="iconBox">
@@ -57,7 +54,16 @@
                     </span>
                   </span>
                 </div>
+              </div> -->
+              <div class="floatLeft">
+                <div @click="negNew" class="checkBox floatLeft marginLeft10">
+                  <span class="iconBox">
+                    <i v-show="isShowNgenew" class="dot"></i>
+                  </span>
+                  <span class="marginLeft5">负面新闻</span>
+                </div>
               </div>
+
               <div class="floatLeft marginLeft20">
                 <div class="uploadFiles">
                   <label for="fileExport">上传文件(csv、txt)等
@@ -74,6 +80,7 @@
             </div>
           </div>
         </div>
+        <span class="bond_z" @click='zhaiquan' :class="{active:true ==categoryIndex}">新闻</span><span class="zhuti" @click='zhuti' :class="{active:true ==categoryIndex1}">公告</span>
         <!-- 风险类型选择 -->
         <div v-if="isShowTypeList && isShowTypeBox" class="typeBox clearFloat">
           <div class="firstTypeBox">
@@ -83,7 +90,7 @@
                   <span class="iconBox">
                     <i v-show="item.check" class="iconfont icon-queren"></i>
                   </span>
-                  <span class="firstType">{{item.type}}</span>
+                  <span class="firstType">{{item.riskname}}</span>
                 </div>
               </li>
             </ul>
@@ -97,7 +104,7 @@
               <li v-for="(item,index) of secondTypeList" :key="index" class="clearFloat">
                 <div v-show="item.check" class="firstItem">
                   <div class="firstTitle">
-                    {{item.firstTitle}}：
+                    {{item.riskname}}：
                   </div>
                   <div class="listBox">
                     <ul class="clearFloat">
@@ -105,7 +112,7 @@
                         <span class="iconBox">
                           <i v-show="secondItem.check" class="iconfont icon-queren"></i>
                         </span>
-                        <span class="secondType">{{secondItem.title}}</span>
+                        <span class="secondType">{{secondItem.riskname}}</span>
                       </li>
                     </ul>
                   </div>
@@ -117,67 +124,60 @@
         <!-- 查询结果 -->
         <div v-if="isShowQueryResult" class="queryResult">
           <div v-if="hasResultData">
+            <span class="biaozhuxin">新闻</span>
             <table>
               <tbody>
                 <tr>
                   <th v-for="(item, index) of titleData" :key="index" class="tableTh" width:100px>{{item}}</th>
                 </tr>
                 <tr v-for="(item, index) of dataList" :key="index">
-                  <td>{{item.SHOWTIME}}</td>
+                  <td>{{item.noticedate}}</td>
                   <td class="tableTd">
-                    <a :href="item.URL" target="_bank">{{item.TITLE}}</a>
+                    <a :href="item.sourceurl" target="_bank">{{item.title}}</a>
                   </td>
                   <td class="data-content">
-                    <p v-html="item.CONTENT"></p>
+                    <p v-html="item.securitycodes"></p>
                     <span @click="details(item, index)">{{item.details}}</span>
                   </td>
-                  <td>{{item.SOURCE}}</td>
-                  <td>
-                    <div class="floatLeft2">
-                      <select class="form-control" style="width:100px;" v-model="item.risk_code">
-                        <option v-for="s in risk_codeList" :value="s.code" :key="s.code">{{s.title}}</option>
-                      </select>
-                      <button type="button" @click="saveItem(item)" class="btn btn-default">确定</button>
-                    </div>
+                  <td class="data-content">
+                    <p v-html="item.companynames"></p>
+                    <span @click="detailsxi(item,index)">{{item.detailsxi}}</span>
                   </td>
-                  <td class="starBox">
-                    <div class="starBg">
-                      <span @click="choiceStar(secondItem, item, index)" v-for="secondItem of starNumber" :key="secondItem" class="iconfont icon-star"></span>
-                    </div>
-                    <div class="nowStarNumber">
-                      <div class="clearFloat" v-if="item.starNumber === 1">
-                        <span class="iconfont icon-xingxing"></span>
-                      </div>
-                      <div class="clearFloat" v-else-if="item.starNumber === 2">
-                        <span class="iconfont icon-xingxing"></span>
-                        <span class="iconfont icon-xingxing"></span>
-                      </div>
-                      <div class="clearFloat" v-else-if="item.starNumber === 3">
-                        <span class="iconfont icon-xingxing"></span>
-                        <span class="iconfont icon-xingxing"></span>
-                        <span class="iconfont icon-xingxing"></span>
-                      </div>
-                      <div v-else></div>
-                    </div>
-                  </td>
-                  <td>
-                    <span v-if="item.is_favorite">已收藏
-                      <span @click="favorite(item, index, false)" class="updateBtn">取消</span>
-                    </span>
-                    <span v-else @click="favorite(item, index, true)" class="updateBtn">加入收藏夹</span>
-                  </td>
-                  <td>
-                    <span v-if="item.finished">zhangxx已处理
-                      <span @click="dispose(item, index, false)" class="updateBtn">取消</span>
-                    </span>
-                    <span v-else @click="dispose(item, index, true)" class="updateBtn">处理完成</span>
-                  </td>
+                  <td>{{item.medianame}}</td>
+                  <td></td>
                 </tr>
               </tbody>
             </table>
             <pagination :prop="paginationData" @paginationSelect="paginationSelect"></pagination>
           </div>
-          <div v-else>
+          <div v-if="hasNotic">
+            <span class="biaozhuxin">公告</span>
+            <table>
+              <tbody>
+                <tr>
+                  <th v-for="(item, index) of titleData" :key="index" class="tableTh" width:100px>{{item}}</th>
+                </tr>
+                <tr v-for ="(item ,index) of dataListNotice" :key='index' >
+                  <td>{{item.noticedate}}</td>
+                  <td class="tableTd">
+                    <a :href="item.sourceurl" target="_bank">{{item.title}}</a>
+                  </td>
+                  <td class="data-content">
+                    <p v-html="item.securitycodes"></p>
+                    <span @click="detailsone(item, index)">{{item.detailsone}}</span>
+                  </td>
+                  <td class="data-content">
+                    <p v-html="item.companynames"></p>
+                    <span @click="detailsxione(item,index)">{{item.detailsxione}}</span>
+                  </td>
+                  <td>{{item.medianame}}</td>
+                  <td></td>
+                </tr>
+              </tbody>
+            </table>
+            <paginationtwo :prop="paginationDatatwo" @paginationSelecttwo ="paginationSelecttwo"></paginationtwo>
+          </div>
+          <div v-show="isshownow">
             <div class="loadEffect">
               <span></span>
               <span></span>
@@ -196,44 +196,93 @@
 </template>
 
 <script>
+import pullDownListTwo from '@/components/common/pullDownListTwo'
 import pullDownList from '@/components/common/pullDownList'
 import pagination from '@/components/common/pagination'
+import paginationtwo from '@/components/common/paginationtwo'
 import commonMethods from '@/common/common.js'
 import datePicker from '@/components/common/datePicker'
+import keyword from '@/components/common/keyword'
 export default {
   data() {
     const oneDayAfter = new Date().getTime() - 86400000;
     return {
-      url: 'http://10.25.24.51:10192/api/rest/nlp/risk/query_favorite',
-      updateUrl: 'http://10.25.24.51:10192/api/rest/nlp/risk/update_news_factor?',
+      url: 'http://10.25.24.51:10193/api/risk/bond_issue_all?',
+      updateUrl: 'http://10.25.24.51:10193/api/risk/get_risk_code??',
       isShowTypeList: false,
       isShowTypeBox: false,
+      isShowNgenew:true,
       isShowQueryResult: false,
       hasResultData: false,
       isFinished: false,
       isAttentionPool: false,
       categroyIndex: 0,
+      hasNotic:false,
+      categoryIndex:true,
+      categoryIndex1:true,
+      isshownow:false,
       nowCategroy: '',
+      resultDataNotice:'',
+      dataListNotice:'',
       selectFileName: '选择文件',
       starNumber: [1, 2, 3],
       conditionStarNumber: [],
       sendData: {},
       queryCondition: {
-        stock_type: 'F',
-        imp_score: '',
-        is_favorite: '',
-        risk_type: '',
-        risk_code: '',
-        page_size: 10,
-        page: 1,
-        from_date: '',
-        to_date: '',
-        keyword: '',
-        finished: '',
-        file: '',
+        start_date: '',
+        end_date: '',
+        keytype:0,
+        keyword:'',
+        userid:'',
+        sector:'',
+        file:'',
+        riskcode:'',
+        isnegative:1,
+        scope:0,
+        querytype:0,
+        page: 0,
+        pagesize: 3,
       },
+      modulesNameList: {
+        title: '组合范围：',
+        parentEvent: 'modulesNameEvent',
+        default: '请选择',
+        listWidth: 143,
+        nowSelectWidth: 145,
+        nowSelectHeight: 25,
+        nowSelectFontSize: 13,
+        list: []
+      },
+      legislationListTwo: {
+        title: '',
+        parentEvent: 'legislationEventTwo',
+        default: '标题',
+        listWidth: 98,
+        nowSelectWidth: 100,
+        nowSelectHeight: 25,
+        nowSelectFontSize: 13,
+        list: [
+          '标题',
+          '证券代码',
+          '公司名称'
+        ]
+      },
+      listCode:[
+        {
+          code:0,
+          content:'标题'
+        },
+        {
+          code:1,
+          content:'证券代码'
+        },
+        {
+          code:2,
+          content:'公司名称'
+        }
+      ],
       startDatePicker: {
-        title: '新闻日期：',
+        title: '日期：',
         parentEvent: 'startDateEvent',
         defaultDate: new Date(oneDayAfter)
       },
@@ -248,7 +297,13 @@ export default {
         total_Count: 0,
         current: 1
       },
-      titleData: ['新闻时间', '新闻标题', '新闻内容', '新闻源', '风险类型', '重要性', '收藏', '处理情况'],
+      paginationDatatwo: {
+        parentEvent: 'paginationSelecttwo',
+        page_Count: 0,
+        total_Count: 0,
+        current: 1
+      },
+      titleData: ['日期', '标题', '证券代码', '公司全称', '来源', '类型'],
       dataList: [],
       firstTypeList: [
         { type: '全部', check: false },
@@ -321,91 +376,173 @@ export default {
         {          firstTitle: '不可抗力风险', check: false, list: [
             { code: '517100', check: false, title: '地震、水灾、火灾、恐怖袭击；通讯、电力中断；战争' },
           ]        },
-        // {firstTitle: '监管预警', check: false, list: [
-        //   {code: 'xxxxx', check: false, title: 'xxxxxxxxxx'},
-        // ]},
-        // {firstTitle: '产品预警', check: false, list: [
-        //   {code: 'xxxxx', check: false, title: 'xxxxxxxxxx'},
-        // ]},
         {          firstTitle: '其他风险', check: false, list: [
             { code: '590100', check: false, title: '其他风险类事件' },
           ]        },
       ],
-      risk_codeList: [
-        { code: " ", title: "无" },
-        { code: "518", title: "产品预警" },
-        { code: "519", title: "监管预警" },
-        { code: "510101", title: "债务违约、合同失信、债务展期" },
-        { code: "510102", title: "评级下调、列入观察或负面类展望、推迟评级" },
-        { code: "510103", title: "欺诈造假" },
-        { code: "510104", title: "承诺失信" },
-        { code: "510105", title: "公司挪用资金、未按约定使用资金" },
-        { code: "511100", title: "暂停交易、退市" },
-        { code: "511101", title: "股权质押、冻结或爆仓" },
-        { code: "511102", title: "股份解禁或减持" },
-        { code: "511103", title: "证券价格异常波动" },
-        { code: "512100", title: "发生亏损" },
-        { code: "512101", title: "盈利能力下降" },
-        { code: "512102", title: "公司资金流动性不足或资金来源异常" },
-        { code: "512103", title: "资不抵债、资产负债率过高" },
-        { code: "512104", title: "资产重大减值、资产异常" },
-        { code: "512105", title: "财务造假、不透明，财务数据存在真实性问题" },
-        { code: "512106", title: "放弃债权和财产" },
-        { code: "512107", title: "对外借款或对外担保过多,存在代偿风险" },
-        { code: "513100", title: "重组失败、重组取消或重组存在问题" },
-        { code: "513101", title: "经营方针、主营业务、经营范围发生重大变化" },
-        {
-          code: "513102",
-          title: "对外投资失误、参与其他公司股权之争、抛售公司资产"
-        },
-        { code: "513103", title: "虚假注资、抽逃资金、转移资产" },
-        { code: "513104", title: "国家或地方政府政策变动而造成影响" },
-        { code: "513105", title: "公司资产被查封、扣押、冻结、司法划转" },
-        {
-          code: "513106",
-          title: "公司经营出现问题、公司（项目）停产或半停产、业务减少"
-        },
-        { code: "513107", title: "公司发生减资、合并、分立、解散、破产" },
-        {
-          code: "513108",
-          title:
-            "关联企业或人（实际控制人、控股股东、供应商、客户、被担保企业、其他关联企业）出现问题"
-        },
-        {
-          code: "513109",
-          title: "投诉和诉讼事件、经济纠纷和环保问题等公共纠纷"
-        },
-        { code: "513110", title: "公司产品存在缺陷或存在问题" },
-        { code: "513111", title: "审批不通过事项或撤销公司某项经营资格" },
-        { code: "513112", title: "犯罪事件" },
-        { code: "513113", title: "公司违规或被问询" },
-        {
-          code: "514100",
-          title:
-            "公司控制权斗争、实际控制人发生变动、公司性质变动、公司股东持有的股份被司法划转"
-        },
-        { code: "514101", title: "处罚事件或问询事件" },
-        { code: "514102", title: "高管变动（异动）" },
-        { code: "514103", title: "员工（含高管）违规" },
-        { code: "514104", title: "拖欠员工工资、大量辞工或员工大面积离职" },
-        { code: "515100", title: "公司项目发生延期、手续不全、陷入问题" },
-        { code: "515101", title: "项目产能未达到预期或情况备受质疑的" },
-        { code: "516100", title: "担保人或抵押物出现纠纷或问题" },
-        {
-          code: "517100",
-          title: "地震、水灾、火灾、恐怖袭击；通讯、电力中断；战争"
-        },
-        { code: "590100", title: "其他风险类事件" }
-      ],
+      // riskcodeList: [
+      //   { code: " ", title: "无" },
+      //   { code: "518", title: "产品预警" },
+      //   { code: "519", title: "监管预警" },
+      //   { code: "510101", title: "债务违约、合同失信、债务展期" },
+      //   { code: "510102", title: "评级下调、列入观察或负面类展望、推迟评级" },
+      //   { code: "510103", title: "欺诈造假" },
+      //   { code: "510104", title: "承诺失信" },
+      //   { code: "510105", title: "公司挪用资金、未按约定使用资金" },
+      //   { code: "511100", title: "暂停交易、退市" },
+      //   { code: "511101", title: "股权质押、冻结或爆仓" },
+      //   { code: "511102", title: "股份解禁或减持" },
+      //   { code: "511103", title: "证券价格异常波动" },
+      //   { code: "512100", title: "发生亏损" },
+      //   { code: "512101", title: "盈利能力下降" },
+      //   { code: "512102", title: "公司资金流动性不足或资金来源异常" },
+      //   { code: "512103", title: "资不抵债、资产负债率过高" },
+      //   { code: "512104", title: "资产重大减值、资产异常" },
+      //   { code: "512105", title: "财务造假、不透明，财务数据存在真实性问题" },
+      //   { code: "512106", title: "放弃债权和财产" },
+      //   { code: "512107", title: "对外借款或对外担保过多,存在代偿风险" },
+      //   { code: "513100", title: "重组失败、重组取消或重组存在问题" },
+      //   { code: "513101", title: "经营方针、主营业务、经营范围发生重大变化" },
+      //   {
+      //     code: "513102",
+      //     title: "对外投资失误、参与其他公司股权之争、抛售公司资产"
+      //   },
+      //   { code: "513103", title: "虚假注资、抽逃资金、转移资产" },
+      //   { code: "513104", title: "国家或地方政府政策变动而造成影响" },
+      //   { code: "513105", title: "公司资产被查封、扣押、冻结、司法划转" },
+      //   {
+      //     code: "513106",
+      //     title: "公司经营出现问题、公司（项目）停产或半停产、业务减少"
+      //   },
+      //   { code: "513107", title: "公司发生减资、合并、分立、解散、破产" },
+      //   {
+      //     code: "513108",
+      //     title:
+      //       "关联企业或人（实际控制人、控股股东、供应商、客户、被担保企业、其他关联企业）出现问题"
+      //   },
+      //   {
+      //     code: "513109",
+      //     title: "投诉和诉讼事件、经济纠纷和环保问题等公共纠纷"
+      //   },
+      //   { code: "513110", title: "公司产品存在缺陷或存在问题" },
+      //   { code: "513111", title: "审批不通过事项或撤销公司某项经营资格" },
+      //   { code: "513112", title: "犯罪事件" },
+      //   { code: "513113", title: "公司违规或被问询" },
+      //   {
+      //     code: "514100",
+      //     title:
+      //       "公司控制权斗争、实际控制人发生变动、公司性质变动、公司股东持有的股份被司法划转"
+      //   },
+      //   { code: "514101", title: "处罚事件或问询事件" },
+      //   { code: "514102", title: "高管变动（异动）" },
+      //   { code: "514103", title: "员工（含高管）违规" },
+      //   { code: "514104", title: "拖欠员工工资、大量辞工或员工大面积离职" },
+      //   { code: "515100", title: "公司项目发生延期、手续不全、陷入问题" },
+      //   { code: "515101", title: "项目产能未达到预期或情况备受质疑的" },
+      //   { code: "516100", title: "担保人或抵押物出现纠纷或问题" },
+      //   {
+      //     code: "517100",
+      //     title: "地震、水灾、火灾、恐怖袭击；通讯、电力中断；战争"
+      //   },
+      //   { code: "590100", title: "其他风险类事件" }
+      // ],
       file: '',
       sendFile: '',
     }
   },
   components: {
     pagination,
+    paginationtwo,
     datePicker,
+    pullDownListTwo,
+    pullDownList,
+    keyword,
+  },
+      //获取板块名称 进入页面发送请求
+  created(){
+    console.log(this.queryCondition.notice_type)
+      const url = 'http://10.25.24.51:10189/api/risk/sector_set/query'
+      const sendData = {
+        userid: 'risk'
+      };
+      console.log(sendData)
+      this.$_axios.get(url, {
+        params: sendData
+      }).then((response) => {
+        if (!response.data) {
+          this.modulesNameList.list = ['默认范围'];
+          this.modulesNameList.default = '没有可选择板块';
+          this.sector = '';
+        } else {
+          if (response.data.code == '0') {
+            console.log(response.data.sectorlist)
+            response.data.sectorlist.unshift('默认范围')
+            this.modulesNameList.list = JSON.parse(JSON.stringify(response.data.sectorlist));
+            this.modulesNameList.default = response.data.sectorlist[0];
+            this.sector = response.data.sectorlist[0];
+          } else {
+            this.modulesNameList.list = [];
+            this.modulesNameList.default = '没有可选择板块';
+            this.sector = '';
+          }
+        }
+      }).catch((err) => {
+
+      });
   },
   methods: {
+      zhaiquan(){
+        this.categoryIndex = !this.categoryIndex
+        if(this.categoryIndex){
+          this.hasResultData = true
+        }else{
+          this.hasResultData = false
+        }
+      },
+      zhuti(){
+        this.categoryIndex1 = !this.categoryIndex1
+        if(this.categoryIndex1){
+          this.hasNotic = true
+        }else{
+          this.hasNotic = false
+        }
+
+      },
+    negNew(){
+        this["isShowNgenew"] = !this[
+        "isShowNgenew"
+      ];
+      if(this["isShowNgenew"]){
+        this.queryCondition.isnegative = 1
+      }else{
+        this.queryCondition.isnegative = 0
+      }
+    },
+    // 组合范围板块
+    modulesNameEvent(...data) {
+      if(data[0] == '默认范围'){
+        this.queryCondition.scope = 0;
+        this.queryCondition.userid = '';
+        this.queryCondition.sector = ''
+      }else{
+        this.queryCondition.scope = 1;
+        this.queryCondition.userid = 'risk',
+        this.queryCondition.sector = data[0]
+      }
+    },
+    // 添加关键字查询
+    keywordEvent(...data) {
+      this.queryCondition.keyword = data[0];
+    },
+    legislationEventTwo(data) {
+      console.log(data)
+      let code = this.listCode.find(v=>{
+        return v.content === data
+      })
+      console.log(code.code)
+      this.queryCondition.keytype = code.code
+
+    },
     saveItem(s) {
       let m = Object.assign({}, s);
       m.news_id = m.INFOCODE;
@@ -458,15 +595,18 @@ export default {
       this.file = '';
     },
     query() {
+      console.log(this.queryCondition)
       this.isShowQueryResult = true;
       this.hasResultData = false;
+      this.hasNotic = false;
+      this.isshownow = true;
       this.sendData = JSON.parse(JSON.stringify(this.queryCondition));
       this.sendFile = this.file;
-      for (let key in this.sendData) {
-        if (this.sendData[key] === '') {
-          delete this.sendData[key];
-        }
-      }
+      // for (let key in this.sendData) {
+      //   if (this.sendData[key] === '') {
+      //     delete this.sendData[key];
+      //   }
+      // }
       let formData = new FormData();
       for (let key in this.sendData) {
         if (this.sendData.hasOwnProperty(key)) {
@@ -479,28 +619,57 @@ export default {
         }
       }
       this.sendFile && formData.append('file', this.sendFile);
-      this.$_axios.post(this.url.toUrl(), formData, config).then(response => {
+      console.log(formData)
+      this.$_axios.post(this.url, formData, config).then(response => {
         // 显示查询结果
         this.hasResultData = true;
+        this.hasNotic = true;
+        this.isshownow = false;
+        // console.log(response.result)
         console.log('主页数据', response.data.result);
-        this.resultData = response.data.result.Announce_List;
-        this.resultData.forEach(item => {
-          item.CONTENT = item.CONTENT.toString().replace(/\\r\\n\\r\\n/g, "<br>");
-          item.CONTENT = item.CONTENT.toString().replace(/\\r\\n/g, "<br>");
-        });
+        this.resultData = response.data.result.news;
+
+        this.resultDataNotice = response.data.result.notice
+
+        // this.resultData.forEach(item => {
+        //   item.CONTENT = item.CONTENT.toString().replace(/\\r\\n\\r\\n/g, "<br>");
+        //   item.CONTENT = item.CONTENT.toString().replace(/\\r\\n/g, "<br>");
+        // });
         this.dataList = JSON.parse(JSON.stringify(this.resultData));
-        this.paginationData.page_Count = response.data.result.Page_Count;
-        this.paginationData.total_Count = response.data.result.Total_Count;
-        this.dataList.forEach(item => {
-          // item.SHOWTIME = item.SHOWTIME ? commonMethods.formatDateTime(new Date(item.SHOWTIME)) : '-';
-          if (item.imp_score) {
-            item.starNumber = parseInt(item.imp_score);
-          } else {
-            item.starNumber = 0;
+        this.dataListNotice = JSON.parse(JSON.stringify(this.resultDataNotice))
+        this.paginationData.page_Count = Math.ceil(response.data.result.news.length/5);
+        this.paginationData.total_Count = response.data.result.news.length;
+
+        this.paginationDatatwo.page_Count = Math.ceil(response.data.result.notice.length/5);
+        this.paginationDatatwo.total_Count = response.data.result.notice.length;
+        
+        this.dataListNotice.forEach(item =>{
+          if (item.companynames) {
+            item.companynames = item.companynames.join(',')
+            item.companynames = item.companynames.slice(0, 50) + '...';
+            item.detailsxione = '...详情';
           }
-          if (item.CONTENT && item.CONTENT.length > 220) {
-            item.CONTENT = item.CONTENT.slice(0, 220) + '...';
-            item.details = '...详情';
+          if(item.securitycodes){
+            item.securitycodes = item.securitycodes.join(',')                                                                                                                 
+            item.securitycodes = item.securitycodes.slice(0,50) + '...'
+            item.detailsone = '...详情'
+          }
+        })
+        this.dataList.forEach(item => {
+          // if (item.imp_score) {
+          //   item.starNumber = parseInt(item.imp_score);
+          // } else {
+          //   item.starNumber = 0;
+          // }
+          if (item.companynames) {
+            item.companynames = item.companynames.join(',')
+            item.companynames = item.companynames.slice(0, 50) + '...';
+            item.detailsxi = '...详情';
+          }
+          if(item.securitycodes){
+            item.securitycodes = item.securitycodes.join(',')                                                                                                                 
+            item.securitycodes = item.securitycodes.slice(0,50) + '...'
+            item.details = '...详情'
           }
         });
       }).catch(err => {
@@ -514,9 +683,59 @@ export default {
     paginationSelect2(pageNumber) {
       this.paginationSelect(pageNumber);
     },
+    paginationSelecttwo(pageNumber) {
+      const sendDataone = JSON.parse(JSON.stringify(this.sendData));
+      sendDataone.page = pageNumber - 1;
+      let formData = new FormData();
+      for (let key in sendDataone) {
+        if (sendDataone.hasOwnProperty(key)) {
+          formData.append(key, sendDataone[key]);
+        }
+      }
+      let config = {
+        headers: {
+          'Content-Type': 'multipart/form-data'
+        }
+      }
+      this.sendFile && formData.append('file', this.sendFile);
+      this.$_axios.post(this.url.toUrl(), formData, config).then(response => {
+        // 显示查询结果
+        this.hasNotic = true;
+        // console.log(response.result)
+        console.log('主页数据', response.data.result);
+        this.resultData = response.data.result.news;
+
+        // this.resultData.forEach(item => {
+        //   item.CONTENT = item.CONTENT.toString().replace(/\\r\\n\\r\\n/g, "<br>");
+        //   item.CONTENT = item.CONTENT.toString().replace(/\\r\\n/g, "<br>");
+        // });
+        this.dataList = JSON.parse(JSON.stringify(this.resultData));
+        this.paginationDatatwo.page_Count = Math.ceil(response.data.result.notice.length/5);
+        this.paginationDatatwo.total_Count = response.data.result.notice.length;
+        this.dataList.forEach(item => {
+          // if (item.imp_score) {
+          //   item.starNumber = parseInt(item.imp_score);
+          // } else {
+          //   item.starNumber = 0;
+          // }
+          if (item.companynames) {
+            item.companynames = item.companynames.join(',')
+            item.companynames = item.companynames.slice(0, 50) + '...';
+            item.detailsxi = '...详情';
+          }
+          if(item.securitycodes){
+            item.securitycodes = item.securitycodes.join(',')                                                                                                                 
+            item.securitycodes = item.securitycodes.slice(0,50) + '...'
+            item.details = '...详情'
+          }
+        });
+      }).catch(err => {
+        console.log(err);
+      });
+    }, 
     paginationSelect(pageNumber) {
       const sendData = JSON.parse(JSON.stringify(this.sendData));
-      sendData.page = pageNumber;
+      sendData.page = pageNumber - 1;
       let formData = new FormData();
       for (let key in sendData) {
         if (sendData.hasOwnProperty(key)) {
@@ -532,38 +751,80 @@ export default {
       this.$_axios.post(this.url.toUrl(), formData, config).then(response => {
         // 显示查询结果
         this.hasResultData = true;
+        // console.log(response.result)
         console.log('主页数据', response.data.result);
-        this.resultData = response.data.result.Announce_List;
-        this.resultData.forEach(item => {
-          item.CONTENT = item.CONTENT.toString().replace(/\\r\\n\\r\\n/g, "<br>");
-          item.CONTENT = item.CONTENT.toString().replace(/\\r\\n/g, "<br>");
-        });
+        this.resultData = response.data.result.news;
+
+        // this.resultData.forEach(item => {
+        //   item.CONTENT = item.CONTENT.toString().replace(/\\r\\n\\r\\n/g, "<br>");
+        //   item.CONTENT = item.CONTENT.toString().replace(/\\r\\n/g, "<br>");
+        // });
         this.dataList = JSON.parse(JSON.stringify(this.resultData));
+        this.paginationData.page_Count = Math.ceil(response.data.result.news.length/5);
+        this.paginationData.total_Count = response.data.result.news.length;
         this.dataList.forEach(item => {
-          // item.SHOWTIME = item.SHOWTIME ? commonMethods.formatDateTime(new Date(item.SHOWTIME)) : '-';
-          if (item.imp_score) {
-            item.starNumber = parseInt(item.imp_score);
-          } else {
-            item.starNumber = 0;
+          // if (item.imp_score) {
+          //   item.starNumber = parseInt(item.imp_score);
+          // } else {
+          //   item.starNumber = 0;
+          // }
+          if (item.companynames) {
+            item.companynames = item.companynames.join(',')
+            item.companynames = item.companynames.slice(0, 50) + '...';
+            item.detailsxi = '...详情';
           }
-          if (item.CONTENT && item.CONTENT.length > 220) {
-            item.CONTENT = item.CONTENT.slice(0, 220) + '...';
-            item.details = '...详情';
+          if(item.securitycodes){
+            item.securitycodes = item.securitycodes.join(',')                                                                                                                 
+            item.securitycodes = item.securitycodes.slice(0,50) + '...'
+            item.details = '...详情'
           }
         });
       }).catch(err => {
         console.log(err);
       });
-    },
-    details(item, index) {
-      if (item.details == '收起') {
-        item.details = '...详情';
-        item.CONTENT = item.CONTENT.slice(0, 220) + '...';
-      } else {
-        item.details = '收起';
-        item.CONTENT = this.resultData[index].CONTENT;
+    }, 
+    detailsxi(item,index){
+      if(item.detailsxi == '收起'){
+        item.detailsxi = '...详情';
+        item.companynames = item.companynames.slice(0,50) + '...'
+      }else{
+        item.detailsxi = '收起';
+        item.companynames = this.resultData[index].companynames.join(',')
       }
     },
+    detailsxione(item,index){
+      if(item.detailsxione == '收起'){
+        item.detailsxione = '...详情';
+        item.companynames = item.companynames.slice(0,50) + '...'
+      }else{
+        item.detailsxione = '收起';
+        item.companynames = this.resultDataNotice[index].companynames.join(',')
+      }
+    },
+    detailsone(item, index) {
+      if (item.detailsone == '收起') {
+        console.log('详情1')
+        item.detailsone = '...详情';
+        item.securitycodes = item.securitycodes.slice(0, 50) + '...';
+      } else {
+        console.log('详情2')
+        item.detailsone = '收起';
+        // item.securitycodes.join(',')
+        item.securitycodes = this.resultDataNotice[index].securitycodes.join(',');
+      }
+    }, 
+    details(item, index) {
+      if (item.details == '收起') {
+        console.log('详情1')
+        item.details = '...详情';
+        item.securitycodes = item.securitycodes.slice(0, 50) + '...';
+      } else {
+        console.log('详情2')
+        item.details = '收起';
+        // item.securitycodes.join(',')
+        item.securitycodes = this.resultData[index].securitycodes.join(',');
+      }
+    }, 
     checkFinished(flag) {
       this.isFinished = flag;
       this.queryCondition.finished = flag ? 1 : '';
@@ -574,9 +835,111 @@ export default {
       // isShowTypeBox
       if (this.isShowTypeList) {
         this.isShowTypeBox = true;
+        this.$_axios.get(this.updateUrl,{
+          params:''
+        }).then(res=>{
+          let allData = res.data.result.result 
+          // for(let i = 0; i <allData.length;i++){
+          //   allData[i].checked = false
+          //   allData[i].list = []
+          //   let allDataAccept = allData.filter((v,i)=>{
+          //     return v.level ===1
+          //   })
+          // }
+          let allDataAccept
+          allData.forEach(function(v,i){
+            allData[i].check = false
+            allData[i].list = []
+          },allDataAccept=allData.filter(function(v,i){
+            return v.level ==1
+          })
+          )
+        this.firstTypeList = allDataAccept
+          console.log(allData)
+          console.log(allDataAccept)
+
+        this.secondTypeList = allDataAccept
+
+        // 将所有的一级数组也同样的放到二级数组里面
+        // 满足二级数组的数据他分别添加到对应的数组里面
+        console.log(this.secondTypeList)
+        let onebiao = allData.filter(function(v,i){
+          return v.riskcode.indexOf('001001') > -1 && v.riskcode.length > 6
+        })
+        console.log(onebiao)
+        let twobiao = allData.filter(function(v,i){
+          return v.riskcode.indexOf('001002') > -1 && v.riskcode.length > 6
+        })
+        console.log(twobiao)
+        let threebiao = allData.filter(function(v,i){
+          return v.riskcode.indexOf('001003') > -1 && v.riskcode.length > 6
+        })
+        let fourbiao = allData.filter(function(v,i){
+          return v.riskcode.indexOf('001004') > -1 && v.riskcode.length > 6
+        })
+        let fivebiao = allData.filter(function(v,i){
+          return v.riskcode.indexOf('001005') > -1 && v.riskcode.length > 6
+        })
+        let sixbiao = allData.filter(function(v,i){
+          return v.riskcode.indexOf('001006') > -1 && v.riskcode.length > 6
+        })
+        let sevenbiao = allData.filter(function(v,i){
+          return v.riskcode.indexOf('001007') > -1 && v.riskcode.length > 6
+        })
+        let eightbiao = allData.filter(function(v,i){
+          return v.riskcode.indexOf('001008') > -1 && v.riskcode.length > 6
+        })  
+        let ninbiao = allData.filter(function(v,i){
+          return v.riskcode.indexOf('001009') > -1 && v.riskcode.length > 6
+        })  
+        let tenbiao = allData.filter(function(v,i){
+          return v.riskcode.indexOf('001010') > -1 && v.riskcode.length > 6
+        })
+        let evebiao = allData.filter(function(v,i){
+          return v.riskcode.indexOf('001011') > -1 && v.riskcode.length > 6
+        })
+
+        this.secondTypeList.forEach((v,i)=>{
+          if(v.riskcode == '001001'){
+            v.list = onebiao
+          }
+          if(v.riskcode == '001002'){
+            v.list = twobiao
+          }
+          if(v.riskcode == '001003'){
+            v.list = threebiao
+          }
+          if(v.riskcode == '001004'){
+            v.list = fourbiao
+          }
+          if(v.riskcode == '001005'){
+            v.list = fivebiao
+          }
+          if(v.riskcode == '001006'){
+            v.list = sixbiao
+          }
+          if(v.riskcode == '001007'){
+            v.list = sevenbiao
+          }
+          if(v.riskcode == '001008'){
+            v.list = eightbiao
+          }
+          if(v.riskcode == '001009'){
+            v.list = ninbiao
+          }
+          if(v.riskcode == '001010'){
+            v.list = tenbiao
+          }
+          if(v.riskcode == '001011'){
+            v.list = evebiao
+          }
+        })
+        console.log(this.secondTypeList)
+
+        })
       } else {
         this.isShowTypeBox = false;
-        this.queryCondition.risk_code = '';
+        this.queryCondition.riskcode = '';
       }
     },
     // 条件 选择重要级 星级
@@ -594,7 +957,7 @@ export default {
       const sendData = {
         news_id: item.INFOCODE,
         risk_type: item.risk_type,
-        risk_code: item.risk_code,
+        riskcode: item.riskcode,
         is_favorite: item.is_favorite,
         finished: item.finished,
         news_type_fk_id: '',
@@ -638,7 +1001,7 @@ export default {
       const sendData = {
         news_id: item.INFOCODE,
         risk_type: item.risk_type,
-        risk_code: item.risk_code,
+        riskcode: item.riskcode,
         imp_score: item.imp_score,
         finished: item.finished,
         news_type_fk_id: '',
@@ -676,7 +1039,7 @@ export default {
       const sendData = {
         news_id: item.INFOCODE,
         risk_type: item.risk_type,
-        risk_code: item.risk_code,
+        riskcode: item.riskcode,
         imp_score: item.imp_score,
         is_favorite: item.is_favorite,
         news_type_fk_id: '',
@@ -709,17 +1072,17 @@ export default {
       });
     },
     startDateEvent(...data) {
-      this.queryCondition.from_date = data[0];
+      this.queryCondition.start_date = data[0];
       // this.startDatePicker.defaultDate = new Date(data[0]);
     },
     endDateEvent(...data) {
-      this.queryCondition.to_date = data[0];
+      this.queryCondition.end_date = data[0];
       // this.endDatePicker.defaultDate = new Date(data[0]);
     },
     // 点击一级风险类型
     checkFirstType(item, index) {
       item.check = !item.check;
-      if (item.type === '全部') {
+      if (item.riskname === '全部') {
 
         this.firstTypeList.forEach(val => {
           val.check = item.check;
@@ -732,7 +1095,7 @@ export default {
         });
       } else {
         this.secondTypeList.forEach(firstVal => {
-          if (item.type === firstVal.firstTitle) {
+          if (item.riskname === firstVal.riskname) {
             firstVal.check = item.check;
             firstVal.list.forEach(secondVal => {
               secondVal.check = item.check;
@@ -740,7 +1103,7 @@ export default {
           }
         });
         if (!item.check) {
-          this.firstTypeList[0].check = false;
+          // this.firstTypeList[0].check = false;
         } else {
           this.checkAll();
         }
@@ -749,16 +1112,21 @@ export default {
     // 点击二级风险类型
     checkSecondType(item, index) {
       item.check = !item.check;
+      // 点击二级风险按钮
+      // 
       if (!item.check) {
-        this.firstTypeList[0].check = false;
+        console.log('此处已经点击过了')
+        // this.firstTypeList[0].check = false;
         this.secondTypeList.forEach(firstVal => {
+          // 第二项的每一项如果都是未选中的话
+          // 那么下面也都未选中
           let checkNull = firstVal.list.every(secondVal => {
             return secondVal.check === false;
           });
           if (checkNull) {
             firstVal.check = false;
             this.firstTypeList.forEach(val => {
-              if (val.type === firstVal.firstTitle) {
+              if (val.riskname === firstVal.riskname) {
                 val.check = false;
               }
             });
@@ -771,7 +1139,7 @@ export default {
     // 点击一级或者二级判断是否全部选中了
     checkAll() {
       let tempFirstArr = JSON.parse(JSON.stringify(this.firstTypeList));
-      tempFirstArr.shift();
+      // tempFirstArr.shift();
       let isFirstAll = tempFirstArr.every(item => {
         return item.check === true;
       });
@@ -783,23 +1151,25 @@ export default {
       });
       console.log(1, isFirstAll, 2, isSecondAll)
       if (isFirstAll && isSecondAll) {
-        this.firstTypeList[0].check = true;
+        // this.firstTypeList[0].check = true;
       }
     },
+    // 选择完riskname之后确认按钮
     confirmType() {
       const tempArr = [];
       this.secondTypeList.forEach(firstVal => {
         firstVal.list.forEach(secondVal => {
           if (secondVal.check) {
-            tempArr.push(secondVal.code);
+            tempArr.push(secondVal.riskcode);
           }
         });
       });
       this.resetType();
-      this.queryCondition.risk_code = tempArr.join(',');
+      this.queryCondition.riskcode = tempArr.join(',');
       this.isShowTypeBox = false;
       console.log(tempArr)
     },
+    // 不想选择riskname之后，选择取消
     resetType() {
       this.firstTypeList.forEach(val => {
         val.check = false;
@@ -810,17 +1180,57 @@ export default {
           secondVal.check = false;
         });
       });
-      this.queryCondition.risk_code = '';
+      this.queryCondition.riskcode = '';
     }
   },
   mounted() {
-    this.queryCondition.from_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
-    this.queryCondition.to_date = commonMethods.formatDateTime2(this.endDatePicker.defaultDate);
+    this.queryCondition.start_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
+    this.queryCondition.end_date = commonMethods.formatDateTime2(this.endDatePicker.defaultDate);
   }
 }
 </script>
 
 <style lang="less" scoped>
+.biaozhuxin{
+      display: inline-block;
+        cursor: pointer;
+        background-color: #D7D7D7;
+        color:white;
+        height: 27px;
+        width: 84px;
+        text-align: center;
+        line-height: 27px;
+        margin-top:10px;
+        background-color: #b50229;
+}
+.bond_z{
+    display: inline-block;
+        cursor: pointer;
+        background-color: #D7D7D7;
+        color:white;
+        height: 27px;
+        width: 84px;
+        text-align: center;
+        line-height: 27px;
+        margin-top:10px;
+}
+.bond_z.active{
+    background-color: #b50229;
+}
+.zhuti.active{
+    background-color: #b50229;
+}
+.zhuti{
+    display: inline-block;
+        cursor: pointer;
+        background-color: #D7D7D7;
+        color:white;
+        height: 27px;
+        width: 84px;
+        text-align: center;
+        line-height: 27px;
+        margin-left:10px;
+}
 .attentionPoolSet {
   position: fixed;
   top: 0;
@@ -925,8 +1335,13 @@ export default {
   }
   .queryBtn {
     margin-top: -15px;
+    
   }
+
 }
+  // #chaxun{
+  //   margin-left:378px
+  // }
 .typeBox {
   .firstTypeBox {
     float: left;
@@ -1026,6 +1441,9 @@ export default {
     // }
   }
 }
+.marginTwo{
+  margin:0 22px;
+}
 .queryResult {
   table {
     width: 1180px;
@@ -1109,13 +1527,13 @@ export default {
       width: 75px;
     }
     .tableTh:nth-child(2) {
-      width: 165px;
+      width: 533px;
     }
     .tableTh:nth-child(3) {
-      width: 260px;
+      width: 402px;
     }
     .tableTh:nth-child(4) {
-      width: 75px;
+      width: 356px;
     }
     .tableTh:nth-child(5) {
       width: 180px;
@@ -1134,5 +1552,8 @@ export default {
 
 .floatLeft2 {
   margin-left: 20px;
+}
+.pianyi{
+  width:882px;
 }
 </style>

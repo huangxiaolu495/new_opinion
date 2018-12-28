@@ -48,10 +48,13 @@ export default {
       isShowList: false,
       dataList: [],
       sidebarData: [
+        {
+          title:'全网舆情', path:'/monitor/homePage/publicSendtime' , isShowList:false, list:[]
+        },
         {          title: '股票', isShowList: false, list: [
             // 新闻预警
             { title: '新闻收藏夹', path: '/monitor/homePage/stock_newsWarning', list: [] },
-            {              title: '公告预警', isShowList: false, path: '/monitor/homePage/stock_afficheWarning', list: [
+            { title: '公告预警', isShowList: false, path: '/monitor/homePage/stock_afficheWarning', list: [
                 { title: '基本公告', path: '/monitor/homePage/stock_Basicannounce' },
                 { title: '自定义板块范围公告', path: '/monitor/homePage/stock_Template' },
                 { title: '负面公告', path: '/monitor/homePage/stock_Negative' }
