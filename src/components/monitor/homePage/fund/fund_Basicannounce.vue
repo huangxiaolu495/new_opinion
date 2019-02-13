@@ -80,6 +80,7 @@ export default {
   data() {
     const now = new Date();
     const week = now.getTime() - 604800000;
+    const oneAfterday = now.getTime() + 86400000
     return {
       // url: 'http://10.25.24.51:10193/api/risk/fund_announce',
       url: 'http://10.25.24.51:10193/api/risk/fund_announce',
@@ -109,7 +110,7 @@ export default {
       endDatePicker: {
         title: '至：',
         parentEvent: 'endDateEvent',
-        defaultDate: new Date()
+        defaultDate: new Date(oneAfterday)
       },
       sendData: {
         // securiycode: '', // 基金代码
@@ -430,18 +431,7 @@ export default {
       this.sendData = JSON.parse(JSON.stringify(this.queryCondition));
 
       console.log(this.sendData)
-      // console.log(this.sendData);
-      //  securiycode: 基金代码
 
-        //  start_date:  公告开始日期
-
-        // end_date: 公告结束日期
-
-        // page: 第几页（从0开始），默认为0
-
-        // pagesize:每页条数，默认为10条
-
-        // notice_type: 公告类型
       this.$_axios.get(this.url, {
         params: this.sendData
       }).then(res => {
@@ -458,63 +448,7 @@ export default {
           this.paginationData.page_Count = 0;
         }
         this.paginationData.total_Count = this.resultData.total_count;
-
-       
-     
-        // this.dataList = JSON.parse(JSON.stringify(res.data.result.total_count));
-        // this.resultData = res.data.result.total_count;
-        // this.paginationData.page_Count = res.data.result.Page_Count;
-        // this.paginationData.total_Count = res.data.result.Total_Count;
-        // this.dataList.forEach(item => {
-          // item.notice_date = item.notice_date ? commonMethods.formatDateTime(new Date(item.notice_date)) : '-';
-          // if (item.notice_detail && item.notice_detail.length > 220) {
-          //   item.notice_detail = item.notice_detail.slice(0, 220) + '...';
-          //   item.details = '...详情';
-          // }
-        // });
-
-        // if (this.resultData.total_count) {
-        //   this.paginationData.page_Count = Math.ceil(this.resultData.total_count / 10);
-        // } else {
-        //   this.paginationData.page_Count = 0;
-        // }
-
-        
       })
-
-
-      // if (!this.queryCondition.start_date || !this.queryCondition.end_date) {
-      //   alert('请输入日期时间段');
-      //   return;
-      // }
-      // this.isShowQueryResult = true;
-      // this.hasResultData = false;
-      // this.sendData = this.selectList.parentEvent;
-      // for (let key in this.sendData) {
-      //   if (this.sendData[key] === '') {
-      //     delete this.sendData[key];
-      //   }
-      // }
-      // console.log('sendData', this.sendData)
-      // this.$_axios.get(this.url, {
-      //   params: this.sendData
-      // }).then(response => {
-        // 显示查询结果
-        // this.hasResultData = true;
-        // console.log('股票 > 股价异动预警', response.data.result);
-        // this.dataList = JSON.parse(JSON.stringify(response.data.result.result));
-        // this.resultData = response.data.result;
-        // if (this.resultData.total_count) {
-        //   this.paginationData.page_Count = Math.ceil(this.resultData.total_count / 10);
-        // } else {
-        //   this.paginationData.page_Count = 0;
-        // }
-        // this.paginationData.total_Count = this.resultData.total_count;
-        
-      // })
-      //   .catch(err => {
-      //     console.log(err);
-      //   });
     },
     threshold() {
       let threshold = parseFloat(this.queryCondition.threshold);
@@ -534,7 +468,7 @@ export default {
   },
   mounted() {
     this.queryCondition.start_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
-    this.queryCondition.end_date = commonMethods.formatDateTime2(new Date());
+    this.queryCondition.end_date = commonMethods.formatDateTime2(this.endDatePicker.defaultDate);
   }
 }
 </script>

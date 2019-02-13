@@ -1536,7 +1536,7 @@ window.onload = (function (M) {
             url: 'http://10.25.24.51:10197/api/credit/rzrq_guarantee',
             data: {
               start_date: $('#month_start_three').val(),
-              end_date: $('#month_stop_two').val(),
+              end_date: $('#month_stop_three').val(),
               // markettype: $('#exchange_down_two').val() == '全部' ? '' : $('#exchange_down_two').val(),
               companyname: $('#select_down_title_two').val() == '全部' ? '' : $('#select_down_title_two').val(),
               securitycode: $('#Security_name_two').val(),
@@ -1557,6 +1557,8 @@ window.onload = (function (M) {
         }
         var Flushing = ''
         $('#finance_btnSelect_two').on('click',function(){
+          console.log( $('#month_stop_three').val())
+          console.log( $('#month_start_three').val())
           $.ajax({
             type:'get',
             url: 'http://10.25.24.51:10197/api/credit/rzrq_guarantee',

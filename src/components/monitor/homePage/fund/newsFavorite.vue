@@ -33,7 +33,6 @@
                   <span class="iconBox">
                     <i v-show="isShowTypeList" class="dot"></i>
                   </span>
-                  
                   <span class="marginLeft5">选择风险类别</span>
                 </div>
               </div>

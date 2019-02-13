@@ -282,7 +282,6 @@ export default new Router({
             path: '/newthreeboard/homePage/NEEQ_NewsMonitoring',
             name: 'NEEQ_NewsMonitoring',
             component: NEEQ_NewsMonitoring,
-
           },
           {
             path: '/newthreeboard/homePage/NEEQ_favorite',

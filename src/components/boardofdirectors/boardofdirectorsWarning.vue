@@ -1039,7 +1039,7 @@ h2 {
   width: 363px !important;
   position: absolute;
   top: 68px;
-  left: 720px;
+  left: 755px;
 }
 // .mt88 {
 //   margin-left: -88px;

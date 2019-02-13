@@ -28,7 +28,7 @@
         </div>
       </div>
     </div>
-    <div class="homeImg" style="background-image: url(./static/img/4.jpg)"></div>
+    <div class="homeImg" style="background-image: url(./static/img/4.jpg)"></div> 
     <div class="opinionEntrance">
       <div>
         <h3>专业、开放、易用的财经舆情分析平台</h3>
@@ -82,7 +82,7 @@
     </div>
     <div class="opinionFooter">
       <p>市场有风险，投资需谨慎</p>
-      <p>© 2015-2018 zts.com.cn. All Rights Reserved</p>
+      <p>© 2015-2019 zts.com.cn. All Rights Reserved</p>
     </div>
   </div>
 </template>

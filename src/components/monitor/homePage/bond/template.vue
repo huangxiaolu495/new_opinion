@@ -88,6 +88,7 @@ export default {
   data() {
     const now = new Date();
     const week = now.getTime() - 604800000;
+     const oneAfterday = now.getTime() + 86400000
     return {
       //url地址
       url: 'http://10.25.24.51:10189/api/risk/sector_set/detail',
@@ -119,7 +120,7 @@ export default {
       endDatePicker: {
         title: '至：',
         parentEvent: 'endDateEvent',
-        defaultDate: new Date()
+        defaultDate: new Date(oneAfterday)
       },
       sendData: {},
       paginationData: {
@@ -550,7 +551,7 @@ export default {
 
   mounted() {
     this.queryCondition.start_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
-    this.queryCondition.end_date = commonMethods.formatDateTime2(new Date());
+    this.queryCondition.end_date = commonMethods.formatDateTime2(this.endDatePicker.defaultDate);
   }
 }
 </script>

@@ -125,7 +125,7 @@
         <div v-if="isShowQueryResult" class="queryResult">
           <div v-if="hasResultData">
             <span class="biaozhuxin">新闻</span>
-            <table>
+            <table class="wholeNetwork">
               <tbody>
                 <tr>
                   <th v-for="(item, index) of titleData" :key="index" class="tableTh" width:100px>{{item}}</th>
@@ -136,11 +136,11 @@
                     <a :href="item.sourceurl" target="_bank">{{item.title}}</a>
                   </td>
                   <td class="data-content">
-                    <p v-html="item.securitycodes"></p>
-                    <span @click="details(item, index)">{{item.details}}</span>
+                    <p v-for="(i,e) of item.securitycodes"  :key="e">{{i}}</p>
+                    <span @click="details(item, index)" >{{item.details}}</span>
                   </td>
                   <td class="data-content">
-                    <p v-html="item.companynames"></p>
+                    <p v-for="(i,e) of item.companynames" :key="e">{{i}}</p>
                     <span @click="detailsxi(item,index)">{{item.detailsxi}}</span>
                   </td>
                   <td>{{item.medianame}}</td>
@@ -152,7 +152,7 @@
           </div>
           <div v-if="hasNotic">
             <span class="biaozhuxin">公告</span>
-            <table>
+            <table class="wholeNetwork">
               <tbody>
                 <tr>
                   <th v-for="(item, index) of titleData" :key="index" class="tableTh" width:100px>{{item}}</th>
@@ -163,11 +163,11 @@
                     <a :href="item.sourceurl" target="_bank">{{item.title}}</a>
                   </td>
                   <td class="data-content">
-                    <p v-html="item.securitycodes"></p>
+                    <p v-for="(i,e) of item.securitycodes" :key="e">{{i}}</p>
                     <span @click="detailsone(item, index)">{{item.detailsone}}</span>
                   </td>
                   <td class="data-content">
-                    <p v-html="item.companynames"></p>
+                    <p v-for="(i,e) of item.companynames" :key="e">{{i}}</p>
                     <span @click="detailsxione(item,index)">{{item.detailsxione}}</span>
                   </td>
                   <td>{{item.medianame}}</td>
@@ -241,7 +241,7 @@ export default {
         scope:0,
         querytype:0,
         page: 0,
-        pagesize: 3,
+        pagesize: 5,
       },
       modulesNameList: {
         title: '组合范围：',
@@ -635,23 +635,26 @@ export default {
         //   item.CONTENT = item.CONTENT.toString().replace(/\\r\\n\\r\\n/g, "<br>");
         //   item.CONTENT = item.CONTENT.toString().replace(/\\r\\n/g, "<br>");
         // });
+        
         this.dataList = JSON.parse(JSON.stringify(this.resultData));
         this.dataListNotice = JSON.parse(JSON.stringify(this.resultDataNotice))
-        this.paginationData.page_Count = Math.ceil(response.data.result.news.length/5);
-        this.paginationData.total_Count = response.data.result.news.length;
+        this.paginationData.page_Count = Math.ceil(100/5);
+        this.paginationData.total_Count = 100;
 
-        this.paginationDatatwo.page_Count = Math.ceil(response.data.result.notice.length/5);
-        this.paginationDatatwo.total_Count = response.data.result.notice.length;
+        this.paginationDatatwo.page_Count = Math.ceil(100/5);
+        this.paginationDatatwo.total_Count = 100;
         
         this.dataListNotice.forEach(item =>{
-          if (item.companynames) {
-            item.companynames = item.companynames.join(',')
-            item.companynames = item.companynames.slice(0, 50) + '...';
+  
+          if (item.companynames && item.companynames.length > 3) {
+            
+            item.companynames = item.companynames.slice(0, 3) 
             item.detailsxione = '...详情';
           }
-          if(item.securitycodes){
-            item.securitycodes = item.securitycodes.join(',')                                                                                                                 
-            item.securitycodes = item.securitycodes.slice(0,50) + '...'
+   
+          if(item.securitycodes && item.securitycodes.length > 3){
+                                                                                                                            
+            item.securitycodes = item.securitycodes.slice(0,3) 
             item.detailsone = '...详情'
           }
         })
@@ -661,14 +664,16 @@ export default {
           // } else {
           //   item.starNumber = 0;
           // }
-          if (item.companynames) {
-            item.companynames = item.companynames.join(',')
-            item.companynames = item.companynames.slice(0, 50) + '...';
+        
+          if (item.companynames && item.companynames.length > 3) {
+            
+            item.companynames = item.companynames.slice(0, 3) ;
             item.detailsxi = '...详情';
           }
-          if(item.securitycodes){
-            item.securitycodes = item.securitycodes.join(',')                                                                                                                 
-            item.securitycodes = item.securitycodes.slice(0,50) + '...'
+    
+          if(item.securitycodes && item.securitycodes.length > 3){
+                                                                                                                            
+            item.securitycodes = item.securitycodes.slice(0,3) 
             item.details = '...详情'
           }
         });
@@ -698,34 +703,36 @@ export default {
         }
       }
       this.sendFile && formData.append('file', this.sendFile);
-      this.$_axios.post(this.url.toUrl(), formData, config).then(response => {
+      this.$_axios.post(this.url, formData, config).then(response => {
         // 显示查询结果
         this.hasNotic = true;
         // console.log(response.result)
         console.log('主页数据', response.data.result);
-        this.resultData = response.data.result.news;
+        this.resultDataNotice = response.data.result.notice
 
         // this.resultData.forEach(item => {
         //   item.CONTENT = item.CONTENT.toString().replace(/\\r\\n\\r\\n/g, "<br>");
         //   item.CONTENT = item.CONTENT.toString().replace(/\\r\\n/g, "<br>");
         // });
-        this.dataList = JSON.parse(JSON.stringify(this.resultData));
-        this.paginationDatatwo.page_Count = Math.ceil(response.data.result.notice.length/5);
-        this.paginationDatatwo.total_Count = response.data.result.notice.length;
-        this.dataList.forEach(item => {
+        this.dataListNotice = JSON.parse(JSON.stringify(this.resultDataNotice));
+        this.paginationDatatwo.page_Count = Math.ceil(100/5);
+        this.paginationDatatwo.total_Count = 100;
+        this.dataListNotice.forEach(item => {
           // if (item.imp_score) {
           //   item.starNumber = parseInt(item.imp_score);
           // } else {
           //   item.starNumber = 0;
           // }
-          if (item.companynames) {
-            item.companynames = item.companynames.join(',')
-            item.companynames = item.companynames.slice(0, 50) + '...';
+
+          if (item.companynames && item.companynames.length > 3) {
+            
+            item.companynames = item.companynames.slice(0, 3)
             item.detailsxi = '...详情';
           }
-          if(item.securitycodes){
-            item.securitycodes = item.securitycodes.join(',')                                                                                                                 
-            item.securitycodes = item.securitycodes.slice(0,50) + '...'
+
+          if(item.securitycodes && item.securitycodes > 3){
+                                                                                                                            
+            item.securitycodes = item.securitycodes.slice(0,3) 
             item.details = '...详情'
           }
         });
@@ -748,7 +755,7 @@ export default {
         }
       }
       this.sendFile && formData.append('file', this.sendFile);
-      this.$_axios.post(this.url.toUrl(), formData, config).then(response => {
+      this.$_axios.post(this.url, formData, config).then(response => {
         // 显示查询结果
         this.hasResultData = true;
         // console.log(response.result)
@@ -760,22 +767,24 @@ export default {
         //   item.CONTENT = item.CONTENT.toString().replace(/\\r\\n/g, "<br>");
         // });
         this.dataList = JSON.parse(JSON.stringify(this.resultData));
-        this.paginationData.page_Count = Math.ceil(response.data.result.news.length/5);
-        this.paginationData.total_Count = response.data.result.news.length;
+        this.paginationData.page_Count = Math.ceil(100/5);
+        this.paginationData.total_Count = 100;
         this.dataList.forEach(item => {
           // if (item.imp_score) {
           //   item.starNumber = parseInt(item.imp_score);
           // } else {
           //   item.starNumber = 0;
           // }
-          if (item.companynames) {
-            item.companynames = item.companynames.join(',')
-            item.companynames = item.companynames.slice(0, 50) + '...';
+
+          if (item.companynames && item.companynames.length > 3) {
+            
+            item.companynames = item.companynames.slice(0, 3)
             item.detailsxi = '...详情';
           }
-          if(item.securitycodes){
-            item.securitycodes = item.securitycodes.join(',')                                                                                                                 
-            item.securitycodes = item.securitycodes.slice(0,50) + '...'
+
+          if(item.securitycodes && item.securitycodes.length > 3){
+                                                                                                                            
+            item.securitycodes = item.securitycodes.slice(0,3) 
             item.details = '...详情'
           }
         });
@@ -786,43 +795,43 @@ export default {
     detailsxi(item,index){
       if(item.detailsxi == '收起'){
         item.detailsxi = '...详情';
-        item.companynames = item.companynames.slice(0,50) + '...'
+        item.companynames = item.companynames.slice(0,3) 
       }else{
         item.detailsxi = '收起';
-        item.companynames = this.resultData[index].companynames.join(',')
+        item.companynames = this.resultData[index].companynames
       }
     },
     detailsxione(item,index){
       if(item.detailsxione == '收起'){
         item.detailsxione = '...详情';
-        item.companynames = item.companynames.slice(0,50) + '...'
+        item.companynames = item.companynames.slice(0,3)
       }else{
         item.detailsxione = '收起';
-        item.companynames = this.resultDataNotice[index].companynames.join(',')
+        item.companynames = this.resultDataNotice[index].companynames
       }
     },
     detailsone(item, index) {
       if (item.detailsone == '收起') {
         console.log('详情1')
         item.detailsone = '...详情';
-        item.securitycodes = item.securitycodes.slice(0, 50) + '...';
+        item.securitycodes = item.securitycodes.slice(0, 3) ;
       } else {
         console.log('详情2')
         item.detailsone = '收起';
         // item.securitycodes.join(',')
-        item.securitycodes = this.resultDataNotice[index].securitycodes.join(',');
+        item.securitycodes = this.resultDataNotice[index].securitycodes;
       }
     }, 
     details(item, index) {
       if (item.details == '收起') {
         console.log('详情1')
         item.details = '...详情';
-        item.securitycodes = item.securitycodes.slice(0, 50) + '...';
+        item.securitycodes = item.securitycodes.slice(0, 3) ;
       } else {
         console.log('详情2')
         item.details = '收起';
         // item.securitycodes.join(',')
-        item.securitycodes = this.resultData[index].securitycodes.join(',');
+        item.securitycodes = this.resultData[index].securitycodes;
       }
     }, 
     checkFinished(flag) {
@@ -847,6 +856,11 @@ export default {
           //   })
           // }
           let allDataAccept
+          // 完成所需结构的步骤
+          // 对接收的数组进行遍历，给每项都添加check和list属性
+          // 将level的数组筛选出来
+          // 将level=1的对象组成的数组添加到firstTypeList
+          // 以riskcode开头为001001的添加到level=1的list属性里面
           allData.forEach(function(v,i){
             allData[i].check = false
             allData[i].list = []
@@ -864,39 +878,39 @@ export default {
         // 满足二级数组的数据他分别添加到对应的数组里面
         console.log(this.secondTypeList)
         let onebiao = allData.filter(function(v,i){
-          return v.riskcode.indexOf('001001') > -1 && v.riskcode.length > 6
+          return v.riskcode.indexOf('001001') == 0 && v.riskcode.length > 6
         })
         console.log(onebiao)
         let twobiao = allData.filter(function(v,i){
-          return v.riskcode.indexOf('001002') > -1 && v.riskcode.length > 6
+          return v.riskcode.indexOf('001002') == 0 && v.riskcode.length > 6
         })
         console.log(twobiao)
         let threebiao = allData.filter(function(v,i){
-          return v.riskcode.indexOf('001003') > -1 && v.riskcode.length > 6
+          return v.riskcode.indexOf('001003') == 0 && v.riskcode.length > 6
         })
         let fourbiao = allData.filter(function(v,i){
-          return v.riskcode.indexOf('001004') > -1 && v.riskcode.length > 6
+          return v.riskcode.indexOf('001004') == 0 && v.riskcode.length > 6
         })
         let fivebiao = allData.filter(function(v,i){
-          return v.riskcode.indexOf('001005') > -1 && v.riskcode.length > 6
+          return v.riskcode.indexOf('001005') == 0 && v.riskcode.length > 6
         })
         let sixbiao = allData.filter(function(v,i){
-          return v.riskcode.indexOf('001006') > -1 && v.riskcode.length > 6
+          return v.riskcode.indexOf('001006') == 0 && v.riskcode.length > 6
         })
         let sevenbiao = allData.filter(function(v,i){
-          return v.riskcode.indexOf('001007') > -1 && v.riskcode.length > 6
+          return v.riskcode.indexOf('001007') == 0 && v.riskcode.length > 6
         })
         let eightbiao = allData.filter(function(v,i){
-          return v.riskcode.indexOf('001008') > -1 && v.riskcode.length > 6
+          return v.riskcode.indexOf('001008') == 0 && v.riskcode.length > 6
         })  
         let ninbiao = allData.filter(function(v,i){
-          return v.riskcode.indexOf('001009') > -1 && v.riskcode.length > 6
+          return v.riskcode.indexOf('001009') == 0 && v.riskcode.length > 6
         })  
         let tenbiao = allData.filter(function(v,i){
-          return v.riskcode.indexOf('001010') > -1 && v.riskcode.length > 6
+          return v.riskcode.indexOf('001010') == 0 && v.riskcode.length > 6
         })
         let evebiao = allData.filter(function(v,i){
-          return v.riskcode.indexOf('001011') > -1 && v.riskcode.length > 6
+          return v.riskcode.indexOf('001011') == 0 && v.riskcode.length > 6
         })
 
         this.secondTypeList.forEach((v,i)=>{
@@ -1079,7 +1093,18 @@ export default {
       this.queryCondition.end_date = data[0];
       // this.endDatePicker.defaultDate = new Date(data[0]);
     },
-    // 点击一级风险类型
+
+
+    // 点击一级风险类型 1- 点击全选按钮的步骤
+    // 点击全部按钮，让firstTypeList里面的属性check都为true
+    // 让secondTypeList数组里面所有的属性check都为true
+    // 再让secondTypeList中的list属性里面的check都为true
+
+    // 2-其次
+    // 除了点全部之外，然后点其他的内容
+    // firstTypeList和secondTypeList点击为同一个的时候，设置secondTypeList对应项的check属性为true
+    // 将对应项的list属性里面的所有的项都标记为选中
+
     checkFirstType(item, index) {
       item.check = !item.check;
       if (item.riskname === '全部') {
@@ -1110,16 +1135,18 @@ export default {
       }
     },
     // 点击二级风险类型
+
+  
     checkSecondType(item, index) {
       item.check = !item.check;
       // 点击二级风险按钮
-      // 
       if (!item.check) {
         console.log('此处已经点击过了')
         // this.firstTypeList[0].check = false;
         this.secondTypeList.forEach(firstVal => {
           // 第二项的每一项如果都是未选中的话
           // 那么下面也都未选中
+          // secondTypeList和firstTypeList中都有项未选中的话那么判断将其设置为未选中
           let checkNull = firstVal.list.every(secondVal => {
             return secondVal.check === false;
           });
@@ -1342,6 +1369,9 @@ export default {
   // #chaxun{
   //   margin-left:378px
   // }
+.detailc{
+  z-index: 2;
+}
 .typeBox {
   .firstTypeBox {
     float: left;
@@ -1524,16 +1554,16 @@ export default {
     // }
 
     .tableTh:nth-child(1) {
-      width: 75px;
+      width: 116px;
     }
     .tableTh:nth-child(2) {
       width: 533px;
     }
     .tableTh:nth-child(3) {
-      width: 402px;
+      width: 246px;
     }
     .tableTh:nth-child(4) {
-      width: 356px;
+      width: 316px;
     }
     .tableTh:nth-child(5) {
       width: 180px;
@@ -1548,6 +1578,9 @@ export default {
       width: 140px;
     }
   }
+}
+.wholeNetwork td{
+  height: 48px !important
 }
 
 .floatLeft2 {

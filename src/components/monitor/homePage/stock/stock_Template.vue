@@ -82,6 +82,7 @@ export default {
   data() {
     const now = new Date();
     const week = now.getTime() - 604800000;
+    const oneAfterday = now.getTime() + 86400000
     return {
       //url地址
       url: 'http://10.25.24.51:10193/api/risk/stock_announce_sector',
@@ -106,7 +107,7 @@ export default {
       endDatePicker: {
         title: '至：',
         parentEvent: 'endDateEvent',
-        defaultDate: new Date()
+        defaultDate: new Date(oneAfterday)
       },
       sendData: {},
       paginationData: {
@@ -479,21 +480,9 @@ export default {
               }
               this.paginationData.total_Count = this.resultData.total_count;
         }
-        // console.log('基金', response.data.result);
-       
-        // console.log(this.dataList);
-        // console.log(this.dataList)
-      
-        // if (this.resultData.total_count) {
-        //   this.paginationData.page_Count = Math.ceil(this.resultData.total_count / 10);
-        // } else {
-        //   this.paginationData.page_Count = 0;
-        // }
-        // this.paginationData.total_Count = this.resultData.total_count;
+
       })
-        // .catch(err => {
-        //   // console.log(err);
-        // });
+
     },
     threshold() {
       let threshold = parseFloat(this.queryCondition.threshold);
@@ -515,7 +504,7 @@ export default {
 
   mounted() {
     this.queryCondition.start_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
-    this.queryCondition.end_date = commonMethods.formatDateTime2(new Date());
+    this.queryCondition.end_date = commonMethods.formatDateTime2(this.endDatePicker.defaultDate);
   }
 }
 </script>
