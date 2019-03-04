@@ -12,6 +12,7 @@
             <span @click="deleteModules" class="span">删除</span>
             <span @click="allCheck" class="span">全选</span>
             <span @click="reverseCheck" class="span">反选</span>
+            <span @click="emptyAll" class="span">清空</span>
           </div>
           <div v-if="isShowAddBox" class="addBox floatLeft">
             <div class="floatLeft">
@@ -38,7 +39,7 @@
                           </span>
                           <!-- item.title -->
                           <span @click="moduleCheck(item)" class="moduleName span" :title="item.title">{{item.title}}</span>
-                          <span @click="seeModule(item.title)" class="seeModule span">查看</span>
+                          <span @click="seeModule(item.code,item.title)" class="seeModule span">查看</span>
                         </li>
                       </ul>
                     </div>
@@ -72,12 +73,12 @@
                                 <span class="checkIconBox">
                                   <i v-if="item.check" class="iconfont icon-queren"></i>
                                 </span>
-                                {{item['证券代码']}}
+                                {{item.securitycode}}
                               </div>
                             </td>
-                            <td>{{item['证券名称']}}</td>
-                            <td>{{item['交易市场']}}</td>
-                            <td>{{item['发行主体']}}</td>
+                            <td>{{item.securitysname}}</td>
+                            <td>{{item.exchange}}</td>
+                            <td>{{item.companyname}}</td>
                           </tr>
                         </table>
                       </div>
@@ -126,24 +127,40 @@
                           <table>
                             <tr>
                               <th v-for="(item, index) of securitiesImportResult.th" :key="index">{{item}}</th>
+                              <th>
+                                <div class="quanxuan" @click="moduleCheckAll">
+                                    全选
+                                    <span class="checkIconBoxAll">
+                                     <i v-if="allCheckb" class="iconfont icon-queren"></i>
+                                    </span>
+                                </div>
+                              </th>
                             </tr>
                             <tr v-for="(item, index) of securitiesImportResult.tr" :key="index">
-                              <td>
+                              <td v-if='index == 0' :rowspan='securitiesImportResult.matchcountNumber'>
                                 <span v-if="index === 0">匹配列表</span>
                                 <span v-else></span>
                               </td>
                               <td>{{item.code}}</td>
                               <td>{{item.name}}</td>
                               <td>{{item.company}}</td>
+                              <td>
+                                <div class="quanxuan" @click="moduleCheckAlldown(item,index)">
+                                    <span class="checkIconBoxAlldown">
+                                     <i v-if="item.check" class="iconfont icon-queren"></i>
+                                    </span>
+                                </div>
+                              </td>
                             </tr>
                             <tr v-for="(item, index) of securitiesImportResult.tr2" :key="index">
-                              <td>
+                              <td v-if='index == 0' :rowspan='securitiesImportResult.unmatchlistNumber'>
                                 <span v-if="index === 0">未匹配列表</span>
                                 <span v-else></span>
                               </td>
                               <td>{{item.code}}</td>
                               <td>{{item.name}}</td>
                               <td>{{item.company}}</td>
+                              <td></td>
                             </tr>
                           </table>
                           <div class="matchcountBottom">
@@ -163,52 +180,77 @@
                 <div class="floatLeft marginLeft20 marginTop15">
                   <pull-down-list :prop="importWayType" @importWayTypeEvent='importWayTypeEvent'></pull-down-list>
                 </div>
-                <div class="floatLeft marginLeft20 marginTop15">
-                  关键字：<input @input="inputEvent" v-model="keyword" type="text">
-                </div>
-                <div class="searchBtn floatLeft marginLeft20">
-                  <span @click="search">搜索</span>
-                </div>
-                <div class="searchBtn floatLeft marginLeft20">
-                  <span @click="addToModule">添加至板块</span>
-                </div>
-                <div class="searchBtn floatLeft marginLeft20">
-                  <span @click="cancelToModule">取消</span>
+              </div>
+              <div class="floatLeft marginLeft20 margintopwenjian">
+                <div class="uploadFiles">
+                  <label for="fileExport">上传文件(csv、txt)等
+                    <span class="fileExportBtn">{{selectFileName}}</span>
+                  </label>
+                  <span v-if="selectFileName !== '选择文件'" @click="clearFile" class="clearFile">清除文件</span>
+                  <input type="file" id="fileExport" @change="handleFileChange($event)" ref="inputer">
                 </div>
               </div>
-              <div class="searchResulBox">
-                <EasyScrollbar>
-                  <div style="height: 560px">
-                    <div>
-                      <div v-show="isShowsearchResultList">
-                        <div v-if="hasSearchResultList">
-                          <ul class="clearFloat">
-                            <li v-for="(item, index) of searchResultList" :key="index" @click="moduleCheck(item)" :class="{oneLine: oneLine}" class="floatLeft searchResultList">
-                              <span class="checkIconBox">
-                                <i v-if="item.check" class="iconfont icon-queren"></i>
-                              </span>
-                              <span class="marginTop5 marginLeft3">{{item.code}}</span>
-                              <span class="marginTop2 marginLeft3">{{item.name}}</span>
-                            </li>
-                          </ul>
-                          <pagination :prop="paginationData" @paginationSelect="paginationSelect"></pagination>
-                        </div>
-                        <div v-else>
-                          <div class="loadEffect">
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
-                            <span></span>
+              <div class="searchBtn floatLeft marginLeft20">
+                <span @click="filequery">查询</span>
+              </div>
+              <div class="securitiesImportResult floatLeft">
+                <div class="marginLeft20 marginTop15 marginBottom15 margintopp">
+                  <span @click="addMatcht" class="addCode">添加匹配代码</span>
+                </div>
+                <div class="marginTop15" style="height:530px">
+                  <EasyScrollbar>
+                    <div style="height:530px">
+                      <div>
+                        <div>
+                          <table>
+                            <tr>
+                              <th v-for="(item, index) of securitiesImportResult1.th" :key="index">{{item}}</th>
+                              <th>
+                                <div class="quanxuan" @click="moduleCheckAllt">
+                                    全选
+                                    <span class="checkIconBoxAll">
+                                     <i v-if="allCheckbt" class="iconfont icon-queren"></i>
+                                    </span>
+                                </div>
+                              </th>
+                            </tr>
+                            <tr v-for="(item, index) of securitiesImportResult1.tr" :key="index">
+                              <td v-if='index == 0' :rowspan='securitiesImportResult1.matchcountNumber'>
+                                <span v-if="index === 0">匹配列表</span>
+                                <span v-else></span>
+                              </td>
+                              <td>{{item.code}}</td>
+                              <td>{{item.name}}</td>
+                              <td>{{item.company}}</td>
+                              <td>
+                                <div class="quanxuan" @click="moduleCheckAlldownt(item,index)">
+                                    <span class="checkIconBoxAlldown">
+                                     <i v-if="item.check" class="iconfont icon-queren icon-querent"></i>
+                                    </span>
+                                </div>
+                              </td>
+                            </tr>
+                            <tr v-for="(item, index) of securitiesImportResult1.tr2" :key="index">
+                              <td v-if='index == 0' :rowspan='securitiesImportResult1.unmatchlistNumber'>
+                                <span v-if="index === 0">未匹配列表</span>
+                                <span v-else></span>
+                              </td>
+                              <td>{{item.code}}</td>
+                              <td>{{item.name}}</td>
+                              <td>{{item.company}}</td>
+                              <td></td>
+                            </tr>
+                          </table>
+                          <div class="matchcountBottom">
+                            匹配代码列表
+                            <span>{{securitiesImportResult1.matchcountNumber}}</span> 条， 未匹配代码列表
+                            <span>{{securitiesImportResult1.unmatchlistNumber}}</span> 条
                           </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </EasyScrollbar>
+                  </EasyScrollbar>
+                </div>
               </div>
             </div>
           </div>
@@ -228,6 +270,8 @@ export default {
       myBarOption: {
         barColor: "red"
       },
+      allCheckb: false,
+      allCheckbt: false,
       isShowModule: 'user-defined',
       isShowAddBox: false,
       oneLine: false,
@@ -236,6 +280,8 @@ export default {
       nowAddModuleName: '',
       placeholderList: '例如：\n000000\n000001\n000002',
       textareaVlaue: '',
+      emptyId:0,
+      selectFileName:'选择文件',
       sidebarTabData: [
         { module: 'user-defined', title: '自定义板块管理' },
         { module: 'securitiesImport', title: '证券导入' },
@@ -267,6 +313,10 @@ export default {
           '板块二'
         ]
       },
+      file: '',
+      sendFile: '',
+      sectorban:'',
+      matchCode:'',
       nowSeeModule: '',
       nowUpdateModuleName: '',
       nowImportWay: '手工输入',
@@ -280,13 +330,13 @@ export default {
         nowSelectFontSize: 13,
         list: [
           '手工输入',
-          '多项选择'
+          '文件上传'
         ]
       },
       importWayType: {
         title: '类型：',
         parentEvent: 'importWayTypeEvent',
-        default: '股票',
+        default: '全部',
         listWidth: 143,
         nowSelectWidth: 145,
         nowSelectHeight: 25,
@@ -298,8 +348,17 @@ export default {
           '新三板',
         ]
       },
-      codetype: 'S',
+      codetype: '',
       securitiesImportResult: {
+        th: ['类型', '证券代码', '证券名称','发行主体'],
+        tr: [
+          // {title: '匹配列表', code: '835364', name: '德善药业'},
+        ],
+        tr2: [],
+        matchcountNumber: 0,
+        unmatchcountNumber: 0
+      },
+      securitiesImportResult1: {
         th: ['类型', '证券代码', '证券名称','发行主体'],
         tr: [
           // {title: '匹配列表', code: '835364', name: '德善药业'},
@@ -356,18 +415,29 @@ export default {
     },
     // 添加模块提交
     addModuleSubmit() {
-      console.log('提交')
+      console.log('提交的内容',this.nowAddModuleName)
       // this.nowAddModuleName
       if (!this.nowAddModuleName) return;
-      const url = 'http://10.25.24.51:10189/api/risk/sector_set/insert'
+      const url = 'http://10.25.24.51:10201/api/risk/finchina/sector_add?'
       const sendData = {
         userid: 'risk',
         sectorname: this.nowAddModuleName
       }
       this.$_axios.get(url, {
         params: sendData
-      }).then((response) => {
-        if (response.data.msg === 'insert success' && response.data.code == '0') {
+      }).then(response => {
+        if(response.data.code == '1'){
+          alert('添加失败')
+          return;
+        }
+          console.log(response)
+        if(response.data.msg == '板块已存在' && response.data.code == '1'){
+            this.nowAddModuleName = '';
+            // this.moduleInit();
+          alert('板块已存在');
+          this.isShowAddBox = false;
+        }
+        if (response.data.msg === '添加成功!' && response.data.code == '0') {
           this.nowAddModuleName = '';
           // 重新渲染已有板块
           this.moduleInit();
@@ -380,16 +450,17 @@ export default {
     },
     // 删除模块
     deleteModules() {
-      const url = 'http://10.25.24.51:10189/api/risk/sector_set/delete'
+      const url = 'http://10.25.24.51:10201/api/risk/finchina/sector_del'
       const tempArr = [];
       this.modulesDataList.map(item => {
         if (item.check) {
-          tempArr.push(item.title);
+          tempArr.push(item.code);
         }
       });
+      console.log(tempArr)
       const sendData = {
         userid: 'risk',
-        sectorname: tempArr.join(',')
+        sectorcode: tempArr.join(',')
       }
       if (!tempArr.length) {
         alert('没有选择要删除的模块');
@@ -399,7 +470,12 @@ export default {
       this.$_axios.get(url, {
         params: sendData
       }).then((response) => {
-        if (response.data.code == '0' && response.data.msg == 'delete success') {
+        if(response.data.code == '1'){
+          alert('删除失败')
+          return;
+        }
+          console.log(response)
+        if (response.data.code == '0' && response.data.msg == '删除成功!') {
           alert('删除成功')
           // 重新渲染已有板块
           this.moduleInit();
@@ -424,23 +500,51 @@ export default {
         item.check = !item.check;
       });
     },
+
+    //清空模块
+    emptyAll(){
+        const url = 'http://10.25.24.51:10201/api/risk/finchina/sector_drop?'
+        const sendData = {
+            userid:'risk'
+        }
+        this.$_axios.get(url,{
+            params:sendData
+        }).then(response =>{
+          if(response.data.code =='1'){
+            alert('清空失败')
+            return;
+          }
+            console.log(response)
+            if(response.data.code == '0' && response.data.msg == '清空板块成功'){
+                alert('清空板块成功')
+                this.moduleInit()
+            }
+        }).catch(err=>{
+
+        })
+    },
     // 查看板块
-    seeModule(modulename) {
-      const url = 'http://10.25.24.51:10189/api/risk/sector_set/detail'
+    seeModule(moduleid,modulename) {
+      const url = 'http://10.25.24.51:10201/api/risk/finchina/sector_detail_query'
+      this.sectorban = moduleid
       const sendData = {
-        userid: 'risk',
-        action: 'query',
-        sector: modulename,
+        sectorcode: moduleid,
       }
+      console.log(sendData)
       this.isShowSeeModule = true;
       // this.nowSeeModule = '';
       this.$_axios.get(url, {
         params: sendData
       }).then((response) => {
-        console.log(response.data)
+        console.log(response)
+        if(response.data.code == '1'){
+          alert('查询失败！')
+          return;
+        }
         this.nowSeeModule = modulename;
-        if (response.data.code == '0' && response.data.msg == 'query success') {
-          this.seeModuleData.tr = response.data.result.result.map(item => {
+        if (response.data.code == '0' && response.data.message == 'success!') {
+          this.seeModuleData.tr = response.data.result.map(item => {
+            console.log(item)
             const tempItem = JSON.parse(JSON.stringify(item));
             tempItem.check = false;
             return tempItem;
@@ -451,6 +555,28 @@ export default {
 
       });
     },
+      handleFileChange(event) {
+      this.file = event.target.files[0];
+      if (this.file) {
+        const type = this.file.name.slice(-4).toLowerCase();
+        if (type != '.txt' && type != '.csv') {
+          this.file = '';
+          event.target.value = '';
+          this.selectFileName = '选择文件';
+          alert('请输入txt或csv类型文件')
+          return;
+        }
+        event.target.value = '';
+        this.selectFileName = this.file.name;
+      }
+      console.log('file', this.file)
+    },
+    clearFile() {
+      // inputer
+      this.$refs.inputer = null;
+      this.selectFileName = '选择文件';
+      this.file = '';
+    },
     // 更新板块名
     updateModuleName() {
       // this.nowUpdateModuleName
@@ -459,12 +585,16 @@ export default {
         alert("请输入板块名");
       }
       else {
-        const url = 'http://10.25.24.51:10189/api/risk/sector_set/detail'
+        const url = 'http://10.25.24.51:10201/api/risk/finchina/sector_rename'
+        this.modulesDataList.forEach(item=>{
+            if(this.nowSeeModule == item.title){
+                this.emptyId = item.code
+            }
+            console.log(this.emptyId)
+        })
         const sendData = {
-          userid: 'risk',
-          action: 'update',
-          sector: this.nowSeeModule,
-          new_sector: this.nowUpdateModuleName
+          sectorcode: this.emptyId,
+          newsector: this.nowUpdateModuleName
         }
         console.log('sendData', sendData)
         this.$_axios.get(url, {
@@ -487,11 +617,17 @@ export default {
     // 清空板块信息
     emptyModulesInfo() {
       if (!this.nowSeeModule) return;
-      const url = 'http://10.25.24.51:10189/api/risk/sector_set/detail'
+      const url = 'http://10.25.24.51:10201/api/risk/finchina/sector_detail_drop'
+      console.log(this.modulesDataList)
+        this.modulesDataList.forEach(item=>{
+          console.log(this.nowSeeModule)
+            if(this.nowSeeModule == item.title){
+                this.emptyId = item.code
+                console.log(this.emptyId)
+            }
+        })
       const sendData = {
-        userid: 'risk',
-        action: 'drop',
-        sector: this.nowSeeModule,
+        sectorcode: this.emptyId,
       }
       console.log('sendData', sendData)
       this.$_axios.get(url, {
@@ -500,9 +636,9 @@ export default {
         console.log(response.data)
         if (response.data.code == '0') {
           alert('清空成功')
-          this.moduleInit();
-          this.seeModule(this.nowSeeModule);
-          this.isShowSeeModule = false;
+          // this.moduleInit();
+          this.seeModule(this.sectorban,this.nowSeeModule);
+          // this.isShowSeeModule = false;
         }
         else if (response.data.code == '1') {
           alert('清空失败')
@@ -514,20 +650,17 @@ export default {
     // 删除板块信息
     deleteModulesInfo() {
       if (!this.nowSeeModule) return;
-      const url = 'http://10.25.24.51:10189/api/risk/sector_set/detail'
+      const url = 'http://10.25.24.51:10201/api/risk/finchina/sector_detail_delete'
       const tempArr = [];
       this.seeModuleData.tr.forEach(item => {
         if (item.check) {
-          tempArr.push(item['证券代码']);
+          tempArr.push(item.sector_detail_id);
         }
       });
       console.log(tempArr.join(','))
       if (!tempArr.join(',')) return;
       const sendData = {
-        userid: 'risk',
-        action: 'delete',
-        sector: this.nowSeeModule,
-        seccodes: tempArr.join(',')
+        sector_detail_id: tempArr.join(',')
       }
       console.log('sendData', sendData)
       this.$_axios.get(url, {
@@ -536,7 +669,7 @@ export default {
         console.log(response.data)
         if (response.data.code == '0') {
           alert('删除成功')
-          this.seeModule(this.nowSeeModule);
+          this.seeModule(this.sectorban,this.nowSeeModule);
         }
         else if (response.data.code == '1') {
           alert('删除失败')
@@ -545,9 +678,108 @@ export default {
 
       });
     },
+    moduleCheckAlldown(item,index){
+        item.check = !item.check
+        console.log(item.check,'和',index)
+        let moduleAllDown = this.securitiesImportResult.tr.every(item=>{
+            return item.check
+        })
+        if(moduleAllDown){
+            this.allCheckb = moduleAllDown
+        }else{
+            this.allCheckb = false
+        }
+
+    },
+    moduleCheckAlldownt(item,index){
+        item.check = !item.check
+        console.log(item.check,'和',index)
+        let moduleAllDown = this.securitiesImportResult1.tr.every(item=>{
+            return item.check
+        })
+        if(moduleAllDown){
+            this.allCheckbt = moduleAllDown
+        }else{
+            this.allCheckbt = false
+        }
+
+    },
+    moduleCheckAll(){
+        this.allCheckb = !this.allCheckb
+        console.log(this.securitiesImportResult.tr)
+        if(this.allCheckb){
+            this.securitiesImportResult.tr.forEach(item=>{
+                item.check = true
+            }) 
+        }else{
+            this.securitiesImportResult.tr.forEach(item=>{
+                item.check = false
+            }) 
+        }
+    },
+    moduleCheckAllt(){
+        this.allCheckbt = !this.allCheckbt
+        console.log(this.securitiesImportResult1.tr)
+        if(this.allCheckbt){
+            this.securitiesImportResult1.tr.forEach(item=>{
+                item.check = true
+            }) 
+        }else{
+            this.securitiesImportResult1.tr.forEach(item=>{
+                item.check = false
+            }) 
+        }
+    },
+    //按文件输入查询
+    filequery(){
+      this.sendFile = this.file;
+      const url = 'http://10.25.24.51:10201/api/risk/finchina/sector_detail_match';
+      const sendData = {
+        readtype:1,
+        sectype: this.codetype || '',
+        securitycodes: ''
+      }
+      let formData = new FormData();
+      for(let key in sendData){
+        if(sendData.hasOwnProperty(key)){
+          formData.append(key, sendData[key])
+        }
+      }
+      this.sendFile && formData.append('file', this.sendFile);
+      this.$_axios.post(url,formData).then(response=>{
+        console.log(response)
+        if(response.data.code == '1'){
+          alert('匹配失败')
+          return;
+        }
+        if (response.data.code == '0') {
+          this.securitiesImportResult1.tr = response.data.matchlist.map(item => {
+            return {
+              code: item.securitycode,
+              name: item.securitysname,
+              company: item.companyname,
+              check: false,
+              stcodeid: item.stcodeid
+            }
+          });
+          this.securitiesImportResult1.tr2 = response.data.unmatchlist.map(item => {
+            return {
+              code: item
+            }
+          });
+          this.securitiesImportResult1.matchcountNumber = response.data.matchcount.matchcount;
+          this.securitiesImportResult1.unmatchlistNumber = response.data.matchcount.unmatchcount;
+        }
+      }).catch((err) => {
+
+      });
+    
+
+    },
     // 手动选择查询
     ManualQueries() {
       const codelist = this.textareaVlaue.split('\n');
+      console.log(codelist)
       const tempArr = [];
       codelist.forEach(item => {
         if (item) {
@@ -558,33 +790,46 @@ export default {
         alert('请输入证券列表');
         return;
       }
-      const url = 'http://10.25.24.51:10189/api/risk/code_import/hand'
+      const url = 'http://10.25.24.51:10201/api/risk/finchina/sector_detail_match'
       const sendData = {
-        codetype: this.codetype,
-        action: 'query',
-        codelist: tempArr.join(',')
+        sectype: this.codetype || '',
+        securitycodes: tempArr.join(','),
+        readtype:0,
+        file:''
       };
+      let formData = new FormData();
+      for (let key in sendData) {
+        if (sendData.hasOwnProperty(key)) {
+          formData.append(key, sendData[key]);
+        }
+      }
+      
       // return
       console.log(sendData)
-      this.$_axios.get(url, {
-        params: sendData
-      }).then((response) => {
-        console.log(response.data)
+      this.$_axios.post(url,formData).then((response) => {
+        console.log(response)
+        if(response.data.code == '1'){
+          alert('匹配失败')
+          return;
+        }
         if (response.data.code == '0') {
-          this.securitiesImportResult.tr = response.data.result.matchlist.map(item => {
+          this.securitiesImportResult.tr = response.data.matchlist.map(item => {
             return {
               code: item.securitycode,
-              name: item.securityname,
-              company: item.companyname
+              name: item.securitysname,
+              company: item.companyname,
+              check: false,
+              stcodeid: item.stcodeid,
             }
           });
-          this.securitiesImportResult.tr2 = response.data.result.unmatchlist.map(item => {
+          console.log(this.securitiesImportResult.tr)
+          this.securitiesImportResult.tr2 = response.data.unmatchlist.map(item => {
             return {
               code: item
             }
           });
-          this.securitiesImportResult.matchcountNumber = response.data.result.matchcount.matchcount;
-          this.securitiesImportResult.unmatchlistNumber = response.data.result.matchcount.unmatchcount;
+          this.securitiesImportResult.matchcountNumber = response.data.matchcount.matchcount;
+          this.securitiesImportResult.unmatchlistNumber = response.data.matchcount.unmatchcount;
         }
       }).catch((err) => {
 
@@ -703,13 +948,48 @@ export default {
         alert('查询请求服务失败');
       });
     },
-    // 添加匹配代码
-    addMatch() {
-      if (!this.impotModuleName) {
+    addMatcht(){
+      if (!this.matchCode) {
         alert('请选择要导入的板块');
         return;
       }
-      const url = 'http://10.25.24.51:10189/api/risk/code_import/hand'
+      const url = 'http://10.25.24.51:10201/api/risk/finchina/sector_detail_insert'
+      const codelist = this.securitiesImportResult1.tr.map(item => {
+        return item.code;
+      });
+      const temarr =[]
+      console.log(this.securitiesImportResult1.tr)
+      this.securitiesImportResult1.tr.forEach(item=>{
+          if(item.check){
+              temarr.push(item.stcodeid)
+          }
+      })
+      const sendData = {
+          sectorcode:this.matchCode,
+          stcodeids: temarr.join(',')
+      };
+      this.$_axios.get(url, {
+        params: sendData
+      }).then((response) => {
+        if (response.data.code == '0') {
+          alert('添加成功');
+        } else if (response.data.code == '1') {
+          alert('添加失败');
+        } else if (response.data.code == '2' && response.data.msg == 'already exists the record') {
+          alert('重复添加');
+        }
+      }).catch((err) => {
+        alert('添加失败');
+      });
+
+    },
+    // 添加匹配代码
+    addMatch() {
+      if (!this.matchCode) {
+        alert('请选择要导入的板块');
+        return;
+      }
+      const url = 'http://10.25.24.51:10201/api/risk/finchina/sector_detail_insert'
       const codelist = this.securitiesImportResult.tr.map(item => {
         return item.code;
       });
@@ -717,12 +997,17 @@ export default {
         alert('没有匹配代码');
         return;
       }
+      const temarr =[]
+      console.log(this.securitiesImportResult.tr)
+      this.securitiesImportResult.tr.forEach(item=>{
+          if(item.check){
+              temarr.push(item.stcodeid)
+          }
+      })
+      console.log(temarr)
       const sendData = {
-        action: 'insert',
-        userid: 'risk',
-        codetype: this.codetype,
-        codelist: codelist.join(','),
-        sector: this.impotModuleName
+          sectorcode:this.matchCode,
+          stcodeids: temarr.join(',')
       };
       this.$_axios.get(url, {
         params: sendData
@@ -748,7 +1033,12 @@ export default {
       }
     },
     impotModuleEvent(...data) {
-      this.impotModuleName = data[0];
+        console.log(data)
+        let fuhe = this.modulesDataList.find(item=>{
+            console.log(data[0])
+            return data[0] == item.title
+        })
+      this.matchCode = fuhe.code;
     },
     // 类型
     importWayTypeEvent(...data) {
@@ -768,7 +1058,7 @@ export default {
       }
     },
     moduleInit() {
-      const url = 'http://10.25.24.51:10189/api/risk/sector_set/query'
+      const url = 'http://10.25.24.51:10201/api/risk/finchina/sector_query?'
       const sendData = {
         userid: 'risk'
       };
@@ -776,18 +1066,24 @@ export default {
       this.$_axios.get(url, {
         params: sendData
       }).then((response) => {
-        console.log('查询结果', response.data)
+        console.log('查询结果', response)
         if (!response.data) {
           this.modulesDataList = [];
         } else {
+          if(response.data.code == '1'){
+            alert('查询失败！')
+            return;
+          }
           if (response.data.code == '0') {
             console.log(response.data.sectorlist)
             this.modulesDataList = response.data.sectorlist.map(item => {
               return {
-                title: item,
+                code: item.sectorcode,
+                title: item.sectorname,
                 check: false
               }
             });
+            console.log(this.modulesDataList)
           } else {
             this.modulesDataList = [];
           }
@@ -809,7 +1105,9 @@ export default {
   mounted() {
     this.moduleInit();
   },
-
+  created(){
+    this.moduleInit();
+  }
 }
 </script>
 
@@ -859,7 +1157,7 @@ export default {
 }
 
 .securitiesImport {
-  width: 1222px;
+  width: 1338px;
   height: 636px;
   margin-top: 20px;
   border: 1px solid #797979;
@@ -910,6 +1208,20 @@ export default {
         border: 1px solid #797979;
         background-color: #f0f5f9;
       }
+      th:nth-child(4) {
+        height: 40px;
+        width: 212px;
+        line-height: 40px;
+        border: 1px solid #797979;
+        background-color: #f0f5f9;
+      }
+      th:nth-child(5) {
+        height: 40px;
+        width: 100px;
+        line-height: 40px;
+        border: 1px solid #797979;
+        background-color: #f0f5f9;
+      }
       tr {
         overflow: hidden;
         border: 1px solid #797979;
@@ -922,6 +1234,8 @@ export default {
     }
   }
   .multiSelection {
+      position: relative;
+
     input {
       width: 150px;
       height: 25px;
@@ -931,6 +1245,9 @@ export default {
     .searchBtn {
       margin-top: 17px;
       span {
+        position: absolute;
+        top: 100px;
+        left: 138px;
         padding: 3px 25px;
         cursor: pointer;
         background-color: #eaeaea;
@@ -1119,6 +1436,7 @@ export default {
         }
       }
     }
+    
     .bottom {
       margin-left: 60px;
       margin-top: 20px;
@@ -1132,6 +1450,85 @@ export default {
       }
     }
   }
+
+}
+  .uploadFiles {
+    float: left;
+    input {
+      position: absolute;
+      width: 0;
+      height: 0;
+      opacity: 0;
+      z-index: -2;
+    }
+    label {
+      float: left;
+      // width: 200px;
+      cursor: pointer;
+    }
+    .clearFile,
+    .fileExportBtn {
+      background-color: #eaeaea;
+      padding: 5px;
+      border: 1px solid #797979;
+      border-radius: 5px;
+      cursor: pointer;
+    }
+    .fileExportBtn {
+      pointer-events: none;
+    }
+  }
+    .checkIconBoxAll {
+          position: relative;
+          display: inline-block;
+          width: 10px;
+          height: 10px;
+          margin-top: 4px;
+          border: 1px solid #797979;
+          overflow: hidden;
+          .icon-queren {
+            position: absolute;
+            top: -15px;
+            left: -8px;
+          }
+    }
+    .checkIconBoxAlldown {
+          position: relative;
+          display: inline-block;
+          width: 10px;
+          height: 10px;
+          margin-top: 4px;
+          border: 1px solid #797979;
+          overflow: hidden;
+          .icon-queren {
+            position: absolute;
+            top: -3px;
+            left: -7px;
+          }
+    }
+      .checkIconBoxAlldown {
+          position: relative;
+          display: inline-block;
+          width: 10px;
+          height: 10px;
+          margin-top: 4px;
+          border: 1px solid #797979;
+          overflow: hidden;
+          .icon-querent {
+            position: absolute;
+            top: -3px;
+            left: -8px;
+          }
+    }
+.quanxuan{
+    cursor: pointer;
+}
+.margintopwenjian{
+  margin-top: 22px;
+}
+.margintopp{
+  margin-left: -12px;
+  margin-top: -26px;
 }
 </style>
 

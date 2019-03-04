@@ -16,6 +16,8 @@ import blackSwan from '@/components/monitor/blackSwan/blackSwan'
 import companyRelease from '@/components/monitor/companyRelease/companyRelease'
 // 用户管理
 import userSystem from '@/components/common/userSystemManagement'
+//自定义板块范围管理(新)
+import userSystemnew from '@/components/common/userSystemnew'
 // 重点关注池
 import attentionPoolSet from '@/components/common/attentionPoolSet'
 
@@ -34,6 +36,8 @@ import economicbusinessWarning from '@/components/economicbusiness/economicbusin
 import userSystem_diyManagement from '@/components/monitor/homePage/userSystem/diyManagement'
 
 // >> 债券
+//新闻预警 > 债券发行人负面新闻（新）
+import bond_negativeNewNews from '@/components/monitor/homePage/bond/negativeNewNews'
 // 新闻预警 > 债券发行人负面新闻
 import bond_negativeNews from '@/components/monitor/homePage/bond/negativeNews'
 // 新闻预警 > 新闻收藏夹
@@ -55,10 +59,13 @@ import bond_plateWarning from '@/components/monitor/homePage/bond/plateWarning'
 // >> 债券
 
 // >> 基金
+
 // 新闻预警 > 基金重仓股负面新闻
 import fund_shigekuraNews from '@/components/monitor/homePage/fund/shigekuraNews'
 // 新闻预警 > 基金管理人新闻
 import fund_managerNews from '@/components/monitor/homePage/fund/managerNews'
+// 新闻预警 > 基金管理人新闻(新)
+import fund_managerNewNews from '@/components/monitor/homePage/fund/fund_managerNewNews'
 // 新闻预警 > 新闻收藏夹
 import fund_newsFavorite from '@/components/monitor/homePage/fund/newsFavorite'
 // 公告预警
@@ -73,6 +80,7 @@ import fund_info from '@/components/monitor/homePage/fund/fund_info'
 //基金公告详情
 import fundDetail from '@/components/monitor/homePage/fund/fundDetail'
 import fundDetailtwo from '@/components/monitor/homePage/fund/fundDetailtwo'
+import detailsThree from '@/components/monitor/homePage/commons/detailsThree'
 
 
 
@@ -125,6 +133,8 @@ import shareOption_page2 from '@/components/monitor/homePage/shareOption/shareOp
 // >> 期权
 
 // >> 股票
+//新闻预警 公司负面新闻
+import stock_newsnegative from '@/components/monitor/homePage/stock/stock_newsnegative'
 // 新闻预警 新闻收藏夹
 import stock_newsWarning from '@/components/monitor/homePage/stock/newsFavorite'
 // 公告预警
@@ -205,6 +215,11 @@ export default new Router({
     //用户登录页面
     //meta
     {
+      path:'/monitor/homePage/detailsThree',
+      name:'detailsThree',
+      component:detailsThree
+    },
+    {
       path: '/monitor/homePage/fundDetail',
       name: 'fundDetail',
       component: fundDetail
@@ -247,6 +262,11 @@ export default new Router({
         name: 'register',
         component: register,
       }]
+    },
+    {
+      path:'/userSystemnew',
+      name:'userSystemnew',
+      component:userSystemnew
     },
     {
       path: '/userSystem',
@@ -353,6 +373,11 @@ export default new Router({
               component: fund_shigekuraNews,
             },
             {
+              path:'/monitor/homePage/fund_managerNewNews',
+              name:'fund_managerNewNews',
+              component:fund_managerNewNews
+            },
+            {
               path: '/monitor/homePage/fund_managerNews',
               name: 'fund_managerNews',
               component: fund_managerNews
@@ -389,6 +414,12 @@ export default new Router({
             // >> 基金
 
             //  >> 债券
+ 
+            {
+              path:'/monitor/homePage/bond_negativeNewNews',
+              name:'bond_negativeNewNews',
+              component:bond_negativeNewNews
+            },
             {
               path: '/monitor/homePage/bond_negativeNews',
               name: 'bond_negativeNews',
@@ -512,6 +543,11 @@ export default new Router({
             },
             // >> 新三板
             // >> 股票
+            {
+              path:'/monitor/homePage/stock_newsnegative',
+              name:'stock_newsnegative',
+              component:stock_newsnegative
+            },
             {
               path: '/monitor/homePage/stock_newsWarning',
               name: 'stock_newsWarning',

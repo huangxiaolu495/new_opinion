@@ -11,10 +11,12 @@ import '@/style/common.css';
 import '@/style/queryCondition.css';
 import '@/style/reset.css';
 import 'element-ui/lib/theme-chalk/index.css';
+import './assets/iconfont.css'
 // import 'element-ui/lib/index.js';
 import ElementUI from 'element-ui';
 
 Vue.config.productionTip = false
+//给vue原型添加axios属性
 Vue.prototype.$_axios = axios;
 Vue.use(EasyScroll);
 Vue.use(ElementUI);

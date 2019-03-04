@@ -1130,7 +1130,9 @@ export default {
     }
   }
 }
-
+.icon-star:nth-child(3){
+  margin: -2px;
+}
 .floatLeft2 {
   margin-left: 20px;
 }
