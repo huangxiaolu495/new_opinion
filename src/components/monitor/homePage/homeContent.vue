@@ -266,7 +266,7 @@
               </span>
             </div>
           </div>
-          <div class="clearFloat marginTop10">
+          <div class="clearFloat marginLeft20 marginTop10">
             <div class="uploadFiles">
               <label for="fileExport">上传文件(csv、txt)等
                 <span class="fileExportBtn">{{selectFileName1}}</span>
@@ -472,7 +472,7 @@
               </span>
             </div>
           </div>
-          <div class="clearFloat marginTop10">
+          <div class="clearFloat tarword marginTop10">
             <div class="uploadFiles">
               <label for="fileExport">上传文件(csv、txt)等
                 <span class="fileExportBtn">{{selectFileName2}}</span>
@@ -2258,15 +2258,15 @@ export default {
   }
 }
 .queryConditionBox {
-  position: relative;
-  width: 100%;
-  height: 110px;
-  // margin-top: 30px;
-  line-height: 25px;
-  // border-bottom: 1px solid #797979;
-
-  border: 1px solid #797979;
-  padding-top: 10px;
+    position: relative;
+    width: 100%;
+    height: 115px;
+    line-height: 25px;
+    margin-top: 3px;
+    border: 1px solid #dddddd;
+    padding-top: 10px;
+    background-color: #f9f9f9;
+    box-shadow: 1px 1px 2px #eee inset;
   input {
     width: 130px;
     height: 25px;
@@ -2350,10 +2350,14 @@ export default {
     line-height: 30px;
     text-align: center;
     cursor: pointer;
-    border: 1px solid #797979;
-    background-color: #fff;
+    color: #666;
+    border: 1px solid #dddddd;
+    /* background-color: #fff; */
     border-radius: 5px;
   }
+}
+.marginLeftl{
+  margin-left: 20px;
 }
 .typeBox {
   .firstTypeBox {
@@ -2453,6 +2457,9 @@ export default {
     //   border-bottom: none;
     // }
   }
+}
+.tarword{
+  margin-left: 20px;
 }
 .queryResult {
   table {

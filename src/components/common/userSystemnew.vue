@@ -985,6 +985,15 @@ export default {
     },
     // 添加匹配代码
     addMatch() {
+      let option = this.securitiesImportResult.tr.some(item=>{
+        return item.check
+      })
+      console.log(this.securitiesImportResult.tr)
+      console.log(option)
+      if(!option){
+        alert('请选择添加的代码')
+        return;
+      }
       if (!this.matchCode) {
         alert('请选择要导入的板块');
         return;

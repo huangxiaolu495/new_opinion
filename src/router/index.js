@@ -42,6 +42,8 @@ import bond_negativeNewNews from '@/components/monitor/homePage/bond/negativeNew
 import bond_negativeNews from '@/components/monitor/homePage/bond/negativeNews'
 // 新闻预警 > 新闻收藏夹
 import bond_newsFavorite from '@/components/monitor/homePage/bond/newsFavorite'
+//新闻收藏夹新
+import bond_newsFavoritenew from '@/components/monitor/homePage/bond/newsFavoritenew'
 // 公告预警
 import bond_ratingwarning from '@/components/monitor/homePage/bond/ratingwarning'
 // 公告预警 > 债券发行人公告
@@ -68,6 +70,8 @@ import fund_managerNews from '@/components/monitor/homePage/fund/managerNews'
 import fund_managerNewNews from '@/components/monitor/homePage/fund/fund_managerNewNews'
 // 新闻预警 > 新闻收藏夹
 import fund_newsFavorite from '@/components/monitor/homePage/fund/newsFavorite'
+//新闻收藏夹新
+import fund_newsFavoritenew from '@/components/monitor/homePage/fund/newsFavoritenew'
 // 公告预警
 import fund_issuerNotice from '@/components/monitor/homePage/fund/issuerNotice'
 //公告預警 > 基本公告
@@ -137,6 +141,8 @@ import shareOption_page2 from '@/components/monitor/homePage/shareOption/shareOp
 import stock_newsnegative from '@/components/monitor/homePage/stock/stock_newsnegative'
 // 新闻预警 新闻收藏夹
 import stock_newsWarning from '@/components/monitor/homePage/stock/newsFavorite'
+//新闻收藏夹新
+import stock_newsWarningnew from '@/components/monitor/homePage/stock/newsWarningnew'
 // 公告预警
 import stock_afficheWarning from '@/components/monitor/homePage/stock/afficheWarning'
 //股票 > 公告预警 > 基本公告
@@ -388,6 +394,11 @@ export default new Router({
               component: fund_newsFavorite
             },
             {
+              path:'/monitor/homePage/fund_newsFavoritenew',
+              name:'fund_newsFavoritenew',
+              component:fund_newsFavoritenew
+            },
+            {
               path: '/monitor/homePage/fund_issuerNotice',
               name: 'fund_issuerNotice',
               component: fund_issuerNotice
@@ -429,6 +440,11 @@ export default new Router({
               path: '/monitor/homePage/bond_newsFavorite',
               name: 'bond_newsFavorite',
               component: bond_newsFavorite
+            },
+            {
+              path:'/monitor/homePage/bond_newsFavoritenew',
+              name:'bond_newsFavoritenew',
+              component:bond_newsFavoritenew
             },
             {
               path: '/monitor/homePage/bond_issuerNotice',
@@ -554,7 +570,12 @@ export default new Router({
               component: stock_newsWarning
             },
             {
-              path: '/monitor/homePage/stock_afficheWarning',
+              path:'/monitor/homePage/stock_newsWarningnew',
+              name:'stock_newsWaringnew',
+              component:stock_newsWarningnew
+            },
+            {
+              path: '/monitor/homePage/stock_afficheWarning', //公告预警
               name: 'stock_afficheWarning',
               component: stock_afficheWarning
             },

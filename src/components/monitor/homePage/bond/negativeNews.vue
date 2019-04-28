@@ -208,6 +208,7 @@ export default {
     },
     keywordEvent(...data) {
       this.queryCondition.keyword = data[0];
+      console.log(this.queryCondition.keyword)
     },
     startDateEvent(...data) {
       this.queryCondition.from_date = data[0];

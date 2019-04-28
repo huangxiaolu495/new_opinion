@@ -1,7 +1,7 @@
 <template>
   <div>
     <div>
-      <div>
+      <div @click="inputNone">
         <div class="queryCondition-top">
           <div class="queryCondition-title">公司负面新闻</div>
           <div class="middle clearFloat">
@@ -98,9 +98,27 @@
                 <pull-down-list-two :prop="legislationListTwo" @legislationEventTwo='legislationEventTwo'></pull-down-list-two>
               </div>  
               <!-- 关键字部分 -->
-              <div class="floatLeft">
+              <div v-if='comnameMatch !="公司名称"' class="floatLeft">
                 <keyword @keywordEvent="keywordEvent"></keyword>
               </div> 
+              <div v-else class="floatLeft">
+                <div class="pullDown" @click.stop>
+                  <input type="text" v-model="nowQuite" @input="inputmethod" class="inputNow">
+                  <span v-show="isShowDropDownList" ref="inputContent" class="drop-down-box">
+                    <span v-for="(item, index) of dropDownList" :key="index" @click="dropDownEvent(item)">{{item.compname}}</span>
+                  </span>
+                </div>
+              </div>
+            </div>
+            <div ref='mask' class="cover">
+              <div class="cover_show">
+                  <div @click='mask_close' class="mask_close"><i class="iconfont icon-shanchu"></i></div>
+                  <div class="modulesNameListy">
+                    <pull-down-list-six :prop="modulesNameListy" @modulesNameEventy='modulesNameEventy'></pull-down-list-six>
+                  </div>  
+                  <button @click="export_mask" class="mask_button">导出</button>
+              </div>
+              
             </div>
             <!-- 查询按钮 -->
             <div class="queryBtn">
@@ -108,6 +126,9 @@
             </div>
             <div class="Collection">
               <span @click='collect'>收藏</span>
+            </div>
+            <div class="Collection">
+              <span @click='export_bond'>导出</span>
             </div>
           </div>
         </div>
@@ -242,6 +263,7 @@ import commonMethods from '@/common/common.js'
 import datePicker from '@/components/common/datePicker'
 import keyword from '@/components/common/keywordt'
 import pullDownListThree from '@/components/common/pullDownListThree'
+import pullDownListSix from '@/components/common/pullDownListSix'
 export default {
   data() {
     const oneDayAfter = new Date().getTime() - 86400000;
@@ -260,8 +282,12 @@ export default {
       categoryIndex1:true,
       isshownow:false,
       allCheckb:false,
+      isShowDropDownList:false,
       nowCategroy: '',
+      nowQuite:'',
+      dropDownList:[],
       resultDataNotice:'',
+      comnameMatch:'',
       dataListNotice:'',
       selectFileName: '选择文件',
       starNumber: [-1, -2, -3],
@@ -291,6 +317,19 @@ export default {
           children: 'children',
           label: 'label'
         },
+      exportData:{
+        export_type:1,
+        start_date:'',
+        end_date:'',
+        keytype:0,
+        keyword:'',
+        scope:'',
+        userid:'risk',
+        sector:'',
+        imp:'',
+        riskcode:'',
+        sectype:'S'
+      },
       queryCondition: {
         start_date: '',
         end_date: '',
@@ -303,6 +342,19 @@ export default {
         riskcode:'',
         page: 0,
         pagesize: 10,
+      },
+      modulesNameListy: {
+        title: '新闻范围：',
+        parentEvent: 'modulesNameEventy',
+        default: '当前页面选中新闻',
+        listWidth: 143,
+        nowSelectWidth: 145,
+        nowSelectHeight: 25,
+        nowSelectFontSize: 13,
+        list: [
+          '所有符合条件新闻',
+          '当前页面选中新闻'
+        ]
       },
       modulesNameList: {
         title: '组合范围：',
@@ -517,6 +569,7 @@ export default {
       // ],
       file: '',
       sendFile: '',
+      mathCompany:[]
     }
   },
   components: {
@@ -527,6 +580,7 @@ export default {
     pullDownListTwo,
     pullDownListFive,
     keyword,
+    pullDownListSix
   },
       //获取板块名称 进入页面发送请求
   created(){
@@ -565,13 +619,131 @@ export default {
       }).catch((err) => {
 
       });
+      this.companyMatch()
   },
   methods: {
+    dropDownEvent(item){
+      this.nowQuite = item.compname
+      this.queryCondition.keyword = item.compcode
+      console.log(item.compcode)
+      this.isShowDropDownList = false
+    },
+    inputmethod(){
+      // this.dropDownList = []
+      if(this.nowQuite){
+        this.$refs.inputContent.style.display = 'block'
+      }else{
+        this.$refs.inputContent.style.display = 'none'
+      }
+      console.log(111)
+      let keyword = commonMethods.checkName(this.nowQuite);
+      this.nowQuite = keyword
+      let nowNumber = parseInt(this.nowQuite);
+      if(nowNumber > 99999){
+
+      }else if(this.nowQuite.toString().length > 0){
+        const tempArrShu = [];
+        this.isShowDropDownList = true;
+        console.log(this.nowQuite.toString())
+        this.mathCompany.forEach(item => {
+          // console.log(item.length)
+          if(item.compname){
+            if (item.compname.indexOf(this.nowQuite.toString()) !== -1) {
+              tempArrShu.push(item);
+            }
+          }
+
+        });
+        console.log(tempArrShu)
+        this.dropDownList = tempArrShu
+        // // console.log(tempArr)
+        // tempArrShu.forEach(item=>{
+        //   this.dropDownList.push(item.compname)
+        // })
+        // // this.dropDownList = tempArrShu.slice(0, 5);
+        // console.log(this.dropDownList)
+      }
+    },
+    //获取公司名称匹配项
+    companyMatch(){
+      const matchUrl = 'http://10.25.26.194:10201/api/risk/finchina/get_comp_code'
+      let matchData = {
+        sectype:'S'
+      }
+      this.$_axios.get(matchUrl,{
+        params: matchData
+      }).then(res=>{
+        console.log(res)
+        this.mathCompany = res.data.result
+      })
+    },
+    inputNone(){
+      try {
+          console.log(this.$refs.inputContent)
+        if(this.$refs.inputContent.style.display == 'block'){
+        console.log(this.$refs.inputContent)
+        this.$refs.inputContent.style.display = 'none'
+        }
+      } catch (error) {
+        
+      }
+    },
+    mask_close(){
+      this.$refs.mask.style.display = 'none'
+    },
+    export_mask(){
+            let exportTem = []
+      this.dataList.forEach(item=>{
+        if(item.check){
+          exportTem.push(item.newscode)
+        }
+      })
+      this.exportData.newscodes = exportTem.join(',')
+      console.log(this.dataList)
+        let mask = this.dataList.some(item=>{
+            return item.check
+        })
+        if(!mask && this.exportData.export_type == 1){
+          alert('至少选中一条记录!')
+          return;
+        }
+      const export_url = 'http://10.25.24.51:10201/api/risk/finchina/primary_news_export'
+      let timestart = this.exportData.start_date
+      let timeend = this.exportData.end_date
+      let exportType = this.exportData.export_type
+      let keyType = this.exportData.keytype
+      let keyWord = this.exportData.keyword
+      let scope = this.exportData.scope
+      let userId = this.exportData.userid
+      let sector = this.exportData.sector
+      let imp = this.exportData.imp
+      let riskcode = this.exportData.riskcode
+      let newsCodes = this.exportData.newscodes
+      let sectype = this.exportData.sectype
+      window.location.href = 'http://10.25.24.51:10201/api/risk/finchina/primary_news_export?sectype='+sectype+'&start_date='+timestart+'&end_date='+timeend+'&keytype='+keyType+'&keyword='+keyWord+'&scope='+scope+'&userid='+userId+'&sector='+sector+'&imp='+imp+'&riskcode='+riskcode+'&newscodes='+newsCodes+'&export_type='+exportType
+
+      // this.$_axios.get(export_url,{
+      //     params:this.exportData
+      //   }).then(res=>{
+      //   console.log(res)
+      //   if(res.data.code == 1){
+      //     alert('导出失败')
+
+      //   }
+      // })
+      this.$refs.mask.style.display = 'none'
+    },
+    export_bond(){
+      this.$refs.mask.style.height = document.getElementById('app').clientHeight + 'px'
+      this.$refs.mask.style.width = document.getElementById('app').clientWidth + 'px'
+      this.$refs.mask.style.display = 'block'
+    },
     collect(){
-      const url = 'http://10.25.24.51:10201/api/risk/finchina/primary_news_favorite?'
+      
+      const url = 'http://10.25.26.194:10201/api/risk/finchina/news_favorite_add'
       let temArrf = []
-      alert('收藏成功!')
-      return;
+      // alert('收藏成功!')
+      // return;
 
 
 
@@ -584,7 +756,8 @@ export default {
       console.log(temArrf)
       const sendData = {
         userid:'risk',
-        newscode:temArrf.join(',')
+        newscodes:temArrf.join(','),
+        sectype:'S'
       }
       let formData = new FormData()
       for(let key in sendData){
@@ -594,6 +767,9 @@ export default {
       }
       this.$_axios.post(url,formData).then(response=>{
         console.log(response)
+        if(response.data.code == 0){
+          alert('收藏成功')
+        }
       })
 
     },
@@ -633,8 +809,10 @@ export default {
         console.log(arr)
         if(arr.length == 5){
           this.queryCondition.imp = ''
+          this.exportData.imp = ''
         }else{
           this.queryCondition.imp = arr.join(',')
+          this.exportData.imp = arr.join(',')
         }
     },
       zhaiquan(){
@@ -670,15 +848,41 @@ export default {
         this.queryCondition.scope = 0;
         this.queryCondition.userid = '';
         this.queryCondition.sector = ''
+        this.exportData.scope = 0;
+        this.exportData.userid = '';
+        this.exportData.sector = ''
       }else{
         this.queryCondition.scope = 1;
         this.queryCondition.userid = 'risk',
         this.queryCondition.sector = data[0]
+        this.exportData.scope = 1;
+        this.exportData.userid = 'risk',
+        this.exportData.sector = data[0]
       }
+    },
+    modulesNameEventy(...data){
+      console.log(data)
+      if(data[0] == '所有符合条件新闻'){
+        this.exportData.export_type = 0
+        this.exportData.newscodes = ''
+      }
+      if(data[0] == '当前页面选中新闻'){
+        this.exportData.export_type = 1
+        let exportTem = []
+      this.dataList.forEach(item=>{
+        if(item.check){
+          exportTem.push(item.newscode)
+        }
+      })
+      this.exportData.newscodes = exportTem.join(',')
+
+      }
+
     },
     // 添加关键字查询
     keywordEvent(...data) {
       this.queryCondition.keyword = data[0];
+      this.exportData.keyword = data[0];
     },
     legislationEventTwo(data) {
       console.log(data)
@@ -687,6 +891,14 @@ export default {
       })
       console.log(code.code)
       this.queryCondition.keytype = code.code
+      this.exportData.keytype = code.code
+      if(data == '公司名称'){
+        this.comnameMatch = '公司名称'
+        this.nowQuite = ''
+        this.queryCondition.keyword= ''
+      }else{
+        this.comnameMatch = ''
+      }
     },
     legislationEventThree(data) {
       // this.queryCondition.keytype = ''
@@ -698,6 +910,7 @@ export default {
       }else{
         this.isShowTypeList =false
         this.queryCondition.riskcode = ''
+        this.exportData.riskcode = ''
         console.log(this.isShowTypeList)
       }
     },
@@ -754,6 +967,9 @@ export default {
     // },
     query() {
       this.getCheckedKeys()
+      if(this.nowQuite == '' && this.queryCondition.keytype == 2){
+        this.queryCondition.keyword = ''
+      }
       console.log(this.queryCondition)
       this.isShowQueryResult = true;
       this.hasResultData = false;
@@ -816,13 +1032,13 @@ export default {
           if (item.compnames && item.compnames.length > 2) {
             
             item.compnames = item.compnames.slice(0, 2) ;
-            item.detailsxi = '...详情';
+            item.detailsxi = '...展开';
           }
     
           if(item.secnames && item.secnames.length > 2){
                                                                                                                             
             item.secnames = item.secnames.slice(0,2) 
-            item.details = '...详情'
+            item.details = '...展开'
           }
         });
       }).catch(err => {
@@ -859,6 +1075,10 @@ export default {
         //   item.CONTENT = item.CONTENT.toString().replace(/\\r\\n\\r\\n/g, "<br>");
         //   item.CONTENT = item.CONTENT.toString().replace(/\\r\\n/g, "<br>");
         // });
+        this.allCheckb = false
+        this.resultData.forEach(item=>{
+          item.check = false
+        })
         
         this.dataList = JSON.parse(JSON.stringify(this.resultData));
         // this.dataListNotice = JSON.parse(JSON.stringify(this.resultDataNotice))
@@ -875,13 +1095,13 @@ export default {
           if (item.compnames && item.compnames.length > 2) {
             
             item.compnames = item.compnames.slice(0, 2) ;
-            item.detailsxi = '...详情';
+            item.detailsxi = '...展开';
           }
     
           if(item.secnames && item.secnames.length > 2){
                                                                                                                             
             item.secnames = item.secnames.slice(0,2) 
-            item.details = '...详情'
+            item.details = '...展开'
           }
         });
       }).catch(err => {
@@ -890,7 +1110,7 @@ export default {
     }, 
     detailsxi(item,index){
       if(item.detailsxi == '收起'){
-        item.detailsxi = '...详情';
+        item.detailsxi = '...展开';
         item.compnames = item.compnames.slice(0,2) 
       }else{
         item.detailsxi = '收起';
@@ -901,11 +1121,11 @@ export default {
 
     details(item, index) {
       if (item.details == '收起') {
-        console.log('详情1')
-        item.details = '...详情';
+        console.log('展开1')
+        item.details = '...展开';
         item.secnames = item.secnames.slice(0, 2) ;
       } else {
-        console.log('详情2')
+        console.log('展开2')
         item.details = '收起';
         // item.secnames.join(',')
         item.secnames = this.resultData[index].secnames;
@@ -1051,6 +1271,7 @@ export default {
       } else {
         this.isShowTypeBox = false;
         this.queryCondition.riskcode = '';
+        this.exportData.riskcode = '';
       }
     },
     // 条件 选择重要级 星级
@@ -1187,10 +1408,12 @@ export default {
     },
     startDateEvent(...data) {
       this.queryCondition.start_date = data[0];
+      this.exportData.start_date = data[0];
       // this.startDatePicker.defaultDate = new Date(data[0]);
     },
     endDateEvent(...data) {
       this.queryCondition.end_date = data[0];
+      this.exportData.end_date = data[0];
       // this.endDatePicker.defaultDate = new Date(data[0]);
     },
 
@@ -1293,6 +1516,7 @@ export default {
       });
       this.resetType();
       this.queryCondition.riskcode = tempArr.join(',');
+      this.exportData.riskcode = tempArr.join(',');
       this.isShowTypeBox = false;
       console.log(tempArr)
     },
@@ -1308,11 +1532,14 @@ export default {
         });
       });
       this.queryCondition.riskcode = '';
+      this.exportData.riskcode = '';
     }
   },
   mounted() {
     this.queryCondition.start_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
     this.queryCondition.end_date = commonMethods.formatDateTime2(this.endDatePicker.defaultDate);
+    this.exportData.start_date = commonMethods.formatDateTime2(this.startDatePicker.defaultDate);
+    this.exportData.end_date = commonMethods.formatDateTime2(this.endDatePicker.defaultDate);
   }
 }
 </script>
@@ -1357,6 +1584,9 @@ export default {
         text-align: center;
         line-height: 27px;
         margin-left:10px;
+}
+.inputNow{
+  width: 168px !important;
 }
 .attentionPoolSet {
   position: fixed;
@@ -1568,6 +1798,7 @@ export default {
         position: absolute;
         display: inline-block;
         top: 4px;
+        left: 6px;
         width: 12px;
         height: 12px;
         border-radius: 3px;
@@ -1590,6 +1821,45 @@ export default {
 .marginTwo{
   margin:0 22px;
 }
+  .cover{
+        position: fixed;;
+        left:0px;
+        top:0px;
+        background:rgba(0, 0, 0, 0.4);
+        filter:alpha(opacity=60);  /*设置透明度为60%*/
+        display:none; 
+        z-Index:999;  
+  }
+.cover_show{
+    position: absolute;
+    top: 40%;
+    left: 40%;
+    width: 300px;
+    height: 100px;
+    border-radius: 8px;
+    background-color: #fff;
+    z-Index: 1000;
+}
+.mask_close{
+    width: 20px;
+    height: 20px;
+    cursor: pointer;
+    margin-bottom: 13px;
+    margin-top: -4px;
+    margin-left: 279px;
+}
+.modulesNameListy{
+  margin-left: 6px;
+}
+.mask_button{
+    width: 69px;
+    height: 30px;
+    margin-left: 232px;
+    background-color: #b50229;
+    margin-top: 17px;
+    color: #fff;
+    cursor: pointer;
+}
     .checkIconBoxAll {
           position: relative;
           display: inline-block;
@@ -1604,6 +1874,28 @@ export default {
             left: -8px;
           }
     }
+  .drop-down-box {
+    position: absolute;
+    top: 24px;
+    left: 0px;
+    width: 230px;
+    height: 290px;
+    overflow-y: auto;
+    /* border: 1px solid #797979; */
+    z-index: 2;
+    background-color: #e0e0e0;
+    span {
+      float: left;
+      width: 230px;
+      cursor: pointer;
+    }
+    span:hover {
+      background-color:#bebebe;
+    }
+  }
+.pullDown{
+  position: relative;
+}
 .queryResult {
   table {
     width: 1180px;

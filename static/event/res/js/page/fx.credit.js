@@ -1225,7 +1225,7 @@ window.onload = (function (M) {
         var str = '';
         var url = '';
         for (var i = 0, len = d.length; i < len; i++) {
-          d[i].notice_date = M.format(new Date(d[i].notice_date), 'yyyy-MM-dd hh:ss:mm');
+          d[i].notice_date = M.format(new Date(d[i].notice_date), 'yyyy-MM-dd hh:mm:ss');
           if (d[i].file_url) {
             url = d[i].file_url;
           } else {

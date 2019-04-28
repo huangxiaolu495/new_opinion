@@ -31,7 +31,9 @@ export default {
       } else {
         if(this.nowKeyword){
           this.pullDown.push(this.nowKeyword);
+          
           this.pullDown = [...new Set(this.pullDown)];
+          
         }
         return this.pullDown.join(',');
       }
@@ -48,7 +50,9 @@ export default {
     addKeyword(){
       if(this.nowKeyword){
         this.pullDown.push(this.nowKeyword);
+        console.log(this.pullDown)
         this.pullDown = [...new Set(this.pullDown)]; 
+        console.log(this.pullDown)
         this.nowKeyword = '';
         if(this.pullDown.length > 5){
           this.pullDown.shift();

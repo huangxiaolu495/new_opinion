@@ -56,6 +56,7 @@ export default {
         const resultData = response.data;
         if (resultData.msg === 'query success') {
           const dataList = JSON.parse(JSON.stringify(resultData.result.securitycodelist));
+          console.log(dataList)
           this.$store.state.codeDataList_N.push(...dataList);
           console.log('自律监管措施', this.$store.state.codeDataList_N.length)
         }

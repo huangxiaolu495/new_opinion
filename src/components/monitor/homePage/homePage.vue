@@ -57,6 +57,7 @@ export default {
               {title:'公司负面新闻',path:'/monitor/homePage/stock_newsnegative'}
             ]},
             { title: '新闻收藏夹', path: '/monitor/homePage/stock_newsWarning', list: [] },
+            {title:'新闻收藏夹(新)',path:'/monitor/homePage/stock_newsWarningnew',list:[]},
             { title: '公告预警', isShowList: false, path: '/monitor/homePage/stock_afficheWarning', list: [
                 { title: '基本公告', path: '/monitor/homePage/stock_Basicannounce' },
                 { title: '自定义板块范围公告', path: '/monitor/homePage/stock_Template' },
@@ -73,7 +74,8 @@ export default {
             {              title: '新闻预警', isShowList: false, path: '/monitor/homePage/homeContent', list: [
                 { title: '债券发行人负面新闻', path: '/monitor/homePage/bond_negativeNews' },
                 {title:'债券发行人负面新闻(新)',path:'/monitor/homePage/bond_negativeNewNews'},
-                { title: '新闻收藏夹', path: '/monitor/homePage/bond_newsFavorite' }
+                { title: '新闻收藏夹', path: '/monitor/homePage/bond_newsFavorite' },
+                {title:'新闻收藏夹(新)',path:'/monitor/homePage/bond_newsFavoritenew'}
               ]            },
             // {title: '公告预警', isShowList: false, path: '/monitor/homePage/homeContent', list: [
             //     {title: '债券发行人公告', path: '/monitor/homePage/bond_issuerNotice'},
@@ -95,7 +97,8 @@ export default {
                 { title: '基金重仓股负面新闻', path: '/monitor/homePage/fund_shigekuraNews' },
                 { title: '基金管理人新闻', path: '/monitor/homePage/fund_managerNews' },
                 {title:'基金管理人新闻(新)',path:'/monitor/homePage/fund_managerNewNews'},
-                { title: '新闻收藏夹', path: '/monitor/homePage/fund_newsFavorite' }
+                { title: '新闻收藏夹', path: '/monitor/homePage/fund_newsFavorite' },
+                {title:'新闻收藏夹(新)',path:'/monitor/homePage/fund_newsFavoritenew'}
               ]            },
             {              title: '公告预警', isShowList: false, path: '/monitor/homePage/fund_issuerNotice', list: [
                 { title: '基本公告', path: '/monitor/homePage/fund_Basicannounce' },

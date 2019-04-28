@@ -12,6 +12,7 @@ import '@/style/queryCondition.css';
 import '@/style/reset.css';
 import 'element-ui/lib/theme-chalk/index.css';
 import './assets/iconfont.css'
+import './assets/icon/iconfont.css'
 // import 'element-ui/lib/index.js';
 import ElementUI from 'element-ui';
 

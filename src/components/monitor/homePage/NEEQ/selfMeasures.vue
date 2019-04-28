@@ -146,7 +146,9 @@ export default {
   },
   methods: {
     inputCode() {
+      console.log(this.nowEquityNo)
       let keyword = commonMethods.checkName(this.nowEquityNo);
+      console.log(keyword)
       this.nowEquityNo = keyword;
 
       let nowNumber = parseInt(this.nowEquityNo);
@@ -156,12 +158,16 @@ export default {
       } else if (this.nowEquityNo.toString().length > 0) {
         const tempArr = [];
         this.isShowDropDownList = true;
+        console.log(this.nowEquityNo.toString())
         this.codeDataList.forEach(item => {
+
           if (item.indexOf(this.nowEquityNo.toString()) !== -1) {
             tempArr.push(item);
           }
         });
+        console.log(tempArr)
         this.dropDownList = tempArr.slice(0, 5);
+        console.log(this.dropDownList)
       }
     },
     inputEvent() {

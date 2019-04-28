@@ -15,7 +15,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "easyscroll": "^1.0.1",
-    "element-ui": "^2.4.6",
+    "element-ui": "^2.4.9",
     "iview": "^1.0.1",
     "less": "^3.0.4",
     "less-loader": "^4.1.0",
